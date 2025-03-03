@@ -5,7 +5,7 @@
     home.username = "jackson";
 
     custom.home = {
-      suite = {
+      suites = {
         common.enable = true;
         gaming.enable = true;
         japanese.enable = true;

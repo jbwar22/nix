@@ -2,7 +2,7 @@
 
 with lib;
 let
-  inherit (namespace config { home.suite.sway = ns; }) cfg opt;
+  inherit (namespace config { home.suites.sway = ns; }) cfg opt;
 in
 {
   options = opt {

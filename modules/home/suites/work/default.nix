@@ -2,7 +2,7 @@
 
 with lib;
 let
-  inherit (namespace config { home.suite.work = ns; }) cfg opt;
+  inherit (namespace config { home.suites.work = ns; }) cfg opt;
 in
 {
   options = opt {

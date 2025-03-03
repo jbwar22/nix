@@ -6,6 +6,10 @@ with lib; {
     home.homeDirectory = "/home/jackson";
 
     custom.home = {
+      suites = {
+        work.enable = true;
+      };
+
       programs = {
         fcitx5.basic = true;
       };

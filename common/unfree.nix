@@ -1,12 +1,15 @@
 [
+  "apple_cursor"
+  "corefonts"
   "discord"
+  "msodbcsql17"
   "nvidia-settings"
   "nvidia-x11"
+  "pycharm-professional"
+  "slack"
+  "spotify"
   "steam"
   "steam-unwrapped"
-  "corefonts"
   "vista-fonts"
-  "spotify"
   "zoom"
-  "apple_cursor"
 ]

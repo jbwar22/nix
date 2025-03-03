@@ -1,18 +1,14 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.noconfig.work = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.noconfig.work = ns; }; {
   options = opt {
     enable = mkEnableOption "additional programs for use at work";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       slack
-      jetbrains.pycharm-professional
+      # jetbrains.pycharm-professional
       mssql_jdbc
       unixODBCDrivers.msodbcsql17
     ];

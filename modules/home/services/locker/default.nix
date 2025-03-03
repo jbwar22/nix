@@ -17,7 +17,7 @@ in
       };
       Service = {
         ExecStart = pkgs.writeShellScript "locker-script" ''
-          SWAYLOCK=${pkgs.swaylock}/bin/swaylock ${pkgs.nodejs_22}/bin/node /home/jackson/documents/dev/locker/index.js > /tmp/locker.out
+          SWAYLOCK=${pkgs.swaylock}/bin/swaylock ${pkgs.nodejs}/bin/node /home/jackson/documents/dev/locker/index.js > /tmp/locker.out
         '';
       };
       Install = {

@@ -2,7 +2,7 @@
 
 with lib;
 let
-  inherit (namespace config { home.suite.gaming = ns; }) cfg opt;
+  inherit (namespace config { home.suites.gaming = ns; }) cfg opt;
 in
 {
   options = opt {
