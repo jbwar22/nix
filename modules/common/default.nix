@@ -1,0 +1,7 @@
+{ ... }:
+
+{
+  imports = [
+    ./opts/hardware
+  ];
+}

@@ -1,0 +1,12 @@
+[
+  "discord"
+  "nvidia-settings"
+  "nvidia-x11"
+  "steam"
+  "steam-unwrapped"
+  "corefonts"
+  "vista-fonts"
+  "spotify"
+  "zoom"
+  "apple_cursor"
+]
