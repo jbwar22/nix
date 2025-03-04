@@ -14,9 +14,6 @@ with lib; {
       };
 
       opts = {
-        secrets = {
-          geoLoc = trim (readFile ../../../../../secrets/git-crypt/strings/geoloc-monstro.txt);
-        };
         screens.definition = [
           { name = "ASUSTek COMPUTER INC VG278 J8LMQS104073";
             bar = "bar1080";

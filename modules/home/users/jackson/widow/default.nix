@@ -15,9 +15,6 @@ with lib; {
       };
 
       opts = {
-        secrets = {
-          geoLoc = trim (readFile ../../../../../secrets/git-crypt/strings/geoloc-widow.txt);
-        };
         screens.definition = [
           { name = "BOE 0x06B3";
             noserial = true;
