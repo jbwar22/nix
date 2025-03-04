@@ -183,7 +183,13 @@ lib: with lib; rec {
   # ageOrDefault config "geolocation" "0.00:0.00"
   ageOrDefault = (config: file: content:
     if hasAttr file config.age.secrets
-    then config.age.secrets."${file}".path
+    then config.age.secrets.${file}.path
     else builtins.toFile "agedefault-${file}" content
+  );
+
+  ageOrNull = (config: file:
+    if hasAttr file config.age.secrets
+    then config.age.secrets.${file}.path
+    else null
   );
 }

@@ -24,8 +24,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    custom.home.opts.aliases = mkIf config.custom.common.opts.hardware.nvidia {
-      sway = "${pkgs.sway}/bin/sway --unsupported-gpu";
+    custom.home.opts.aliases = {
+      sway = mkIf config.custom.common.opts.hardware.nvidia "${pkgs.sway}/bin/sway --unsupported-gpu";
       getgeo = "echo ${geolocation}";
     };
 

@@ -10,10 +10,6 @@ with lib; {
         work.enable = true;
       };
 
-      programs = {
-        fcitx5.basic = true;
-      };
-
       opts = {
         screens.definition = [
           { name = "BOE 0x06B3";
@@ -42,6 +38,7 @@ with lib; {
       };
     };
     age = {
+      secretsDir = "/run/user/1001/agenix";
       identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
       secrets = {
         geolocation.file = ../../../../../secrets/agenix/users/jackson/widow/geolocation.age;

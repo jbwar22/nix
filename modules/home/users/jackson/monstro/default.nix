@@ -9,7 +9,6 @@ with lib; {
       programs = {
         sway.blueLightFilter = true;
         sway.blueLightStrength = 5000;
-        fcitx5.basic = true;
         firefox.usePackage = true;
       };
 
@@ -41,6 +40,7 @@ with lib; {
     };
 
     age = {
+      secretsDir = "/run/user/1000/agenix";
       identityPaths = [ "${config.home.homeDirectory}/.ssh/id_rsa" ];
       secrets = {
         geolocation.file = ../../../../../secrets/agenix/users/jackson/monstro/geolocation.age;

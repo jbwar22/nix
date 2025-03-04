@@ -15,7 +15,8 @@ in
       pulsemixer
       vim
       nixvim-custom
-      inputs.home-manager.packages."x86_64-linux".default
+      inputs.home-manager.packages.${pkgs.system}.default
+      inputs.agenix.packages.${pkgs.system}.default
     ];
   };
 }
