@@ -42,5 +42,12 @@ with lib; {
         colorscheme = import ./colorscheme.nix;
       };
     };
+
+    age = {
+      identityPaths = [ "${config.home.homeDirectory}/.ssh/id_rsa" ];
+      secrets = {
+        geolocation.file = ../../../../../secrets/agenix/users/jackson/monstro/geolocation.age;
+      };
+    };
   };
 }

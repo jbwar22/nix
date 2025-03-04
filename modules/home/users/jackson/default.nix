@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 
 {
   config = {
@@ -10,13 +10,6 @@
         gaming.enable = true;
         japanese.enable = true;
         sway.enable = true;
-      };
-    };
-
-    age = {
-      identityPaths = [ "${config.home.homeDirectory}/.ssh/id_rsa" ];
-      secrets = {
-        geolocation.file = ../../../../secrets/agenix/users/jackson/monstro/geolocation.age;
       };
     };
   };
