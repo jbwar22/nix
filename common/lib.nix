@@ -176,4 +176,14 @@ lib: with lib; rec {
       inherit mode options;
     });
   };
+
+
+  # secrets helpers
+
+  # ageOrDefault config "geolocation" "0.00:0.00"
+  ageOrDefault = (config: file: content:
+    if hasAttr file config.age.secrets
+    then config.age.secrets."${file}".path
+    else builtins.toFile "agedefault-${file}" content
+  );
 }

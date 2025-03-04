@@ -1,15 +1,12 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.sway = ns; }) cfg opt;
-
+with lib; with namespace config { home.programs.sway = ns; }; let
   colorscheme = config.custom.home.opts.colorscheme;
   waybar = config.custom.home.programs.waybar;
   swaylock = config.custom.home.programs.swaylock;
   scripts = (import ./scripts) pkgs lib config;
 
-  geolocation = if hasAttr "geolocation" config.age.secrets then config.age.secrets.geolocation.path else pkgs.writeText "0.00:0.00";
+  geolocation = ageOrDefault config "geolocation" "0.00:0.00";
 in
 {
   options = opt {
@@ -222,7 +219,7 @@ in
             always = true;
           }
           (mkIf cfg.blueLightFilter {
-            command = "pkill -9 gammastep; ${pkgs.gammastep}/bin/gammastep -l ${config.custom.home.opts.secrets.geoLoc} -t 6500:${toString cfg.blueLightStrength}";
+            command = "pkill -9 gammastep; ${pkgs.gammastep}/bin/gammastep -l $(cat ${geolocation}) -t 6500:${toString cfg.blueLightStrength}";
             always = true;
           })
         ];

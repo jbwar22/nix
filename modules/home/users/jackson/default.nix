@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   config = {
@@ -13,8 +13,11 @@
       };
     };
 
-    age.secrets = {
-      geolocation.file = ../../../../secrets/agenix/monstro-jackson-geolocation.age;
+    age = {
+      identityPaths = [ "${config.home.homeDirectory}/.ssh/id_rsa" ];
+      secrets = {
+        geolocation.file = ../../../../secrets/agenix/users/jackson/monstro/geolocation.age;
+      };
     };
   };
 }
