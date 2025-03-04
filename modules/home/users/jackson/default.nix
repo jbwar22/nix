@@ -12,5 +12,9 @@
         sway.enable = true;
       };
     };
+
+    age.secrets = {
+      geolocation.file = ../../../../secrets/agenix/monstro-jackson-geolocation.age;
+    };
   };
 }

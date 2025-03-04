@@ -3,6 +3,7 @@
 with lib; with namespace config { nixos.host = ns; }; {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    inputs.agenix.nixosModules.default
     ../..
     ../../../common
   ];

@@ -8,18 +8,10 @@ let
   waybar = config.custom.home.programs.waybar;
   swaylock = config.custom.home.programs.swaylock;
   scripts = (import ./scripts) pkgs lib config;
+
+  geolocation = if hasAttr "geolocation" config.age.secrets then config.age.secrets.geolocation.path else pkgs.writeText "0.00:0.00";
 in
 {
-  imports = [
-    ../../opts/aliases
-    ../../opts/colorscheme
-    ../../opts/cursor
-    ../../opts/screens
-    ../../opts/wallpaper
-    ../swaylock
-    ../waybar
-  ];
-
   options = opt {
     enable = mkEnableOption "sway wm";
     blueLightFilter = with types; mkOption {
@@ -37,6 +29,7 @@ in
   config = lib.mkIf cfg.enable {
     custom.home.opts.aliases = mkIf config.custom.common.opts.hardware.nvidia {
       sway = "${pkgs.sway}/bin/sway --unsupported-gpu";
+      getgeo = "echo ${geolocation}";
     };
 
     home.packages = with pkgs; [
