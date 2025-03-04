@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, ... }:
+{ inputs, config, lib, modulesPath, ... }:
 
 with lib;
 let
@@ -15,6 +15,10 @@ in
 
   config = lib.mkIf cfg.enable {
     custom.nixos.hardware.cpu.intel.enable = true;
+
+    # nixos-hardware overrides
+    hardware.cpu.intel.updateMicrocode = false;
+    services.fstrim.enable = false;
 
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
 

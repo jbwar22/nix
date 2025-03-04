@@ -7,7 +7,7 @@ with lib; {
 
     custom.home = {
       programs = {
-        sway.blueLightFilter = false;
+        sway.blueLightFilter = true;
         sway.blueLightStrength = 5000;
         fcitx5.basic = true;
         firefox.usePackage = true;

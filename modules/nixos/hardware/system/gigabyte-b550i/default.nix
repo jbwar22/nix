@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, ... }:
+{ inputs, config, lib, modulesPath, ... }:
 
 with lib;
 let
@@ -7,6 +7,7 @@ in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.nixos-hardware.nixosModules.gigabyte-b550
   ];
 
   options = opt {
