@@ -192,4 +192,16 @@ lib: with lib; rec {
     then config.age.secrets.${file}.path
     else null
   );
+
+  loadAgeSecretsFromDir = dir: (
+    if pathExists dir then (
+      pipe (builtins.readDir dir) [
+        (filterAttrs (file: type: (type != "directory") && (hasSuffix ".age" file)))
+        (concatMapAttrs (file: _: {
+          ${removeSuffix ".age" file}.file = dir + "/${file}";
+        }))
+      ]
+    ) else {}
+  );
+    
 }

@@ -16,11 +16,5 @@ with lib; {
         fcitx5.user-dictionary = ageOrNull config "fcitx5-mozc-user_dictionary";
       };
     };
-
-    age = {
-      secrets = {
-        fcitx5-mozc-user_dictionary.file = ../../../../secrets/agenix/users/jackson/common/fcitx5-mozc-user_dictionary.age;
-      };
-    };
   };
 }
