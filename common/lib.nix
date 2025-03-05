@@ -108,10 +108,15 @@ lib: with lib; rec {
   # mkIfAnyHMOpt config (cfg: cfg.programs.bash.enable)
   mkIfAnyHMOpt = config: predicate: mkIf (checkHMOpt config any predicate);
 
+  # set home-manager options for a list of users, with username
+  # example: set username for all users
+  # home-manager = setHMOptWithUser config.custom.common.opts.host.users (name: { home.username = name; })
+  setHMOptWithUser = users: valuef: { users = genAttrs (attrNames users) (name: valuef name); };
+
   # set home-manager options for a list of users
   # example: enable bash for all users
   # home-manager = setHMOpt config.custom.common.opts.host.users { programs.bash.enable = true; }
-  setHMOpt = users: value: { users = genAttrs (attrNames users) (_: value); };
+  setHMOpt = users: value: setHMOptWithUser users (_: value);
 
   # set home-manager options for a list of users only if they match a predicate
   # unfortunately this causes infinite recursion and should not be used directly. This was

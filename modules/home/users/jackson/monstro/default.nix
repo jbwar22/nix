@@ -3,7 +3,6 @@
 with lib; {
   config = {
     home.stateVersion = "24.05";
-    home.homeDirectory = "/home/jackson";
 
     custom.home = {
       programs = {
@@ -44,9 +43,6 @@ with lib; {
     age = {
       secretsDir = "/run/user/1000/agenix";
       identityPaths = [ "${config.home.homeDirectory}/.ssh/id_rsa" ];
-      secrets = {
-        geolocation.file = ../../../../../secrets/agenix/users/jackson/monstro/geolocation.age;
-      };
     };
   };
 }

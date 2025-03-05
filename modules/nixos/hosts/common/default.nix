@@ -18,9 +18,11 @@ with lib; {
     }) users;
 
     # load host common options into home-manager
-    home-manager = setHMOpt users {
+    home-manager = setHMOptWithUser users (username: {
       custom.common = config.custom.common;
-    };
+      home.username = mkDefault username;
+      home.homeDirectory = mkDefault "/home/${username}";
+    });
 
     # load common suite
     custom.nixos.suites.common.enable = true; 

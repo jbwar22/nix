@@ -3,7 +3,6 @@
 with lib; {
   config = {
     home.stateVersion = "23.11";
-    home.homeDirectory = "/home/jackson";
 
     custom.home = {
       suites = {
@@ -37,12 +36,10 @@ with lib; {
         colorscheme = import ./colorscheme.nix;
       };
     };
+
     age = {
       secretsDir = "/run/user/1001/agenix";
       identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
-      secrets = {
-        geolocation.file = ../../../../../secrets/agenix/users/jackson/widow/geolocation.age;
-      };
     };
   };
 }

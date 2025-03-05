@@ -9,7 +9,11 @@ with lib; {
 
   config = {
     age = {
-      secrets = loadAgeSecretsFromDir ../../../../secrets/agenix/users/${config.home.username}/common;
+      secrets = (
+        loadAgeSecretsFromDir ../../../../secrets/agenix/users/${config.home.username}/common
+      ) // ( 
+        loadAgeSecretsFromDir ../../../../secrets/agenix/users/${config.home.username}/${config.custom.common.opts.host.hostname}
+      );
     };
   };
 }

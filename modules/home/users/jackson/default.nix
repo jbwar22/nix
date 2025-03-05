@@ -2,8 +2,6 @@
 
 with lib; {
   config = {
-    home.username = "jackson";
-
     custom.home = {
       suites = {
         common.enable = true;
