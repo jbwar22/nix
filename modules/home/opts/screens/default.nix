@@ -26,6 +26,11 @@ let
       type = str;
       description = "absolute position";
     };
+    vrr = mkOption {
+      type = bool;
+      default = false;
+      description = "variable refresh rate";
+    };
     wallpaper.mode = mkOption {
       type = str;
       default = "fill";
@@ -38,7 +43,7 @@ in
     definition = mkOption {
       type = with types; listOf (submodule {
         options = {
-          inherit (sharedOptions) name noserial bar resolution position;
+          inherit (sharedOptions) name noserial bar resolution position vrr;
           wallpaper.mode = sharedOptions.wallpaper.mode;
           wallpaper.file = mkOption {
             type = str;
@@ -53,7 +58,7 @@ in
     config = mkOption {
       type = with types; listOf (submodule {
         options = {
-          inherit (sharedOptions) name noserial bar resolution position;
+          inherit (sharedOptions) name noserial bar resolution position vrr;
           wallpaper.mode = sharedOptions.wallpaper.mode;
           wallpaper.path = mkOption {
             type = lib.types.path;
@@ -68,7 +73,7 @@ in
 
   config = opt {
     config = builtins.map (screen: {
-      inherit (screen) name noserial bar resolution position;
+      inherit (screen) name noserial bar resolution position vrr;
       # might not work for multiple monitors of the same name!
       wallpaper.mode = screen.wallpaper.mode;
       wallpaper.path = if (screen.wallpaper.file == "") then

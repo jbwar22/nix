@@ -97,6 +97,7 @@ in
         output = foldl' (accum: screen: accum // (let
           screen-def = {
             inherit (screen) resolution position;
+            adaptive_sync = mkIf screen.vrr "on";
             bg = "${screen.wallpaper.path} ${screen.wallpaper.mode}";
           };
         in {

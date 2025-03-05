@@ -18,12 +18,14 @@ with lib; {
             bar = "bar1080";
             resolution = "1920x1080@144.001Hz";
             position = "0 0";
+            vrr = true;
             wallpaper.file = "p2up0wv6.png";
           }
           { name = "ASUSTek COMPUTER INC VG27AQL1A S1LMQS102258";
             bar = "bar1440";
             resolution = "2560x1440@170.004Hz";
             position = "1920 0";
+            vrr = true;
             wallpaper.file = "p2up0wv6.png";
           }
           { name = "BNQ BenQ GW2780 V1J07047SL0";
