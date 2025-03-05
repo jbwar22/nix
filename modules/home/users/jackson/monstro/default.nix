@@ -18,7 +18,7 @@ with lib; {
             bar = "bar1080";
             resolution = "1920x1080@144.001Hz";
             position = "0 0";
-            vrr = true;
+            vrr = false;
             wallpaper.file = "p2up0wv6.png";
           }
           { name = "ASUSTek COMPUTER INC VG27AQL1A S1LMQS102258";
