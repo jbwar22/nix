@@ -3,7 +3,7 @@
 with lib;
 let
   inherit (namespace config { nixos.programs.virt-manager = ns; }) cfg opt;
-  admins = getAdmins config.custom.nixos.host.users;
+  admins = getAdmins config.custom.common.opts.host.users;
 in
 {
   options = opt {

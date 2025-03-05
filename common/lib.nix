@@ -93,7 +93,7 @@ lib: with lib; rec {
 
   # check if (all/any) users in a given list's home-manager config matches a predicate
   # example: check if ANY admin has bash enabled
-  # checkHMOptForUsers config (getAdmins config.custom.nixos.host.users) any (cfg: cfg.programs.bash.enable)
+  # checkHMOptForUsers config (getAdmins config.custom.common.opts.host.users) any (cfg: cfg.programs.bash.enable)
   checkHMOptForUsers = config: users: boolListCheck: predicate: boolListCheck (username:
     isUserPredicate config username predicate
   ) (attrNames users);
@@ -101,7 +101,7 @@ lib: with lib; rec {
   # check if (all/any) users on the host's home-manager config matches a predicate
   # example: check if ALL users have bash enabled
   # checkHMOpt config all (cfg: cfg.programs.bash.enable)
-  checkHMOpt = config: boolListCheck: predicate: checkHMOptForUsers config (config.custom.nixos.host.users) boolListCheck predicate;
+  checkHMOpt = config: boolListCheck: predicate: checkHMOptForUsers config (config.custom.common.opts.host.users) boolListCheck predicate;
 
   # mkIf any home-manager user passes predicate, then true
   # example: mk true if any home-manager user has bash enabled
@@ -110,7 +110,7 @@ lib: with lib; rec {
 
   # set home-manager options for a list of users
   # example: enable bash for all users
-  # home-manager = setHMOpt config.custom.nixos.host.users { programs.bash.enable = true; }
+  # home-manager = setHMOpt config.custom.common.opts.host.users { programs.bash.enable = true; }
   setHMOpt = users: value: { users = genAttrs (attrNames users) (_: value); };
 
   # set home-manager options for a list of users only if they match a predicate
@@ -129,12 +129,12 @@ lib: with lib; rec {
   # just creating a common hardware opt that is true on nvidia hosts. Then reference that only if
   # what would have been the predicate is true.
   # original example: enable vim on users who have bash enabled
-  # home-manager = setHMOptPredicate config config.custom.nixos.host.users (cfg: cfg.programs.bash.enable) { programs.vim.enable = true; }
+  # home-manager = setHMOptPredicate config config.custom.common.opts.host.users (cfg: cfg.programs.bash.enable) { programs.vim.enable = true; }
   _setHMOptPredicate = config: users: predicate: value: { users = genAttrs (filter (username:
     isUserPredicate config username predicate
   ) (attrNames users)) (_: value); };
 
-  # users = setUserGroups config.custom.nixos.host.users [ "group" ];
+  # users = setUserGroups config.custom.common.opts.host.users [ "group" ];
   setUserGroups = users: groups: {
     users = mapAttrs (username: user: {
       extraGroups = groups;

@@ -65,7 +65,7 @@
         ./modules/nixos/hosts/common
         ./modules/nixos/hosts/${hostname}
         {
-          custom.nixos.host = host;
+          custom.common.opts.host = host;
           nixpkgs.hostPlatform = host.system;
           nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
           home-manager.useGlobalPkgs = true;

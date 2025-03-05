@@ -3,7 +3,7 @@
 with lib;
 let
   inherit (namespace config { nixos.behavior.nvidia = ns; }) cfg opt;
-  users = config.custom.nixos.host.users;
+  users = config.custom.common.opts.host.users;
 in
 {
   options = opt {

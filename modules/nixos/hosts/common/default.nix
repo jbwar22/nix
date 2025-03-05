@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-with lib; with namespace config { nixos.host = ns; }; {
+with lib; {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.agenix.nixosModules.default
@@ -8,30 +8,17 @@ with lib; with namespace config { nixos.host = ns; }; {
     ../../../common
   ];
 
-  options = opt (mkSubmoduleOption "basic host setup" {
-    hostname = mkStrOption "system hostname";
-    system = mkStrOption "system";
-    os = mkStrOption "os";
-    users = mkOption {
-      description = "users on the system";
-      default = {};
-      type = with types; attrsOf (submodule {
-        options = {
-          admin = mkEnableOption "the user being an admin";
-        };
-      });
-    };
-  });
-
-  config = {
+  config = let
+    users = config.custom.common.opts.host.users;
+  in {
     # create user accounts
     users.users = mapAttrs (username: user: {
       isNormalUser = true;
       extraGroups = mkIf user.admin [ "wheel" ];
-    }) cfg.users;
+    }) users;
 
     # load host common options into home-manager
-    home-manager = setHMOpt cfg.users {
+    home-manager = setHMOpt users {
       custom.common = config.custom.common;
     };
 
