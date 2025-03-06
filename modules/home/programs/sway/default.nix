@@ -60,37 +60,39 @@ in
         });
 
         input = {
-          "1:1:AT_Translated_Set_2_keyboard" = {
+          "type:keyboard" = {
+            repeat_delay = "250";
+            repeat_rate = "50";
             dwt = "disabled";
           };
-          "1739:0:Synaptics_TM3276-022" = {
+          "type:pointer" = {
+            accel_profile = "flat";
+            dwt = "disabled";
+          };
+          "type:touchpad" = {
             accel_profile = "adaptive";
             click_method = "clickfinger";
             tap = "enabled";
             natural_scroll = "enabled";
-            scroll_factor = "0.5";
             dwt = "disabled";
           };
-          "4809:4809:HID_12c9:1002_Mouse" = {
-            accel_profile = "flat";
-          };
-          "9610:39:SINOWEALTH_Wired_Gaming_Mouse" = {
-            accel_profile = "flat";
+          "1:1:AT_Translated_Set_2_keyboard" = {};
+          "4809:4809:HID_12c9:1002_Mouse" = {};
+          "9610:39:SINOWEALTH_Wired_Gaming_Mouse" = {};
+          "1739:0:Synaptics_TM3276-022" = {
+            scroll_factor = "0.5";
           };
           "1133:49291:Logitech_G502_HERO_Gaming_Mouse" = {
             pointer_accel = "-0.5";
             scroll_factor = "0.5";
-            accel_profile = "flat";
           };
           "12375:3:PIXART_VAXEE_Wireless_Mouse" = {
             pointer_accel = "0";
             scroll_factor = "0.7";
-            accel_profile = "flat";
           };
           "12375:2:PIXART_VAXEE_Mouse" = {
             pointer_accel = "0";
             scroll_factor = "0.7";
-            accel_profile = "flat";
           };
         };
 
