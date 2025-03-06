@@ -8,6 +8,7 @@ with lib; {
   ];
 
   config = {
+    home.homeDirectory = mkDefault "/home/${config.home.username}";
     age = {
       secrets = (
         loadAgeSecretsFromDir ../../../../secrets/agenix/users/${config.home.username}/common

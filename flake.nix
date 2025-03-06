@@ -41,18 +41,18 @@
       pkgs = imported-channels.${nixpkgs-main};
       custom-lib = import ./common/lib.nix pkgs.lib;
       lib = pkgs.lib.extend (_: prev: prev // custom-lib);
-      pkgs-with-lib = pkgs // { inherit lib; }; # works for home-manager, not for system
     };
 
     importChannelsForHostname = hostname: rec {
       host = hosts.${hostname} // { inherit hostname; };
-      inherit (importChannelsForSystem host.system) imported-channels pkgs custom-lib lib pkgs-with-lib;
+      inherit (importChannelsForSystem host.system) imported-channels pkgs custom-lib lib;
     };
 
     genHMModules = hostname: username: [
       ./modules/home/users/common
       ./modules/home/users/${username}
       ./modules/home/users/${username}/${hostname}
+      { home.username = mkDefault username; }
     ];
   in rec {
     # nixos-rebuild switch --flake .#HOSTNAME
@@ -79,11 +79,12 @@
 
     # home-manager switch --flake .#HOSTNAME-USERNAME
     homeConfigurations = forAllHostUserPairs (genHostUserPairs hosts) (hostname: username: let
-      inherit (importChannelsForHostname hostname) pkgs-with-lib host imported-channels pkgs lib;
+      inherit (importChannelsForHostname hostname) host imported-channels pkgs lib;
+      home-manager-lib = lib.extend (_: _: inputs.home-manager.lib);
     in
       inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgs-with-lib;
-        extraSpecialArgs = { inherit inputs; };
+        inherit pkgs;
+        extraSpecialArgs = { inherit inputs; lib = home-manager-lib; };
         modules = (genHMModules hostname username) ++ [(if isNixosHost host then {
           nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
           custom.common = nixosConfigurations.${hostname}.config.custom.common;
@@ -106,8 +107,7 @@
 
     # TODO run nixvim config from here
     apps."x86_64-linux" = let
-      inherit (importChannelsForSystem "x86_64-linux") pkgs-with-lib host;
-      pkgs = pkgs-with-lib;
+      inherit (importChannelsForSystem "x86_64-linux") pkgs;
     in {
       monstro-memory = {
         type = "app";
