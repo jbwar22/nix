@@ -24,7 +24,7 @@ with lib; {
             bar = "bar1440";
             resolution = "2560x1440@170.004Hz";
             position = "1920 0";
-            vrr = true;
+            vrr = false;
             wallpaper.file = "p2up0wv6.png";
           }
           { name = "BNQ BenQ GW2780 V1J07047SL0";
