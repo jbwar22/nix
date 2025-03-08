@@ -61,8 +61,8 @@ in
 
         input = {
           "type:keyboard" = {
-            repeat_delay = "250";
-            repeat_rate = "50";
+            repeat_delay = "350";
+            repeat_rate = "40";
             dwt = "disabled";
           };
           "type:pointer" = {
