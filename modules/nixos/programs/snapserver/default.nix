@@ -1,12 +1,8 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.snapserver = ns; }) cfg opt;
-
+with lib; with namespace config { nixos.programs.snapserver = ns; }; let
   tcp_listen_port = 4953;
-in
-{
+in {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
     

@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.mpv = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.mpv = ns; }; {
   options = opt {
     enable = mkEnableOption "mpv";
   };

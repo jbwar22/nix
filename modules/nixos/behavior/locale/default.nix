@@ -1,10 +1,6 @@
 { config, lib, ...}:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.locale = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.locale = ns; }; {
   options = opt {
     enable = mkEnableOption "Whether to set the locale to default (english)";
   };

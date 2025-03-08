@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.tofi = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.tofi = ns; }; {
   options = opt {
     enable = mkEnableOption "tofi";
   };

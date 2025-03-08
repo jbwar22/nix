@@ -1,13 +1,10 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.grub-boot = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.grub-boot = ns; }; {
   options = opt {
     enable = mkEnableOption "Whether to enable grub as the bootloader";
   };
+
   config = lib.mkIf cfg.enable {
     boot.loader = {
       grub = {

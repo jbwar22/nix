@@ -1,10 +1,6 @@
 { inputs, config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.firefox = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.firefox = ns; }; {
   options = opt {
     enable = mkEnableOption "firefox";
     usePackage = with types; mkOption {

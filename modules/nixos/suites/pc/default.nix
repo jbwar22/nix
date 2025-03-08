@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.suites.pc = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.suites.pc = ns; }; {
   options = opt {
     enable = mkEnableOption "suite of nixos modules for pc hosts";
   };

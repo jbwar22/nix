@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.suites.common = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.suites.common = ns; }; {
   options = opt {
     enable = mkEnableOption "the basic suite of nixos modules for all hosts";
   };

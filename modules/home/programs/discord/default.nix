@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.discord = ns; }) cfg opt;
-
+with lib; with namespace config { home.programs.discord = ns; }; let
   # github:sersorrel/sys
   krisp-patcher = pkgs.writers.writePython3Bin "krisp-patcher" {
     libraries = with pkgs.python3Packages; [ capstone pyelftools ];
@@ -13,8 +10,7 @@ let
       "F405" # name may be undefined, or defined from star imports: module
     ];
   } (builtins.readFile ./krisp-patcher.py);
-in
-{
+in {
   options = opt {
     enable = mkEnableOption "enable discord";
   };

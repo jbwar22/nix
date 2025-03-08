@@ -1,11 +1,8 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.docker = ns; }) cfg opt;
+with lib; with namespace config { nixos.programs.docker = ns; }; let
   admins = getAdmins config.custom.common.opts.host.users;
-in
-{
+in {
   options = opt {
     enable = mkEnableOption "docker";
   };

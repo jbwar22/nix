@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.suites.hardware.lenovo-t480 = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.suites.hardware.lenovo-t480 = ns; }; {
   options = opt {
     enable = mkEnableOption "suite of options specific to lenovo t480";
   };

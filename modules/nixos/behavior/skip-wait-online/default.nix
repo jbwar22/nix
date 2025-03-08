@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.skip-wait-online = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.skip-wait-online = ns; }; {
   # enable if having issues with network manager wait online
   options = opt {
     enable = mkEnableOption "Whether to skip waiting for network online";

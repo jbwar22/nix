@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.bash = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.bash = ns; }; {
   options = opt {
     enable = mkEnableOption "bash";
   };

@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.appimage = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.appimage = ns; }; {
   options = opt {
     enable = mkEnableOption "options to better run appimages";
   };

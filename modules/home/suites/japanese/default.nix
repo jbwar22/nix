@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.suites.japanese = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.suites.japanese = ns; }; {
   options = opt {
     enable = mkEnableOption "options if using japanese input";
   };

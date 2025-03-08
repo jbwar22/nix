@@ -1,10 +1,6 @@
 { pkgs, config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.behavior.pipewire-sinks = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.behavior.pipewire-sinks = ns; }; {
   options = opt {
     enable = mkEnableOption "complex pipewire setup";
   };

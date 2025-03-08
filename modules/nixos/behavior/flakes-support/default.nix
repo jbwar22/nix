@@ -1,10 +1,6 @@
 { config, lib, ...}:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.flakes-support = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.flakes-support = ns; }; {
   options = opt {
     enable = mkEnableOption "Whether to enable flakes support";
   };

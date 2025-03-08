@@ -1,12 +1,8 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
+with lib; with namespace config { home.programs.waybar = ns; }; let
   colorscheme = config.custom.home.opts.colorscheme;
-
-  inherit (namespace config { home.programs.waybar = ns; }) cfg opt;
-in
-{
+in {
   options = opt {
     enable = mkEnableOption "waybar";
     memoryWidth = mkOption {

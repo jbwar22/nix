@@ -1,9 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.opts.screens = ns; }) cfg opt;
-
+with lib; with namespace config { home.opts.screens = ns; }; let
   sharedOptions = with types; {
     name = mkOption {
       type = str;
@@ -37,8 +34,7 @@ let
       description = "wallpaper mode";
     };
   };
-in
-{
+in {
   options = opt {
     definition = mkOption {
       type = with types; listOf (submodule {

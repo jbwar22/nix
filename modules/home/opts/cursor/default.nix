@@ -1,9 +1,6 @@
 { pkgs, config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.opts.cursor = ns; }) cfg opt;
-
+with lib; with namespace config { home.opts.cursor = ns; }; let
   cursors = {
     "macos" = { # the only one that's small enough at size 24?
       name = "macOS";
@@ -26,8 +23,7 @@ let
       size = 24;
     };
   };
-in
-{
+in {
   options = with types; opt {
     definition = mkOption {
       type = str;

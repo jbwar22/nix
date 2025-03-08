@@ -1,12 +1,8 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.dunst = ns; }) cfg opt;
-
+with lib; with namespace config { home.programs.dunst = ns; }; let
   colorscheme = config.custom.home.opts.colorscheme;
-in
-{
+in {
   options = opt {
     enable = mkEnableOption "dunst notification manager";
   };

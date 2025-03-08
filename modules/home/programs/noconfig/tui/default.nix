@@ -1,10 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.noconfig.tui = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.noconfig.tui = ns; }; {
   options = opt {
     enable = mkEnableOption "tui programs with no additional config";
   };

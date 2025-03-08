@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.suites.common = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.suites.common = ns; }; {
   options = opt {
     enable = mkEnableOption "the basic suite of home modules (for all hosts)";
   };

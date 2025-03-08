@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.home.fcitx5 = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.programs.home.fcitx5 = ns; }; {
   options = opt {
     enable = mkEnableOption "required system options for home fcitx5";
   };

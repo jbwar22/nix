@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.suites.hardware.gigabyte-b550i = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.suites.hardware.gigabyte-b550i = ns; }; {
   options = opt {
     enable = mkEnableOption "suite of options specific to gigabyte b550i aorus pro ax";
   };

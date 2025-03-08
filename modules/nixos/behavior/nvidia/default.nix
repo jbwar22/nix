@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.nvidia = ns; }) cfg opt;
+with lib; with namespace config { nixos.behavior.nvidia = ns; }; let
   users = config.custom.common.opts.host.users;
-in
-{
+in {
   options = opt {
     enable = mkEnableOption "options required for nvidia hardware";
   };

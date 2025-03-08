@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.virt-manager = ns; }) cfg opt;
-  admins = getAdmins config.custom.common.opts.host.users;
-in
+with lib; with namespace config { nixos.programs.virt-manager = ns; }; in
 {
   options = opt {
     enable = mkEnableOption "docker";

@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.hardware.cpu.intel = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.hardware.cpu.intel = ns; }; {
   options = opt {
     enable = mkEnableOption "hardware options for intel cpus";
   };

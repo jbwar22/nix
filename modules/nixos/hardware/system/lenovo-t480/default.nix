@@ -1,10 +1,6 @@
 { inputs, config, lib, modulesPath, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.hardware.system.lenovo-t480 = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.hardware.system.lenovo-t480 = ns; }; {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];

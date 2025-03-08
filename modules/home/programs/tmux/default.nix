@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.tmux = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.tmux = ns; }; {
   options = opt {
     enable = mkEnableOption "tmux";
   };

@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.behavior.environment = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.behavior.environment = ns; }; {
   options = opt {
     enable = mkEnableOption "basic environment";
   };

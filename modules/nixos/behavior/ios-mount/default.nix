@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.ios-mount = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.ios-mount = ns; }; {
   options = opt {
     enable = mkEnableOption "mounting ios devices";
   };

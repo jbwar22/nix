@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.printing = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.printing = ns; }; {
   options = opt {
     enable = mkEnableOption "Whether to enable printing support";
   };

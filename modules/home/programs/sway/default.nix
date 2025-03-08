@@ -7,8 +7,7 @@ with lib; with namespace config { home.programs.sway = ns; }; let
   scripts = (import ./scripts) pkgs lib config;
 
   geolocation = ageOrDefault config "geolocation" "0.00:0.00";
-in
-{
+in {
   options = opt {
     enable = mkEnableOption "sway wm";
     blueLightFilter = with types; mkOption {

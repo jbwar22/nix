@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.systemd-boot = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.systemd-boot = ns; }; {
   options = opt {
     enable = mkEnableOption "systemd-boot bootloader";
   };

@@ -1,10 +1,6 @@
 { config, lib, pkgs, host, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.services.shairport-sync = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.services.shairport-sync = ns; }; {
   options = opt {
     enable = mkEnableOption "sink-tcp";
   };

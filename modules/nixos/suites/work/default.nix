@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.suites.work = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.suites.work = ns; }; {
   options = opt {
     enable = mkEnableOption "suite of options specific to work";
   };

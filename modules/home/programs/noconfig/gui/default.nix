@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.noconfig.gui = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.noconfig.gui = ns; }; {
   options = opt {
     enable = mkEnableOption "gui programs with no additional config";
   };

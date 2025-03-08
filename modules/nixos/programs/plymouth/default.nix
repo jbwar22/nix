@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.plymouth = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.programs.plymouth = ns; }; {
   options = with types; opt {
     enable = mkEnableOption "plymouth splash screen on boot";
     theme = mkOption {

@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.bluetooth = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.bluetooth = ns; }; {
   options = opt {
     enable = mkEnableOption "bluetooth";
   };

@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.behavior.xdg = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.behavior.xdg = ns; }; {
   options = opt {
     enable = mkEnableOption "xdg options";
   };

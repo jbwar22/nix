@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.opts.wallpaper = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.opts.wallpaper = ns; }; {
   options = opt {
     file = mkOption {
       type = with types; str;

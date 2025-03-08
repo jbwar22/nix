@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.suites.gaming = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.suites.gaming = ns; }; {
   options = opt {
     enable = mkEnableOption "all extra options for use as a gaming computer";
   };

@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { common.opts.hardware = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { common.opts.hardware = ns; }; {
   options = with types; opt {
     batteries = mkOption {
       description = "definition for each battery";

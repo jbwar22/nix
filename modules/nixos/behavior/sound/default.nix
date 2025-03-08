@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.sound = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.sound = ns; }; {
   options = opt {
     enable = mkEnableOption "sound output via pipewire";
     minQuantum = mkOption {

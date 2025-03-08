@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.time = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.time = ns; }; {
   options = opt {
     enable = mkEnableOption "default time settings";
   };

@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.services.locker = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.services.locker = ns; }; {
 
   options = opt {
     enable = mkEnableOption "locker";

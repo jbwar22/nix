@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.behavior.cursor-settings = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.behavior.cursor-settings = ns; }; {
   options = opt {
     enable = mkEnableOption "stuff to actually set when you set the cursor";
   };

@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.suites.sway = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.suites.sway = ns; }; {
   options = opt {
     enable = mkEnableOption "sway wm & related programs";
   };

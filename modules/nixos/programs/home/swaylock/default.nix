@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.home.swaylock = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.programs.home.swaylock = ns; }; {
   options = opt {
     enable = mkEnableOption "required system options for home swaylock";
   };

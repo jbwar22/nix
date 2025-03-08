@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.udiskie = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.programs.udiskie = ns; }; {
   options = opt {
     enable = mkEnableOption "auto mount flash drives";
   };

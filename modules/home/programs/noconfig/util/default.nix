@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.programs.noconfig.util = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.programs.noconfig.util = ns; }; {
   options = opt {
     enable = mkEnableOption "util programs with no additional config";
   };

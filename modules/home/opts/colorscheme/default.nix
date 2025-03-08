@@ -1,14 +1,11 @@
 { config, lib, ... }:
 
-with lib;
-let
+with lib; with namespace config { home.opts.colorscheme = ns; }; let
   mkColor = mkOption {
     type = with types; str;
     default = "#00FF00";
   };
-  inherit (namespace config { home.opts.colorscheme = ns; }) opt;
-in
-{
+in {
   options = with types; opt {
     terminal = mkOption {
       description = "terminal colors";

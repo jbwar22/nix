@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.reactive.home = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.reactive.home = ns; }; {
   options = opt {
     enable = mkEnableOption "options reactive based on home-manager options for all hosts";
   };

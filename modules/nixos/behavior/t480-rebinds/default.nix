@@ -1,10 +1,6 @@
 { config, lib, ...}:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.t480-rebinds = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.t480-rebinds = ns; }; {
   options = opt {
     enable = mkEnableOption "rebound keybinds for broken t480 keyboard";
   };

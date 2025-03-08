@@ -1,10 +1,6 @@
 { config, lib, ...}:
 
-with lib;
-let
-  inherit (namespace config { nixos.behavior.t480-power = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.behavior.t480-power = ns; }; {
   options = opt {
     enable = mkEnableOption "power management opitons for lenovo t480";
   };

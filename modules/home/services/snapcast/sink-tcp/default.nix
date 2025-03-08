@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-let
-  inherit (namespace config { home.services.snapcast.sink-tcp = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { home.services.snapcast.sink-tcp = ns; }; {
   options = opt {
     enable = mkEnableOption "sink-tcp";
   };

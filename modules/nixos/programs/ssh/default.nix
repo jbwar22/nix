@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
-with lib;
-let
-  inherit (namespace config { nixos.programs.ssh = ns; }) cfg opt;
-in
-{
+with lib; with namespace config { nixos.programs.ssh = ns; }; {
   options = opt {
     enable = mkEnableOption "ssh server";
   };
