@@ -27,6 +27,7 @@ in
         blueman.enable = true;
         direnv.enable = true;
         discord.enable = true;
+        fastfetch.enable = true;
         firefox.enable = true;
         kitty.enable = true;
         librewolf.enable = true;
