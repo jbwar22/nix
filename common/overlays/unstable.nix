@@ -9,6 +9,4 @@ channels: final: prev: {
   swaylock        # match sway
   tofi            # .desktop entry bug
   yt-dlp;         # features
-
-  wineWowPackages.waylandFull = channels.unstable.wineWowPackages.waylandFull;   # compatibility
 }

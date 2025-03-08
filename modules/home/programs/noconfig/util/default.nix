@@ -31,7 +31,6 @@ in
       unzip
       wget
       which
-      wineWowPackages.waylandFull
       wl-clipboard
       yt-dlp
       zip
