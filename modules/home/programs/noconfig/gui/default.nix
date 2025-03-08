@@ -45,6 +45,10 @@ in
         name = "Houdoku";
         exec = "${houdoku}/bin/houdoku";
       };
+      gimp-beta = {
+        name = "Gimp Beta";
+        exec = "${gimp-beta}/bin/gimp-beta";
+      };
     };
   };
 }
