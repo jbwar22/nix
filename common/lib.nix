@@ -154,6 +154,11 @@ lib: with lib; rec {
     type = types.str;
   };
 
+  mkEnumOption = description: l: mkOption {
+    inherit description;
+    type = types.enum l;
+  };
+
   mkSubmoduleOption = description: options: mkOption {
     inherit description;
     type = (types.submodule {

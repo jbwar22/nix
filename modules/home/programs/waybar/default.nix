@@ -185,6 +185,12 @@ in {
             extras="''${extras}V"
           fi
 
+          # TODO conditional
+          if [[ "$(cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "night" ]] || \
+             [[ "$(cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "transition" ]]; then
+            extras="''${extras}G"
+          fi
+
           if [ "$extras" != "[" ]; then
             echo "''${extras}]"
           else
