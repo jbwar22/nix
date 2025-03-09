@@ -147,7 +147,9 @@ in {
 
 
           "${modifier}+Shift+s" = "exec ${scripts.screenshot}";
-          "${modifier}+Shift+t" = "exec ${scripts.screencopy}";
+          "${modifier}+Shift+t" = "exec ${scripts.screenshot} -c";
+          "${modifier}+${alt}+Shift+s" = "exec ${scripts.screenshot} -f";
+          "${modifier}+${alt}+Shift+t" = "exec ${scripts.screenshot} -cf";
 
       "${modifier}+greater" = "move workspace to output right";
       "${modifier}+less" = "move workspace to output left";
