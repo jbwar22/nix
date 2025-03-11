@@ -21,7 +21,7 @@
     };
   };
 
-  outputs = inputs@{ ... }: let
+  outputs = inputs@{ self, ... }: let
     channels = {
       stable = inputs.nixpkgs-stable;
       unstable = inputs.nixpkgs-unstable;
@@ -60,7 +60,7 @@
       inherit (importChannelsForHostname hostname) host imported-channels pkgs lib;
     in nixosSystem {
       inherit pkgs;
-      specialArgs = { inherit inputs lib; };
+      specialArgs = { inherit inputs lib; outputs = self; };
       modules = [
         ./modules/nixos/hosts/common
         ./modules/nixos/hosts/${hostname}
@@ -69,7 +69,7 @@
           nixpkgs.hostPlatform = host.system;
           nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
           home-manager.useGlobalPkgs = true;
-          home-manager.extraSpecialArgs = { inherit inputs; }; # TODO remove?
+          home-manager.extraSpecialArgs = { inherit inputs; outputs = self; };
           home-manager.users = genAttrs (attrNames host.users) (username: {
             imports = genHMModules hostname username;
           });

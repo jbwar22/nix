@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, outputs, ... }:
 
 with lib; with namespace config { home.programs.noconfig.tui = ns; }; {
   options = opt {
@@ -10,7 +10,7 @@ with lib; with namespace config { home.programs.noconfig.tui = ns; }; {
       htop
       pulsemixer
       vim
-      nixvim-custom
+      outputs.packages.${pkgs.system}.nixvim
       inputs.home-manager.packages.${pkgs.system}.default
       inputs.agenix.packages.${pkgs.system}.default
     ];
