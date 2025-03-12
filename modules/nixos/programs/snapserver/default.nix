@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { nixos.programs.snapserver = ns; }; let
+with lib; with ns config ./.; let
   tcp_listen_port = 4953;
 in {
   options = opt {

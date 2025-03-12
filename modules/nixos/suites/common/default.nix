@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.suites.common = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "the basic suite of nixos modules for all hosts";
   };

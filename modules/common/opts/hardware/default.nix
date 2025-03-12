@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { common.opts.hardware = ns; }; {
+with lib; with ns config ./.; {
   options = with types; opt {
     batteries = mkOption {
       description = "definition for each battery";

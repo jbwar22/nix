@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.programs.noconfig.gaming = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "additional programs for use for gaming";
   };

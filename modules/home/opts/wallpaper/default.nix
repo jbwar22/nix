@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.opts.wallpaper = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     file = mkOption {
       type = with types; str;

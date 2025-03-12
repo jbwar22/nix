@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { common.opts.host = ns; }; {
+with lib; with ns config ./.; {
   options = opt (mkSubmoduleOption "basic host setup" {
     hostname = mkStrOption "system hostname";
     system = mkStrOption "system";

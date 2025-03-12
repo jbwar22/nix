@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.programs.noconfig.util = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "util programs with no additional config";
   };

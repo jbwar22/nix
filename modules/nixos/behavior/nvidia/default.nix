@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { nixos.behavior.nvidia = ns; }; let
+with lib; with ns config ./.; let
   users = config.custom.common.opts.host.users;
 in {
   options = opt {

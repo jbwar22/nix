@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.behavior.cursor-settings = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "stuff to actually set when you set the cursor";
   };

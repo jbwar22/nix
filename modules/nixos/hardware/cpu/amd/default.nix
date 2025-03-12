@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.hardware.cpu.amd = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "hardware options for amd cpus";
   };

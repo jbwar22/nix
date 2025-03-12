@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { nixos.behavior.ios-mount = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "mounting ios devices";
   };

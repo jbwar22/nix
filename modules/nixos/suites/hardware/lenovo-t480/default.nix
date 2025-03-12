@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.suites.hardware.lenovo-t480 = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "suite of options specific to lenovo t480";
   };

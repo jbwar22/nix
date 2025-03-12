@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.behavior.tmpfiles = ns; }; {
+with lib; with ns config ./.; {
   options = opt (mkOption {
     description = "tmp file definitions";
     type = with types; attrsOf (submodule {

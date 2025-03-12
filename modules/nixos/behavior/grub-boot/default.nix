@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.behavior.grub-boot = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "Whether to enable grub as the bootloader";
   };

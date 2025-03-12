@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.suites.gaming = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "all extra options for use as a gaming computer";
   };

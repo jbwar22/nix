@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.programs.waybar = ns; }; let
+with lib; with ns config ./.; let
   colorscheme = config.custom.home.opts.colorscheme;
 in {
   options = opt {

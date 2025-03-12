@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.suites.hardware.gigabyte-b550i = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "suite of options specific to gigabyte b550i aorus pro ax";
   };

@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.suites.common = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "the basic suite of home modules (for all hosts)";
   };

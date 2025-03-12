@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.behavior.xdg = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "xdg options";
   };

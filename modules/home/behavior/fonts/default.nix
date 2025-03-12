@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 
-with lib; with namespace config { home.behavior.fonts = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "the basic suite of home modules (for all hosts)";
   };

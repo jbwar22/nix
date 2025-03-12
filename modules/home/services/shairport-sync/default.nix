@@ -1,6 +1,6 @@
 { config, lib, pkgs, host, ... }:
 
-with lib; with namespace config { home.services.shairport-sync = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "sink-tcp";
   };

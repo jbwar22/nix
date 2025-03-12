@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.behavior.printing = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "Whether to enable printing support";
   };

@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { nixos.programs.plymouth = ns; }; {
+with lib; with ns config ./.; {
   options = with types; opt {
     enable = mkEnableOption "plymouth splash screen on boot";
     theme = mkOption {

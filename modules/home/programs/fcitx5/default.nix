@@ -1,6 +1,6 @@
 { inputs, pkgs, config, lib, ... }:
 
-with lib; with namespace config { home.programs.fcitx5 = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "fcitx5 (japanese ime)";
     basic = mkEnableOption "don't set configuration";

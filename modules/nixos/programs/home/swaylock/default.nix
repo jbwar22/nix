@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.programs.home.swaylock = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "required system options for home swaylock";
   };

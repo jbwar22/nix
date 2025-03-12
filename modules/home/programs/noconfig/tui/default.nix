@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, outputs, ... }:
 
-with lib; with namespace config { home.programs.noconfig.tui = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "tui programs with no additional config";
   };

@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.programs.direnv = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "enable direnv";
   };

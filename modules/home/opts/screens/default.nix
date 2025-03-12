@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.opts.screens = ns; }; let
+with lib; with ns config ./.; let
   sharedOptions = with types; {
     name = mkOption {
       type = str;

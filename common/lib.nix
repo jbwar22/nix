@@ -46,15 +46,30 @@ lib: with lib; rec {
 
   # namespace helper
 
-  ns = enums.namespace.namespace-marker;
+  getCustomModulePath = modulePath: pipe modulePath [
+    (path.removePrefix ../.)
+    (splitString "/")
+    tail
+    tail
+    (l: [ "custom" ] ++ l)
+  ];
+
+  nsref = enums.namespace.namespace-marker;
 
   # [ "a" ] { b.c.d = ns; } -> [ "a", "b", "c", "d" ]
   getPathFromAttr = currpath: attr: if attr == ns then currpath else let
     next = findFirst (_: true) null (attrNames attr);
   in getPathFromAttr (currpath ++ [ next ]) attr.${next};
 
-  namespace = config: namespace: let
+  manualns = config: namespace: let
     customNamespaceList = getPathFromAttr [ "custom" ] namespace;
+  in {
+    cfg = getAttrFromPath customNamespaceList config;
+    opt = setAttrByPath customNamespaceList;
+  };
+
+  ns = config: modulePath: let
+    customNamespaceList = getCustomModulePath modulePath;
   in {
     cfg = getAttrFromPath customNamespaceList config;
     opt = setAttrByPath customNamespaceList;

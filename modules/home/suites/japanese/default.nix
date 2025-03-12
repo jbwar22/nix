@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.suites.japanese = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "options if using japanese input";
   };

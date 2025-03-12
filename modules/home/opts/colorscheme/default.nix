@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.opts.colorscheme = ns; }; let
+with lib; with ns config ./.; let
   mkColor = mkOption {
     type = with types; str;
     default = "#00FF00";

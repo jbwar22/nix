@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.opts.aliases = ns; }; {
+with lib; with ns config ./.; {
   options = opt (mkOption {
     type = with types; attrsOf str;
     description = "aliases";

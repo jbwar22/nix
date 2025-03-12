@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.behavior.systemd-boot = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "systemd-boot bootloader";
   };

@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.opts.secrets = ns; }; {
+with lib; with ns config ./.; {
   options = with types; opt {
     timeZone = mkOption {
       description = "Timezone for the computer";

@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.hardware.cpu.intel = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "hardware options for intel cpus";
   };

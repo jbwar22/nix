@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.programs.ssh = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "ssh server";
   };

@@ -1,6 +1,6 @@
 { inputs, config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.programs.firefox = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "firefox";
     usePackage = with types; mkOption {

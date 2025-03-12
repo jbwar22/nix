@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.behavior.environment = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "basic environment";
   };

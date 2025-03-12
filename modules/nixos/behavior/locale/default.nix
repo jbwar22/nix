@@ -1,6 +1,6 @@
 { config, lib, ...}:
 
-with lib; with namespace config { nixos.behavior.locale = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "Whether to set the locale to default (english)";
   };

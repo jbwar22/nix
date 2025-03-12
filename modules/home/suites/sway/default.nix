@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { home.suites.sway = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "sway wm & related programs";
   };

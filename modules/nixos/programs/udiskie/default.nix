@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.programs.udiskie = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "auto mount flash drives";
   };

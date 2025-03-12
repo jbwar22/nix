@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.programs.discord = ns; }; let
+with lib; with ns config ./.; let
   # github:sersorrel/sys
   krisp-patcher = pkgs.writers.writePython3Bin "krisp-patcher" {
     libraries = with pkgs.python3Packages; [ capstone pyelftools ];

@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.services.snapcast.sink-fifo = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "sink-fifo";
   };

@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.reactive.common = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "options reactive based on common options for all hosts";
   };

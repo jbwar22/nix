@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.programs.tailscale = ns; }; let
+with lib; with ns config ./.; let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
   options = opt {

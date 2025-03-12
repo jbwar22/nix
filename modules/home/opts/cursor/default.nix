@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 
-with lib; with namespace config { home.opts.cursor = ns; }; let
+with lib; with ns config ./.; let
   cursors = {
     "macos" = { # the only one that's small enough at size 24?
       name = "macOS";

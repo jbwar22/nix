@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { nixos.programs.virt-manager = ns; }; let
+with lib; with ns config ./.; let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
   options = opt {

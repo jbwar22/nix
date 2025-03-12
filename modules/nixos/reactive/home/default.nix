@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-with lib; with namespace config { nixos.reactive.home = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "options reactive based on home-manager options for all hosts";
   };

@@ -1,6 +1,6 @@
 { config, lib, ...}:
 
-with lib; with namespace config { nixos.behavior.t480-power = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "power management opitons for lenovo t480";
   };

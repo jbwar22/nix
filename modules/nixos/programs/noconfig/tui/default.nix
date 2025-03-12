@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { nixos.programs.noconfig.tui = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "basic tui programs available in root shell";
   };

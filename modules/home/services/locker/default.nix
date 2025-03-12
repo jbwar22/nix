@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.services.locker = ns; }; {
-
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "locker";
   };

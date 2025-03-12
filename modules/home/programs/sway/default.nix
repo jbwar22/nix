@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { home.programs.sway = ns; }; let
+with lib; with ns config ./.; let
   colorscheme = config.custom.home.opts.colorscheme;
   waybar = config.custom.home.programs.waybar;
   swaylock = config.custom.home.programs.swaylock;

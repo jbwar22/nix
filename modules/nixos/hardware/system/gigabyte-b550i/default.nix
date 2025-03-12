@@ -1,6 +1,6 @@
 { inputs, config, lib, modulesPath, ... }:
 
-with lib; with namespace config { nixos.hardware.system.gigabyte-b550i = ns; }; {
+with lib; with ns config ./.; {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.nixos-hardware.nixosModules.gigabyte-b550

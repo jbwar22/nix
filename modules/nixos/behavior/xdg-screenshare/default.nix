@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with namespace config { nixos.behavior.xdg-screenshare = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "xdg screenshare";
   };

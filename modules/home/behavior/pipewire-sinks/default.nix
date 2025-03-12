@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 
-with lib; with namespace config { home.behavior.pipewire-sinks = ns; }; {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "complex pipewire setup";
   };
