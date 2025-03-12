@@ -25,6 +25,7 @@ with lib; with ns config ./.; {
         discord.enable = true;
         fastfetch.enable = true;
         firefox.enable = true;
+        gpg-agent.enable = true;
         kitty.enable = true;
         librewolf.enable = true;
         mpv.enable = true;
