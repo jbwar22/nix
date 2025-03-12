@@ -88,7 +88,7 @@
     in
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit inputs; lib = home-manager-lib; };
+        extraSpecialArgs = { inherit inputs; lib = home-manager-lib; outputs = self; };
         modules = (genHMModules hostname username) ++ [(if isNixosHost host then {
           nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
           custom.common = nixosConfigurations.${hostname}.config.custom.common;
