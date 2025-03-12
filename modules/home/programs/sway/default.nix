@@ -145,27 +145,27 @@ in {
           "XF86Favorites" = mkIf swaylock.enable "exec ${pkgs.swaylock}/bin/swaylock & systemctl suspend";
           "${modifier}+Shift+delete" = mkIf swaylock.enable "exec ${pkgs.swaylock}/bin/swaylock";
 
-
+          # Screenshot
           "${modifier}+Shift+s" = "exec ${scripts.screenshot}";
           "${modifier}+Shift+t" = "exec ${scripts.screenshot} -c";
           "${modifier}+${alt}+Shift+s" = "exec ${scripts.screenshot} -f";
           "${modifier}+${alt}+Shift+t" = "exec ${scripts.screenshot} -cf";
 
-      "${modifier}+greater" = "move workspace to output right";
-      "${modifier}+less" = "move workspace to output left";
-      "${modifier}+${alt}+greater" = "move workspace to output up";
-      "${modifier}+${alt}+less" = "move workspace to output down";
+          # Workspace output moving
+          "${modifier}+greater" = "move workspace to output right";
+          "${modifier}+less" = "move workspace to output left";
+          "${modifier}+${alt}+greater" = "move workspace to output up";
+          "${modifier}+${alt}+less" = "move workspace to output down";
 
-          # TODO gesture bindings
-          # TODO bookmarks
+          # Shortcut
+          "${modifier}+s" = null;
 
-          # Additional basic
-          # TODO floating terminal
+          # Remap defaults
+          "${modifier}+${alt}+space" = "focus mode_toggle";
+          "${modifier}+${alt}+s" = "layout stacking";
 
-          # Override
-           "${modifier}+${alt}+space" = "focus mode_toggle";
-           "${modifier}+space" = null;
-          
+          # Disable defaults
+          "${modifier}+space" = null;
         };
         bars = [{
           "command" = mkIf waybar.enable "${pkgs.waybar}/bin/waybar";
