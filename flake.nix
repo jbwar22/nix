@@ -19,6 +19,10 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
       inputs.home-manager.follows = "home-manager";
     };
+    clonck = {
+      url = "github:jbwar22/clonck";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
   };
 
   outputs = inputs@{ self, ... }: let

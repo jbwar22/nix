@@ -25,6 +25,26 @@
         "type": "github"
       }
     },
+    "clonck": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1741809950,
+        "narHash": "sha256-teCoumg/vQeSscP8sdpn49Ps2+HuG39g0B7cJYazKA4=",
+        "owner": "jbwar22",
+        "repo": "clonck",
+        "rev": "2507d485544612b8860820aa731fc6b06b1f99b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jbwar22",
+        "repo": "clonck",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -288,6 +308,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "clonck": "clonck",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-stable": "nixpkgs-stable",

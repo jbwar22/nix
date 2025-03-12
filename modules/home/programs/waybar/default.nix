@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib; with ns config ./.; let
   colorscheme = config.custom.home.opts.colorscheme;
@@ -14,7 +14,7 @@ in {
 
   config = lib.mkIf cfg.enable (let
 
-    clonck = pkgs.callPackage ../../../../packages/clonck.nix {};
+    clonck = inputs.clonck.packages.${pkgs.system}.clonck;
 
     progress = import ./progress-bars.nix;
 
