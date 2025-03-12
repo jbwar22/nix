@@ -66,7 +66,7 @@ in {
       config = rec {
         modifier = "Mod4";
         terminal = "${pkgs.kitty}/bin/kitty";
-        menu = "${scripts.menu} | xargs ${pkgs.sway}/bin/swaymsg exec --";
+        menu = "${scripts.menu} -d | xargs ${pkgs.sway}/bin/swaymsg exec --";
         seat = (let 
           cursorTheme = config.custom.home.opts.cursor.theme;
         in {

@@ -15,7 +15,7 @@ pkgs: lib: config: let
   };
 
   runline = (args:
-    "${pkgs.tofi}/bin/tofi-drun --output=$output_output " + (builtins.concatStringsSep " " (map (attr:
+    "$tofi --output=$output_output " + (builtins.concatStringsSep " " (map (attr:
       "--${attr.name}=${toString attr.value}"
     ) (lib.attrsToList args))
   ));
@@ -29,6 +29,19 @@ pkgs: lib: config: let
   '') config.custom.home.opts.screens.config);
 
 in pkgs.writeShellScript "sway-menu" ''
+  tofi="${pkgs.tofi}/bin/tofi"
+  while getopts ":d" opt; do
+    case $opt in
+      d)
+        tofi="${pkgs.tofi}/bin/tofi-drun"
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 1
+        ;;
+    esac
+  done
+
   outputs=$(${pkgs.sway}/bin/swaymsg -t get_outputs)
   output_output=$( \
     echo $outputs | ${pkgs.jq}/bin/jq -r '.[] | select(.focused==true).name' \
