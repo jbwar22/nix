@@ -46,21 +46,43 @@ lib: with lib; rec {
 
   # namespace helper
 
-  getCustomModulePath = modulePath: pipe modulePath [
-    (path.removePrefix ../.)
-    (splitString "/")
-    tail
-    tail
-    (l: [ "custom" ] ++ l)
-  ];
+  # generate namespace helpers given config and a path, from which the namespace will be determined
+  # example: (in which ./. refers to flakeRoot/modules/home/programs/example)
+  # x = ns config ./.;
+  # x = {
+  #   cfg = config.custom.home.programs.example;
+  #   opt = (val: { custom.home.programs.example = val; });
+  # }
+  # (code annotated with example)
+  ns = config: modulePath: let
+    modulesRoot = ../modules;
+    customNamespaceList = pipe modulePath [   # flakeRoot/modules/home/programs/example
+      (path.removePrefix modulesRoot)         # "./home/programs/example"
+      (splitString "/")                       # [ "." "home" "programs" "example" ]
+      tail                                    # [ "home" "programs" "example" ]
+      (l: [ "custom" ] ++ l)                  # [ "custom" "home" "programs" "example" ]
+    ];
+  in {
+    cfg = getAttrFromPath customNamespaceList config;   # config.custom.home.programs.example
+    opt = setAttrByPath customNamespaceList;            # (val: { custom.home.programs.example = val; })
+  };
 
+
+  # non-path based namespace helpers
+
+  # for use in attrset that determines namespace
   nsref = enums.namespace.namespace-marker;
 
-  # [ "a" ] { b.c.d = ns; } -> [ "a", "b", "c", "d" ]
+  # get a list of attrset names leading to nsref in a simple attrset
+  # example:
+  # [ "a" ] { b.c.d = nsref; } -> [ "a", "b", "c", "d" ]
   getPathFromAttr = currpath: attr: if attr == ns then currpath else let
     next = findFirst (_: true) null (attrNames attr);
   in getPathFromAttr (currpath ++ [ next ]) attr.${next};
 
+  # generate namespace helpers given simple attrset defining namespace 
+  # example: use `with` to bring helpers into module context
+  # with lib; with manualns config { home.programs.test = nsref }; { ... }
   manualns = config: namespace: let
     customNamespaceList = getPathFromAttr [ "custom" ] namespace;
   in {
@@ -68,12 +90,6 @@ lib: with lib; rec {
     opt = setAttrByPath customNamespaceList;
   };
 
-  ns = config: modulePath: let
-    customNamespaceList = getCustomModulePath modulePath;
-  in {
-    cfg = getAttrFromPath customNamespaceList config;
-    opt = setAttrByPath customNamespaceList;
-  };
 
 
   # file helpers
