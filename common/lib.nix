@@ -60,7 +60,7 @@ lib: with lib; rec {
       (path.removePrefix modulesRoot)         # "./home/programs/example"
       (splitString "/")                       # [ "." "home" "programs" "example" ]
       tail                                    # [ "home" "programs" "example" ]
-      (l: [ "custom" ] ++ l)                  # [ "custom" "home" "programs" "example" ]
+      (concat [ "custom" ])                   # [ "custom" "home" "programs" "example" ]
     ];
   in {
     cfg = getAttrFromPath customNamespaceList config;   # config.custom.home.programs.example
