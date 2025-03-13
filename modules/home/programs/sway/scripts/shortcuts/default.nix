@@ -4,6 +4,7 @@ with lib; {
   launcher = let
     shortcuts = {
       screens = import ./screens.nix pkgs lib config;
+      kill = import ./kill.nix pkgs;
     };
 
     isPackage = check: hasAttr "stdenv" check;
