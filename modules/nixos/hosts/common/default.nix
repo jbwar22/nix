@@ -10,6 +10,7 @@ with lib; {
 
   config = let
     users = config.custom.common.opts.host.users;
+    admins = getAdmins users;
   in {
     # create user accounts
     users.users = mapAttrs (username: user: {
@@ -21,6 +22,8 @@ with lib; {
     home-manager = setHMOpt users {
       custom.common = config.custom.common;
     };
+
+    nix.settings.trusted-users = attrNames admins;
 
     # load common suite
     custom.nixos.suites.common.enable = true; 
