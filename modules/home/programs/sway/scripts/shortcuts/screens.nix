@@ -3,14 +3,6 @@ pkgs: lib: config:
 with lib; let
   screens = config.custom.home.opts.screens;
 
-  getScript = output-def: let
-    swaymsg-lines = pipe output-def [
-
-    ];
-  in pkgs.writeShellScript "shortcuts-screens-specialization" ''
-    ${swaymsg-lines}
-  '';
-
   getUndo = specialisation-def: output-def: pipe specialisation-def [
     (mapAttrs (setting-name: setting-value: if typeOf setting-value == "set" then (
       getUndo setting-value output-def.${setting-name}
@@ -25,13 +17,15 @@ with lib; let
       inherit output-name output-def specialisation-name specialisation-def;  
     }) output-def.specialisations)))
     concatLists
-    (foldl' (accum: entry: accum // {
+    (foldl' (accum: entry: recursiveUpdate accum {
       ${entry.specialisation-name}.${entry.output-name} = entry.specialisation-def;
       ${"!" + entry.specialisation-name}.${entry.output-name} = getUndo entry.specialisation-def entry.output-def;
-    }) {})
+    }) {
+      reset = screens;
+    })
   ];
 
-  specialization-scripts = pipe specialisation-output-settings [
+  specialisation-scripts = pipe specialisation-output-settings [
     (mapAttrs (specialization-name: output-defs: pipe output-defs [
       (mapAttrsToList (output-name: output-def: if hasAttr "sway" output-def then (
         pipe output-def.sway [
@@ -45,7 +39,7 @@ with lib; let
       (pkgs.writeShellScript "shortcuts-screens-specialization")
     ]))
   ];
-in specialization-scripts // {
+in specialisation-scripts // {
   vert_old = pkgs.writeShellScript "shortcuts-screens-vert" ''
     ${pkgs.sway}/bin/swaymsg 'output "ASUSTek COMPUTER INC VG27AQL1A S1LMQS102258" transform 90'
   '';

@@ -47,7 +47,6 @@ with lib; {
             bar = "bar1080";
             specialisations = {
               vert.sway = {
-                transform = "90";
                 position = "3360 0";
               };
             };
