@@ -1,15 +1,36 @@
 pkgs: lib: config: menu:
 
-with lib; rec {
-  screens = import ./screens.nix pkgs lib config;
+with lib; {
   launcher = let
-    options = [ "a" "b" ];
-    options-str = concatStringsSep "\n" options;
+    shortcuts = {
+      screens = import ./screens.nix pkgs lib config;
+    };
+
+    isPackage = check: hasAttr "stdenv" check;
+
+    mkCase = shortcuts: ''
+      case $(echo "${concatStringsSep "\n" (attrNames shortcuts)}" | ${menu}) in
+        ${pipe shortcuts [
+          attrNames
+          (map (shortcut: ''
+            ${shortcut})
+              ${let
+                innerShortcut = shortcuts.${shortcut};
+              in (if (isPackage innerShortcut) then (
+                toString innerShortcut
+              ) else (
+                mkCase innerShortcut
+              ))}
+              ;;
+          ''))
+          (concatStringsSep "\n")
+        ]}
+        \?)
+          exit 1
+          ;;
+      esac
+    '';
   in pkgs.writeShellScript "shortcuts-launcher" ''
-    case $(echo ${options-str} | ${menu}) in
-      \?)
-        exit 1
-        ;;
-    esac
+    ${mkCase shortcuts}
   '';
 }
