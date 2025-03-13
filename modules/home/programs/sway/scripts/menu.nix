@@ -25,6 +25,7 @@ pkgs: lib: config: let
   in ''
     if [[ "${output_var}" == "${screen.name}" ]]; then
       ${runline (params-by-bar."${screen.bar}")}
+      exit $?
     fi
   '') config.custom.home.opts.screens.config);
 
