@@ -113,19 +113,15 @@ in {
         };
 
         output = foldl' (accum: screen: accum // (let
-          screen-def = {
-            inherit (screen) resolution position;
-            adaptive_sync = mkIf screen.vrr "on";
-            bg = "${screen.wallpaper.path} ${screen.wallpaper.mode}";
-          };
+          screen-def = screen.value.sway;
         in {
-          "${screen.name}" = screen-def;
-          "${screen.name} Unknown" = mkIf screen.noserial screen-def;
+          "${screen.name}" = screen-def; # don't mkIf this one! some options don't work otherwise!
+          "${screen.name} Unknown" = mkIf screen.value.noserial screen-def;
         })) {
           "*" = {
-            bg = "${config.custom.home.opts.wallpaper.path} fill";
+            bg = "${config.custom.home.opts.wallpaper} fill";
           };
-        } config.custom.home.opts.screens.config;
+        } (attrsToList config.custom.home.opts.screens);
 
         keybindings = let
           modifier = config.wayland.windowManager.sway.config.modifier;

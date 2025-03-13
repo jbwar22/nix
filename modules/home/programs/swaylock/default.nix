@@ -12,7 +12,7 @@ with lib; with ns config ./.; {
       settings = {
         show-keyboard-layout = true;
         show-failed-attempts = true;
-        image = "${config.custom.home.opts.wallpaper.path}";
+        image = "${config.custom.home.opts.wallpaper}";
         inside-color = "660000";
         inside-clear-color = "666666";
         inside-caps-lock-color = "660000";

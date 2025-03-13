@@ -190,6 +190,13 @@ lib: with lib; rec {
     type = types.enum l;
   };
 
+  mkOfSubmoduleOption = description: of: options: mkOption {
+    inherit description;
+    type = of (types.submodule {
+      inherit options;
+    });
+  };
+
   mkSubmoduleOption = description: options: mkOption {
     inherit description;
     type = (types.submodule {

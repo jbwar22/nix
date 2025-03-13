@@ -20,14 +20,18 @@ pkgs: lib: config: let
     ) (lib.attrsToList args))
   ));
 
-  if-blocks = builtins.concatStringsSep " " (map (screen: let
-    output_var = if screen.noserial then "$output_name_noserial" else "$output_name";
-  in ''
-    if [[ "${output_var}" == "${screen.name}" ]]; then
-      ${runline (params-by-bar."${screen.bar}")}
-      exit $?
-    fi
-  '') config.custom.home.opts.screens.config);
+  if-blocks = with lib; pipe config.custom.home.opts.screens [
+    attrsToList
+    (map (screen: let
+      output_var = if screen.value.noserial then "$output_name_noserial" else "$output_name";
+    in ''
+      if [[ "${output_var}" == "${screen.name}" ]]; then
+        ${runline (params-by-bar."${screen.value.bar}")}
+        exit $?
+      fi
+    ''))
+    (concatStringsSep " ")
+  ];
 
 in pkgs.writeShellScript "sway-menu" ''
   tofi="${pkgs.tofi}/bin/tofi"

@@ -243,18 +243,22 @@ in {
       };
     };
 
-    screens = config.custom.home.opts.screens.config;
+    screensList = attrsToList config.custom.home.opts.screens;
     screen-id = screen-name: replaceStrings [" "] ["-"] screen-name;
 
-    bar-names-by-id = foldl' (accum: screen: accum // {
-      "${(screen-id screen.name)}" = screen.bar;
-    }) {} screens;
+    bar-names-by-id = pipe screensList [
+      (map (screen: {
+        name = screen-id screen.name;
+        value = screen.value.bar;
+      }))
+      listToAttrs
+    ];
 
-    bars = map (screen: bar-defs.${screen.bar} // rec {
+    bars = map (screen: bar-defs.${screen.value.bar} // rec {
       id = screen-id screen.name;
       name = id;
       output = [ screen.name ];
-    }) screens;
+    }) screensList;
 
     # helper for css: select by bar, then additional selection
     mkselect = bar-name: select: 
