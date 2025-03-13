@@ -11,7 +11,16 @@ with lib; let
     )))
   ];
 
-  specialisation-output-settings = pipe screens [
+  getSwaymsgLines = output-name: output-def: if hasAttr "sway" output-def then (
+    pipe output-def.sway [
+      (mapAttrsToList (sway-command-name: sway-command-value: ''
+        ${pkgs.sway}/bin/swaymsg 'output "${output-name}" ${sway-command-name} ${sway-command-value}'
+      ''))
+      (concatStringsSep "\n")
+    ]
+  ) else "";
+
+  specialisation-scripts = pipe screens [
     (filterAttrs (n: output-def: output-def.specialisations != null))
     (mapAttrsToList (output-name: output-def: (mapAttrsToList (specialisation-name: specialisation-def: {
       inherit output-name output-def specialisation-name specialisation-def;  
@@ -23,27 +32,10 @@ with lib; let
     }) {
       reset = screens;
     })
-  ];
-
-  specialisation-scripts = pipe specialisation-output-settings [
-    (mapAttrs (specialization-name: output-defs: pipe output-defs [
-      (mapAttrsToList (output-name: output-def: if hasAttr "sway" output-def then (
-        pipe output-def.sway [
-          (mapAttrsToList (sway-command-name: sway-command-value: ''
-            ${pkgs.sway}/bin/swaymsg 'output "${output-name}" ${sway-command-name} ${sway-command-value}'
-          ''))
-          (concatStringsSep "\n")
-        ]
-      ) else ""))
+    (mapAttrs (specialisation-name: output-defs: pipe output-defs [
+      (mapAttrsToList (output-name: output-def: getSwaymsgLines output-name output-def))
       (concatStringsSep "\n")
-      (pkgs.writeShellScript "shortcuts-screens-specialization")
+      (pkgs.writeShellScript "shortcuts-screens-specialisation-${specialisation-name}")
     ]))
   ];
-in specialisation-scripts // {
-  vert_old = pkgs.writeShellScript "shortcuts-screens-vert" ''
-    ${pkgs.sway}/bin/swaymsg 'output "ASUSTek COMPUTER INC VG27AQL1A S1LMQS102258" transform 90'
-  '';
-  reset_old = pkgs.writeShellScript "shortcuts-screens-reset" ''
-    ${pkgs.sway}/bin/swaymsg 'output "ASUSTek COMPUTER INC VG27AQL1A S1LMQS102258" transform 0'
-  '';
-}
+in specialisation-scripts // {}
