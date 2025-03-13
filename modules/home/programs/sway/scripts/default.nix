@@ -11,4 +11,5 @@ rec {
   volume = (import ./volume.nix) pkgs slider;
   brightness = (import ./brightness.nix) pkgs slider;
   menu = (import ./menu.nix) pkgs lib config;
+  shortcuts = (import ./shortcuts pkgs lib config menu);
 }

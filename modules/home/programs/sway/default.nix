@@ -158,7 +158,7 @@ in {
           "${modifier}+${alt}+less" = "move workspace to output down";
 
           # Shortcut
-          "${modifier}+s" = null;
+          "${modifier}+s" = "exec ${scripts.shortcuts.launcher}";
 
           # Remap defaults
           "${modifier}+${alt}+space" = "focus mode_toggle";
