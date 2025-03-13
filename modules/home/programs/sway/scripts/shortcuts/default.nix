@@ -14,7 +14,7 @@ with lib; {
         ${pipe shortcuts [
           attrNames
           (map (shortcut: ''
-            ${shortcut})
+            "${shortcut}")
               ${let
                 innerShortcut = shortcuts.${shortcut};
               in (if (isPackage innerShortcut) then (

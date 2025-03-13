@@ -27,6 +27,11 @@ with lib; {
               bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
             };
             bar = "bar1440";
+            specialisations = {
+              "work monitor left".sway = {
+                position = "-2560 -672";
+              };
+            };
           };
           "LG Electronics LG TV 0x01010101" = {
             sway = {
