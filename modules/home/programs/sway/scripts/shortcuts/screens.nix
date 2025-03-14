@@ -33,7 +33,9 @@ with lib; let
       reset = screens;
     })
     (mapAttrs (specialisation-name: output-defs: pipe output-defs [
-      (mapAttrsToList (output-name: output-def: getSwaymsgLines output-name output-def))
+      (mapAttrsToList (output-name: output-def: concatStringsSep "\n" [
+        (getSwaymsgLines output-name output-def)
+      ]))
       (concatStringsSep "\n")
       (pkgs.writeShellScript "shortcuts-screens-specialisation-${specialisation-name}")
     ]))
