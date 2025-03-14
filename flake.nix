@@ -40,6 +40,7 @@
     importChannelsForSystem = system: rec {
       imported-channels = mapAttrs (_name: channel: import channel {
         inherit system;
+        overlays = [ (getConfigurationRevisionOverlay channel) ];
         config.allowUnfreePredicate = pkg: elem (getName pkg) (import ./common/unfree.nix);
       }) channels;
       pkgs = imported-channels.${nixpkgs-main};

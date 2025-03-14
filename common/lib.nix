@@ -41,6 +41,10 @@ lib: with lib; rec {
     genHostUserPairs = hosts: concatMap (hostname:
       map (username: { inherit hostname username; }) (attrNames hosts.${hostname}.users)
     ) (attrNames hosts);
+
+    getConfigurationRevisionOverlay = (channel: final: prev: {
+      lib = prev.lib.extend (import "${channel}/lib/flake-version-info.nix" channel);
+    });
   };
 
 
