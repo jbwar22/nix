@@ -21,6 +21,9 @@ with lib; {
               bg = "${../../../../../secrets/git-crypt/wallpaper/p2up0wv6.png} fill";
             };
             bar = "bar1080";
+            specialisations = {
+              bg2.sway.bg = "${../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png} fill";
+            };
           };
           "ASUSTek COMPUTER INC VG27AQL1A S1LMQS102258" = {
             sway = {
@@ -36,6 +39,7 @@ with lib; {
                 transform = "90";
                 position = "1920 -740";
               };
+              bg2.sway.bg = "${../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png} fill";
             };
           };
           "BNQ BenQ GW2780 V1J07047SL0" = {
@@ -49,6 +53,7 @@ with lib; {
               vert.sway = {
                 position = "3360 0";
               };
+              bg2.sway.bg = "${../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png} fill";
             };
           };
         };
