@@ -9,6 +9,7 @@ with lib; with ns config ./.; {
     custom.nixos = {
       programs = {
         steam.enable = true;
+        gamemode.enable = true;
       };
     };
   };
