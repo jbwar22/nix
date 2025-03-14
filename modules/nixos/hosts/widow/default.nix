@@ -24,7 +24,7 @@ with lib; {
       behavior = {
         skip-wait-online.enable = true;
         systemd-boot.enable = true;
-        latest-kernel.enable = true;
+        zen-kernel.enable = true;
       };
     };
 
