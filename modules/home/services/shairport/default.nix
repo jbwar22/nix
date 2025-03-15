@@ -16,7 +16,7 @@ with lib; with ns config ./.; {
       Service = {
         ExecStart = let
           password-file = ageOrNull config "shairport-password";
-          password-arg = if password-file == null then "" else "--password=\"$(cat ${password-file})\"";
+          password-arg = if password-file == null then "" else "--password=\"$(${pkgs.coreutils}/bin/cat ${password-file})\"";
         in pkgs.writeShellScript "shairport-sync" ''
           ${pkgs.shairport-sync}/bin/shairport-sync -o pa -a "${config.custom.common.opts.host.hostname}" ${password-arg}
         '';
