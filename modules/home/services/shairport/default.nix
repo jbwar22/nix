@@ -1,8 +1,8 @@
-{ config, lib, pkgs, host, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib; with ns config ./.; {
   options = opt {
-    enable = mkEnableOption "sink-tcp";
+    enable = mkEnableOption "shairport-sync systemd service";
   };
 
   config = mkIf cfg.enable {
@@ -14,9 +14,10 @@ with lib; with ns config ./.; {
         After = "pipewire.target";
       };
       Service = {
-        # ExecStart = pkgs.writeShellScript "shairport-sync" ''
-        #   ${pkgs.shairport-sync}/bin/shairport-sync -o pa -a "${host}" --password="${secrets.conf.shairport-password}"
-        # '';
+        ExecStart = pkgs.writeShellScript "shairport-sync" ''
+          ${pkgs.shairport-sync}/bin/shairport-sync -o pa
+        '';
+        # ${pkgs.shairport-sync}/bin/shairport-sync -o pa -a "${host}" --password="${secrets.conf.shairport-password}"
       };
       Install = {
         WantedBy = [ "default.target" ];

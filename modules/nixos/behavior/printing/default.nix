@@ -7,9 +7,9 @@ with lib; with ns config ./.; {
   config = lib.mkIf cfg.enable {
     services.printing.enable = true;
     services.avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
+      enable = mkDefault true;
+      nssmdns4 = mkDefault true;
+      openFirewall = mkDefault true;
     };
   };
 }

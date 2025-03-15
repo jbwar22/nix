@@ -14,6 +14,7 @@ with lib; with ns config ./.; {
 
       behavior = {
         xdg-screenshare.enable = mkIfAnyHMOpt config (config: config.wayland.windowManager.sway.enable) true;
+        shairport-support.enable = mkIfAnyHMOpt config (config: config.custom.home.services.shairport.enable) true;
       };
     };
   };

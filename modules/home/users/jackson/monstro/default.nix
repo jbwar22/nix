@@ -11,6 +11,10 @@ with lib; {
         firefox.usePackage = true;
       };
 
+      services = {
+        shairport.enable = true;
+      };
+
       opts = {
         screens = {
           "ASUSTek COMPUTER INC VG278 J8LMQS104073" = {
