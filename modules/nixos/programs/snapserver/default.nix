@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns config ./.; let
+  configfile = ageOrNull config "snapserver-shairport-config";
+in {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
     sink = mkEnableOption "custom pulse sync (broken)";
@@ -8,6 +10,12 @@ with lib; with ns config ./.; {
 
   config = lib.mkIf cfg.enable {
     custom.nixos.behavior.shairport-support.enable = mkDefault true;
+
+    systemd.services.snapserver.serviceConfig = {
+      LoadCredential = mkIf (configfile != null) [
+        "configfile:${configfile}"
+      ];
+    };
 
     services.snapserver = {
       enable = true;
@@ -21,16 +29,13 @@ with lib; with ns config ./.; {
         docRoot = "${pkgs.snapweb}";
       };
       streams = {
-        airplay = let 
-          # broken due to systemd service dynamic user unable to read
-          configfile = ageOrNull config "snapserver-shairport-config";
-        in {
+        airplay = {
           type = "airplay";
           location = "${pkgs.shairport-sync}/bin/shairport-sync";
           query = {
             name = "AirPlay";
             devicename = "widow Snapcast";
-            # params = mkIf (configfile != null) "--configfile=${configfile}";
+            params = mkIf (configfile != null) "--configfile=\${CREDENTIALS_DIRECTORY}/configfile";
           };
         };
         pulse = mkIf cfg.sink {
