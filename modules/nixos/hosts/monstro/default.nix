@@ -35,12 +35,6 @@ with lib; {
 
     system.stateVersion = "24.05";
 
-    age = {
-      secrets = {
-        agetest.file = ../../../../secrets/agenix/hosts/monstro/agetest.age;
-      };
-    };
-
     programs.bash.shellAliases = {
       getAgeTest = "echo ${config.age.secrets.agetest.path}";
     };

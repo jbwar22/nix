@@ -1,15 +1,49 @@
 { config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; let
-  tcp_listen_port = 4953;
-in {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
-    
+    sink = mkEnableOption "custom pulse sync (broken)";
   };
 
   config = lib.mkIf cfg.enable {
-    services.pipewire.configPackages = [
+    custom.nixos.behavior.shairport-support.enable = mkDefault true;
+
+    services.snapserver = {
+      enable = true;
+      # codec = "flac";
+      openFirewall = true;
+      tcp = {
+        enable = true;
+      };
+      http = {
+        enable = true;
+        docRoot = "${pkgs.snapweb}";
+      };
+      streams = {
+        airplay = let 
+          # broken due to systemd service dynamic user unable to read
+          configfile = ageOrNull config "snapserver-shairport-config";
+        in {
+          type = "airplay";
+          location = "${pkgs.shairport-sync}/bin/shairport-sync";
+          query = {
+            name = "AirPlay";
+            devicename = "widow Snapcast";
+            # params = mkIf (configfile != null) "--configfile=${configfile}";
+          };
+        };
+        pulse = mkIf cfg.sink {
+          type = "pipe";
+          location = "/run/snapserver/snapfifo";
+          query = {
+              mode = "create";
+          };
+        };
+      };
+    };
+
+    services.pipewire.configPackages = mkIf cfg.sink [
       (pkgs.writeTextFile {
         name = "pipewire-snapcast-sink";
         text = ''
@@ -22,41 +56,5 @@ in {
         destination = "/share/pipewire/pipewire-pulse.conf.d/pipewire-snapcast-sink.conf";
       })
     ];
-
-    networking.firewall.allowedTCPPorts = [ tcp_listen_port ];
-    services.snapserver = {
-      enable = true;
-      codec = "flac";
-      tcp.enable = true;
-      http = {
-        enable = true;
-        docRoot = "${pkgs.snapcast}/share/snapserver/snapweb";
-      };
-      openFirewall = true;
-      sendToMuted = true;
-      streams = {
-        airplay = {
-          type = "airplay";
-          location = "${pkgs.shairplay}/bin/shairplay";
-        };
-        pulse = {
-          type = "pipe";
-          location = "/run/snapserver/snapfifo";
-          query = {
-              mode = "create";
-          };
-        };
-        tcp = {
-          type = "tcp";
-          location = "0.0.0.0";
-          query = {
-            name = "snapserver";
-            mode = "server";
-            port = "${builtins.toString tcp_listen_port}";
-          };
-        };
-      };
-    };
-
   };
 }

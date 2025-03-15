@@ -32,5 +32,9 @@ with lib; {
     environment.systemPackages = with pkgs; [
       vim-test
     ];
+
+    age = {
+      secrets = loadAgeSecretsFromDir ../../../../secrets/agenix/hosts/${config.custom.common.opts.host.hostname};
+    };
   };
 }

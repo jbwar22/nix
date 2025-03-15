@@ -26,6 +26,10 @@ with lib; {
         systemd-boot.enable = true;
         kernel-latest.enable = true;
       };
+
+      programs = {
+        snapserver.enable = true;
+      };
     };
 
     networking.hostName = "widow";
