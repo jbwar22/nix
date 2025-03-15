@@ -5,20 +5,24 @@ with lib; with ns config ./.; let
   waybar = config.custom.home.programs.waybar;
   swaylock = config.custom.home.programs.swaylock;
   scripts = (import ./scripts) pkgs lib config;
-
   geolocation = ageOrDefault config "geolocation" "0.00:0.00";
 in {
   options = opt {
     enable = mkEnableOption "sway wm";
-    blueLightFilter = with types; mkOption {
-      type = bool;
+    blueLightFilter = mkOption {
+      type = with types; bool;
       description = "run a blue light filter at night";
       default = true;
     };
-    blueLightStrength = with types; mkOption {
-      type = int;
+    blueLightStrength = mkOption {
+      type = with types; int;
       description = "color temperature at night (kelvin)";
       default = 3600;
+    };
+    shortcuts = mkOption {
+      type = with types; anything; # TODO attrsOf package of arbitrary depth
+      description = "shortcuts menu";
+      default = {};
     };
   };
 
