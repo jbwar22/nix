@@ -14,10 +14,12 @@ with lib; with ns config ./.; {
         After = "pipewire.target";
       };
       Service = {
-        ExecStart = pkgs.writeShellScript "shairport-sync" ''
-          ${pkgs.shairport-sync}/bin/shairport-sync -o pa
+        ExecStart = let
+          password-file = ageOrNull config "shairport-password";
+          password-arg = if password-file == null then "" else "--password=\"$(cat ${password-file})\"";
+        in pkgs.writeShellScript "shairport-sync" ''
+          ${pkgs.shairport-sync}/bin/shairport-sync -o pa -a "${config.custom.common.opts.host.hostname}" ${password-arg}
         '';
-        # ${pkgs.shairport-sync}/bin/shairport-sync -o pa -a "${host}" --password="${secrets.conf.shairport-password}"
       };
       Install = {
         WantedBy = [ "default.target" ];
