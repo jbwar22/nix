@@ -12,7 +12,10 @@ with lib; {
       };
 
       services = {
-        shairport.enable = true;
+        shairport = {
+          enable = true;
+          port = 5001;
+        };
       };
 
       opts = {

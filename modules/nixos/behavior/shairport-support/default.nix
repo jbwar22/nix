@@ -3,6 +3,11 @@
 with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "extra required options for easy use of shairport-sync";
+    ports = mkOption {
+      description = "ports to open for shairport-sync";
+      type = with types; listOf number;
+      default = [ 5000 ];
+    };
   };
   config = lib.mkIf cfg.enable {
     # taken from:
@@ -18,7 +23,7 @@ with lib; with ns config ./.; {
     };
     
     networking.firewall = {
-      allowedTCPPorts = [ 5000 ];
+      allowedTCPPorts = cfg.ports;
       allowedUDPPortRanges = [ { from = 6001; to = 6011; } ];
     };
   };

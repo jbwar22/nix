@@ -22,6 +22,7 @@ with lib; {
 
       programs = {
         plymouth.theme = "rings";
+        snapserver.enable = true;
         virt-manager.enable = true;
       };
 

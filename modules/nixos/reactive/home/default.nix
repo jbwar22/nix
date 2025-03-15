@@ -1,6 +1,8 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns config ./.; let
+  users = config.custom.common.opts.host.users;
+in {
   options = opt {
     enable = mkEnableOption "options reactive based on home-manager options for all hosts";
   };
@@ -14,7 +16,17 @@ with lib; with ns config ./.; {
 
       behavior = {
         xdg-screenshare.enable = mkIfAnyHMOpt config (config: config.wayland.windowManager.sway.enable) true;
-        shairport-support.enable = mkIfAnyHMOpt config (config: config.custom.home.services.shairport.enable) true;
+        shairport-support = mkIfAnyHMOpt config (config: config.custom.home.services.shairport.enable) {
+          enable = true;
+          ports = pipe users [
+            (getHMOpt config (config:
+              if config.custom.home.services.shairport.enable then (
+                config.custom.home.services.shairport.port
+              ) else null
+            ))
+            (filter (x: x != null))
+          ];
+        };
       };
     };
   };

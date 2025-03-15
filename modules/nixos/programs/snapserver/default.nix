@@ -6,10 +6,18 @@ in {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
     sink = mkEnableOption "custom pulse sync (broken)";
+    shairport-port = mkOption {
+      description = "port for shairport to listen on";
+      type = with types; number;
+      default = 5000;
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    custom.nixos.behavior.shairport-support.enable = mkDefault true;
+    custom.nixos.behavior.shairport-support = {
+      enable = mkDefault true;
+      ports = [ cfg.shairport-port ];
+    };
 
     systemd.services.snapserver.serviceConfig = {
       LoadCredential = mkIf (configfile != null) [

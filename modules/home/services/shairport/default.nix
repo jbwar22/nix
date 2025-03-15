@@ -3,6 +3,11 @@
 with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "shairport-sync systemd service";
+    port = mkOption {
+      description = "port for shairport to listen on";
+      type = with types; number;
+      default = 5000;
+    };
   };
 
   config = mkIf cfg.enable {

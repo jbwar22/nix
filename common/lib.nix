@@ -143,6 +143,8 @@ lib: with lib; rec {
   # mkIfAnyHMOpt config (cfg: cfg.programs.bash.enable)
   mkIfAnyHMOpt = config: predicate: mkIf (checkHMOpt config any predicate);
 
+  getHMOpt = config: getter: users: map (username: getter config.home-manager.users.${username}) (attrNames users);
+
   # set home-manager options for a list of users, with username
   # example: set username for all users
   # home-manager = setHMOptWithUser config.custom.common.opts.host.users (name: { home.username = name; })
