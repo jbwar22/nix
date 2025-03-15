@@ -41,10 +41,7 @@ with lib; let
     ]))
   ];
 in specialisation-scripts // {
-  gammatoggle = pkgs.writeShellScript "reset-gammastep" ''
+  gammatoggle = mkIf config.custom.home.programs.sway.blueLightFilter (pkgs.writeShellScript "reset-gammastep" ''
     ${pkgs.procps}/bin/pkill -USR1 gammastep
-  '';
-  # gammatoggle = mkIf config.custom.home.programs.sway.blueLightFilter (pkgs.writeShellScript "reset-gammastep" ''
-  #   ${pkgs.procps}/bin/pkill -USR1 gammastep
-  # '');
+  '');
 }

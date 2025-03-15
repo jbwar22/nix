@@ -22,11 +22,13 @@ in {
     shortcuts = mkOption {
       type = with types; anything; # TODO attrsOf package of arbitrary depth
       description = "shortcuts menu";
-      default = {};
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable ((opt {
+    # shortcuts = import ./shortcuts pkgs lib config;
+  }) // {
+    custom.home.programs.sway.shortcuts = import ./shortcuts pkgs lib config;
     custom.home.opts.aliases = {
       sway = mkIf config.custom.common.opts.hardware.nvidia "${pkgs.sway}/bin/sway --unsupported-gpu";
       getgeo = "echo ${geolocation}";
@@ -130,6 +132,7 @@ in {
         keybindings = let
           modifier = config.wayland.windowManager.sway.config.modifier;
           alt = "Mod1";
+          shortcuts-launcher = import ./shortcuts/launcher.nix pkgs lib config scripts.menu;
         in lib.mkOptionDefault { # append to default behavior
 
           # Media keys: Audio
@@ -158,7 +161,7 @@ in {
           "${modifier}+${alt}+less" = "move workspace to output down";
 
           # Shortcut
-          "${modifier}+s" = "exec ${scripts.shortcuts.launcher}";
+          "${modifier}+s" = "exec ${shortcuts-launcher}";
 
           # Remap defaults
           "${modifier}+${alt}+space" = "focus mode_toggle";
@@ -259,5 +262,5 @@ in {
         bindgesture pinch:4:inward+left move container to workspace prev
       '';
     };
-  };
+  });
 }
