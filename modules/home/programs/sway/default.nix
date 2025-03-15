@@ -20,7 +20,9 @@ in {
       default = 3600;
     };
     shortcuts = mkOption {
-      type = with types; anything; # TODO attrsOf package of arbitrary depth
+      type = with types; let
+        t = attrsOf (oneOf [ t package ]);
+      in t;
       description = "shortcuts menu";
     };
   };
