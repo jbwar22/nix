@@ -9,6 +9,13 @@ with lib; {
         work.enable = true;
       };
 
+      services = {
+        shairport = {
+          enable = true;
+          port = 5001;
+        };
+      };
+
       opts = {
         screens = {
           "BOE 0x06B3" = {

@@ -48,7 +48,10 @@ in {
           query = {
             name = "AirPlay";
             devicename = "${capitalizeDashedString config.custom.common.opts.host.hostname} Snapcast";
-            params = mkIf (configfile != null) "--configfile=\${CREDENTIALS_DIRECTORY}/configfile";
+            params = let
+              params = singleton "--port=${toString cfg.shairport-port}"
+                ++ optional (configfile != null) "--configfile=\${CREDENTIALS_DIRECTORY}/configfile";
+            in concatStringsSep " " params;
           };
         };
         pulse = mkIf cfg.sink {
