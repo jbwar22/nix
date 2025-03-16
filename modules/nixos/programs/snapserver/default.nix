@@ -19,16 +19,21 @@ in {
       ports = [ cfg.shairport-port ];
     };
 
+    # override systemd service
     systemd.services.snapserver.serviceConfig = {
       LoadCredential = mkIf (configfile != null) [
         "configfile:${configfile}"
       ];
     };
 
+    # override firewall
+    # use nixos-firewall-tool open 1780 to open http port temporarily
+    # use nixos-firewall-tool reset to close when done
+    networking.firewall.allowedTCPPorts = [ config.services.snapserver.port ];
+
     services.snapserver = {
       enable = true;
-      # codec = "flac";
-      openFirewall = true;
+      openFirewall = false;
       tcp = {
         enable = true;
       };
