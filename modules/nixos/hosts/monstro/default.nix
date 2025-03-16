@@ -35,9 +35,5 @@ with lib; {
     networking.hostName = "monstro";
 
     system.stateVersion = "24.05";
-
-    programs.bash.shellAliases = {
-      getAgeTest = "echo ${config.age.secrets.agetest.path}";
-    };
   };
 }
