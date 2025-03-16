@@ -56,26 +56,54 @@ in {
         };
         pulse = mkIf cfg.sink {
           type = "pipe";
-          location = "/run/snapserver/snapfifo";
+          location = "/run/snapserver/fifo";
           query = {
-              mode = "create";
+            name = "PipeWire";
+            mode = "create";
           };
         };
       };
     };
 
-    services.pipewire.configPackages = mkIf cfg.sink [
-      (pkgs.writeTextFile {
-        name = "pipewire-snapcast-sink";
-        text = ''
-          pulse.cmd = [{ 
-            cmd = "load-module"
-            args = "module-pipe-sink"
-            flags = [ "file=/run/snapserver/pulse" "sink_name=Snapcast" "format=s16le" "rate=48000" ]
-          }]
-        '';
-        destination = "/share/pipewire/pipewire-pulse.conf.d/pipewire-snapcast-sink.conf";
-      })
+    services.pipewire.configPackages = [
+      (pkgs.writeTextDir "share/pipewire/pipewire-pulse.conf.d/50-snapserver-fifo.conf" ''
+        pulse.cmd = [{ 
+          cmd = "load-module"
+          args = "module-pipe-sink file=/run/snapserver/fifo sink_name=Snapcast format=s16le rate=48000"
+        }]
+      '')
     ];
+
+
+    # the below functions are useful if you want to restrict who can play via the fifo
+    # however the fifo created by snapcast defaults to all writable, so you'd have to limit the permissions of that
+    # before being able to use this
+
+    # create pipe for pipewire sink playback
+    # custom.nixos.behavior.tmpfiles."snapserver-fifo" = mkIf cfg.sink {
+    #   type = "p";
+    #   path = "/run/snapserver-pipewire/adminfifo";
+    #   mode = "1660";
+    #   user = "root";
+    #   group = "wheel";
+    #   age = "-";
+    #   argument = "-";
+    # };
+
+    # connect pipe to snapserver's pipe
+    # systemd.services.snapserver-adminfifo = mkIf cfg.sink {
+    #   after = [ "snapserver.service" ];
+    #   wantedBy = [ "multi-user.target" ];
+    #   description = "fifo to snapserver fifo";
+    #   serviceConfig = {
+    #     ExecStart = pkgs.writeShellScript "snapserver-adminfifo" ''
+    #       ${pkgs.coreutils}/bin/cat /run/snapserver-pipewire/adminfifo > /run/snapserver/fifo
+    #     '';
+    #     Restart = "always";
+    #   };
+    # };
+
+    # in addition, configPackages should be moved to a setHMOpt to set ~/.config/pipewire/...
+
   };
 }
