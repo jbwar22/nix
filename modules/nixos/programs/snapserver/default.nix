@@ -5,7 +5,11 @@ with lib; with ns config ./.; let
 in {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
-    sink = mkEnableOption "custom pulse sync (broken)";
+    sink = mkOption {
+      description = "custom pulse sync";
+      type = with types; bool;
+      default = true;
+    };
     shairport-port = mkOption {
       description = "port for shairport to listen on";
       type = with types; number;
