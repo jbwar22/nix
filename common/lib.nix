@@ -257,5 +257,20 @@ lib: with lib; rec {
       ]
     ) else {}
   );
+
+
+  # other helpers
+
+  # capitalize-dashed-string = Capitalize Dashed String
+  # mainly for use with hostnames
+  capitalizeDashedString = str: pipe str [
+    (splitString "-")
+    (map (x: pipe x [
+      stringToCharacters
+      (imap0 (i: c: if i == 0 then toUpper c else c))
+      concatStrings
+    ]))
+    (lib.concatStringsSep " ")
+  ];
     
 }

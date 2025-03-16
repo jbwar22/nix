@@ -47,7 +47,7 @@ in {
           location = "${pkgs.shairport-sync}/bin/shairport-sync";
           query = {
             name = "AirPlay";
-            devicename = "${config.custom.common.opts.host.hostname} snapcast";
+            devicename = "${capitalizeDashedString config.custom.common.opts.host.hostname} Snapcast";
             params = mkIf (configfile != null) "--configfile=\${CREDENTIALS_DIRECTORY}/configfile";
           };
         };
