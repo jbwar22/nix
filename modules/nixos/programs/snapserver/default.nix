@@ -2,6 +2,7 @@
 
 with lib; with ns config ./.; let
   configfile = ageOrNull config "snapserver-shairport-config";
+  admins = getAdmins config.custom.common.opts.host.users;
 in {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
@@ -77,6 +78,17 @@ in {
         }]
       '')
     ];
+
+    home-manager = setHMOpt admins {
+      custom.home.programs.sway.shortcuts.firewall = {
+        snapweb = pkgs.writeShellScript "shortcuts-firewall-snapweb" ''
+          ${pkgs.kitty}/bin/kitty -e ${pkgs.writeShellScript "shortcuts-firewall-snapweb-inner" ''
+            echo executing: sudo nixos-firewall-tool open tcp 1780
+            sudo nixos-firewall-tool open tcp 1780
+          ''}
+        '';
+      };
+    };
 
 
     # the below functions are useful if you want to restrict who can play via the fifo
