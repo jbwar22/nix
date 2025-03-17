@@ -262,6 +262,13 @@ in {
         bindgesture swipe:3:down focus down
         bindgesture pinch:4:inward+right move container to workspace next
         bindgesture pinch:4:inward+left move container to workspace prev
+
+        set $PROP none
+        for_window [shell="."] mark --add "prop:$$PROP:"
+        for_window [con_mark=^prop.*:floating:] floating enable
+        for_window [con_mark=^prop.*:fullscreen:] fullscreen enable
+        for_window [con_mark=^prop.*:shellpopup:] floating enable ; resize set width 1000 ; resize set height 55
+        for_window [con_mark=^prop:] mark --toggle "prop:$$PROP:" ; set $$PROP none
       '';
     };
   });
