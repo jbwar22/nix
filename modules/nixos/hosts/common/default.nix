@@ -19,7 +19,7 @@ with lib; {
     }) users;
 
     # load host common options into home-manager
-    home-manager = setHMOpt users {
+    home-manager = setHMOptNoPropagate users {
       custom.common = config.custom.common;
     };
 

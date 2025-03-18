@@ -84,16 +84,19 @@
 
     # home-manager switch --flake .#HOSTNAME-USERNAME
     homeConfigurations = forAllHostUserPairs (genHostUserPairs hosts) (hostname: username: let
+      propagated = nixosConfigurations.${hostname}.config.custom.nixos.opts.propagated;
       inherit (importChannelsForHostname hostname) host imported-channels pkgs lib;
       home-manager-lib = lib.extend (_: _: inputs.home-manager.lib);
     in
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit inputs; lib = home-manager-lib; outputs = self; };
-        modules = (genHMModules hostname username) ++ [(if isNixosHost host then {
-          nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
-          custom.common = nixosConfigurations.${hostname}.config.custom.common;
-        } else ./modules/home/users/common/${hostname})];
+        modules = (genHMModules hostname username) ++ [(if isNixosHost host then (
+          recursiveUpdate (if hasAttr username propagated then propagated.${username} else {}) {
+            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
+            custom.common = nixosConfigurations.${hostname}.config.custom.common;
+          }
+        ) else ./modules/home/users/common/${hostname})];
       }
     );
 

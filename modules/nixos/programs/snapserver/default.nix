@@ -18,7 +18,7 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable ({
     custom.nixos.behavior.shairport-support = {
       enable = mkDefault true;
       ports = [ cfg.shairport-port ];
@@ -79,15 +79,6 @@ in {
       '')
     ];
 
-    home-manager = setHMOpt admins {
-      custom.home.programs.sway.shortcuts.firewall = {
-        snapweb = pkgs.sway-kitty-popup "shortcuts-firewall-snapweb" ''
-          echo executing: sudo nixos-firewall-tool open tcp 1780
-          sudo nixos-firewall-tool open tcp 1780
-        '';
-      };
-    };
-
 
     # the below functions are useful if you want to restrict who can play via the fifo
     # however the fifo created by snapcast defaults to all writable, so you'd have to limit the permissions of that
@@ -119,5 +110,12 @@ in {
 
     # in addition, configPackages should be moved to a setHMOpt to set ~/.config/pipewire/...
 
-  };
+  } // (setHMOpt admins {
+    custom.home.programs.sway.shortcuts.firewall = {
+      snapweb = pkgs.sway-kitty-popup "shortcuts-firewall-snapweb" ''
+        echo executing: sudo nixos-firewall-tool open tcp 1780
+        sudo nixos-firewall-tool open tcp 1780
+      '';
+    };
+  }));
 }
