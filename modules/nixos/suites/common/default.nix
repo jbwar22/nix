@@ -19,7 +19,6 @@ with lib; with ns config ./.; {
       programs = {
         noconfig.util.enable = true;
         noconfig.tui.enable = true;
-        cpupower.enable = true;
         ssh.enable = true;
         tailscale.enable = true;
         vnstat.enable = true;

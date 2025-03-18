@@ -17,6 +17,7 @@ with lib; {
         hardware.lenovo-t480.enable = true;
 
         pc.enable = true;
+        laptop.enable = true;
         gaming.enable = true;
         work.enable = true;
       };
