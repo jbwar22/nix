@@ -111,9 +111,8 @@ in {
     # in addition, configPackages should be moved to a setHMOpt to set ~/.config/pipewire/...
 
   } // (setHMOpt admins {
-    custom.home.programs.sway.shortcuts.firewall = {
-      snapweb = pkgs.sway-kitty-popup "shortcuts-firewall-snapweb" ''
-        echo executing: sudo nixos-firewall-tool open tcp 1780
+    custom.home.programs.sway.shortcuts.admin.firewall = {
+      snapweb = pkgs.sway-kitty-popup-admin "shortcuts-admin-firewall-snapweb" ''
         sudo nixos-firewall-tool open tcp 1780
       '';
     };
