@@ -81,7 +81,7 @@ in {
 
     home-manager = setHMOpt admins {
       custom.home.programs.sway.shortcuts.firewall = {
-        snapweb = pkgs.sway-kitty-popup "shortcuts-firewall-reset" ''
+        snapweb = pkgs.sway-kitty-popup "shortcuts-firewall-snapweb" ''
           echo executing: sudo nixos-firewall-tool open tcp 1780
           sudo nixos-firewall-tool open tcp 1780
         '';
