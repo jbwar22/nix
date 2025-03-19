@@ -1,11 +1,5 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "udiskie";
-  };
-
-  config = mkIf cfg.enable {
-    services.udiskie.enable = true;
-  };
+with lib; mkNsEnableModule config ./. {
+  services.udiskie.enable = true;
 }

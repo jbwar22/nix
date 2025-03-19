@@ -1,27 +1,21 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "suite of nixos modules for pc hosts";
-  };
+with lib; mkNsEnableModule config ./. {
+  custom.nixos = {
+    behavior = {
+      bluetooth.enable = true;
+      graphics.enable = true;
+      ios-mount.enable = true;
+      printing.enable = true;
+      sound.enable = true;
+    };
 
-  config = lib.mkIf cfg.enable {
-    custom.nixos = {
-      behavior = {
-        bluetooth.enable = true;
-        graphics.enable = true;
-        ios-mount.enable = true;
-        printing.enable = true;
-        sound.enable = true;
-      };
-
-      programs = {
-        noconfig.vpn.enable = true;
-        docker.enable = true;
-        flatpak.enable = true;
-        plymouth.enable = true;
-        udiskie.enable = true;
-      };
+    programs = {
+      noconfig.vpn.enable = true;
+      docker.enable = true;
+      flatpak.enable = true;
+      plymouth.enable = true;
+      udiskie.enable = true;
     };
   };
 }

@@ -1,50 +1,44 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "fastfetch";
-  };
+with lib; mkNsEnableModule config ./. {
+  programs.fastfetch = {
+    enable = true;
+    settings = {
+      modules = [
+        "title"
 
-  config = mkIf cfg.enable {
-    programs.fastfetch = {
-      enable = true;
-      settings = {
-        modules = [
-          "title"
+        "separator"
 
-          "separator"
+        "os"
+        "kernel"
 
-          "os"
-          "kernel"
+        "separator"
 
-          "separator"
+        "host"
+        "cpu"
+        "gpu"
+        "memory"
+        "physicalmemory"
+        "display"
+        "battery"
+        "disk"
 
-          "host"
-          "cpu"
-          "gpu"
-          "memory"
-          "physicalmemory"
-          "display"
-          "battery"
-          "disk"
+        "separator"
 
-          "separator"
+        "wm"
+        "cursor"
+        "terminal"
+        "shell"
 
-          "wm"
-          "cursor"
-          "terminal"
-          "shell"
+        "separator"
 
-          "separator"
+        "uptime"
+        "packages"
 
-          "uptime"
-          "packages"
+        "break"
 
-          "break"
-
-          "colors"
-        ];
-      };
+        "colors"
+      ];
     };
   };
 }

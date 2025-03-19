@@ -1,15 +1,12 @@
 { config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; let
+with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
-in {
-  options = opt {
-    enable = mkEnableOption "docker";
-  };
+in recursiveUpdate {
+  programs.virt-manager.enable = true;
 
-  config = lib.mkIf cfg.enable (recursiveUpdate {
-    programs.virt-manager.enable = true;
-    virtualisation.libvirtd = {
+  virtualisation = {
+    libvirtd = {
       enable = true;
       qemu = {
         package = pkgs.qemu_kvm;
@@ -24,13 +21,12 @@ in {
         };
       };
     };
-    virtualisation.spiceUSBRedirection.enable = true;
+    spiceUSBRedirection.enable = true;
+  };
 
-    users = setUserGroups admins [ "libvirtd" ];
-
-  } (setHMOpt admins {
-    xdg.configFile."libvert/qemu.conf".text = ''
-      nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
-    '';
-  }));
-}
+  users = setUserGroups admins [ "libvirtd" ];
+} (setHMOpt admins {
+  xdg.configFile."libvert/qemu.conf".text = ''
+    nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
+  '';
+}))

@@ -1,19 +1,13 @@
 { config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; let
+with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
-in {
-  options = opt {
-    enable = mkEnableOption "cpupower";
+in recursiveUpdate {
+  environment.systemPackages = [ config.boot.kernelPackages.cpupower ];
+} (setHMOpt admins {
+  custom.home.programs.sway.shortcuts.admin.cpupower = {
+    performance = pkgs.sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
+      sudo cpupower frequency-set -g performance
+    '';
   };
-
-  config = lib.mkIf cfg.enable (recursiveUpdate {
-    environment.systemPackages = [ config.boot.kernelPackages.cpupower ];
-  } (setHMOpt admins {
-    custom.home.programs.sway.shortcuts.admin.cpupower = {
-      performance = pkgs.sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
-        sudo cpupower frequency-set -g performance
-      '';
-    };
-  }));
-}
+}))

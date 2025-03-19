@@ -1,21 +1,13 @@
 { config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "mounting ios devices";
-  };
+with lib; mkNsEnableModule config ./. {
+  environment.systemPackages = with pkgs; [
+    libimobiledevice
+    ifuse
+  ];
 
-  config = lib.mkIf cfg.enable {
-
-    environment.systemPackages = with pkgs; [
-      libimobiledevice
-      ifuse
-    ];
-
-    services.usbmuxd = {
-      enable = true;
-      package = pkgs.usbmuxd2;
-    };
-    
+  services.usbmuxd = {
+    enable = true;
+    package = pkgs.usbmuxd2;
   };
 }

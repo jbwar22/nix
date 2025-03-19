@@ -1,21 +1,13 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; let
+with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
-  options = opt {
-    enable = mkEnableOption "tailscale";
+  services.tailscale.enable = true;
+
+  services.davfs2 = {
+    enable = true;
   };
 
-  config = mkIf cfg.enable {
-
-    services.tailscale.enable = true;
-
-    services.davfs2 = {
-      enable = true;
-    };
-
-    users = setUserGroups admins [ "davfs2" ];
-
-  };
-}
+  users = setUserGroups admins [ "davfs2" ];
+})

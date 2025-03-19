@@ -1,22 +1,16 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "sway wm & related programs";
-  };
+with lib; mkNsEnableModule config ./. {
+  custom.home = {
+    programs = {
 
-  config = lib.mkIf cfg.enable {
-    custom.home = {
-      programs = {
+      sway.enable = true;
+      
+      dunst.enable = true;
+      swaylock.enable = true;
+      tofi.enable = true;
+      waybar.enable = true;
 
-        sway.enable = true;
-        
-        dunst.enable = true;
-        swaylock.enable = true;
-        tofi.enable = true;
-        waybar.enable = true;
-
-      };
     };
   };
 }

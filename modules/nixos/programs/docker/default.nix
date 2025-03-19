@@ -1,18 +1,12 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; let
+with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
-  options = opt {
-    enable = mkEnableOption "docker";
+  virtualisation.docker = {
+    enable = true;
+    storageDriver = "btrfs";
   };
 
-  config = lib.mkIf cfg.enable {
-    virtualisation.docker = {
-      enable = true;
-      storageDriver = "btrfs";
-    };
-
-    users = setUserGroups admins [ "docker" ];
-  };
-}
+  users = setUserGroups admins [ "docker" ];
+})

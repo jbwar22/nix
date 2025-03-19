@@ -195,6 +195,19 @@ lib: with lib; rec {
   };
 
 
+  # module helpers
+
+  mkNsEnableModule = config: path: body: with ns config path; {
+    options = opt {
+      enable = mkOption {
+        type = with types; bool;
+        default = false;
+      };
+    };
+    config = mkIf cfg.enable body;
+  };
+
+
   # option helpers
 
   mkStrOption = description: mkOption {

@@ -1,11 +1,5 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "suite of options specific to work";
-  };
+with lib; mkNsEnableModule config ./. {
 
-  config = lib.mkIf cfg.enable {
-
-  };
 }

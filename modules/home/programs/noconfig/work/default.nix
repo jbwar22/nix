@@ -1,20 +1,14 @@
 { config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "additional programs for use at work";
-  };
+with lib; mkNsEnableModule config ./. {
+  home.packages = with pkgs; [
+    slack
+    # jetbrains.pycharm-professional
+    mssql_jdbc
+    unixODBCDrivers.msodbcsql17
+  ];
 
-  config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      slack
-      # jetbrains.pycharm-professional
-      mssql_jdbc
-      unixODBCDrivers.msodbcsql17
-    ];
-
-    custom.home.opts.aliases = {
-      # TODO
-    };
+  custom.home.opts.aliases = {
+    # TODO
   };
 }

@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; let
+with lib; mkNsEnableModule config ./. (let
   # github:sersorrel/sys
   krisp-patcher = pkgs.writers.writePython3Bin "krisp-patcher" {
     libraries = with pkgs.python3Packages; [ capstone pyelftools ];
@@ -11,14 +11,8 @@ with lib; with ns config ./.; let
     ];
   } (builtins.readFile ./krisp-patcher.py);
 in {
-  options = opt {
-    enable = mkEnableOption "enable discord";
-  };
-
-  config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ 
-      discord
-      krisp-patcher
-    ];
-  };
-}
+  home.packages = with pkgs; [ 
+    discord
+    krisp-patcher
+  ];
+})

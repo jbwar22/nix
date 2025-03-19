@@ -1,17 +1,9 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; {
-  options = opt {
-    enable = mkEnableOption "bluetooth";
+with lib; mkNsEnableModule config ./. {
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
   };
-
-  config = lib.mkIf cfg.enable {
-
-    hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = false;
-    };
-    services.blueman.enable = true;
-
-  };
+  services.blueman.enable = true;
 }
