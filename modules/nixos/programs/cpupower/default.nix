@@ -9,5 +9,8 @@ in recursiveUpdate {
     performance = pkgs.sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
       sudo cpupower frequency-set -g performance
     '';
+    powersave = pkgs.sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
+      sudo cpupower frequency-set -g powersave
+    '';
   };
 }))
