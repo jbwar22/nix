@@ -7,7 +7,7 @@ in {
     enable = mkEnableOption "waybar";
     memoryWidth = mkOption {
       type = with types; int;
-      default = 8;
+      default = 12;
       description = "width of memory status";
     };
   };
@@ -16,7 +16,7 @@ in {
 
     clonck = inputs.clonck.packages.${pkgs.system}.clonck;
 
-    progress = import ./progress-bars.nix;
+    progress = import ./progress-bars.nix lib;
 
     battery = conf: {
       interval = 10;
@@ -30,7 +30,7 @@ in {
       format-critical = "B[<span font-size=\"${conf.status-font-size}\">{icon}</span>]";
       format-critical-alt = "B[{capacity:>2}%{time}]";
       format-alt-critical = "B[{capacity:>2}%{time}]";
-      format-icons = progress.horizontal.step4x8;
+      format-icons = progress.getHorizontal 4 8;
     };
 
     bar-batteries = conf: foldl' (accum: x:
@@ -115,7 +115,7 @@ in {
         format = "M<span>[<span font-size=\"${conf.status-font-size}\">{icon}</span>]</span>";
         format-alt = "M[{percentage:>2}]";
         tooltip = false;
-        format-icons = progress.horizontal."step${toString cfg.memoryWidth}x4";
+        format-icons = progress.getHorizontal cfg.memoryWidth 8;
       };
 
       "network" = {
