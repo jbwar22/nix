@@ -6,9 +6,9 @@ in {
   options = opt {
     enable = mkEnableOption "firewall related options";
   };
-  config = lib.mkIf cfg.enable ({
+  config = lib.mkIf cfg.enable (recursiveUpdate {
     # firewall is on by default, this is for extra stuff related to it
-  } // (setHMOpt admins {
+  } (setHMOpt admins {
     custom.home.programs.sway.shortcuts.admin.firewall = {
       reset = pkgs.sway-kitty-popup-admin "shortcuts-admin-firewall-reset" ''
         sudo nixos-firewall-tool reset

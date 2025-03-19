@@ -7,7 +7,7 @@ in {
     enable = mkEnableOption "docker";
   };
 
-  config = lib.mkIf cfg.enable ({
+  config = lib.mkIf cfg.enable (recursiveUpdate {
     programs.virt-manager.enable = true;
     virtualisation.libvirtd = {
       enable = true;
@@ -28,7 +28,7 @@ in {
 
     users = setUserGroups admins [ "libvirtd" ];
 
-  } // (setHMOpt admins {
+  } (setHMOpt admins {
     xdg.configFile."libvert/qemu.conf".text = ''
       nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
     '';

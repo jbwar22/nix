@@ -27,10 +27,9 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable ((opt {
-    # shortcuts = import ./shortcuts pkgs lib config;
-  }) // {
-    custom.home.programs.sway.shortcuts = import ./shortcuts pkgs lib config;
+  config = lib.mkIf cfg.enable (recursiveUpdate (opt {
+    shortcuts = import ./shortcuts pkgs lib config;
+  }) {
     custom.home.opts.aliases = {
       sway = mkIf config.custom.common.opts.hardware.nvidia "${pkgs.sway}/bin/sway --unsupported-gpu";
       getgeo = "echo ${geolocation}";

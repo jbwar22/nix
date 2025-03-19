@@ -7,9 +7,9 @@ in {
     enable = mkEnableOption "cpupower";
   };
 
-  config = lib.mkIf cfg.enable ({
+  config = lib.mkIf cfg.enable (recursiveUpdate {
     environment.systemPackages = [ config.boot.kernelPackages.cpupower ];
-  } // (setHMOpt admins {
+  } (setHMOpt admins {
     custom.home.programs.sway.shortcuts.admin.cpupower = {
       performance = pkgs.sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
         sudo cpupower frequency-set -g performance

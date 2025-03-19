@@ -18,7 +18,7 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable ({
+  config = lib.mkIf cfg.enable (recursiveUpdate {
     custom.nixos.behavior.shairport-support = {
       enable = mkDefault true;
       ports = [ cfg.shairport-port ];
@@ -110,7 +110,7 @@ in {
 
     # in addition, configPackages should be moved to a setHMOpt to set ~/.config/pipewire/...
 
-  } // (setHMOpt admins {
+  } (setHMOpt admins {
     custom.home.programs.sway.shortcuts.admin.firewall = {
       snapweb = pkgs.sway-kitty-popup-admin "shortcuts-admin-firewall-snapweb" ''
         sudo nixos-firewall-tool open tcp 1780
