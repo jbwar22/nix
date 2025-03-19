@@ -73,7 +73,7 @@ with lib; with ns config ./.; {
 
     custom.common = {
       opts.hardware = {
-        cpu.threads = 8;
+        cpu.threads = 12;
         memory.size = 32;
         nvidia = true;
       };
