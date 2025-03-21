@@ -38,6 +38,9 @@ with lib; {
               "work monitor left".sway = {
                 position = "-2560 -672";
               };
+              "work monitor above".sway = {
+                position = "-597 -1440";
+              };
             };
           };
           "LG Electronics LG TV 0x01010101" = {
