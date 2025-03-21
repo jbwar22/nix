@@ -170,6 +170,14 @@ in {
 
           # Disable defaults
           "${modifier}+space" = null;
+          "${modifier}+Up" = null;
+          "${modifier}+Down" = null;
+          "${modifier}+Left" = null;
+          "${modifier}+Right" = null;
+          "${modifier}+Shift+Up" = null;
+          "${modifier}+Shift+Down" = null;
+          "${modifier}+Shift+Left" = null;
+          "${modifier}+Shift+Right" = null;
         };
         bars = [{
           "command" = mkIf waybar.enable "${pkgs.waybar}/bin/waybar";
