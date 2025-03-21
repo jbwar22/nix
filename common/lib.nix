@@ -197,12 +197,12 @@ lib: with lib; rec {
 
   # module helpers
 
-  mkNsEnableModule = config: path: body: with ns config path; {
+  mkNsEnableModule = config: modulePath: body: with ns config modulePath; let
+    flakeRoot = ./..;
+    relativeModulePath = path.removePrefix flakeRoot modulePath;
+  in {
     options = opt {
-      enable = mkOption {
-        type = with types; bool;
-        default = false;
-      };
+      enable = mkEnableOption "the module located at ${relativeModulePath}";
     };
     config = mkIf cfg.enable body;
   };
