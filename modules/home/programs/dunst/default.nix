@@ -11,7 +11,16 @@ in {
     # 90: system critical notifications
 
     enable = true;
-    package = pkgs.dunst;
+
+    package = (pkgs.dunst.overrideAttrs (oldAttrs: {
+      src = pkgs.fetchFromGitHub {
+        owner = "jbwar22";
+        repo = "dunst";
+        rev = "88d3c0f";
+        hash = "sha256-NAayendy/eBg6Yn9Knqv25Cewu2u7XHPcz4QRn6EmxU=";
+      };
+    })).override { withX11 = false; };
+
     settings = {
       global = {
         # display options
@@ -56,7 +65,7 @@ in {
 
         # trigger update of waybar module
         script = "${pkgs.writeShellScript "waybar-dunst-signal" ''
-          pkill -RTMIN+5 waybar
+          ${pkgs.procps}/bin/pkill -RTMIN+5 waybar
         ''}";
       };
       urgency_low = {

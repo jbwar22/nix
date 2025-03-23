@@ -206,10 +206,10 @@ in {
         on-click = pkgs.writeShellScript "waybar-dunst-pause" ''
           if ${pkgs.dunst}/bin/dunstctl is-paused | grep true > /dev/null; then
             ${pkgs.dunst}/bin/dunstctl set-pause-level 0
-            pkill -RTMIN+5 waybar
+            ${pkgs.procps}/bin/pkill -RTMIN+5 waybar
           else
             ${pkgs.dunst}/bin/dunstctl set-pause-level 50
-            pkill -RTMIN+5 waybar
+            ${pkgs.procps}/bin/pkill -RTMIN+5 waybar
           fi
         '';
         exec = pkgs.writeShellScript "waybar-dunst" ''
