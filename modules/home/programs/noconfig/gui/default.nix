@@ -8,11 +8,11 @@ with lib; mkNsEnableModule config ./. (let
       hash = "sha256-P9f8t5K6c9hF/qe0Fqv5pAgB3rjya9FswV6sPF1ykOg=";
     };
   });
-  gimp-beta = (pkgs.appimageTools.wrapType2 {
-    name = "gimp-beta";
+  gimp_3 = (pkgs.appimageTools.wrapType2 {
+    name = "gimp_3";
     src = pkgs.fetchurl {
-      url = "https://download.gimp.org/gimp/v3.0/linux/GIMP-3.0.0-RC3-x86_64.AppImage";
-      hash = "sha256-OD9iXtN6LW0uXCK6rS8+O2xQ081RnrbgkGmQN4O8rHo=";
+      url = "https://download.gimp.org/gimp/v3.0/linux/GIMP-3.0.0-x86_64.AppImage";
+      hash = "sha256-9S6+SYirgYYVVJ7N/7Jx5uIOnIQSkDXZOqpPtB+lqWo=";
     };
   });
 in {
@@ -20,7 +20,7 @@ in {
     chromium
     element-desktop
     feh
-    gimp-beta
+    gimp_3
     houdoku
     prismlauncher
     qbittorrent
@@ -37,8 +37,8 @@ in {
       exec = "${houdoku}/bin/houdoku";
     };
     gimp-beta = {
-      name = "Gimp Beta";
-      exec = "${gimp-beta}/bin/gimp-beta";
+      name = "Gimp 3";
+      exec = "${gimp_3}/bin/gimp_3";
     };
   };
 })
