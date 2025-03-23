@@ -204,20 +204,25 @@ in {
         tooltip = false;
         signal = 5; # instant update on click, also triggered by dunst
         on-click = pkgs.writeShellScript "waybar-dunst-pause" ''
-          if ${pkgs.dunst}/bin/dunstctl is-paused | grep true > /dev/null; then
-            ${pkgs.dunst}/bin/dunstctl set-pause-level 0
-            ${pkgs.procps}/bin/pkill -RTMIN+5 waybar
-          else
+          # reference pause levls in dunst module
+          if [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 0 ]; then
             ${pkgs.dunst}/bin/dunstctl set-pause-level 50
-            ${pkgs.procps}/bin/pkill -RTMIN+5 waybar
+          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 50 ]; then
+            ${pkgs.dunst}/bin/dunstctl set-pause-level 70
+          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 70 ]; then
+            ${pkgs.dunst}/bin/dunstctl set-pause-level 0
           fi
+          ${pkgs.procps}/bin/pkill -RTMIN+5 waybar
         '';
         exec = pkgs.writeShellScript "waybar-dunst" ''
-          if ${pkgs.dunst}/bin/dunstctl is-paused | grep true > /dev/null; then
-            echo -n N
+          if [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 0 ]; then
+            echo ND~
+          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 50 ]; then
+            echo -n NW
             ${pkgs.dunst}/bin/dunstctl count waiting
-          else
-            echo N~
+          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 70 ]; then
+            echo -n NF
+            ${pkgs.dunst}/bin/dunstctl count waiting
           fi
         '';
       };

@@ -7,8 +7,10 @@ in {
 
     # PAUSE LEVELS:
     # 0 : default
-    # 50: my default pause level (set in waybar module)
-    # 90: system critical notifications
+    # 50: work pause level
+    # 70: full focus pause level
+    # 80: system critical alerts
+    # 90: system input feedback (volume, brightness, etc)
 
     enable = true;
 
@@ -92,7 +94,7 @@ in {
       slack = {
         appname = "Slack";
         summary = "*";
-        override_pause_level = 70;
+        override_pause_level = 50;
       };
     };
   };
