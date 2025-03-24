@@ -14,15 +14,7 @@ in {
 
     enable = true;
 
-    package = (pkgs.dunst.overrideAttrs (oldAttrs: {
-      src = pkgs.fetchFromGitHub {
-        owner = "jbwar22";
-        repo = "dunst";
-        rev = "88d3c0f";
-        hash = "sha256-NAayendy/eBg6Yn9Knqv25Cewu2u7XHPcz4QRn6EmxU=";
-      };
-    })).override { withX11 = false; };
-
+    package = pkgs.dunst; # common/overlays/custom.nix
     settings = {
       global = {
         # display options
@@ -52,10 +44,11 @@ in {
         foreground = colorscheme.wm.text;
 
         # behavior
+        indicate_hidden = false;
         notification_limit = 10;
-        indicate_hidden = true;
         sort = "yes";
-        dmenu = "tofi --prompt=\"dunst: \"";
+        dmenu = "${pkgs.tofi}/bin/tofi --prompt=\"dunst: \"";
+        enable_posix_regex = true;
 
         # progress
         progress_bar = true;
@@ -93,7 +86,12 @@ in {
       };
       slack = {
         appname = "Slack";
-        summary = "*";
+        summary = ".*";
+        override_pause_level = 50;
+      };
+      google-calendar = {
+        appname = "LibreWolf";
+        body = ".*[ap]m – .*[ap]m.*";
         override_pause_level = 50;
       };
     };

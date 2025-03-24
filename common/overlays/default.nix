@@ -3,4 +3,5 @@ inputs: channels: system: pkgs: lib: [
   (import ./test.nix)
   (import ./scripts.nix)
   (import ./unstable.nix channels)
+  (import ./custom.nix channels)
 ]
