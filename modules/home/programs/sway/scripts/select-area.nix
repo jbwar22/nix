@@ -10,5 +10,5 @@ pkgs.writeShellScript "sway-select-area" ''
        select(.pid and .visible) |
        .rect |
        "\(.x),\(.y) \(.width)x\(.height)"' | \
-  ${pkgs.slurp}/bin/slurp
+  ${pkgs.slurp}/bin/slurp -w 0
 ''

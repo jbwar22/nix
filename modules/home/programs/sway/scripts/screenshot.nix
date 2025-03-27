@@ -26,7 +26,7 @@ pkgs.writeShellScript "sway-screenshot" ''
   ${pkgs.coreutils}/bin/sleep 0.02
 
   if [ $fullscreen = true ]; then
-    area="$(${pkgs.slurp}/bin/slurp -o)"
+    area="$(${pkgs.slurp}/bin/slurp -o -w 0)"
   else
     area="$(${select-area})"
   fi
