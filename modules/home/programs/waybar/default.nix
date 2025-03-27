@@ -169,33 +169,79 @@ in {
         format = "{}";
         escape = true;
         tooltip = false;
-        interval = 1;
         exec = pkgs.writeShellScript "waybar-extras" ''
-          extras="["
-          
-          if hciconfig | head -3 | tail -1 | grep UP > /dev/null; then
-            extras="''${extras}B"
-          fi
-
-          if [ -d /sys/class/net/wg ]; then
-            extras="''${extras}V"
-          fi
-
-          if nmcli con show --active | awk '{print $3}' | grep vpn > /dev/null || nmcli con show --active | awk '{print $3}' | grep wireguard > /dev/null; then
-            extras="''${extras}V"
-          fi
-
-          # TODO conditional
-          if [[ "$(cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "night" ]] || \
-             [[ "$(cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "transition" ]]; then
-            extras="''${extras}G"
-          fi
-
-          if [ "$extras" != "[" ]; then
-            echo "''${extras}]"
-          else
-            echo
-          fi
+          bluetooth=""
+          vpn=""
+          gammastep=""
+          {(
+            while true
+            do
+              echo bluetooth
+              sleep 5
+            done
+          ) & (
+            ${pkgs.networkmanager}/bin/nmcli monitor \
+            | ${pkgs.coreutils}/bin/stdbuf -oL \
+              ${pkgs.gnugrep}/bin/grep -E '.*: connected|.*: disconnected' \
+            | while read line
+            do
+              echo vpn
+            done
+          ) & (
+            while true
+            do
+              echo gammastep
+              sleep 1
+            done
+          )} | while read line
+          do
+            case $line in
+              bluetooth)
+                if ${pkgs.bluez}/bin/hciconfig \
+                   | ${pkgs.coreutils}/bin/head -3 \
+                   | ${pkgs.coreutils}/bin/tail -1 \
+                   | ${pkgs.gnugrep}/bin/grep UP > /dev/null
+                then
+                  bluetooth="B"
+                else
+                  bluetooth=""
+                fi
+                ;;
+              vpn)
+                if ${pkgs.networkmanager}/bin/nmcli con show --active \
+                   | ${pkgs.gawk}/bin/awk '{print $3}' \
+                   | ${pkgs.gnugrep}/bin/grep vpn > /dev/null \
+                || ${pkgs.networkmanager}/bin/nmcli con show --active \
+                   | ${pkgs.gawk}/bin/awk '{print $3}' \
+                   | ${pkgs.gnugrep}/bin/grep wireguard > /dev/null \
+                || [ -d /sys/class/net/wg ]
+                then
+                  vpn="V"
+                else
+                  vpn=""
+                fi
+                ;;
+              gammastep)
+                if [[ "$(${pkgs.coreutils}/bin/cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "night" ]] || \
+                   [[ "$(${pkgs.coreutils}/bin/cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "transition" ]]
+                then
+                  gammastep="G"
+                else
+                  gammastep=""
+                fi
+                ;;
+              *)
+                exit 1
+                ;;
+            esac
+            extras="[''${bluetooth}''${vpn}''${gammastep}]"
+            if [ "$extras" != "[]" ]
+            then
+              echo $extras
+            else
+              echo
+            fi
+          done
         '';
       };
 
