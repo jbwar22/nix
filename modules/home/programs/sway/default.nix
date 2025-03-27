@@ -168,6 +168,9 @@ in {
           "${modifier}+${alt}+space" = "focus mode_toggle";
           "${modifier}+${alt}+s" = "layout stacking";
 
+          # Basic behavior
+          "${modifier}+Shift+a" = "focus child";
+
           # Disable defaults
           "${modifier}+space" = null;
           "${modifier}+Up" = null;
