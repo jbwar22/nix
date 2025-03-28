@@ -180,6 +180,7 @@ in {
               sleep 5
             done
           ) & (
+            echo vpn
             ${pkgs.networkmanager}/bin/nmcli monitor \
             | ${pkgs.coreutils}/bin/stdbuf -oL \
               ${pkgs.gnugrep}/bin/grep -E '.*: connected|.*: disconnected' \
@@ -188,10 +189,13 @@ in {
               echo vpn
             done
           ) & (
-            while true
+            echo gammastep
+            ${pkgs.inotify-tools}/bin/inotifywait -m -e close_write \
+            ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path} \
+            2>/dev/null \
+            | while read line
             do
               echo gammastep
-              sleep 1
             done
           )} | while read line
           do
