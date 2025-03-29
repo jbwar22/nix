@@ -3,4 +3,7 @@ let
 in {
   "geolocation.age".publicKeys = keys;
   "shairport-password.age".publicKeys = keys;
+
+  "rclone-ay5efs34-args.age".publicKeys = keys;
+  "rclone-ay5efs34-conf.age".publicKeys = keys;
 }

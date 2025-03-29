@@ -16,6 +16,17 @@ with lib; {
           enable = true;
           port = 5001;
         };
+
+        rclone = {
+          enable = true;
+          configs = {
+            ay5efs34 = {
+              oncalendar = "*-*-* 05:00:0";
+              rcloneargs = ageOrNull config "rclone-ay5efs34-args";
+              rcloneconf = ageOrNull config "rclone-ay5efs34-conf";
+            };
+          };
+        };
       };
 
       opts = {

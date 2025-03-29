@@ -241,6 +241,11 @@ lib: with lib; rec {
     type = types.bool;
   };
 
+  mkNullOrStrOption = description: mkOption {
+    inherit description;
+    type = with types; nullOr str;
+  };
+
 
   # nixvim helpers
 
@@ -296,5 +301,10 @@ lib: with lib; rec {
     ]))
     (lib.concatStringsSep " ")
   ];
+
+  # use at own risk, infinite recursion errors that I couldn't figure out
+  mapAttrsRecursiveUpdate = generate: attrset: foldl' (accum: x:
+    recursiveUpdate accum (generate x.name x.value)
+  ) {} (attrsToList attrset);
     
 }
