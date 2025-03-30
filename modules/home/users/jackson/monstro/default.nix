@@ -20,10 +20,15 @@ with lib; {
         rclone = {
           enable = true;
           configs = {
+            dh5exd2a = {
+              oncalendar = "*-*-* 05:00:00";
+              rcloneargs = ageOrNull config "rclone-dh5exd2a-args";
+              rcloneconf = ageOrNull config "rclone-the-forsaken-conf";
+            };
             ay5efs34 = {
-              oncalendar = "*-*-* 05:00:0";
+              oncalendar = "*-*-* 05:01:00";
               rcloneargs = ageOrNull config "rclone-ay5efs34-args";
-              rcloneconf = ageOrNull config "rclone-ay5efs34-conf";
+              rcloneconf = ageOrNull config "rclone-the-forsaken-conf";
             };
           };
         };
