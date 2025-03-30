@@ -12,6 +12,7 @@ with lib; mkNsEnableModule config ./. {
 
     programs = {
       noconfig.vpn.enable = true;
+      arduino.enable = true;
       docker.enable = true;
       flatpak.enable = true;
       plymouth.enable = true;
