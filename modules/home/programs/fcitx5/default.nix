@@ -22,7 +22,10 @@ with lib; with ns config ./.; {
 
     xdg.configFile = mkIf (!cfg.basic) {
       "fcitx5/config".source = ./fcitx5/config;
-      "fcitx5/profile".source = ./fcitx5/profile;
+      "fcitx5/profile" = {
+        source = ./fcitx5/profile;
+        force = true;
+      };
       "fcitx5/conf/mozc.conf".source = ./fcitx5/conf/mozc.conf;
       "mozc/config1.db".source = ./mozc/config1.db;
       "mozc/user_dictionary.db".source = mkIf (cfg.user-dictionary != null) (config.lib.file.mkOutOfStoreSymlink cfg.user-dictionary);
