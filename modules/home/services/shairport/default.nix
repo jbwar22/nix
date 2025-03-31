@@ -15,7 +15,7 @@ with lib; with ns config ./.; {
     systemd.user.services.shairport-sync = {
       Unit = {
         Description = "shairport-sync airplay server";
-        Requires = [ "pipewire.service" ];
+        Requires = [ "pipewire.service" "agenix.service" ];
         After = "pipewire.target";
       };
       Service = {
