@@ -18,10 +18,7 @@ with lib; with ns config ./.; {
     systemd.user.services = mapAttrs' (name: c: {
       name = "rclone-${name}";
       value = if checkc c then {
-        Unit = {
-          Description = "service for rclone config: ${name}";
-          Requires = [ "default.target" "agenix.service" ];
-        };
+        Unit.Description = "service for rclone config: ${name}";
         Service = {
           ExecStart = pkgs.writeShellScript "rclone: ${name}" ''
             echo executing rclone
