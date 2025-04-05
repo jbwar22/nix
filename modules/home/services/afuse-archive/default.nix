@@ -5,16 +5,19 @@ with lib; mkNsEnableModule config ./. (let
     r=$1
     m=$2
     dir=$3
-    if [[ "$r" == *.zip ]]; then
-      ${pkgs.mount-zip}/bin/mount-zip $dir/$r $m
-    elif [[ "$r" == *.tar ]] || [[ "$r" == *.tar.gz ]] || [[ "$r" == *.tar.bz2 ]]; then
+    if [[ "$r" == *.zip ]] \
+    || [[ "$r" == *.tar ]] \
+    || [[ "$r" == *.tar.gz ]] \
+    || [[ "$r" == *.tar.bz2 ]] \
+    || [[ "$r" == *.7z ]]
+    then
       ${pkgs.archivemount}/bin/archivemount $dir/$r $m
     else
       exit 1
     fi
   '';
   lister = pkgs.writeShellScript "afuse-archive-lister" ''
-    ${pkgs.coreutils}/bin/ls $1 | ${pkgs.gnugrep}/bin/grep -E "(\.zip|\.tar|\.tar\.gz|\.tar\.bz2)\$"
+    ${pkgs.coreutils}/bin/ls $1 | ${pkgs.gnugrep}/bin/grep -E "(\.zip|\.tar|\.tar\.gz|\.tar\.bz2|\.7z)\$"
   '';
   afuse-archive = pkgs.writeShellScript "afuse-archive" ''
     dir=$1
