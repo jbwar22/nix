@@ -7,6 +7,7 @@ with lib; mkNsEnableModule config ./. {
     Unit = {
       Description="afuse sshfs";
       AssertPathExists="%h/sshfs/";
+      Requires = [ "agenix.service" ];
     };
     Service = {
       Restart="always";
