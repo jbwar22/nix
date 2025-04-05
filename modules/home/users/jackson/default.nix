@@ -14,8 +14,8 @@ with lib; {
         fcitx5.user-dictionary = ageOrNull config "fcitx5-mozc-user_dictionary";
       };
 
-      behavior = {
-        afuse.enable=true;
+      services = {
+        afuse-sshfs.enable=true;
       };
     };
   };
