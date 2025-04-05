@@ -4,6 +4,7 @@ in {
   "geolocation.age".publicKeys = keys;
   "shairport-password.age".publicKeys = keys;
   "afuse-sshfs-hosts.age".publicKeys = keys;
+  "afuse-archive-dirs.age".publicKeys = keys;
 
   "rclone-the-forsaken-conf.age".publicKeys = keys;
   "rclone-ay5efs34-args.age".publicKeys = keys;
