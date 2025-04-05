@@ -10,4 +10,6 @@ channels: final: prev: {
   swaylock        # match sway
   tofi            # .desktop entry bug
   yt-dlp;         # features
+
+  gimp3 = channels.gimp3.gimp3;
 }

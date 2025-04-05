@@ -208,6 +208,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-gimp3": {
+      "locked": {
+        "lastModified": 1743550502,
+        "narHash": "sha256-+n8Odooi32fHtpW0MbbP0sXH2UYYGl3C2QuOiuLps2c=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "fa4992dd39f48279eb33db114c623abccae09384",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "fa4992d",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1741600792,
@@ -311,6 +327,7 @@
         "clonck": "clonck",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
+        "nixpkgs-gimp3": "nixpkgs-gimp3",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",

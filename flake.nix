@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-gimp3.url = "github:NixOS/nixpkgs/fa4992d";
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
@@ -29,6 +30,7 @@
     channels = {
       stable = inputs.nixpkgs-stable;
       unstable = inputs.nixpkgs-unstable;
+      gimp3 = inputs.nixpkgs-gimp3;
     };
     nixpkgs-main = "stable";
     custom-lib = import ./common/lib.nix channels.${nixpkgs-main}.lib;
