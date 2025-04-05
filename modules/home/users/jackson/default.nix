@@ -13,6 +13,10 @@ with lib; {
       programs = {
         fcitx5.user-dictionary = ageOrNull config "fcitx5-mozc-user_dictionary";
       };
+
+      behavior = {
+        afuse.enable=true;
+      };
     };
   };
 }
