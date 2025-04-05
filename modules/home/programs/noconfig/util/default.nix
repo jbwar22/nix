@@ -3,6 +3,7 @@
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
     appimage-run
+    archivemount
     cowsay
     dig
     ffmpeg
@@ -24,6 +25,17 @@ with lib; mkNsEnableModule config ./. {
     wl-clipboard
     yt-dlp
     zip
+
+    (pkgs.writeShellScriptBin "cdarchive" ''
+      mountpoint=$(${pkgs.coreutils}/bin/mktemp -d)
+      ${pkgs.archivemount}/bin/archivemount $1 $mountpoint
+      echo "entering archive (ctrl-d to exit)"
+      pushd $mountpoint > /dev/null
+      ${pkgs.bashInteractive}/bin/bash
+      popd > /dev/null
+      umount $mountpoint
+      ${pkgs.coreutils}/bin/rmdir $mountpoint
+    '')
   ];
 
    
