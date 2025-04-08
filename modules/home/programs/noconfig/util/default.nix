@@ -30,8 +30,10 @@ with lib; mkNsEnableModule config ./. {
       mountpoint=$(${pkgs.coreutils}/bin/mktemp -d)
       ${pkgs.archivemount}/bin/archivemount $1 $mountpoint
       echo "entering archive (ctrl-d to exit)"
+      echo 'currend pwd stored in $PREV'
+      PREV="$(${pkgs.coreutils}/bin/pwd)"
       pushd $mountpoint > /dev/null
-      ${pkgs.bashInteractive}/bin/bash
+      PREV="$PREV" ${pkgs.bashInteractive}/bin/bash
       popd > /dev/null
       umount $mountpoint
       ${pkgs.coreutils}/bin/rmdir $mountpoint
