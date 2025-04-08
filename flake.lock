@@ -176,6 +176,26 @@
         "type": "github"
       }
     },
+    "jbwar22-mpv-scripts": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744083157,
+        "narHash": "sha256-skn1X0YO6PPj+tsr+nkBYoQpCUKT8nfj6KgNgzSVyto=",
+        "owner": "jbwar22",
+        "repo": "mpv-scripts",
+        "rev": "d43baf7cfc2865ccf356fdf486b4421fb8de14a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jbwar22",
+        "repo": "mpv-scripts",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1741792691,
@@ -326,6 +346,7 @@
         "agenix": "agenix",
         "clonck": "clonck",
         "home-manager": "home-manager",
+        "jbwar22-mpv-scripts": "jbwar22-mpv-scripts",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-gimp3": "nixpkgs-gimp3",
         "nixpkgs-stable": "nixpkgs-stable",

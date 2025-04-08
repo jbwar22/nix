@@ -24,6 +24,10 @@
       url = "github:jbwar22/clonck";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+    jbwar22-mpv-scripts = {
+      url = "github:jbwar22/mpv-scripts";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
   };
 
   outputs = inputs@{ self, ... }: let

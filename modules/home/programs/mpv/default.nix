@@ -1,9 +1,13 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib; mkNsEnableModule config ./. {
   programs.mpv = {
     enable = true;
     package = pkgs.mpv;
+    scripts = [
+      inputs.jbwar22-mpv-scripts.packages.${pkgs.system}.downmix
+    ];
+
     config = {
       # screenshot
       screenshot-format = "png";
