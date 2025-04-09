@@ -3,4 +3,6 @@ let
 in {
   "geolocation.age".publicKeys = keys;
   "shairport-password.age".publicKeys = keys;
+  "afuse-sshfs-hosts.age".publicKeys = keys;
+  "afuse-archive-dirs.age".publicKeys = keys;
 }
