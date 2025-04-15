@@ -28,7 +28,7 @@ with lib; mkNsEnableModule config ./. {
 
     (pkgs.writeShellScriptBin "cdarchive" ''
       mountpoint=$(${pkgs.coreutils}/bin/mktemp -d)
-      ${pkgs.archivemount}/bin/archivemount $1 $mountpoint
+      ${pkgs.archivemount}/bin/archivemount "$1" $mountpoint
       echo "entering archive (ctrl-d to exit)"
       echo 'currend pwd stored in $PREV'
       PREV="$(${pkgs.coreutils}/bin/pwd)"
