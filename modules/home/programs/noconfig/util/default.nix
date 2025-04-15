@@ -12,9 +12,11 @@ with lib; mkNsEnableModule config ./. {
     git
     git-crypt
     jq
+    ncdu
     nmap
     ripgrep
     rsync
+    smartmontools
     snapcast
     sqlite
     sshfs
