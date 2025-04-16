@@ -34,7 +34,7 @@ with lib; with ns config ./.; {
       };
 
     fileSystems."/boot/efi" =
-      { device = "/dev/disk/by-uuid/15E9-B97A";
+      { device = "/dev/disk/by-uuid/A550-E7F5";
         fsType = "vfat";
         options = [ "umask=0077" "defaults" ];
       };
