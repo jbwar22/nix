@@ -45,10 +45,16 @@ with lib; with ns config ./.; {
         options = [ "subvol=@home" "subvolid=257" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
-    fileSystems."/home/jackson/tmp" =
+    fileSystems."/home/jackson/bulk" =
       { device = "/dev/disk/by-uuid/4cdc67ca-2aa2-4a1b-b929-8c25d041cd35";
         fsType = "btrfs";
         options = [ "subvol=@bulk" "subvolid=258" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+      };
+
+    fileSystems."/data" =
+      { device = "/dev/disk/by-uuid/4cdc67ca-2aa2-4a1b-b929-8c25d041cd35";
+        fsType = "btrfs";
+        options = [ "subvol=@data" "subvolid=276" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
     fileSystems."/mnt/red" =
