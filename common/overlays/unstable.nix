@@ -11,4 +11,6 @@ channels: final: prev: {
   swaylock        # match sway
   tofi            # .desktop entry bug
   yt-dlp;         # features
+
+  linuxPackages_latest_unstable = channels.unstable.linuxPackages_latest;
 }

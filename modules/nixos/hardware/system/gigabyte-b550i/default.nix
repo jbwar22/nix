@@ -27,12 +27,6 @@ with lib; with ns config ./.; {
         options = [ "subvol=/" "subvolid=5" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
-    fileSystems."/boot" =
-      { device = "/dev/disk/by-uuid/4cdc67ca-2aa2-4a1b-b929-8c25d041cd35";
-        fsType = "btrfs";
-        options = [ "subvol=@boot" "subvolid=259" "noatime" "compress=lzo" "ssd" "space_cache=v2" "umask=0077" ];
-      };
-
     fileSystems."/boot/efi" =
       { device = "/dev/disk/by-uuid/A550-E7F5";
         fsType = "vfat";
