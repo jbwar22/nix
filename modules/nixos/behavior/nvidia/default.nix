@@ -4,9 +4,9 @@ with lib; mkNsEnableModule config ./. {
   specialisation.lts.configuration = let
     kernelPackages = pkgs.linuxPackages_6_12;
   in {
-    environment.etc.specialisation.text = "6.12, NVIDIA beta 565";
+    environment.etc.specialisation.text = "6.12, NVIDIA latest 565";
     boot.kernelPackages = mkForce kernelPackages;
-    hardware.nvidia.package = mkForce kernelPackages.nvidiaPackages.beta;
+    hardware.nvidia.package = mkForce kernelPackages.nvidiaPackages.latest;
   };
 
   services.xserver.videoDrivers = ["nvidia"];
@@ -14,7 +14,7 @@ with lib; mkNsEnableModule config ./. {
   boot.kernelPackages = mkDefault pkgs.linuxPackages_latest_unstable;
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     open = false;
 
     modesetting.enable = true;
