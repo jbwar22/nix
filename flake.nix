@@ -12,7 +12,7 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      # inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     agenix = {
       url = "github:ryantm/agenix";
