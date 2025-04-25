@@ -18,6 +18,8 @@ with lib; with ns config ./.; {
 
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
 
+    boot.kernel.sysctl."vm.swapiness" = 0;
+
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/46f5a669-adab-462d-ba14-6f1282a06bc5";
         fsType = "btrfs";

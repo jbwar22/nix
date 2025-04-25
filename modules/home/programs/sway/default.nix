@@ -32,6 +32,7 @@ in {
   }) {
     custom.home.opts.aliases = {
       sway = mkIf config.custom.common.opts.hardware.nvidia "${pkgs.sway}/bin/sway --unsupported-gpu";
+      screens = "${pkgs.sway}/bin/swaymsg -t get_outputs | ${pkgs.jq}/bin/jq -r '.[] | .name + \"\\t\" + .make + \" \" + .model + \" \" + .serial'";
     };
 
     home.packages = with pkgs; [

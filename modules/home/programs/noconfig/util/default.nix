@@ -25,6 +25,7 @@ with lib; mkNsEnableModule config ./. {
     wget
     which
     wl-clipboard
+    wl-mirror
     yt-dlp
     zip
 

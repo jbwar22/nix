@@ -93,6 +93,7 @@ in {
         appname = "LibreWolf";
         body = ".*[ap]m – .*[ap]m.*";
         override_pause_level = 50;
+        set_transient = true;
       };
     };
   };
