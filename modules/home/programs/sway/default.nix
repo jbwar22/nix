@@ -32,7 +32,6 @@ in {
   }) {
     custom.home.opts.aliases = {
       sway = mkIf config.custom.common.opts.hardware.nvidia "${pkgs.sway}/bin/sway --unsupported-gpu";
-      getgeo = "echo ${geolocation}";
     };
 
     home.packages = with pkgs; [
