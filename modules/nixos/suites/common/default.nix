@@ -4,7 +4,6 @@ with lib; mkNsEnableModule config ./. {
   custom.nixos = {
     behavior = {
       appimage.enable = true;
-      firewall.enable = true;
       flakes-support.enable = true;
       locale.enable = true;
       network.enable = true;

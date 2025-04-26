@@ -2,7 +2,7 @@
 
 with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
-in recursiveUpdate {
+in {
   programs.virt-manager.enable = true;
 
   virtualisation = {
@@ -25,8 +25,4 @@ in recursiveUpdate {
   };
 
   users = setUserGroups admins [ "libvirtd" ];
-} (setHMOpt admins {
-  xdg.configFile."libvert/qemu.conf".text = ''
-    nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
-  '';
-}))
+})

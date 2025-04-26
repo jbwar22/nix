@@ -29,7 +29,7 @@ lib: with lib; rec {
     forAllHostnames = hosts: genAttrs (attrNames hosts);
 
     forAllHostUserPairs = pairs: f: listToAttrs (map ({hostname, username}:
-      nameValuePair "${hostname}-${username}" (f hostname username)
+      nameValuePair "${username}@${hostname}" (f hostname username)
     ) pairs);
 
     getNixosHosts = filterAttrs (_name: value: value.os == enums.os.nixos);
@@ -155,44 +155,17 @@ lib: with lib; rec {
   # home-manager = setHMOpt config.custom.common.opts.host.users { programs.bash.enable = true; }
   setHMOptNoPropagate = users: value: setHMOptWithUserNoPropagate users (_: value);
 
-
-  setHMOptWithUser = users: valuef: let
-    userAttrs = genAttrs (attrNames users) valuef;
-  in {
-    home-manager.users = userAttrs;
-    custom.nixos.opts.propagated = userAttrs;
-  };
-
-  setHMOpt = users: value: setHMOptWithUser users (_: value);
-
-
-  # set home-manager options for a list of users only if they match a predicate
-  # unfortunately this causes infinite recursion and should not be used directly. This was
-  # originally built with the purpose of enabling a shell alias for home-manager users with sway
-  # enabled on systems with nvidia hardware:
-  # home-manager = setHMOptPredicate config users (config:
-  #   config.custom.home.program.sway.enable
-  # ) {
-  #   custom.home.opt.aliases = {
-  #     sway = "${pkgs.sway}/bin/sway --unsupported-gpu";
-  #   };
-  # };
-  # however that cause infinite recursion. Instead of doing this, there is a different paradigm that
-  # works just as well. Use the common opt structure instead. In the nvidia example that would be
-  # just creating a common hardware opt that is true on nvidia hosts. Then reference that only if
-  # what would have been the predicate is true.
-  # original example: enable vim on users who have bash enabled
-  # home-manager = setHMOptPredicate config config.custom.common.opts.host.users (cfg: cfg.programs.bash.enable) { programs.vim.enable = true; }
-  _setHMOptPredicate = config: users: predicate: value: { users = genAttrs (filter (username:
-    isUserPredicate config username predicate
-  ) (attrNames users)) (_: value); };
-
   # users = setUserGroups config.custom.common.opts.host.users [ "group" ];
   setUserGroups = users: groups: {
     users = mapAttrs (username: user: {
       extraGroups = groups;
     }) users;
   };
+
+  # elem "wheel" (getUserGroups config "jackson")
+  getUserGroups = config: user: config.users.users.${user}.extraGroups;
+
+  hasGroup = config: osConfig: group: elem group (getUserGroups osConfig config.home.username);
 
 
   # module helpers
