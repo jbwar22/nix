@@ -7,12 +7,12 @@ with lib; mkNsEnableModule config ./. {
       graphics.enable = true;
       ios-mount.enable = true;
       printing.enable = true;
+      serial-support.enable = true;
       sound.enable = true;
     };
 
     programs = {
       noconfig.vpn.enable = true;
-      arduino.enable = true;
       docker.enable = true;
       flatpak.enable = true;
       plymouth.enable = true;

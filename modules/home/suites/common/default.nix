@@ -2,8 +2,6 @@
 
 with lib; mkNsEnableModule config ./. {
   custom.home = {
-    reactive.enable = true;
-
     behavior = {
       cursor-settings.enable = true;
       environment.enable = true;

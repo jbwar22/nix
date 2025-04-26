@@ -6,7 +6,8 @@ with lib; with ns config ./.; {
     usesNixosFirewall = mkDisableOption "uses nixos firewall";
     runningSnapweb = mkDisableOption "running snapweb";
     hasCpupower = mkDisableOption "has cpupower package";
-    hasDialoutGroup = mkDisableOption "current user has dialout group";
+    hasSerialSupport = mkDisableOption "current user has dialout group";
+    hasLibvirtd = mkDisableOption "has cpupower package";
     hasOvmf = mkDisableOption "has cpupower package";
   };
 
@@ -15,7 +16,8 @@ with lib; with ns config ./.; {
     usesNixosFirewall = osConfig.networking.firewall.enable;
     runningSnapweb = osConfig.custom.nixos.programs.snapserver.enable;
     hasCpupower = osConfig.custom.nixos.programs.cpupower.enable;
-    hasDialoutGroup = hasGroup config osConfig "dialout";
+    hasSerialSupport = hasGroup config osConfig "dialout";
+    hasLibvirtd = osConfig.virtualisation.libvirtd.enable;
     hasOvmf = osConfig.virtualisation.libvirtd.qemu.ovmf.enable;
   }) else {};
 }

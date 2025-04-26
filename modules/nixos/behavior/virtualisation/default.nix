@@ -3,7 +3,17 @@
 with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
-  programs.virt-manager.enable = true;
+  # from nixpkgs/nixos/modules/programs/virt-manager.nix
+  programs.dconf = {
+    profiles.user.databases = [{
+      settings = {
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = [ "qemu:///system" ];
+          uris = [ "qemu:///system" ];
+        };
+      };
+    }];
+  };
 
   virtualisation = {
     libvirtd = {

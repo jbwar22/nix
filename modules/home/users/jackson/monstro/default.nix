@@ -9,6 +9,7 @@ with lib; {
         sway.blueLightFilter = true;
         sway.blueLightStrength = 5000;
         firefox.usePackage = true;
+        virt-manager.enable = true;
       };
 
       services = {

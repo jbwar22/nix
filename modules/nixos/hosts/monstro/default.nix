@@ -23,12 +23,12 @@ with lib; {
       programs = {
         plymouth.theme = "rings";
         snapserver.enable = true;
-        virt-manager.enable = true;
       };
 
       behavior = {
         skip-wait-online.enable = true;
         grub-boot.enable = true;
+        virtualisation.enable = true;
       };
     };
 
