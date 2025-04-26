@@ -8,7 +8,7 @@ with lib; {
   ];
 
   config = {
-    custom.common = osConfig.custom.common;
+    custom.common = osConfig.custom.common; # TODO unsafe on standalone hm on non nixos systems
     home.homeDirectory = mkDefault "/home/${config.home.username}";
     age = {
       secrets = (
