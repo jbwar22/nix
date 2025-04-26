@@ -1,4 +1,4 @@
-{ inputs, lib, config, ... }:
+{ inputs, lib, config, osConfig, ... }:
 
 with lib; {
   imports = [
@@ -8,6 +8,7 @@ with lib; {
   ];
 
   config = {
+    custom.common = osConfig.custom.common;
     home.homeDirectory = mkDefault "/home/${config.home.username}";
     age = {
       secrets = (

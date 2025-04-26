@@ -101,7 +101,6 @@
         };
         modules = (genHMModules hostname username) ++ [(if isNixosHost host then {
           nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
-          custom.common = nixosConfigurations.${hostname}.config.custom.common;
         } else ./modules/home/users/common/${hostname})];
       }
     );

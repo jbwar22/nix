@@ -145,16 +145,6 @@ lib: with lib; rec {
 
   getHMOpt = config: getter: users: map (username: getter config.home-manager.users.${username}) (attrNames users);
 
-  # set home-manager options for a list of users, with username
-  # example: set username for all users
-  # home-manager = setHMOptWithUser config.custom.common.opts.host.users (name: { home.username = name; })
-  setHMOptWithUserNoPropagate = users: valuef: { users = genAttrs (attrNames users) (name: valuef name); };
-
-  # set home-manager options for a list of users
-  # example: enable bash for all users
-  # home-manager = setHMOpt config.custom.common.opts.host.users { programs.bash.enable = true; }
-  setHMOptNoPropagate = users: value: setHMOptWithUserNoPropagate users (_: value);
-
   # users = setUserGroups config.custom.common.opts.host.users [ "group" ];
   setUserGroups = users: groups: {
     users = mapAttrs (username: user: {

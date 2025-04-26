@@ -18,11 +18,6 @@ with lib; {
       extraGroups = mkIf user.admin [ "wheel" ];
     }) users;
 
-    # load host common options into home-manager
-    home-manager = setHMOptNoPropagate users {
-      custom.common = config.custom.common;
-    };
-
     nix.settings.trusted-users = attrNames admins;
 
     # load common suite
