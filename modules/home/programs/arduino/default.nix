@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib; mkNsEnableModule config ./. (let
   hf = config.custom.home.opts.hostfeatures;

@@ -5,6 +5,10 @@ with lib; {
     home.stateVersion = "24.05";
 
     custom.home = {
+      suites = {
+        pc.enable = true;
+      };
+
       programs = {
         sway.blueLightFilter = true;
         sway.blueLightStrength = 5000;
