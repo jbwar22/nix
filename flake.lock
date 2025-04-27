@@ -176,6 +176,22 @@
         "type": "github"
       }
     },
+    "jbwar22-dunst": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1742489490,
+        "narHash": "sha256-z2P5YxZqlFncaY1JSU2DNqHGWMkDBPJb0SViPzXLWJ8=",
+        "owner": "jbwar22",
+        "repo": "dunst",
+        "rev": "e4eedd9853a92c277d81da78bbc9ef7ed6756d1e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jbwar22",
+        "repo": "dunst",
+        "type": "github"
+      }
+    },
     "jbwar22-mpv-scripts": {
       "inputs": {
         "nixpkgs": [
@@ -344,6 +360,7 @@
         "agenix": "agenix",
         "clonck": "clonck",
         "home-manager": "home-manager",
+        "jbwar22-dunst": "jbwar22-dunst",
         "jbwar22-mpv-scripts": "jbwar22-mpv-scripts",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-stable": "nixpkgs-stable",

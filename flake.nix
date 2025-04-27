@@ -27,6 +27,10 @@
       url = "github:jbwar22/mpv-scripts";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+    jbwar22-dunst = {
+      url = "github:jbwar22/dunst";
+      flake = false;
+    };
     yt-dlp = {
       url = "github:yt-dlp/yt-dlp/master";
       flake = false;
