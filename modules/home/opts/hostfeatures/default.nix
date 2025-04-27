@@ -9,6 +9,7 @@ with lib; with ns config ./.; {
     hasSerialSupport = mkDisableOption "current user has dialout group";
     hasLibvirtd = mkDisableOption "has cpupower package";
     hasOvmf = mkDisableOption "has cpupower package";
+    hasTailscale = mkDisableOption "has tailscale";
   };
 
   config = if (osConfig != false) then (opt {
@@ -19,5 +20,6 @@ with lib; with ns config ./.; {
     hasSerialSupport = hasGroup config osConfig "dialout";
     hasLibvirtd = osConfig.virtualisation.libvirtd.enable;
     hasOvmf = osConfig.virtualisation.libvirtd.qemu.ovmf.enable;
+    hasTailscale = osConfig.services.tailscale.enable;
   }) else {};
 }

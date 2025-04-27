@@ -23,4 +23,13 @@ in {
       sudo cpupower frequency-set -g powersave
     '';
   };
+
+  tailscale = mkIf hf.hasTailscale {
+    up = pkgs.sway-kitty-popup-admin "shortcuts-admin-tailscale-up" ''
+      sudo tailscale up
+    '';
+    down = pkgs.sway-kitty-popup-admin "shortcuts-admin-tailscale-down" ''
+      sudo tailscale down
+    '';
+  };
 })
