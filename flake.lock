@@ -349,7 +349,8 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
-        "nur": "nur"
+        "nur": "nur",
+        "yt-dlp": "yt-dlp"
       }
     },
     "systems": {
@@ -400,6 +401,23 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "yt-dlp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745712994,
+        "narHash": "sha256-Pu1lTmeMF2LsPU3Zdq7tdlCe92dBpb1Gh9fE/ITFkjI=",
+        "owner": "yt-dlp",
+        "repo": "yt-dlp",
+        "rev": "8cb08028f5be2acb9835ce1670b196b9b077052f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yt-dlp",
+        "ref": "master",
+        "repo": "yt-dlp",
         "type": "github"
       }
     }

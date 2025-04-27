@@ -9,8 +9,8 @@ channels: final: prev: {
   sway            # IM support
   swaybg          # match sway
   swaylock        # match sway
-  tofi            # .desktop entry bug
-  yt-dlp;         # features
+  tofi;           # .desktop entry bug
+  # yt-dlp;         # features
 
   linuxPackages_latest_unstable = channels.unstable.linuxPackages_latest;
 }

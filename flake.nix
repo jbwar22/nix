@@ -27,6 +27,10 @@
       url = "github:jbwar22/mpv-scripts";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+    yt-dlp = {
+      url = "github:yt-dlp/yt-dlp/master";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, ... }: let
