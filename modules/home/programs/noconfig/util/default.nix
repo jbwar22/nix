@@ -18,6 +18,7 @@ with lib; mkNsEnableModule config ./. {
     rsync
     smartmontools
     snapcast
+    speedtest-cli
     sqlite
     sshfs
     tree
