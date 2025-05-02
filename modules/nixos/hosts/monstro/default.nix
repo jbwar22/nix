@@ -20,15 +20,15 @@ with lib; {
         gaming.enable = true;
       };
 
-      programs = {
-        plymouth.theme = "rings";
-        snapserver.enable = true;
-      };
-
       behavior = {
         skip-wait-online.enable = true;
         grub-boot.enable = true;
         virtualisation.enable = true;
+      };
+
+      programs = {
+        plymouth.theme = "rings";
+        snapserver.enable = true;
       };
     };
 

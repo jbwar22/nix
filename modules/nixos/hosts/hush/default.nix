@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, lib, pkgs, ... }:
 
 with lib; {
   imports = [
@@ -6,6 +6,9 @@ with lib; {
   ];
 
   config = {
+
+    boot.loader.systemd-boot.consoleMode = "auto";
+
     custom.nixos = {
       opts = {
         secrets = {
@@ -28,6 +31,7 @@ with lib; {
       };
 
       programs = {
+        plymouth.theme = "rings";
         snapserver.enable = false;
       };
     };
