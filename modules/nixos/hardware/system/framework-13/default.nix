@@ -14,7 +14,11 @@ with lib; with ns config ./.; {
 
     boot.initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
-      luks.devices."root".device = "/dev/disk/by-uuid/41c4368d-eb26-45c7-ba3d-06c87e50ceda";
+
+      luks.devices."root" = {
+        device = "/dev/disk/by-uuid/41c4368d-eb26-45c7-ba3d-06c87e50ceda";
+        bypassWorkqueues = true;
+      };
     };
 
     fileSystems."/" =
