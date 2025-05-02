@@ -14,8 +14,8 @@ pkgs: lib: config: let
     };
     "bar1920_2x" = {
       font-size = 9;
-      padding-top = 5;
-      height = 20;
+      padding-top = 2;
+      height = 22;
     };
   };
 
