@@ -33,7 +33,7 @@ in {
   boot.initrd = {
     supportedFilesystems = [ "btrfs" ];
     systemd = {
-      enable = true;
+      enable = mkDefault true;
       storePaths = with pkgs; [
         "${btrfs-progs}/bin/btrfs"
         "${coreutils}/bin/cut"
@@ -86,7 +86,12 @@ in {
     ];
     files = [
       "/etc/machine-id"
-      "/etc/nixos"
     ];
   };
+
+  # TODO 
+  environment.etc."nixos".source = myMkOutOfStoreSymlink pkgs "/home/jackson/documents/nixos-config";
+  users.mutableUsers = false;
+  users.users.jackson.hashedPasswordFile = "/persist/passwords/user/jackson";
+  users.users.root.hashedPasswordFile = "/persist/passwords/user/root";
 })

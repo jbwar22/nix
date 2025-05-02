@@ -274,4 +274,8 @@ lib: with lib; rec {
     (mkIf p yes)
     (mkif (!p) no)
   ];
+
+  myMkOutOfStoreSymlink = (pkgs: path:
+    pkgs.runCommandLocal path {} "ln -s ${escapeShellArg path} $out"
+  );
 }
