@@ -29,6 +29,7 @@ with lib; {
         systemd-boot.enable = true;
         kernel-latest.enable = true;
         graphics.useUnstableMesa = true;
+        impermanence-btrfs.enable = true;
       };
 
       programs = {

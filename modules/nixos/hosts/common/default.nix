@@ -4,6 +4,7 @@ with lib; {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.agenix.nixosModules.default
+    inputs.impermanence.nixosModules.impermanence
     ../..
     ../../../common
   ];

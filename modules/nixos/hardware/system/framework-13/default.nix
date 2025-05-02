@@ -33,6 +33,13 @@ with lib; with ns config ./.; {
         options = [ "subvol=/" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
+    fileSystems."/persist" =
+      { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
+        fsType = "btrfs";
+        neededForBoot = true;
+        options = [ "subvol=@persist" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+      };
+
     fileSystems."/boot/efi" =
       { device = "/dev/disk/by-uuid/0A74-81F6";
         fsType = "vfat";
