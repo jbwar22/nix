@@ -1,15 +1,20 @@
 { config, lib, pkgs, ... }:
 
-with lib; mkNsEnableModule config ./. {
-  hardware.graphics = {
-    enable = true;
-    # steam
-    enable32Bit = true;
-
-    package = pkgs.mesa_unstable;
+with lib; with ns config ./.; {
+  options = opt {
+    enable = mkEnableOption "graphics";
+    useUnstableMesa = mkEnableOption "use unstable mesa drivers";
   };
 
-  environment.systemPackages = with pkgs; [
-    dconf       # gtk
-  ];
+  config = mkIf cfg.enable {
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+      package = mkIf cfg.useUnstableMesa pkgs.mesa_unstable;
+    };
+
+    environment.systemPackages = with pkgs; [
+      dconf  # gtk
+    ];
+  };
 }

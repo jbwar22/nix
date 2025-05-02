@@ -28,6 +28,7 @@ with lib; {
         skip-wait-online.enable = true;
         systemd-boot.enable = true;
         kernel-latest.enable = true;
+        graphics.useUnstableMesa = true;
       };
 
       programs = {
