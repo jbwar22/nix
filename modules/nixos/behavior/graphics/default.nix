@@ -5,6 +5,8 @@ with lib; mkNsEnableModule config ./. {
     enable = true;
     # steam
     enable32Bit = true;
+
+    package = pkgs.mesa_unstable;
   };
 
   environment.systemPackages = with pkgs; [

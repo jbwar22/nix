@@ -25,6 +25,7 @@ with lib; {
       behavior = {
         skip-wait-online.enable = true;
         systemd-boot.enable = true;
+        systemd-boot.efiAtSlashBoot = true;
         kernel-latest.enable = true;
       };
 

@@ -16,7 +16,10 @@ with lib; with ns config ./.; {
     hardware.cpu.intel.updateMicrocode = false;
     services.fstrim.enable = false;
 
-    boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+    boot.initrd = {
+      availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+      luks.devices."root".device = "/dev/disk/by-uuid/c9a1bcf9-6e95-4e1c-a244-d8314c3009e9";
+    };
 
     boot.kernel.sysctl."vm.swapiness" = 0;
 
@@ -26,7 +29,6 @@ with lib; with ns config ./.; {
         options = [ "subvol=@root" "subvolid=256" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
-    boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/c9a1bcf9-6e95-4e1c-a244-d8314c3009e9";
 
     fileSystems."/home" =
       { device = "/dev/disk/by-uuid/46f5a669-adab-462d-ba14-6f1282a06bc5";

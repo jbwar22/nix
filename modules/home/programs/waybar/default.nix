@@ -63,9 +63,10 @@ in {
         "custom/dunst"
         "cpu"
         "memory"
-        "battery#bat0"
-        "battery#bat1"
-      ];
+      ] ++ (pipe config.custom.common.opts.hardware.batteries [
+        attrsToList
+        (map (x: "battery#${toLower x.name}"))
+      ]);
       
       # Modules configuration
       "sway/workspaces" = {
@@ -295,6 +296,12 @@ in {
         conf.status-font-size = "70%";
       in (bar-base conf) // {
         height = 26;
+      };
+
+      "bar1920_2x" = let
+        conf.status-font-size = "72%";
+      in (bar-base conf) // {
+        height = 22;
       };
     };
 

@@ -3,19 +3,9 @@
 with lib; {
   imports = [
     inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
-    ../../../../hardware-configuration.nix
   ];
 
   config = {
-
-    boot.loader = {
-      systemd-boot.enable = true;
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
-    };
-
     custom.nixos = {
       opts = {
         secrets = {
@@ -25,7 +15,6 @@ with lib; {
 
       suites = {
         hardware.framework-13.enable = true;
-
         pc.enable = true;
         laptop.enable = true;
         gaming.enable = true;
@@ -34,6 +23,7 @@ with lib; {
 
       behavior = {
         skip-wait-online.enable = true;
+        systemd-boot.enable = true;
         kernel-latest.enable = true;
       };
 

@@ -12,6 +12,11 @@ pkgs: lib: config: let
       padding-top = 5;
       height = 26;
     };
+    "bar1920_2x" = {
+      font-size = 9;
+      padding-top = 5;
+      height = 20;
+    };
   };
 
   runline = (args:

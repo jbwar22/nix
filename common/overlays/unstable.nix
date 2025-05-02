@@ -13,4 +13,6 @@ channels: final: prev: {
   # yt-dlp;         # features
 
   linuxPackages_latest_unstable = channels.unstable.linuxPackages_latest;
+
+  mesa_unstable = channels.unstable.mesa;
 }

@@ -24,6 +24,10 @@ ${mkselect "bar1080" ""} {
   font-size: 13px;
 }
 
+${mkselect "bar1920_2x" ""} {
+  font-size: 12px;
+}
+
 /* all modules */
 .modules-right > * > *, .modules-center > * > *, .modules-left > * > * {
     padding-left: 5px;
@@ -59,6 +63,15 @@ ${mkselect "bar1440" "#workspaces button"} {
 
 ${mkselect "bar1080" "#workspaces button"} {
     padding: 0px 3px;
+}
+
+${mkselect "bar1920_2x" "#workspaces button"} {
+    padding: 0px 3px;
+}
+
+/* compensate for rounded screen */
+${mkselect "bar1920_2x" "#workspaces button:first-child"} {
+    padding-left: 6px;
 }
 
 #workspaces > button:hover {

@@ -269,5 +269,9 @@ lib: with lib; rec {
   mapAttrsRecursiveUpdate = generate: attrset: foldl' (accum: x:
     recursiveUpdate accum (generate x.name x.value)
   ) {} (attrsToList attrset);
-    
+
+  mkIfElse = p: yes: no: mkMerge [
+    (mkIf p yes)
+    (mkif (!p) no)
+  ];
 }
