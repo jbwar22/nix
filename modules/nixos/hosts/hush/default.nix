@@ -32,6 +32,7 @@ with lib; {
       };
 
       programs = {
+        fwupd.enable = true;
         plymouth.theme = "rings";
         snapserver.enable = false;
       };
