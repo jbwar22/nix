@@ -8,6 +8,7 @@ with lib; mkNsEnableModule config ./. {
       
       dunst.enable = true;
       swaylock.enable = true;
+      swayidle.enable = true;
       tofi.enable = true;
       waybar.enable = true;
 
