@@ -14,6 +14,7 @@ with lib; {
         sway.blueLightStrength = 5000;
         firefox.usePackage = true;
         virt-manager.enable = true;
+        bash.hostcolor = "\\033[38;5;140m";
       };
 
       services = {

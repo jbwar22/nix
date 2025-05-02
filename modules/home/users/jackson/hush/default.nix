@@ -10,6 +10,10 @@ with lib; {
         work.enable = true;
       };
 
+      programs = {
+        bash.hostcolor = "\\033[38;5;75m";
+      };
+
       opts = {
         screens = {
           "BOE NE135A1M-NY1" = {
