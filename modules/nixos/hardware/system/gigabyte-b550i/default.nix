@@ -3,7 +3,6 @@
 with lib; with ns config ./.; {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    inputs.nixos-hardware.nixosModules.gigabyte-b550
   ];
 
   options = opt {
