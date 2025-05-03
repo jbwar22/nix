@@ -66,8 +66,7 @@ with lib; with ns config ./.; {
         memory.size = 32;
         batteries = {
           BAT1 = {
-            min = 99;
-            max = 100;
+            max = 80;
           };
         };
       };
