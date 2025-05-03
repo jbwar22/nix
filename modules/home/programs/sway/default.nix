@@ -117,6 +117,9 @@ in {
             pointer_accel = "0";
             scroll_factor = "0.7";
           };
+          "2362:628:PIXA3854:00_093A:0274_Touchpad" = { # framework touchpad
+            scroll_factor = "0.5";
+          };
         };
 
         output = foldl' (accum: screen: accum // (let
