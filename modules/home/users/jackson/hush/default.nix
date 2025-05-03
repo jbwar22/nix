@@ -24,6 +24,7 @@ with lib; {
             };
             bar = "bar1920_2x";
             noserial = true;
+            clamshell = true;
           };
           "Acer Technologies XV271U M3 140400E433LIJ" = {
             sway = {

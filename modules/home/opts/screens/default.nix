@@ -19,5 +19,6 @@ in {
     };
     bar = mkStrOption "bar def name";
     noserial = mkEnableOption "screen name does not enclude serial number";
+    clamshell = mkEnableOption "screen clamshell behavior";
   });
 }

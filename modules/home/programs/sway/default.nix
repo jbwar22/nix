@@ -282,7 +282,16 @@ in {
         for_window [con_mark=^prop.*:fullscreen:] fullscreen enable
         for_window [con_mark=^prop.*:shellpopup:] floating enable ; resize set width 1000 ; resize set height 55
         for_window [con_mark=^prop:] mark --toggle "prop:$$PROP:" ; set $$PROP none
-      '';
+      '' + (pipe config.custom.home.opts.screens [
+        attrsToList
+        (map (x: if x.value.clamshell then (let
+          name = if x.value.noserial then x.name + " Unknown" else x.name;
+        in ''
+          bindswitch --reload --locked lid:on output "${name}" disable
+          bindswitch --reload --locked lid:off output "${name}" enable
+        '') else ""))
+        (concatStringsSep "\n")
+      ]);
     };
   });
 }
