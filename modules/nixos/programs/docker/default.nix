@@ -9,4 +9,6 @@ in {
   };
 
   users = setUserGroups admins [ "docker" ];
+
+  environment.persistence = persistSysDirs [ "/var/lib/docker" ];
 })

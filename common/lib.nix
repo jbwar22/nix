@@ -251,6 +251,13 @@ lib: with lib; rec {
   );
 
 
+  # impermanence helpers
+
+  persistSysDirs = dirs: {
+    "/persist/system".directories = dirs;
+  };
+
+
   # other helpers
 
   # capitalize-dashed-string = Capitalize Dashed String

@@ -79,15 +79,9 @@ in {
     enable = true;
     hideMounts = true;
     directories = [
-      "/etc/NetworkManager/system-connections"
-      "/etc/ssh"
-      "/var/lib/blueman"
-      "/var/lib/bluetooth"
-      "/var/lib/docker"
-      "/var/lib/fprint"
+      "/etc/ssh"                  # host key, needed for agenix
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
-      "/var/lib/tailscale"
       "/var/log"
     ];
     files = [

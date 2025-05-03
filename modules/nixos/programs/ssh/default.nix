@@ -11,4 +11,7 @@ with lib; mkNsEnableModule config ./. {
   };
 
   networking.firewall.allowedTCPPorts = [ 22 ];
+
+  # in main module because host key is needed for agenix
+  # environment.persistence = persistSysDirs [ "/etc/ssh" ];
 }

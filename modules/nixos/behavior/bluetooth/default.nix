@@ -6,4 +6,9 @@ with lib; mkNsEnableModule config ./. {
     powerOnBoot = false;
   };
   services.blueman.enable = true;
+
+  environment.persistence = persistSysDirs [
+    "/var/lib/blueman"
+    "/var/lib/bluetooth"
+  ];
 }
