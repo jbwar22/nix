@@ -6,6 +6,7 @@ with lib; mkNsEnableModule config ./. {
       bluetooth.enable = true;
       graphics.enable = true;
       ios-mount.enable = true;
+      powerbutton-lock-power.enable = true;
       printing.enable = true;
       serial-support.enable = true;
       sound.enable = true;

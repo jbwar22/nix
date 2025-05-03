@@ -254,6 +254,11 @@ in {
         };
         startup = [
           {
+            # swayidle is handling lock-before-sleep instead
+            command = "pkill xss-lock; ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep ${pkgs.swaylock}/bin/swaylock";
+            always = true;
+          }
+          {
             command = "pkill dunst; ${pkgs.dunst}/bin/dunst";
             always = true;
           }
