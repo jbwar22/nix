@@ -11,7 +11,7 @@ with lib; {
       };
 
       programs = {
-        bash.hostcolor = "\\033[38;5;75m";
+        bash.hostcolor = "\\033[38;5;111m";
       };
 
       opts = {
