@@ -30,6 +30,12 @@ with lib; mkNsEnableModule config ./. (let
   # devToSystemdDevice = dev: (lib.replaceStrings [ "-" "/" ] [ "\\x2d" "-" ] dev) + ".device";
   # (devToSystemdDevice "dev/disk/by-something/foo")
 in {
+  specialisation.no-wipe-root.configuration = {
+    boot.initrd.systemd.services.reset-root.script = mkForce ''
+      echo skipping resetting root
+    '';
+  };
+
   boot.initrd = {
     supportedFilesystems = [ "btrfs" ];
     systemd = {
