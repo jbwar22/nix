@@ -25,7 +25,7 @@ let
 
   orange-ds3 = "#FFCC99";
 
-in {
+in rec {
   terminal = rec {
     inherit foreground background;
 
@@ -67,5 +67,13 @@ in {
     bg-select-alert = orange-ds3;
 
     bg-select-alt-normal = gray-b1;
+  };
+
+  ime = {
+    background = wm.background;
+    border = wm.foreground-normal;
+    text = wm.text;
+    highlight = wm.bg-select-normal;
+    separator = gray-b1;
   };
 }

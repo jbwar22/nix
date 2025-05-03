@@ -59,5 +59,17 @@ in {
         };
       });
     };
+    ime = mkOption {
+      description = "ime colors";
+      type = (submodule {
+        options = {
+          background = mkColor;
+          border = mkColor;
+          text = mkColor;
+          highlight = mkColor;
+          separator = mkColor;
+        };
+      });
+    };
   };
 }

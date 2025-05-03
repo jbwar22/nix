@@ -18,7 +18,7 @@ let
   gray = "#555555";
 
 
-in {
+in rec {
   terminal = rec {
     inherit foreground background;
 
@@ -60,5 +60,13 @@ in {
     bg-select-alert = red-ds1-d2;
 
     bg-select-alt-normal = gray;
+  };
+
+  ime = {
+    background = wm.background;
+    border = wm.foreground-normal;
+    text = wm.text;
+    highlight = wm.bg-select-normal;
+    separator = gray;
   };
 }

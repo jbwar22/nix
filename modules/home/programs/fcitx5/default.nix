@@ -1,6 +1,8 @@
 { inputs, pkgs, config, lib, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns config ./.; let
+  colorscheme = config.custom.home.opts.colorscheme;
+in {
   options = opt {
     enable = mkEnableOption "fcitx5 (japanese ime)";
     basic = mkEnableOption "don't set configuration";
@@ -17,17 +19,19 @@ with lib; with ns config ./.; {
       enabled = "fcitx5";
       fcitx5.addons = [
         pkgs.fcitx5-mozc
+        (pkgs.callPackage ./theme { colorscheme = colorscheme.ime; })
       ];
     };
 
     xdg.configFile = mkIf (!cfg.basic) {
-      "fcitx5/config".source = ./fcitx5/config;
+      "fcitx5/config".source = ./config/fcitx5/config;
       "fcitx5/profile" = {
-        source = ./fcitx5/profile;
+        source = ./config/fcitx5/profile;
         force = true;
       };
-      "fcitx5/conf/mozc.conf".source = ./fcitx5/conf/mozc.conf;
-      "mozc/config1.db".source = ./mozc/config1.db;
+      "fcitx5/conf/mozc.conf".source = ./config/fcitx5/conf/mozc.conf;
+      "fcitx5/conf/classicui.conf".source = ./config/fcitx5/conf/classicui.conf;
+      "mozc/config1.db".source = ./config/mozc/config1.db;
       "mozc/user_dictionary.db".source = mkIf (cfg.user-dictionary != null) (config.lib.file.mkOutOfStoreSymlink cfg.user-dictionary);
     };
 
@@ -41,6 +45,7 @@ with lib; with ns config ./.; {
         mv ${hconf}/fcitx5/config ${hconf}/fcitx5/config.bak
         mv ${hconf}/fcitx5/profile ${hconf}/fcitx5/profile.bak
         mv ${hconf}/fcitx5/conf/mozc.conf ${hconf}/fcitx5/conf/mozc.conf.bak
+        mv ${hconf}/fcitx5/conf/classicui.conf ${hconf}/fcitx5/conf/classicui.conf.bak
         mv ${hconf}/mozc/config1.db ${hconf}/mozc/config1.db.bak
         ${
           if dict then ''
@@ -50,6 +55,7 @@ with lib; with ns config ./.; {
         cp ${hconf}/fcitx5/config.bak ${hconf}/fcitx5/config
         cp ${hconf}/fcitx5/profile.bak ${hconf}/fcitx5/profile
         cp ${hconf}/fcitx5/conf/mozc.conf.bak ${hconf}/fcitx5/conf/mozc.conf
+        cp ${hconf}/fcitx5/conf/classicui.conf.bak ${hconf}/fcitx5/conf/classicui.conf
         cp ${hconf}/mozc/config1.db.bak ${hconf}/mozc/config1.db
         ${
           if dict then ''
@@ -59,6 +65,7 @@ with lib; with ns config ./.; {
         chmod +w ${hconf}/fcitx5/config
         chmod +w ${hconf}/fcitx5/profile
         chmod +w ${hconf}/fcitx5/conf/mozc.conf
+        chmod +w ${hconf}/fcitx5/conf/classicui.conf
         chmod +w ${hconf}/mozc/config1.db
         ${
           if dict then ''
@@ -70,6 +77,7 @@ with lib; with ns config ./.; {
         cp ${hconf}/fcitx5/config /etc/nixos/modules/home/programs/fcitx5/fcitx5/config
         cp ${hconf}/fcitx5/profile /etc/nixos/modules/home/programs/fcitx5/fcitx5/profile
         cp ${hconf}/fcitx5/conf/mozc.conf /etc/nixos/modules/home/programs/fcitx5/fcitx5/conf/mozc.conf
+        cp ${hconf}/fcitx5/conf/classicui.conf /etc/nixos/modules/home/programs/fcitx5/fcitx5/conf/classicui.conf
         cp ${hconf}/mozc/config1.db /etc/nixos/modules/home/programs/fcitx5/mozc/config1.db
         ${
           if dict then ''
@@ -82,6 +90,7 @@ with lib; with ns config ./.; {
         rm ${hconf}/fcitx5/config
         rm ${hconf}/fcitx5/profile
         rm ${hconf}/fcitx5/conf/mozc.conf
+        rm ${hconf}/fcitx5/conf/classicui.conf
         rm ${hconf}/mozc/config1.db
         ${
           if dict then ''
@@ -91,6 +100,7 @@ with lib; with ns config ./.; {
         mv ${hconf}/fcitx5/config.bak ${hconf}/fcitx5/config
         mv ${hconf}/fcitx5/profile.bak ${hconf}/fcitx5/profile
         mv ${hconf}/fcitx5/conf/mozc.conf.bak ${hconf}/fcitx5/conf/mozc.conf
+        mv ${hconf}/fcitx5/conf/classicui.conf.bak ${hconf}/fcitx5/conf/classicui.conf
         mv ${hconf}/mozc/config1.db.bak ${hconf}/mozc/config1.db
         ${
           if dict then ''
