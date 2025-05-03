@@ -28,6 +28,7 @@ with lib; {
         kernel-latest.enable = true;
         graphics.useUnstableMesa = true;
         impermanence-btrfs.enable = true;
+        impermanence-btrfs.nixconfigSymlink = "/home/jackson/documents/nixos-config";
       };
 
       programs = {
