@@ -6,9 +6,6 @@ with lib; {
   ];
 
   config = {
-
-    boot.loader.systemd-boot.consoleMode = "auto";
-
     custom.nixos = {
       opts = {
         secrets = {
@@ -27,6 +24,7 @@ with lib; {
       behavior = {
         skip-wait-online.enable = true;
         systemd-boot.enable = true;
+        systemd-boot.fixResolution = true;
         kernel-latest.enable = true;
         graphics.useUnstableMesa = true;
         impermanence-btrfs.enable = true;
