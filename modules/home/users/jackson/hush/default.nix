@@ -29,13 +29,13 @@ with lib; {
           "Acer Technologies XV271U M3 140400E433LIJ" = {
             sway = {
               resolution = "2560x1440@165.002Hz";
-              position = "2880 -500";
+              position = "1440 -650";
               bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
             };
             bar = "bar1440";
             specialisations = {
               "work monitor above".sway = {
-                position = "160 -1440";
+                position = "-560 -1440";
               };
             };
           };
