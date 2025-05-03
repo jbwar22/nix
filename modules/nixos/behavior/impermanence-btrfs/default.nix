@@ -89,6 +89,9 @@ in {
     ];
   };
 
+  # could persist /var/db/sudo/lectured, but meh
+  custom.nixos.programs.sudo.lecture = "never";
+
   # TODO 
   environment.etc."nixos".source = myMkOutOfStoreSymlink pkgs "/home/jackson/documents/nixos-config";
   users.mutableUsers = false;
