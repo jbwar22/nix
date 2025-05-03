@@ -71,7 +71,7 @@ ${mkselect "bar1920_2x" "#workspaces button"} {
 
 /* compensate for rounded screen */
 ${mkselect "bar1920_2x" "#workspaces button:first-child"} {
-    padding-left: 6px;
+    padding-left: 8px;
 }
 
 #workspaces > button:hover {
