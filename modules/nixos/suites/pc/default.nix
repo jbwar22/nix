@@ -17,7 +17,7 @@ with lib; mkNsEnableModule config ./. {
       docker.enable = true;
       flatpak.enable = true;
       plymouth.enable = true;
-      udiskie.enable = true;
+      udisks2.enable = true;
     };
   };
 }

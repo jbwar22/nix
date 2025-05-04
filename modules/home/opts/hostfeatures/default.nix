@@ -11,6 +11,7 @@ with lib; with ns config ./.; {
     hasOvmf = mkDisableOption "has cpupower package";
     hasTailscale = mkDisableOption "has tailscale";
     hasFuseAllowOther = mkDisableOption "has userAllowOther for fuse";
+    hasUdisks2 = mkDisableOption "has udisks2";
   };
 
   config = if (osConfig != false) then (opt {
@@ -23,5 +24,6 @@ with lib; with ns config ./.; {
     hasOvmf = osConfig.virtualisation.libvirtd.qemu.ovmf.enable;
     hasTailscale = osConfig.services.tailscale.enable;
     hasFuseAllowOther = osConfig.programs.fuse.userAllowOther;
+    hasUdisks2 = osConfig.services.udisks2.enable;
   }) else {};
 }
