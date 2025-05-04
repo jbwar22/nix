@@ -3,6 +3,7 @@
 with lib; {
   imports = [
     inputs.agenix.homeManagerModules.default
+    inputs.impermanence.homeManagerModules.impermanence
     ../../../common
     ../..
   ];

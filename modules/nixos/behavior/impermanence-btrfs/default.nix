@@ -108,5 +108,7 @@ in {
     users.users = genAttrs users (user: {
       hashedPasswordFile = mkDefault "/persist/passwords/user/${user}";
     });
+
+    programs.fuse.userAllowOther = mkDefault true;
   };
 })

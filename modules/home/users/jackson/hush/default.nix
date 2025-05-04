@@ -4,6 +4,13 @@ with lib; {
   config = {
     home.stateVersion = "24.11";
 
+    home.persistence."/persist/home/jackson" = {
+      directories = [
+        "foo"
+      ];
+      allowOther = true;
+    };
+
     custom.home = {
       services.locker.enable = mkForce false;
 
