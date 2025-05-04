@@ -4,12 +4,7 @@ with lib; {
   config = {
     home.stateVersion = "24.11";
 
-    home.persistence."/persist/home/jackson" = {
-      directories = [
-        "foo"
-      ];
-      allowOther = true;
-    };
+    home.persistence = persistUserDirs config [ "foo" ];
 
     custom.home = {
       services.locker.enable = mkForce false;
@@ -17,6 +12,13 @@ with lib; {
       suites = {
         pc.enable = true;
         work.enable = true;
+      };
+
+      behavior = {
+        impermanence = {
+          enable = true;
+          persistPath = "/persist/home/jackson";
+        };
       };
 
       programs = {

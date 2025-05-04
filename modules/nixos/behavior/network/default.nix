@@ -5,5 +5,5 @@ with lib; mkNsEnableModule config ./. {
 
   networking.useDHCP = lib.mkDefault true;
 
-  environment.persistence = persistSysDirs [ "/etc/NetworkManager/system-connections" ];
+  environment.persistence = persistSysDirs config [ "/etc/NetworkManager/system-connections" ];
 }

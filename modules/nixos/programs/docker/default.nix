@@ -10,5 +10,5 @@ in {
 
   users = setUserGroups admins [ "docker" ];
 
-  environment.persistence = persistSysDirs [ "/var/lib/docker" ];
+  environment.persistence = persistSysDirs config [ "/var/lib/docker" ];
 })

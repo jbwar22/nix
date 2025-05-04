@@ -253,8 +253,20 @@ lib: with lib; rec {
 
   # impermanence helpers
 
-  persistSysDirs = dirs: {
-    "/persist/system".directories = dirs;
+  persistSys = config: value: mkIf config.custom.nixos.behavior.impermanence-btrfs.enable {
+    ${config.custom.nixos.behavior.impermanence-btrfs.persistPath} = value;
+  };
+
+  persistSysDirs = config: dirs: persistSys config {
+    directories = dirs;
+  };
+
+  persistUser = config: value: mkIf config.custom.home.behavior.impermanence.enable {
+    ${config.custom.home.behavior.impermanence.persistPath} = value;
+  };
+
+  persistUserDirs = config: dirs: persistUser config {
+    directories = dirs;
   };
 
 
@@ -279,7 +291,7 @@ lib: with lib; rec {
 
   mkIfElse = p: yes: no: mkMerge [
     (mkIf p yes)
-    (mkif (!p) no)
+    (mkIf (!p) no)
   ];
 
   myMkOutOfStoreSymlink = (pkgs: path:

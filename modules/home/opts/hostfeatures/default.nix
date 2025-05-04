@@ -10,6 +10,7 @@ with lib; with ns config ./.; {
     hasLibvirtd = mkDisableOption "has cpupower package";
     hasOvmf = mkDisableOption "has cpupower package";
     hasTailscale = mkDisableOption "has tailscale";
+    hasImpermanence = mkDisableOption "has impermanence";
   };
 
   config = if (osConfig != false) then (opt {
@@ -21,5 +22,6 @@ with lib; with ns config ./.; {
     hasLibvirtd = osConfig.virtualisation.libvirtd.enable;
     hasOvmf = osConfig.virtualisation.libvirtd.qemu.ovmf.enable;
     hasTailscale = osConfig.services.tailscale.enable;
+    hasImpermanence = osConfig.custom.nixos.behavior.impermanence-btrfs.enable;
   }) else {};
 }

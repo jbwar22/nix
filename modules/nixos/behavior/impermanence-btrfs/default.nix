@@ -38,6 +38,10 @@ in {
       description = "what to link /etc/nixos to, if anything";
       default = null;
     };
+    persistPath = mkOption {
+      type = with types; path;
+      description = "persist path";
+    };
   };
   config = mkIf cfg.enable {
     specialisation.no-wipe-root.configuration = {
@@ -85,7 +89,7 @@ in {
       };
     };
 
-    environment.persistence."/persist/system" = {
+    environment.persistence.${cfg.persistPath} = {
       enable = true;
       hideMounts = true;
       directories = [

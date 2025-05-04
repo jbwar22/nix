@@ -11,5 +11,5 @@ in {
 
   users = setUserGroups admins [ "davfs2" ];
 
-  environment.persistence = persistSysDirs [ "/var/lib/tailscale" ];
+  environment.persistence = persistSysDirs config [ "/var/lib/tailscale" ];
 })
