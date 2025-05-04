@@ -6,4 +6,6 @@ with lib; mkNsEnableModule config ./. {
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
+
+  home.persistence = persistUserDirs config [ ".local/share/direnv" ];
 }

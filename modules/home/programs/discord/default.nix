@@ -15,4 +15,6 @@ in {
     discord
     krisp-patcher
   ];
+
+  home.persistence = persistUserDirs config [ ".config/discord" ];
 })

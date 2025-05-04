@@ -4,8 +4,6 @@ with lib; {
   config = {
     home.stateVersion = "24.11";
 
-    home.persistence = persistUserDirs config [ "foo" ];
-
     custom.home = {
       services.locker.enable = mkForce false;
 

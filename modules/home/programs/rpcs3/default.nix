@@ -2,7 +2,8 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    wineWowPackages.staging
-    # wineWowPackages.waylandFull
+    rpcs3
   ];
+
+  home.persistence = persistUserDirs config [ ".cache/rpcs3" ];
 }

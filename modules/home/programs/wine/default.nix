@@ -3,6 +3,12 @@
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
     wineWowPackages.staging
-    # wineWowPackages.waylandFull
+    winetricks
+  ];
+
+  home.persistence = persistUserDirs config [
+    ".wine"
+    ".cache/wine"
+    ".cache/winetricks"
   ];
 }

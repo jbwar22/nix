@@ -2,7 +2,9 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    wineWowPackages.staging
-    # wineWowPackages.waylandFull
+    git
+    git-crypt
   ];
+
+  home.persistence = persistUserFiles config [ ".gitconfig" ];
 }

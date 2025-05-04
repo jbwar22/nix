@@ -2,7 +2,8 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    wineWowPackages.staging
-    # wineWowPackages.waylandFull
+    signal-desktop
   ];
+
+  home.persistence = persistUserDirs config [ ".config/Signal" ];
 }

@@ -23,5 +23,7 @@ with lib; with ns config ./.; {
         PS1="\[\033[38;5;166m\]\u\[\033[0m\]@\[${cfg.hostcolor}\]\h\[\033[0m\]:\W \! $ "
       '';
     };
+
+    home.persistence = persistUserFiles config [ ".bash_history" ];
   };
 }

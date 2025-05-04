@@ -4,6 +4,7 @@ with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
     xdg-utils
   ];
+
   xdg.userDirs = {
     enable = true;
     desktop = null;
@@ -16,9 +17,11 @@ with lib; mkNsEnableModule config ./. {
     videos = "${config.home.homeDirectory}/videos";
     createDirectories = true;
   };
+
   xdg.systemDirs = {
     data = [ "/etc/profiles/per-user/${config.home.username}/share" ];
   };
+
   xdg.portal = {
     enable = true; # TODO fix
     extraPortals = with pkgs; [
@@ -38,4 +41,11 @@ with lib; mkNsEnableModule config ./. {
       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
     };
   };
+
+  home.persistence = persistUserDirs config [
+    "documents"
+    "downloads"
+    "pictures"
+    "videos"
+  ];
 }

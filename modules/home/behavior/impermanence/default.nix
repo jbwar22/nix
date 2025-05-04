@@ -15,6 +15,19 @@ in {
     home.persistence.${cfg.persistPath} = {
       enable = true;
       allowOther = hf.hasFuseAllowOther;
+      directories = mkMerge [
+        [
+          ".ssh"
+          ".cache/nix"
+          ".cache/mesa_shader_cache"
+          ".cache/mesa_shader_cache_db"
+          ".local/share/home-manager"
+          ".local/share/nix"
+          # ".pki"
+        ]
+        (mkIf true [ ".docker" ])
+        (mkIf true [ ".local/share/flatpak" ])
+      ];
     };
   };
 })

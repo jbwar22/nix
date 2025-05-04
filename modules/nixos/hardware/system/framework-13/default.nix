@@ -52,11 +52,11 @@ with lib; with ns config ./.; {
         options = [ "subvol=@nix" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
-    fileSystems."/home" =
-      { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
-        fsType = "btrfs";
-        options = [ "subvol=@home" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-      };
+    # fileSystems."/home" =
+    #   { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
+    #     fsType = "btrfs";
+    #     options = [ "subvol=@home" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+    #   };
 
     swapDevices = [ ];
 

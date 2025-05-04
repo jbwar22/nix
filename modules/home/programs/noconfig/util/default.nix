@@ -9,8 +9,6 @@ with lib; mkNsEnableModule config ./. {
     ffmpeg
     file
     gawk
-    git
-    git-crypt
     jq
     ncdu
     nmap

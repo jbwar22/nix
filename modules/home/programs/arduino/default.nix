@@ -7,4 +7,9 @@ in {
     arduino-cli
     arduino-ide
   ]);
+
+  home.persistence = persistUserDirs config [
+    ".arduino15"
+    # ".arduinoIDE"
+  ];
 })

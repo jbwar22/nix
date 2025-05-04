@@ -42,4 +42,6 @@ with lib; mkNsEnableModule config ./. {
       noDisplay = false;
     };
   };
+
+  home.persistence = persistUserDirs config [ ".librewolf" ];
 }

@@ -138,5 +138,7 @@ with lib; with ns config ./.; {
       #   # noDisplay = true;
       # };
     };
+
+    home.persistence = persistUserDirs config [ ".mozilla/firefox" ];
   };
 }

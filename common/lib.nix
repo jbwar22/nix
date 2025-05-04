@@ -269,6 +269,10 @@ lib: with lib; rec {
     directories = dirs;
   };
 
+  persistUserFiles = config: files: persistUser config {
+    files = files;
+  };
+
 
   # other helpers
 
