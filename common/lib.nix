@@ -251,29 +251,6 @@ lib: with lib; rec {
   );
 
 
-  # impermanence helpers
-
-  persistSys = config: value: mkIf config.custom.nixos.behavior.impermanence-btrfs.enable {
-    ${config.custom.nixos.behavior.impermanence-btrfs.persistPath} = value;
-  };
-
-  persistSysDirs = config: dirs: persistSys config {
-    directories = dirs;
-  };
-
-  persistUser = config: value: mkIf config.custom.home.behavior.impermanence.enable {
-    ${config.custom.home.behavior.impermanence.persistPath} = value;
-  };
-
-  persistUserDirs = config: dirs: persistUser config {
-    directories = dirs;
-  };
-
-  persistUserFiles = config: files: persistUser config {
-    files = files;
-  };
-
-
   # other helpers
 
   # capitalize-dashed-string = Capitalize Dashed String

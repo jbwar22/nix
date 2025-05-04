@@ -23,5 +23,5 @@ with lib; mkNsEnableModule config ./. {
 
   xdg.configFile."fontconfig/conf.d/53-helvetica.conf".source = ./helvetica.conf;
 
-  home.persistence = persistUserDirs config [ ".cache/fontconfig" ];
+  custom.home.behavior.impermanence.dirs = [ ".cache/fontconfig" ];
 }

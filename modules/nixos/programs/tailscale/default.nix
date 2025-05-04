@@ -11,5 +11,5 @@ in {
 
   users = setUserGroups admins [ "davfs2" ];
 
-  environment.persistence = persistSysDirs config [ "/var/lib/tailscale" ];
+  custom.nixos.behavior.impermanence.dirs = [ "/var/lib/tailscale" ];
 })

@@ -5,5 +5,5 @@ with lib; mkNsEnableModule config ./. {
     chromium
   ];
 
-  home.persistence = persistUserDirs config [ ".config/chromium" ];
+  custom.home.behavior.impermanence.dirs = [ ".config/chromium" ];
 }

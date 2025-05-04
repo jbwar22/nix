@@ -5,7 +5,7 @@ with lib; mkNsEnableModule config ./. {
     dolphin-emu
   ];
 
-  home.persistence = persistUserDirs config [
+  custom.home.behavior.impermanence.dirs = [
     ".cache/dolphin-emu"
     ".local/share/dolphin-emu"
   ];

@@ -5,5 +5,5 @@ with lib; mkNsEnableModule config ./. {
     sqlitebrowser
   ];
 
-  home.persistence = persistUserDirs config [ ".config/sqlitebrowser" ];
+  custom.home.behavior.impermanence.dirs = [ ".config/sqlitebrowser" ];
 }

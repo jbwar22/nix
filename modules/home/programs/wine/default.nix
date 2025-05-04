@@ -6,7 +6,7 @@ with lib; mkNsEnableModule config ./. {
     winetricks
   ];
 
-  home.persistence = persistUserDirs config [
+  custom.home.behavior.impermanence.dirs = [
     ".wine"
     ".cache/wine"
     ".cache/winetricks"

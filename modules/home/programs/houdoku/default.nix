@@ -20,5 +20,5 @@ in {
     };
   };
 
-  home.persistence = persistUserDirs config [ ".config/Houdoku" ];
+  custom.home.behavior.impermanence.dirs = [ ".config/Houdoku" ];
 })

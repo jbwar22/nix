@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 with lib; mkNsEnableModule config ./. {
-  home.persistence = persistUserDirs config [
+  custom.home.behavior.impermanence.dirs = [
     ".steam"
     ".config/unity3d"
     ".local/share/Steam"

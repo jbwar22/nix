@@ -6,5 +6,5 @@ with lib; mkNsEnableModule config ./. {
     git-crypt
   ];
 
-  home.persistence = persistUserFiles config [ ".gitconfig" ];
+  custom.home.behavior.impermanence.files = [ ".gitconfig" ];
 }

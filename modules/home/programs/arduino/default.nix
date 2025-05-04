@@ -8,7 +8,7 @@ in {
     arduino-ide
   ]);
 
-  home.persistence = persistUserDirs config [
+  custom.home.behavior.impermanence.dirs = [
     ".arduino15"
     # ".arduinoIDE"
   ];

@@ -3,5 +3,5 @@
 with lib; mkNsEnableModule config ./. {
   services.fprintd.enable = true;
 
-  environment.persistence = persistSysDirs config [ "/var/lib/fprint" ];
+  custom.nixos.behavior.impermanence.dirs = [ "/var/lib/fprint" ];
 }

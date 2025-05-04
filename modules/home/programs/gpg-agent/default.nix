@@ -5,5 +5,5 @@ with lib; mkNsEnableModule config ./. {
     enable = true;
   };
 
-  home.persistence = persistUserDirs config [ ".gnupg" ];
+  custom.home.behavior.impermanence.dirs = [ ".gnupg" ];
 }

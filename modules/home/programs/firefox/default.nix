@@ -139,6 +139,6 @@ with lib; with ns config ./.; {
       # };
     };
 
-    home.persistence = persistUserDirs config [ ".mozilla/firefox" ];
+    custom.home.behavior.impermanence.dirs = [ ".mozilla/firefox" ];
   };
 }

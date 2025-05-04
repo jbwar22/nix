@@ -26,5 +26,5 @@ with lib; mkNsEnableModule config ./. {
     };
   };
 
-  home.persistence = persistUserDirs config [ ".config/Signal" ];
+  custom.home.behavior.impermanence.dirs = [ ".config/Signal" ];
 }

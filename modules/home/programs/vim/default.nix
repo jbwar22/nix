@@ -5,7 +5,7 @@ with lib; mkNsEnableModule config ./. {
     vim
   ];
 
-  home.persistence = persistUserFiles config [
+  custom.home.behavior.impermanence.files = [
     ".vimrc" # define in nix?
     # ".viminfo"
   ];

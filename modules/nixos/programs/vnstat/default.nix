@@ -3,5 +3,5 @@
 with lib; mkNsEnableModule config ./. {
   services.vnstat.enable = true;
 
-  environment.persistence = persistSysDirs config [ "/var/lib/vnstat" ];
+  custom.nixos.behavior.impermanence.dirs = [ "/var/lib/vnstat" ];
 }

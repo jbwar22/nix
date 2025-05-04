@@ -7,5 +7,5 @@ with lib; mkNsEnableModule config ./. {
     nix-direnv.enable = true;
   };
 
-  home.persistence = persistUserDirs config [ ".local/share/direnv" ];
+  custom.home.behavior.impermanence.dirs = [ ".local/share/direnv" ];
 }

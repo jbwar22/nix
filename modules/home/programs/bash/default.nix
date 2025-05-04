@@ -24,6 +24,6 @@ with lib; with ns config ./.; {
       '';
     };
 
-    home.persistence = persistUserFiles config [ ".bash_history" ];
+    custom.home.behavior.impermanence.files = [ ".bash_history" ];
   };
 }

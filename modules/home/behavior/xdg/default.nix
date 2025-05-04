@@ -42,7 +42,7 @@ with lib; mkNsEnableModule config ./. {
     };
   };
 
-  home.persistence = persistUserDirs config [
+  custom.home.behavior.impermanence.dirs = [
     "documents"
     "downloads"
     "pictures"

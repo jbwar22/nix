@@ -16,5 +16,5 @@ in {
     krisp-patcher
   ];
 
-  home.persistence = persistUserDirs config [ ".config/discord" ];
+  custom.home.behavior.impermanence.dirs = [ ".config/discord" ];
 })

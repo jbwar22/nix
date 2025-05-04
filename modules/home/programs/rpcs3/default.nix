@@ -5,5 +5,5 @@ with lib; mkNsEnableModule config ./. {
     rpcs3
   ];
 
-  home.persistence = persistUserDirs config [ ".cache/rpcs3" ];
+  custom.home.behavior.impermanence.dirs = [ ".cache/rpcs3" ];
 }

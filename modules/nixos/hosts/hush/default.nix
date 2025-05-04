@@ -27,7 +27,7 @@ with lib; {
         systemd-boot.fixResolution = true;
         kernel-latest.enable = true;
         graphics.useUnstableMesa = true;
-        impermanence-btrfs = {
+        impermanence = {
           enable = true;
           persistPath = "/persist/system";
           nixconfigSymlink = "/home/jackson/documents/nixos-config";

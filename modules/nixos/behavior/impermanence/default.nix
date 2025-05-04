@@ -42,6 +42,16 @@ in {
       type = with types; path;
       description = "persist path";
     };
+    dirs = mkOption {
+      type = with types; listOf str;
+      description = "extra dirs to persist";
+      default = [];
+    };
+    files = mkOption {
+      type = with types; listOf str;
+      description = "extra files to persist";
+      default = [];
+    };
   };
   config = mkIf cfg.enable {
     specialisation.no-wipe-root.configuration = {
@@ -97,10 +107,10 @@ in {
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
         "/var/log"
-      ];
+      ] ++ cfg.dirs;
       files = [
         "/etc/machine-id"
-      ];
+      ] ++ cfg.files;
     };
 
     # could persist /var/db/sudo/lectured, but meh

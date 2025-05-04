@@ -43,5 +43,5 @@ with lib; mkNsEnableModule config ./. {
     };
   };
 
-  home.persistence = persistUserDirs config [ ".librewolf" ];
+  custom.home.behavior.impermanence.dirs = [ ".librewolf" ];
 }
