@@ -62,12 +62,12 @@ with lib; with ns config ./.; {
         memory.size = 32;
         batteries = {
           BAT0 = {
-            min = 50;
-            max = 70;
+            min = 45;
+            max = 55;
           };
           BAT1 = {
-            min = 75;
-            max = 80;
+            min = 45;
+            max = 55;
           };
         };
         hasMicToggle = true;
