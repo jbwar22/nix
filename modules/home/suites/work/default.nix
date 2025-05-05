@@ -8,5 +8,8 @@ with lib; mkNsEnableModule config ./. {
     services = {
       locker.enable = true;
     };
+    behavior = {
+      persist-work.enable = true;
+    };
   };
 }
