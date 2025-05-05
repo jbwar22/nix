@@ -2,7 +2,6 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    slack
     # jetbrains.pycharm-professional
     mssql_jdbc
     unixODBCDrivers.msodbcsql17
