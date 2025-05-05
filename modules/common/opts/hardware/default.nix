@@ -27,5 +27,6 @@ with lib; with ns config ./.; {
       description = "size of memory in gb";
     };
     nvidia = mkEnableOption "does the system use an nvidia gpu";
+    hasMicToggle = mkEnableOption "has software mic toggle button";
   };
 }

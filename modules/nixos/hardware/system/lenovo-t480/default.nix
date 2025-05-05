@@ -70,6 +70,7 @@ with lib; with ns config ./.; {
             max = 80;
           };
         };
+        hasMicToggle = true;
       };
     };
   };

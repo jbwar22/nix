@@ -128,13 +128,15 @@ in {
         tooltip = false;
       };
 
-      "pulseaudio" = {
-        format = "V{volume} {format_source}";
-        format-muted = "VM {format_source}";
-        format-bluetooth = "V{volume}B {format_source}";
-        format-bluetooth-muted = "VMB {format_source}";
-        format-source = "MU";
-        format-source-muted = "MM";
+      "pulseaudio" = let
+        mkIfElseMic = mkIfElse config.custom.common.opts.hardware.hasMicToggle; 
+      in {
+        format = "V{volume}{format_source}";
+        format-muted = "VM{format_source}";
+        format-bluetooth = "V{volume}B{format_source}";
+        format-bluetooth-muted = "VMB{format_source}";
+        format-source = mkIfElseMic " MU" "";
+        format-source-muted = mkIfElseMic " MM" "";
         format-alt = "{desc}";
         tooltip = false;
       };
