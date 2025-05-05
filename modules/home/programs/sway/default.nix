@@ -255,7 +255,7 @@ in {
         startup = [
           {
             # swayidle is handling lock-before-sleep instead
-            command = "pkill xss-lock; ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep ${pkgs.swaylock}/bin/swaylock";
+            command = "pkill xss-lock; ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep ${pkgs.swaylock}/bin/swaylock --ring-color=\"#000044\"";
             always = true;
           }
           {
