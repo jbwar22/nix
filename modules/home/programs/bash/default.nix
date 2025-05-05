@@ -13,6 +13,7 @@ with lib; with ns config ./.; {
     custom.home.opts.aliases = {
       ll = "ls -hal";
       rb = "nixos-rebuild switch --use-remote-sudo";
+      rbb = "nixos-rebuild boot --use-remote-sudo";
     };
 
     programs.bash = {
