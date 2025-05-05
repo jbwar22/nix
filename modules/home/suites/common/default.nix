@@ -27,6 +27,7 @@ with lib; mkNsEnableModule config ./. {
       librewolf.enable = true;
       mpv.enable = true;
       neofetch.enable = true;
+      nixvim.enable = true;
       ranger.enable = true;
       signal.enable = true;
       sqlitebrowser.enable = true;
