@@ -40,5 +40,17 @@ in {
       ];
       files = cfg.files;
     };
+
+    # TODO per-host
+    home.file.".local/state/wireplumber/default-routes.hm-default" = mkIf hf.hasWireplumber {
+      text = ''
+        [default-routes]
+        alsa_card.pci-0000_c1_00.6:output:analog-output-speaker={"channelMap":["FL", "FR"], "channelVolumes":[0.125000, 0.125000], "latencyOffsetNsec":0, "mute":true}
+      '';
+      onChange = ''
+        cp ~/.local/state/wireplumber/default-routes.hm-default ~/.local/state/wireplumber/default-routes
+        chmod 644 ~/.local/state/wireplumber/default-routes
+      '';
+    };
   };
 })

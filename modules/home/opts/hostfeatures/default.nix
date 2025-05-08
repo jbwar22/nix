@@ -12,6 +12,7 @@ with lib; with ns config ./.; {
     hasTailscale = mkDisableOption "has tailscale";
     hasFuseAllowOther = mkDisableOption "has userAllowOther for fuse";
     hasUdisks2 = mkDisableOption "has udisks2";
+    hasWireplumber = mkDisableOption "has wireplumber";
   };
 
   config = if (osConfig != false) then (opt {
@@ -25,5 +26,6 @@ with lib; with ns config ./.; {
     hasTailscale = osConfig.services.tailscale.enable;
     hasFuseAllowOther = osConfig.programs.fuse.userAllowOther;
     hasUdisks2 = osConfig.services.udisks2.enable;
+    hasWireplumber = osConfig.services.pipewire.wireplumber.enable;
   }) else {};
 }
