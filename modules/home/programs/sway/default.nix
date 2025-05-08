@@ -253,11 +253,12 @@ in {
           border = 2;
         };
         startup = [
-          {
-            # swayidle is handling lock-before-sleep instead
-            command = "pkill xss-lock; ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep ${pkgs.swaylock}/bin/swaylock --ring-color=\"#000044\"";
-            always = true;
-          }
+          # TODO these are really not consistant
+          # {
+          #   # swayidle is handling lock-before-sleep instead
+          #   command = "pkill xss-lock; ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep ${pkgs.swaylock}/bin/swaylock --ring-color=\"#000044\"";
+          #   always = true;
+          # }
           {
             command = "pkill dunst; ${pkgs.dunst}/bin/dunst";
             always = true;
@@ -294,6 +295,7 @@ in {
         in ''
           bindswitch --reload --locked lid:on output "${name}" disable
           bindswitch --reload --locked lid:off output "${name}" enable
+          bindsym --locked XF86AudioMedia output ${name} enable
         '') else ""))
         (concatStringsSep "\n")
       ]);
