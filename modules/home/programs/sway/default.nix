@@ -293,9 +293,9 @@ in {
         (map (x: if x.value.clamshell then (let
           name = if x.value.noserial then x.name + " Unknown" else x.name;
         in ''
-          bindswitch --reload --locked lid:on output "${name}" disable
-          bindswitch --reload --locked lid:off output "${name}" enable
-          bindsym --locked XF86AudioMedia output ${name} enable
+          # bindswitch --reload --locked lid:on output "${name}" disable
+          # bindswitch --reload --locked lid:off output "${name}" enable
+          # bindsym --locked XF86AudioMedia output ${name} enable
         '') else ""))
         (concatStringsSep "\n")
       ]);
