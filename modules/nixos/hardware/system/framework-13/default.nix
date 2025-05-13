@@ -52,13 +52,24 @@ with lib; with ns config ./.; {
         options = [ "subvol=@nix" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
+    fileSystems."/swap" =
+      { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
+        fsType = "btrfs";
+        options = [ "subvol=@swap" "noatime" "ssd" ];
+      };
+
     # fileSystems."/home" =
     #   { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
     #     fsType = "btrfs";
     #     options = [ "subvol=@home" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
     #   };
 
-    swapDevices = [ ];
+    swapDevices = [{
+      device = "/swap/swapfile";
+      size = 8 * 1024;
+    }];
+
+    boot.kernel.sysctl."vm.swapiness" = 1;
 
     custom.common = {
       opts.hardware = {
