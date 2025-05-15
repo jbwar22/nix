@@ -66,6 +66,7 @@ in {
     wayland.windowManager.sway = {
       enable = true;
       package = pkgs.sway;
+      checkConfig = false;
       # extraOptions = [ "--unsupported-gpu" ];
 
       systemd.xdgAutostart = true;
@@ -79,6 +80,7 @@ in {
         in {
           "*" = {
             xcursor_theme = "${cursorTheme.name} ${toString cursorTheme.size}";
+            hide_cursor = "500";
           };
         });
 

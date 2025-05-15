@@ -6,7 +6,7 @@ channels: final: prev: {
   kitty           # to fix fcitx5 issue
   librewolf       # up-to-date browsers
   qbittorrent     # features 
-  sway            # IM support
+  # sway            # IM support
   swaybg          # match sway
   swaylock        # match sway
   tofi;           # .desktop entry bug

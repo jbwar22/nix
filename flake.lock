@@ -383,7 +383,20 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "nur": "nur",
+        "swayfx-hidecursor-patch": "swayfx-hidecursor-patch",
         "yt-dlp": "yt-dlp"
+      }
+    },
+    "swayfx-hidecursor-patch": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-K0/10x5b8xnEbbabp+wGU23b6bQhMtT29LmDFQU1Iq8=",
+        "type": "file",
+        "url": "https://github.com/WillPower3309/swayfx/pull/266.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/WillPower3309/swayfx/pull/266.patch"
       }
     },
     "systems": {
