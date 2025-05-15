@@ -36,10 +36,6 @@
       url = "github:yt-dlp/yt-dlp/master";
       flake = false;
     };
-    swayfx-hidecursor-patch = {
-      url = "https://github.com/WillPower3309/swayfx/pull/266.patch";
-      flake = false;
-    };
   };
 
   outputs = inputs@{ self, ... }: let

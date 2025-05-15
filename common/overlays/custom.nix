@@ -7,10 +7,10 @@ inputs: channels: final: prev: {
     src = inputs.yt-dlp;
   });
 
-  sway = (channels.unstable.swayfx.override {
-    swayfx-unwrapped = channels.unstable.swayfx-unwrapped.overrideAttrs (oldAttrs: {
+  sway = (channels.unstable.sway.override {
+    sway-unwrapped = channels.unstable.sway-unwrapped.overrideAttrs (oldAttrs: {
       patches = oldAttrs.patches ++ [
-        inputs.swayfx-hidecursor-patch
+        ./patches/sway-hidecursor.patch
       ];
     });
   });
