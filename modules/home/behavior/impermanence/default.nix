@@ -10,12 +10,12 @@ in {
       description = "persist path";
     };
     dirs = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf anything;
       description = "extra dirs to persist";
       default = [];
     };
     files = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf anything;
       description = "extra files to persist";
       default = [];
     };
@@ -25,6 +25,7 @@ in {
     home.persistence.${cfg.persistPath} = {
       enable = true;
       allowOther = hf.hasFuseAllowOther;
+      defaultDirectoryMethod = "symlink";
       directories = mkMerge [
         ([
           ".ssh"

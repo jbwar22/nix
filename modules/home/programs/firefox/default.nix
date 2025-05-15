@@ -139,6 +139,6 @@ with lib; with ns config ./.; {
       # };
     };
 
-    custom.home.behavior.impermanence.dirs = [ ".mozilla/firefox" ];
+    custom.home.behavior.impermanence.dirs = [ { directory = ".mozilla/firefox"; method = "bindfs"; } ];
   };
 }

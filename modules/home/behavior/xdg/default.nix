@@ -15,7 +15,7 @@ with lib; mkNsEnableModule config ./. {
     publicShare = null;
     templates = null;
     videos = "${config.home.homeDirectory}/videos";
-    createDirectories = true;
+    createDirectories = false;
   };
 
   xdg.systemDirs = {
