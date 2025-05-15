@@ -66,7 +66,6 @@ in {
     wayland.windowManager.sway = {
       enable = true;
       package = pkgs.sway;
-      checkConfig = false;
       # extraOptions = [ "--unsupported-gpu" ];
 
       systemd.xdgAutostart = true;
