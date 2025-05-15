@@ -4,6 +4,7 @@ with lib; with ns config ./.; (let
   users = (attrNames config.custom.common.opts.host.users) ++ [ "root" ];
   toplevelfs = config.fileSystems."/toplevel";
   wipe = ''
+    plymouth display-message --text="Wiping root subvolume..."
     mkdir /toplevel
     mount ${toplevelfs.device} /toplevel -t btrfs -o ${concatStringsSep "," toplevelfs.options}
 
@@ -27,6 +28,7 @@ with lib; with ns config ./.; (let
 
     btrfs subvolume create /toplevel/@root
     umount /toplevel
+    plymouth display-message --text="Root wipe complete."
   '';
   # devToSystemdDevice = dev: (lib.replaceStrings [ "-" "/" ] [ "\\x2d" "-" ] dev) + ".device";
   # (devToSystemdDevice "dev/disk/by-something/foo")
@@ -72,6 +74,7 @@ in {
           "${coreutils}/bin/mv"
           "${coreutils}/bin/stat"
           "${findutils}/bin/find"
+          "${plymouth}/bin/plymouth"
           "${util-linux}/bin/mount"
           "${util-linux}/bin/umount"
         ];
@@ -93,6 +96,7 @@ in {
             btrfs-progs
             coreutils
             findutils
+            plymouth
             util-linux
           ];
         };
