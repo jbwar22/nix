@@ -89,12 +89,12 @@ in {
 
               timestamp=$(date --date="@$(stat -c %Y /toplevel/@root)" "+@root@%Y-%m-%d-%H:%M:%S")
 
-              ${log "creating new root subvolume"}
-              mv /toplevel/@root /toplevel/@old_root
+              ${log "moving root to old root"}
+              mv /toplevel/@root /toplevel/@old_root_FOO
               btrfs subvolume create /toplevel/@new_root
 
               copy_subvolume_recursively() {
-                if [ $(stat --format=%i "$2") -eq 2 ]; then
+                if [ -e "$2" ] && [ $(stat --format=%i "$2") -eq 2 ]; then
                   btrfs subvolume delete "$2"
                 fi
                 mkdir -p $(dirname "$2")
@@ -106,7 +106,7 @@ in {
                 done
               }
 
-              for dir in "$${copy_dirs[@]}"; do
+              for dir in "''${copy_dirs[@]}"; do
                 mkdir -p $(dirname "/toplevel/@new_root$dir")
                 if [ ! -e "/toplevel/@old_root$dir" ]; then
                   ${log "creating new subvolume: $dir"}
@@ -121,7 +121,7 @@ in {
                 fi
               done
 
-              for file in "$${copy_files[@]}"; do
+              for file in "''${copy_files[@]}"; do
                 ${log "copying file: $file"}
                 mkdir -p $(dirname "/toplevel/@new_root$file")
                 cp -a "/toplevel/@old_root$file" "/toplevel/@new_root$file"
