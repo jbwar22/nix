@@ -91,7 +91,7 @@ in {
 
               ${log "creating new root subvolume"}
               mv /toplevel/@root /toplevel/@old_root
-              btrfs subvolume create /toplevel/@root
+              btrfs subvolume create /toplevel/@new_root
 
               copy_subvolume_recursively() {
                 if [ $(stat --format=%i "$2") -eq 2 ]; then
@@ -102,30 +102,32 @@ in {
                 IFS=$'\n'
                 for subvolume in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
                   new_subvolume="$(echo "$subvolume" | cut -c 11-)"
-                  copy_subvolume_recursively "/toplevel/$subvolume" "/toplevel/@root/$new_subvolume"
+                  copy_subvolume_recursively "/toplevel/$subvolume" "/toplevel/@new_root/$new_subvolume"
                 done
               }
 
               for dir in "$${copy_dirs[@]}"; do
-                mkdir -p $(dirname "/toplevel/@root$dir")
+                mkdir -p $(dirname "/toplevel/@new_root$dir")
                 if [ ! -e "/toplevel/@old_root$dir" ]; then
                   ${log "creating new subvolume: $dir"}
-                  btrfs subvolume create "/toplevel/@root$dir"
+                  btrfs subvolume create "/toplevel/@new_root$dir"
                 elif [ $(stat --format=%i "/toplevel/@old_root$dir") -eq 256 ]; then
                   ${log "snapshotting: $dir"}
-                  copy_subvolume_recursively "/toplevel/@old_root$dir" "/toplevel/@root$dir"
+                  copy_subvolume_recursively "/toplevel/@old_root$dir" "/toplevel/@new_root$dir"
                 else
                   ${log "copying to new subvolume: $dir"}
-                  btrfs subvolume create "/toplevel/@root$dir"
-                  cp -a "/toplevel/@old_root$dir" "/toplevel/@root$dir"
+                  btrfs subvolume create "/toplevel/@new_root$dir"
+                  cp -a "/toplevel/@old_root$dir" "/toplevel/@new_root$dir"
                 fi
               done
 
               for file in "$${copy_files[@]}"; do
                 ${log "copying file: $file"}
-                mkdir -p $(dirname "/toplevel/@root$file")
-                cp -a "/toplevel/@old_root$file" "/toplevel/@root$file"
+                mkdir -p $(dirname "/toplevel/@new_root$file")
+                cp -a "/toplevel/@old_root$file" "/toplevel/@new_root$file"
               done
+
+              mv "/toplevel/@new_root" "/toplevel/@root"
 
               ${log "backing up old root"}
               mkdir -p /toplevel/old_roots
@@ -170,9 +172,9 @@ in {
           "/var/log"
         ]
         (mkMerge (pipe users [
-          (getHMOptWithUsername config (config: username:
-            pipe config.custom.home.behavior.impermanence.dirs [
-              map (x: "${config.users.users.${username}.home}/${x}")
+          (getHMOptWithUsername config (hmconfig: username:
+            pipe hmconfig.custom.home.behavior.impermanence.dirs [
+              (map (x: "${config.users.users.${username}.home}/${x}"))
             ]
           ))
         ]))
@@ -184,9 +186,9 @@ in {
           "/etc/nixos"
         ]
         (mkMerge (pipe users [
-          (getHMOptWithUsername config (config: username:
-            pipe config.custom.home.behavior.impermanence.files [
-              map (x: "${config.users.users.${username}.home}/${x}")
+          (getHMOptWithUsername config (hmconfig: username:
+            pipe hmconfig.custom.home.behavior.impermanence.files [
+              (map (x: "${config.users.users.${username}.home}/${x}"))
             ]
           ))
         ]))
