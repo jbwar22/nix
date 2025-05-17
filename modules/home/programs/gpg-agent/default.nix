@@ -5,5 +5,5 @@ with lib; mkNsEnableModule config ./. {
     enable = true;
   };
 
-  custom.home.behavior.impermanence.dirs = [ { directory = ".gnupg"; method = "bindfs"; } ];
+  custom.home.behavior.impermanence.dirs = [ ".gnupg" ];
 }

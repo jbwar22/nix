@@ -43,5 +43,5 @@ with lib; mkNsEnableModule config ./. {
     };
   };
 
-  custom.home.behavior.impermanence.dirs = [ { directory = ".librewolf"; method = "bindfs"; } ];
+  custom.home.behavior.impermanence.dirs = [ ".librewolf" ];
 }
