@@ -154,16 +154,34 @@ in {
       };
     };
 
-    cfg.dirs = [
-      "/etc/ssh"                  # host key, needed for agenix
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/var/log"
+    cfg.dirs = mkMerge [
+      [
+        "/etc/ssh"                  # host key, needed for agenix
+        "/var/lib/nixos"
+        "/var/lib/systemd/coredump"
+        "/var/log"
+      ]
+      (mkMerge (pipe users [
+        (getHMOptWithUsername config (config: username:
+          pipe config.custom.home.behavior.impermanence.dirs [
+            map (x: "${users.users.${username}.home}/${x}")
+          ]
+        ))
+      ]))
     ];
 
-    cfg.files = [
-      "/etc/machine-id"
-      "/etc/nixos"
+    cfg.files = mkMerge [
+      [
+        "/etc/machine-id"
+        "/etc/nixos"
+      ]
+      (mkMerge (pipe users [
+        (getHMOptWithUsername config (config: username:
+          pipe config.custom.home.behavior.impermanence.files [
+            map (x: "${users.users.${username}.home}/${x}")
+          ]
+        ))
+      ]))
     ];
 
     # could persist /var/db/sudo/lectured, but meh

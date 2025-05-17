@@ -143,7 +143,10 @@ lib: with lib; rec {
   # mkIfAnyHMOpt config (cfg: cfg.programs.bash.enable)
   mkIfAnyHMOpt = config: predicate: mkIf (checkHMOpt config any predicate);
 
-  getHMOpt = config: getter: users: map (username: getter config.home-manager.users.${username}) (attrNames users);
+  getHMOptWithUsername = config: getter: users: map (username: getter config.home-manager.users.${username} username) (attrNames users);
+
+  getHMOpt = config: getter: users: getHMOptUsername config (c: _: getter c) users;
+
 
   # users = setUserGroups config.custom.common.opts.host.users [ "group" ];
   setUserGroups = users: groups: {
