@@ -29,8 +29,6 @@ with lib; {
         graphics.useUnstableMesa = true;
         impermanence = {
           enable = true;
-          persistPath = "/persist/system";
-          nixconfigSymlink = "/home/jackson/documents/nixos-config";
         };
       };
 

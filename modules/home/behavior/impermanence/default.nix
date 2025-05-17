@@ -17,8 +17,8 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    cfg.dirs = mkMerge [
+  config = mkIf cfg.enable (opt {
+    dirs = mkMerge [
       [
         ".ssh"
         ".cache/nix"
@@ -30,5 +30,5 @@ in {
       (mkIf true [ ".docker" ])
       (mkIf true [ ".local/share/flatpak" ])
     ];
-  };
+  });
 })

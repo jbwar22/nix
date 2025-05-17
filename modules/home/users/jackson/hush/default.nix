@@ -15,7 +15,6 @@ with lib; {
       behavior = {
         impermanence = {
           enable = true;
-          persistPath = "/persist/home/jackson";
         };
         default-audio = {
           enable = true;
