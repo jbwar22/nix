@@ -44,7 +44,7 @@ with lib; {
           };
           "Acer Technologies XV271U M3 140400E433LIJ" = {
             sway = {
-              resolution = "2560x1440@180.002Hz";
+              resolution = "2560x1440@143.999Hz";
               position = "1440 -650";
               bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
             };
