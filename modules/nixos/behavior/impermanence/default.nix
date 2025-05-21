@@ -33,6 +33,7 @@ in {
           enable = mkDefault true;
           storePaths = with pkgs; [
             "${btrfs-progs}/bin/btrfs"
+            "${coreutils}/bin/chown"
             "${coreutils}/bin/cp"
             "${coreutils}/bin/cut"
             "${coreutils}/bin/date"
@@ -93,11 +94,27 @@ in {
               mv /toplevel/@root /toplevel/@old_root_FOO
               btrfs subvolume create /toplevel/@new_root
 
+              copy_usergroup() {
+                user=$(stat --format=%u "$1")
+                group=$(stat --format=%g "$1")
+                chown $user:$group "$2"
+              }
+
+              mkdir_chown() {
+                if [ ! -e "$2" ]; then
+                  parent_1="$(dirname "$1")"
+                  parent_2="$(dirname "$2")"
+                  mkdir_chown "$parent_1" "$parent_2"
+                  mkdir "$2"
+                  copy_usergroup "$1" "$2"
+                fi
+              }
+
               copy_subvolume_recursively() {
                 if [ -e "$2" ] && [ $(stat --format=%i "$2") -eq 2 ]; then
                   btrfs subvolume delete "$2"
                 fi
-                mkdir -p $(dirname "$2")
+                mkdir_chown $(dirname "$1") $(dirname "$2")
                 btrfs subvolume snapshot "$1" "$2"
                 IFS=$'\n'
                 for subvolume in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
@@ -107,7 +124,7 @@ in {
               }
 
               for dir in "''${copy_dirs[@]}"; do
-                mkdir -p $(dirname "/toplevel/@new_root$dir")
+                mkdir_chown $(dirname "/toplevel/@old_root$dir") $(dirname "/toplevel/@new_root$dir")
                 if [ ! -e "/toplevel/@old_root$dir" ]; then
                   ${log "creating new subvolume: $dir"}
                   btrfs subvolume create "/toplevel/@new_root$dir"
@@ -123,7 +140,7 @@ in {
 
               for file in "''${copy_files[@]}"; do
                 ${log "copying file: $file"}
-                mkdir -p $(dirname "/toplevel/@new_root$file")
+                mkdir_chown $(dirname "/toplevel/@old_root$file") $(dirname "/toplevel/@new_root$file")
                 cp -a "/toplevel/@old_root$file" "/toplevel/@new_root$file"
               done
 
