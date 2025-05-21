@@ -2,7 +2,8 @@
 
 with lib; mkNsEnableModule config ./. (let
   houdoku = (pkgs.appimageTools.wrapType2 {
-    name = "houdoku";
+    pname = "houdoku";
+    version = "2.16.0";
     src = pkgs.fetchurl {
       url = "https://github.com/xgi/houdoku/releases/download/v2.16.0/Houdoku-2.16.0.AppImage";
       hash = "sha256-P9f8t5K6c9hF/qe0Fqv5pAgB3rjya9FswV6sPF1ykOg=";

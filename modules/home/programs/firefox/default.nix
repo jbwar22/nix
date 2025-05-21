@@ -35,8 +35,8 @@ with lib; with ns config ./.; {
             (builtins.readFile ./prefs.js)
           ];
           search = {
-            default = "DuckDuckGo";
-            privateDefault = "DuckDuckGo";
+            default = "ddg";
+            privateDefault = "ddg";
             force = true;
             engines = {
               "Nix Packages" = {
@@ -66,15 +66,15 @@ with lib; with ns config ./.; {
                 icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@nw" ];
               };
-              "Google".metaData.alias = "@g";
-              "Wikipedia".metaData.alias = "@w";
-              "Amazon".metaData.alias = "@a";
-              "Bing".metaData.hidden = true;
-              "eBay".metaData.hidden = true;
+              "google".metaData.alias = "@g";
+              "wikipedia".metaData.alias = "@w";
+              "amazon".metaData.alias = "@a";
+              "bing".metaData.hidden = true;
+              "ebay".metaData.hidden = true;
             };
             order = [
-              "DuckDuckGo"
-              "Google"
+              "ddg"
+              "google"
             ];
           };
         };

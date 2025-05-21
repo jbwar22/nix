@@ -4,6 +4,7 @@
   extraPlugins = [
     (pkgs.vimUtils.buildVimPlugin {
       name = "colortils";
+      version = "test";
       src = pkgs.fetchFromGitHub {
         owner = "max397574";
         repo = "colortils.nvim";

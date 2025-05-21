@@ -5,6 +5,7 @@
 
     (pkgs.vimUtils.buildVimPlugin {
       name = "vim-moonfly-colors";
+      version = "test";
       src = pkgs.fetchFromGitHub {
         owner = "bluz71";
         repo = "vim-moonfly-colors";
@@ -15,6 +16,7 @@
 
     (pkgs.vimUtils.buildVimPlugin {
       name = "vim-indentwise";
+      version = "test";
       src = pkgs.fetchFromGitHub {
         owner = "jeetsukumaran";
         repo = "vim-indentwise";

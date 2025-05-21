@@ -7,7 +7,7 @@ inputs: channels: final: prev: {
     src = inputs.yt-dlp;
   });
 
-  sway = (channels.unstable.sway.override {
+  sway = (channels.stable.sway.override {
     sway-unwrapped = channels.unstable.sway-unwrapped.overrideAttrs (oldAttrs: {
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
