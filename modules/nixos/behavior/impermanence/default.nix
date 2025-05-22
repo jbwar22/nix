@@ -24,6 +24,12 @@ in {
         boot.initrd.systemd.services.reset-root.script = mkForce ''
           echo skipping resetting root
           plymouth display-message --text="Skipping wipe root"
+          mkdir /toplevel
+          mount ${toplevelfs.device} /toplevel -t btrfs -o ${concatStringsSep "," toplevelfs.options}
+          if [ ! -e /toplevel/@root ] && [ -e /toplevel/@old_root ]; then
+            mv /toplevel/@old_root /toplevel/@root
+          fi
+          umount /toplevel
         '';
       };
 
