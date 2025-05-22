@@ -134,7 +134,8 @@ in {
                 else
                   ${log "copying to new subvolume: $dir"}
                   btrfs subvolume create "/toplevel/@new_root$dir"
-                  cp -a "/toplevel/@old_root$dir" "/toplevel/@new_root$dir"
+                  copy_usergroup "/toplevel/@old_root$dir" "/toplevel/@new_root$dir"
+                  cp -a "/toplevel/@old_root$dir/." "/toplevel/@new_root$dir"
                 fi
               done
 
