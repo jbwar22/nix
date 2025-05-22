@@ -91,7 +91,7 @@ in {
               timestamp=$(date --date="@$(stat -c %Y /toplevel/@root)" "+@root@%Y-%m-%d-%H:%M:%S")
 
               ${log "moving root to old root"}
-              mv /toplevel/@root /toplevel/@old_root_FOO
+              mv /toplevel/@root /toplevel/@old_root
               btrfs subvolume create /toplevel/@new_root
 
               copy_usergroup() {
