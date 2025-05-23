@@ -145,7 +145,7 @@ lib: with lib; rec {
 
   getHMOptWithUsername = config: getter: users: map (username: getter config.home-manager.users.${username} username) (attrNames users);
 
-  getHMOpt = config: getter: users: getHMOptUsername config (c: _: getter c) users;
+  getHMOpt = config: getter: users: getHMOptWithUsername config (c: _: getter c) users;
 
 
   # users = setUserGroups config.custom.common.opts.host.users [ "group" ];
