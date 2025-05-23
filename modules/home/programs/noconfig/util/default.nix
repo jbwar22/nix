@@ -45,6 +45,6 @@ with lib; mkNsEnableModule config ./. {
    
   custom.home.opts.aliases = {
     yt-dlp-c = "${pkgs.yt-dlp}/bin/yt-dlp --cookies-from-browser firefox:/home/${config.home.username}/.librewolf/c3juc9f4.default-release";
-    rsync-p2 = "rsync --no-i-r --info=progress2";
+    rsync-p2 = "rsync -r --no-i-r --info=progress2";
   };
 }
