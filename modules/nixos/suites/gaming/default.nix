@@ -8,6 +8,7 @@ with lib; mkNsEnableModule config ./. {
     };
     behavior = {
       gamepad-support.enable = true;
+      pipewire-low-latency.enable = true;
     };
   };
 }
