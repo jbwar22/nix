@@ -2,12 +2,12 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    signal-desktop
+    (wrapWaylandElectron signal-desktop-bin)
   ];
 
   # fix for needing to open it up twice
   xdg.desktopEntries = {
-    signal-desktop = {
+    signal = {
       name = "Signal";
       exec = "${pkgs.writeShellScript "launch-signal" ''
         ${pkgs.signal-desktop}/bin/signal-desktop &

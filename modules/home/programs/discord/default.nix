@@ -12,7 +12,7 @@ with lib; mkNsEnableModule config ./. (let
   } (builtins.readFile ./krisp-patcher.py);
 in {
   home.packages = with pkgs; [ 
-    discord
+    (wrapWaylandElectron discord)
     krisp-patcher
   ];
 

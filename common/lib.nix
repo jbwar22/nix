@@ -281,4 +281,11 @@ lib: with lib; rec {
   myMkOutOfStoreSymlink = (pkgs: path:
     pkgs.runCommandLocal path {} "ln -s ${escapeShellArg path} $out"
   );
+
+  wrapWaylandElectron = package: package.overrideAttrs (oldAttrs: {
+    postInstall = oldAttrs.postInstall or "" + ''
+      wrapProgram $out/bin/${oldAttrs.meta.mainProgram} \
+        --add-flags "--wayland-text-input-version=3"
+    '';
+  });
 }
