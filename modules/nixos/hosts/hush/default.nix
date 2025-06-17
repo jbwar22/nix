@@ -9,7 +9,7 @@ with lib; {
     custom.nixos = {
       opts = {
         secrets = {
-          timeZone = trim (readFile ../../../../secrets/git-crypt/strings/timezone-widow.txt);
+          timeZone = trim (readFile ../../../../secrets/git-crypt/strings/timezone-hush.txt);
         };
       };
 
