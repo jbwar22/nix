@@ -12,6 +12,7 @@ with lib; mkNsEnableModule config ./. {
     jq
     ncdu
     nmap
+    p7zip
     ripgrep
     rsync
     smartmontools
