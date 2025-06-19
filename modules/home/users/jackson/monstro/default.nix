@@ -9,6 +9,10 @@ with lib; {
         pc.enable = true;
       };
 
+      behavior = {
+        xdg.defaultBrowser = "firefox.desktop";
+      };
+
       programs = {
         sway.blueLightFilter = true;
         sway.blueLightStrength = 5000;
