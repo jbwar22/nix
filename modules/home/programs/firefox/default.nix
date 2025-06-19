@@ -124,19 +124,16 @@ with lib; with ns config ./.; {
         };
       };
     in {
-      # firefoxp1
       firefox = fxdesktop // {
         name = "Firefox (Personal)";
         exec = "${pkgs.firefox}/bin/firefox -P Personal %u";
         noDisplay = false;
-        # noDisplay = true;
       };
-      # firefoxp2
-      # firefoxprofile = fxdesktop // {
-      #   name = "Firefox ()";
-      #   exec = "${pkgs.firefox}/bin/firefox --P TMP %u";
-      #   # noDisplay = true;
-      # };
+      firefoxprofile = fxdesktop // {
+        name = "Firefox (Profile Manager)";
+        exec = "${pkgs.firefox}/bin/firefox --ProfileManager %u";
+        noDisplay = false;
+      };
     };
 
     custom.home.behavior.impermanence.dirs = [ ".mozilla/firefox" ];

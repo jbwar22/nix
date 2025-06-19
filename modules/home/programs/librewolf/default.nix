@@ -31,12 +31,12 @@ with lib; mkNsEnableModule config ./. {
       };
     };
   in {
-    librewolfp1 = lwdesktop // {
+    librewolf = lwdesktop // {
       name = "LibreWolf (Personal)";
       exec = "${pkgs.librewolf}/bin/librewolf -P Personal %u";
-      noDisplay = true;
+      noDisplay = false;
     };
-    librewolf = lwdesktop // {
+    librewolfprofile = lwdesktop // {
       name = "LibreWolf (Profile Manager)";
       exec = "${pkgs.librewolf}/bin/librewolf --ProfileManager %u";
       noDisplay = false;
