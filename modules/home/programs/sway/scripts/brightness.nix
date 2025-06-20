@@ -9,16 +9,23 @@
 
 # fit: 0,0 1,1 20,1515
 
-pkgs: slider:
+pkgs: slider: config:
 pkgs.writeShellScript "sway-brightness" ''
   current=$(${pkgs.brightnessctl}/bin/brightnessctl \
-            --device="intel_backlight" | \
+            --device="${config.custom.home.programs.sway.brightnessDevice}" | \
             head -2 | \
             tail -1 | \
             awk '{ print $3 }')
   newp="$(${slider} $1 $current \
-          0 1 10 27 51 84 124 172 228 292 364 \
-          444 531 627 730 841 960 1087 1222 1365 1515)"
+          ${
+            if (config.custom.home.programs.sway.brightnessDevice == "intel_backlight")
+            then "0 1 10 27 51 84 124 172 228 292 364 444 531 627 730 841 960 1087 1222 1365 1515"
+            else (
+            if (config.custom.home.programs.sway.brightnessDevice == "amdgpu_bl1")
+            then "1 30 35 40 46 53 61 69 79 89 100 112 124 138 152 167 183 200 217 236 255" # ax^2 + 20, a=(255-20)/(24^2), 5<=x<=24
+            else ""
+          )} \
+        )"
   newp2=($newp)
   new=''${newp2[0]}
   per=''${newp2[1]}
@@ -26,7 +33,7 @@ pkgs.writeShellScript "sway-brightness" ''
   max=''${newp2[3]}
   if [ "$new" != "$current" ] ; then
       ${pkgs.brightnessctl}/bin/brightnessctl \
-      --device="intel_backlight" set $new
+      --device="${config.custom.home.programs.sway.brightnessDevice}" set $new
   fi
   ${pkgs.dunst}/bin/dunstify -a mediakeys -t 1000 -r 100 -u normal \
   -h int:value:$per -h string:hlcolor:#660000 Brightness:\ $num/$max

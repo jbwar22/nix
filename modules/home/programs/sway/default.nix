@@ -25,6 +25,11 @@ in {
       in t;
       description = "shortcuts menu";
     };
+    brightnessDevice = mkOption {
+      type = with types; nullOr str;
+      description = "device for brightnessctl";
+      default = null;
+    };
   };
 
   config = lib.mkIf cfg.enable (recursiveUpdate (opt {
@@ -147,8 +152,8 @@ in {
           "XF86AudioMicMute" = "exec ${scripts.volume} micmute";
 
           # Media keys: Display
-          "XF86MonBrightnessUp" = "exec ${scripts.brightness} up";
-          "XF86MonBrightnessDown" = "exec ${scripts.brightness} down";
+          "XF86MonBrightnessUp" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} up";
+          "XF86MonBrightnessDown" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} down";
           "XF86Display" = mkIf cfg.blueLightFilter "exec pkill -USR1 gammastep";
           "XF86Favorites" = mkIf swaylock.enable "exec ${pkgs.swaylock}/bin/swaylock & systemctl suspend";
           "${modifier}+Shift+delete" = mkIf swaylock.enable "exec ${pkgs.swaylock}/bin/swaylock";

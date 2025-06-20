@@ -27,6 +27,7 @@ with lib; {
 
       programs = {
         bash.hostcolor = "\\033[38;5;111m";
+        sway.brightnessDevice = "amdgpu_bl1";
       };
 
       opts = {
