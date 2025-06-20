@@ -40,6 +40,10 @@
       url = "github:yt-dlp/yt-dlp/master";
       flake = false;
     };
+    framework-dsp = {
+      url = "github:cab404/framework-dsp";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, ... }: let
