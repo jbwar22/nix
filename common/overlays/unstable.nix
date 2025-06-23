@@ -6,4 +6,6 @@ channels: final: prev: {
   qbittorrent;    # features 
 
   linuxPackages_latest_unstable = channels.unstable.linuxPackages_latest;
+
+  mesa_unstable = channels.unstable.mesa;
 }
