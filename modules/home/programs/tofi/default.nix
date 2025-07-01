@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; mkNsEnableModule config ./. (let
+  colorscheme = config.custom.home.opts.colorscheme;
+in {
   programs.tofi = {
     enable = true;
     package = pkgs.tofi;
@@ -14,8 +16,9 @@ with lib; mkNsEnableModule config ./. {
       font = "monospace";
       outline-width = 0;
       border-width = 0;
-      background-color = "#000000";
-      selection-color = "#FFFFFF";
+      background-color = colorscheme.wm.background;
+      text-color = colorscheme.wm.text;
+      selection-color = colorscheme.wm.foreground-normal;
       min-input-width = 120;
       result-spacing = 15;
       padding-top = 2;
@@ -32,4 +35,4 @@ with lib; mkNsEnableModule config ./. {
       [[ -f "$tofi_cache" ]] && rm "$tofi_cache"
     '';
   };
-}
+})
