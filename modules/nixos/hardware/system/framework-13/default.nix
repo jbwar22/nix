@@ -12,6 +12,10 @@ with lib; with ns config ./.; {
   config = lib.mkIf cfg.enable {
     custom.nixos.hardware.cpu.amd.enable = true;
 
+    boot.kernelParams = [
+      "amdgpu.dcdebugmask=0x410" # fix flickering issue
+    ];
+
     boot.initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
 
