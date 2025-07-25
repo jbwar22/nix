@@ -6,6 +6,17 @@ with lib; {
   ];
 
   config = {
+
+    custom.nixos.behavior.tmpfiles."/home/jackson/.local" = {
+      type = "d";
+      path = "/home/jackson/.local";
+      mode = "7500";
+      user = "jackson";
+      group = "users";
+      age = "-";
+      argument = "-";
+    };
+
     custom.nixos = {
       opts = {
         secrets = {
