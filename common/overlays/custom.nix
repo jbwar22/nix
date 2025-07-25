@@ -17,7 +17,6 @@ inputs: channels: final: prev: {
 
   waybar = channels.stable.waybar.override {
     cavaSupport = false;
-    hyprlandSupport = false;
     mpdSupport = false;
   };
 }
