@@ -11,6 +11,12 @@ with lib; with ns config ./.; {
 
   config = lib.mkIf cfg.enable {
     custom.nixos.hardware.cpu.amd.enable = true;
+    custom.nixos.behavior.impermanence = { # sets up most mounts
+      enable = true;
+      device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
+      mntOptions = [ "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+      persist = "@new_persist";
+    };
 
     boot.kernelParams = [
       "amdgpu.dcdebugmask=0x410" # fix flickering issue
@@ -25,23 +31,16 @@ with lib; with ns config ./.; {
       };
     };
 
-    fileSystems."/" =
-      { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
-        fsType = "btrfs";
-        options = [ "subvol=@root" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-      };
+    fileSystems."/" = { 
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "defaults" "size=2G" "mode=755" ];
+    };
 
     fileSystems."/toplevel" =
       { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
         fsType = "btrfs";
         options = [ "subvol=/" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-      };
-
-    fileSystems."/persist" =
-      { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
-        fsType = "btrfs";
-        neededForBoot = true;
-        options = [ "subvol=@persist" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
     fileSystems."/boot/efi" =
@@ -61,12 +60,6 @@ with lib; with ns config ./.; {
         fsType = "btrfs";
         options = [ "subvol=@swap" "noatime" "ssd" ];
       };
-
-    # fileSystems."/home" =
-    #   { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
-    #     fsType = "btrfs";
-    #     options = [ "subvol=@home" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-    #   };
 
     swapDevices = [{
       device = "/swap/swapfile";

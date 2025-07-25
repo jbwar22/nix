@@ -1,8 +1,6 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; (let
-  hf = config.custom.home.opts.hostfeatures;
-in {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "home impermanence";
     dirs = mkOption {
@@ -31,4 +29,4 @@ in {
       (mkIf true [ ".local/share/flatpak" ])
     ];
   });
-})
+}
