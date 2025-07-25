@@ -32,7 +32,7 @@ with lib; with ns config ./.; {
     };
 
     fileSystems."/" = { 
-      device = "none";
+      device = "root_tmpfs";
       fsType = "tmpfs";
       options = [ "defaults" "size=2G" "mode=755" ];
     };
