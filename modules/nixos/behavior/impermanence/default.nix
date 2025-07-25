@@ -30,7 +30,13 @@ in {
       default = [];
     };
   };
-  config = mkMerge [
+  config = let
+    userConfs = (getHMOptWithUsername config (hmconfig: username: {
+      inherit username;
+      dirs = hmconfig.custom.home.behavior.impermanence.dirs;
+      files = hmconfig.custom.home.behavior.impermanence.files;
+    }) users);
+  in mkMerge [
     (mkIf cfg.enable {
       # could persist /var/db/sudo/lectured, but meh
       custom.nixos.programs.sudo.lecture = "never";
@@ -60,23 +66,33 @@ in {
         }))
       ];
 
-      custom.nixos.behavior.tmpfiles = genAttrs [
-        "/home/jackson/.cache"
-        "/home/jackson/.config"
-        "/home/jackson/.local"
-        "/home/jackson/.local/share"
-        "/home/jackson/.local/state"
-        "/home/jackson/.mozilla"
-      ] (path: {
-        type = "d";
-        inherit path;
-        mode = "0755";
-        user = "jackson";
-        group = "users";
-        age = "-";
-        argument = "-";
-      });
-
+      # make sure home folder mountpoint parent folders have correct permissions
+      custom.nixos.behavior.tmpfiles = pipe userConfs [
+        (map (userConf: pipe (userConf.dirs ++ userConf.files) [
+          (map (splitString "/"))
+          (map (dropEnd 1))
+          (map (foldl (acc: x: if (acc == []) then [x] else (
+            acc ++ ["${last acc}/${x}"]
+          )) []))
+          flatten
+          unique
+          (map (x: "/home/${userConf.username}/${x}"))
+          (map (x: {
+            name = x;
+            value = {
+              type = "d";
+              path = x;
+              mode = "0755";
+              user = userConf.username;
+              group = "users";
+              age = "-";
+              argument = "-";
+            };
+          }))
+        ]))
+        flatten
+        listToAttrs
+      ];
     })
     (opt {
       dirs = mkMerge [
@@ -86,13 +102,9 @@ in {
           "/var/lib/systemd/coredump"
           "/var/log"
         ]
-        (mkMerge (pipe users [
-          (getHMOptWithUsername config (hmconfig: username:
-            pipe hmconfig.custom.home.behavior.impermanence.dirs [
-              (map (x: "/home/${username}/${x}"))
-            ]
-          ))
-        ]))
+        (mkMerge (map (userConf: 
+          map (x: "/home/${userConf.username}/${x}") userConf.dirs
+        ) userConfs))
       ];
 
       files = mkMerge [
@@ -100,13 +112,9 @@ in {
           "/etc/machine-id"
           "/etc/nixos"
         ]
-        (mkMerge (pipe users [
-          (getHMOptWithUsername config (hmconfig: username:
-            pipe hmconfig.custom.home.behavior.impermanence.files [
-              (map (x: "/home/${username}/${x}"))
-            ]
-          ))
-        ]))
+        (mkMerge (map (userConf: 
+          map (x: "/home/${userConf.username}/${x}") userConf.files
+        ) userConfs))
       ];
     })
   ];
