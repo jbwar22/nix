@@ -10,6 +10,7 @@ with lib; mkNsEnableModule config ./. {
     qpwgraph
     spotify
     sqlitebrowser
+    vlc
     zoom-us
   ];
 }
