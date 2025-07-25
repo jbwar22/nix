@@ -59,6 +59,24 @@ in {
           options = [ "bind" ];
         }))
       ];
+
+      custom.nixos.behavior.tmpfiles = genAttrs [
+        "/home/jackson/.cache"
+        "/home/jackson/.config"
+        "/home/jackson/.local"
+        "/home/jackson/.local/share"
+        "/home/jackson/.local/state"
+        "/home/jackson/.mozilla"
+      ] (path: {
+        type = "d";
+        inherit path;
+        mode = "0755";
+        user = "jackson";
+        group = "users";
+        age = "-";
+        argument = "-";
+      });
+
     })
     (opt {
       dirs = mkMerge [
