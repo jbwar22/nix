@@ -8,4 +8,9 @@ with lib; mkNsEnableModule config ./. {
        location = "$HOME/games/osu/prefix";
     })
   ];
+  custom.home.behavior.impermanence.dirs = [
+    "gaming"
+    ".local/share/umu"
+    ".local/share/osu" # osu-lazer
+  ];
 }
