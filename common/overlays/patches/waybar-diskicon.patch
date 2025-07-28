@@ -1,0 +1,17 @@
+allows icon formatting of disk module
+
+---
+
+--- a/src/modules/disk.cpp
++++ b/src/modules/disk.cpp
+@@ -68,8 +68,10 @@ auto waybar::modules::Disk::update() -> void {
+     event_box_.hide();
+   } else {
+     event_box_.show();
++    auto icons = std::vector<std::string>{state};
+     label_.set_markup(fmt::format(
+         fmt::runtime(format), stats.f_bavail * 100 / stats.f_blocks, fmt::arg("free", free),
++        fmt::arg("icon", getIcon(percentage_used, icons)),
+         fmt::arg("percentage_free", stats.f_bavail * 100 / stats.f_blocks), fmt::arg("used", used),
+         fmt::arg("percentage_used", percentage_used), fmt::arg("total", total),
+         fmt::arg("path", path_), fmt::arg("specific_free", specific_free),

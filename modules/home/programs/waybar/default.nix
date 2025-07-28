@@ -2,6 +2,7 @@
 
 with lib; with ns config ./.; let
   colorscheme = config.custom.home.opts.colorscheme;
+  hf = config.custom.home.opts.hostfeatures;
 in {
   options = opt {
     enable = mkEnableOption "waybar";
@@ -55,17 +56,25 @@ in {
       modules-center = [
         "sway/window"
       ];
-      modules-right = [
-        "custom/extras"
-        "custom/lang"
-        "network"
-        "pulseaudio"
-        "custom/dunst"
-        "cpu"
-        "memory"
-      ] ++ (pipe config.custom.common.opts.hardware.batteries [
-        attrsToList
-        (map (x: "battery#${toLower x.name}"))
+      modules-right = (mkMerge [
+        [
+          "custom/extras"
+          "custom/lang"
+          "network"
+          "pulseaudio"
+          "custom/dunst"
+        ]
+        (mkIf hf.hasTmpfsRoot [
+          "disk#tmpfsroot"
+        ])
+        [
+          "cpu"
+          "memory"
+        ]
+        (pipe config.custom.common.opts.hardware.batteries [
+          attrsToList
+          (map (x: "battery#${toLower x.name}"))
+        ])
       ]);
       
       # Modules configuration
@@ -96,6 +105,15 @@ in {
         format-icons = ["" "他"];
         tooltip = true;
         tooltip-format = "{app}: {title}";
+      };
+
+      "disk#tmpfsroot" = {
+        interval = 1;
+        tooltip = false;
+        path = "/";
+        format = "R<span>[<span font-size=\"${conf.status-font-size}\">{icon}</span>]</span>";
+        format-alt = "R[{percentage_used:>2}]";
+        format-icons = progress.getHorizontal 4 8;
       };
 
       "cpu" = let

@@ -13,6 +13,7 @@ with lib; with ns config ./.; {
     hasFuseAllowOther = mkDisableOption "has userAllowOther for fuse";
     hasUdisks2 = mkDisableOption "has udisks2";
     hasWireplumber = mkDisableOption "has wireplumber";
+    hasTmpfsRoot = mkDisableOption "root is tmpfs";
   };
 
   config = if (osConfig != false) then (opt {
@@ -27,5 +28,6 @@ with lib; with ns config ./.; {
     hasFuseAllowOther = osConfig.programs.fuse.userAllowOther;
     hasUdisks2 = osConfig.services.udisks2.enable;
     hasWireplumber = osConfig.services.pipewire.wireplumber.enable;
+    hasTmpfsRoot = osConfig.fileSystems."/".fsType == "tmpfs";
   }) else {};
 }

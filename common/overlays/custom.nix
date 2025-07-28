@@ -15,7 +15,11 @@ inputs: channels: final: prev: {
     });
   });
 
-  waybar = channels.stable.waybar.override {
+  waybar = (channels.stable.waybar.overrideAttrs(oldAttrs: {
+    patches = oldAttrs.patches ++ [
+      ./patches/waybar-diskicon.patch
+    ];
+  })).override {
     cavaSupport = false;
     mpdSupport = false;
   };
