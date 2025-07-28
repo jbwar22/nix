@@ -108,7 +108,7 @@ in {
       };
 
       "disk#tmpfsroot" = {
-        interval = 1;
+        interval = 10;
         tooltip = false;
         path = "/";
         format = "R<span>[<span font-size=\"${conf.status-font-size}\">{icon}</span>]</span>";
