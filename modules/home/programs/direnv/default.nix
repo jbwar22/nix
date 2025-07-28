@@ -5,6 +5,9 @@ with lib; mkNsEnableModule config ./. {
     enable = true;
     enableBashIntegration = true;
     nix-direnv.enable = true;
+    config = {
+      hide_env_diff = true;
+    };
   };
 
   custom.home.behavior.impermanence.dirs = [ ".local/share/direnv" ];
