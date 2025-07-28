@@ -9,7 +9,7 @@ with lib; mkNsEnableModule config ./. {
     })
   ];
   custom.home.behavior.impermanence.dirs = [
-    "gaming"
+    "games"
     ".local/share/umu"
     ".local/share/osu" # osu-lazer
   ];
