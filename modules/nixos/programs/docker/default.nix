@@ -2,10 +2,11 @@
 
 with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
+  hasBtrfsRoot = config.fileSystems."/".fsType == "btrfs";
 in {
   virtualisation.docker = {
     enable = true;
-    storageDriver = "btrfs";
+    storageDriver = mkIf hasBtrfsRoot "btrfs";
   };
 
   users = setUserGroups admins [ "docker" ];
