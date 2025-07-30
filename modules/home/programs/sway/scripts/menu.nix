@@ -15,12 +15,13 @@ pkgs: lib: config: let
     "bar1920_2x" = {
       font-size = 9;
       padding-top = 2;
+      padding-left = 9;
       height = 22;
     };
   };
 
   runline = (args:
-    "$tofi --output=$output_output " + (builtins.concatStringsSep " " (map (attr:
+    "$tofi \"\${args[@]}\" --output=$output_output " + (builtins.concatStringsSep " " (map (attr:
       "--${attr.name}=${toString attr.value}"
     ) (lib.attrsToList args))
   ));
@@ -40,10 +41,17 @@ pkgs: lib: config: let
 
 in pkgs.writeShellScript "sway-menu" ''
   tofi="${pkgs.tofi}/bin/tofi"
-  while getopts ":d" opt; do
+  args=()
+  while getopts ":drp:" opt; do
     case $opt in
       d)
         tofi="${pkgs.tofi}/bin/tofi-drun"
+        ;;
+      r)
+        tofi="${pkgs.tofi}/bin/tofi --require-match=false"
+        ;;
+      p)
+        args=(--prompt-text="''${OPTARG}")
         ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2

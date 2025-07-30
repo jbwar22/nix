@@ -12,7 +12,7 @@ in {
       height = 20;
       horizontal = true;
       font-size = 8;
-      prompt-text = "\" run: \"";
+      prompt-text = "\"run: \"";
       font = "monospace";
       outline-width = 0;
       border-width = 0;
@@ -23,7 +23,7 @@ in {
       result-spacing = 15;
       padding-top = 2;
       padding-bottom = 0;
-      padding-left = 0;
+      padding-left = 5; # todo test for all monitors
       padding-right = 0;
     };
   };

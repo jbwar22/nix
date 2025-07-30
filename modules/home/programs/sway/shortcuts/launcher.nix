@@ -4,7 +4,7 @@ with lib; let
   shortcuts = config.custom.home.programs.sway.shortcuts;
   isPackage = check: hasAttr "stdenv" check;
   mkCase = shortcuts: ''
-    case $(echo "${concatStringsSep "\n" (attrNames shortcuts)}" | ${menu}) in
+    case $(echo "${concatStringsSep "\n" (attrNames shortcuts)}" | ${menu} -p "run shortcut: ") in
       ${pipe shortcuts [
         attrNames
         (map (shortcut: ''

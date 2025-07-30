@@ -173,6 +173,9 @@ in {
           # Shortcut
           "${modifier}+s" = "exec ${shortcuts-launcher}";
 
+          # nix run
+          "${modifier}+x" = "exec ${scripts.runner}";
+
           # Remap defaults
           "${modifier}+${alt}+space" = "focus mode_toggle";
           "${modifier}+${alt}+s" = "layout stacking";
