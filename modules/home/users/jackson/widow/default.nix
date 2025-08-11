@@ -57,6 +57,14 @@ with lib; {
             };
             bar = "bar1080";
           };
+          "Hewlett Packard HP 22cwa 6CM6120J0Z" = {
+            sway = {
+              resolution = "1920x1080@60.000hz";
+              position = "-1920 0";
+              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
+            };
+            bar = "bar1080";
+          };
         };
         wallpaper = ../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png;
         colorscheme = import ./colorscheme.nix;
