@@ -34,22 +34,11 @@ with lib; {
       opts = {
         screens = {
           "BOE NE135A1M-NY1" = {
-            sway = {
-              resolution = "2880x1920@120.000Hz";
-              position = "0 0";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
-            };
-            bar = "bar1920_2x";
-            noserial = true;
+            sway.position = "0 0";
             clamshell = true;
           };
           "Acer Technologies XV271U M3 140400E433LIJ" = {
-            sway = {
-              resolution = "2560x1440@143.999Hz";
-              position = "1440 -650";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
-            };
-            bar = "bar1440";
+            sway.position = "1440 -650";
             specialisations = {
               "work monitor above".sway = {
                 position = "-560 -1440";
@@ -57,12 +46,7 @@ with lib; {
             };
           };
           "LG Electronics LG TV 0x01010101" = {
-            sway = {
-              resolution = "1920x1080@60.000hz";
-              position = "0 -1080";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
-            };
-            bar = "bar1080";
+            sway.position = "0 -1080";
           };
         };
         wallpaper = ../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png;

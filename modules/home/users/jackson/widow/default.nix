@@ -25,21 +25,10 @@ with lib; {
       opts = {
         screens = {
           "BOE 0x06B3" = {
-            sway = {
-              resolution = "1366x768@60.058Hz";
-              position = "0 0";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
-            };
-            bar = "bar768";
-            noserial = true;
+            sway.position = "0 0";
           };
           "Acer Technologies XV271U M3 140400E433LIJ" = {
-            sway = {
-              resolution = "2560x1440@165.002Hz";
-              position = "1366 -672";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
-            };
-            bar = "bar1440";
+            sway.position = "1366 -672";
             specialisations = {
               "work monitor left".sway = {
                 position = "-2560 -672";
@@ -50,20 +39,10 @@ with lib; {
             };
           };
           "LG Electronics LG TV 0x01010101" = {
-            sway = {
-              resolution = "1920x1080@60.000hz";
-              position = "0 -1080";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
-            };
-            bar = "bar1080";
+            sway.position = "0 -1080";
           };
           "Hewlett Packard HP 22cwa 6CM6120J0Z" = {
-            sway = {
-              resolution = "1920x1080@60.000hz";
-              position = "-1920 0";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png} fill";
-            };
-            bar = "bar1080";
+            sway.position = "-1920 0";
           };
         };
         wallpaper = ../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png;
