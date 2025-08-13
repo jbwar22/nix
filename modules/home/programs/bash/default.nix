@@ -14,6 +14,7 @@ with lib; with ns config ./.; {
       ll = "ls -hal";
       rb = "nixos-rebuild switch --use-remote-sudo";
       rbb = "nixos-rebuild boot --use-remote-sudo";
+      ng = "sudo nix-collect-garbage --delete-older-than 7d";
     };
 
     programs.bash = {
