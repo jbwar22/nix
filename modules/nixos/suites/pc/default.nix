@@ -18,6 +18,7 @@ with lib; mkNsEnableModule config ./. {
       flatpak.enable = true;
       plymouth.enable = true;
       udisks2.enable = true;
+      captive-browser.enable = true;
     };
   };
 }

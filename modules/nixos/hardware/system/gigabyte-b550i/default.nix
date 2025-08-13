@@ -81,6 +81,7 @@ with lib; with ns config ./.; {
         cpu.threads = 12;
         memory.size = 32;
         nvidia = true;
+        interface = "wlp6s0";
       };
     };
   };

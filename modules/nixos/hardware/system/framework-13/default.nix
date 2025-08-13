@@ -77,6 +77,7 @@ with lib; with ns config ./.; {
             max = 80;
           };
         };
+        interface = "wlp192s0";
       };
     };
   };
