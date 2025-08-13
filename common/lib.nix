@@ -278,6 +278,18 @@ lib: with lib; rec {
     (mkIf (!p) no)
   ];
 
+  mkEachDefault = attrs: pipe attrs [
+    attrsToList
+    (map (x: if typeOf x.value == "set" then {
+      name = x.name;
+      value = mkEachDefault x.value;
+    } else {
+      name = x.name;
+      value = mkDefault x.value;
+    }))
+    listToAttrs
+  ];
+
   myMkOutOfStoreSymlink = (pkgs: path:
     pkgs.runCommandLocal path {} "ln -s ${escapeShellArg path} $out"
   );
