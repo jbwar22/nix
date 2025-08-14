@@ -2,7 +2,7 @@
 
 with lib; mkNsEnableModule config ./. (let
   # github:sersorrel/sys
-  krisp-patcher = pkgs.writers.writePython3Bin "krisp-patcher" {
+  krisp-patcher-python = pkgs.writers.writePython3Bin "krisp-patcher-python" {
     libraries = with pkgs.python3Packages; [ capstone pyelftools ];
     flakeIgnore = [
       "E501" # line too long (82 > 79 characters)
@@ -10,6 +10,9 @@ with lib; mkNsEnableModule config ./. (let
       "F405" # name may be undefined, or defined from star imports: module
     ];
   } (builtins.readFile ./krisp-patcher.py);
+  krisp-patcher = pkgs.writeShellScriptBin "krisp-patcher" ''
+    ${krisp-patcher-python}/bin/krisp-patcher-python ~/.config/discord/0.*/modules/discord_krisp/discord_krisp.node
+  '';
 in {
   home.packages = with pkgs; [ 
     (wrapWaylandElectron discord)
