@@ -1,8 +1,16 @@
 { config, lib, pkgs, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; mkNsEnableModule config ./. (let
+  # extended from wrapWaylandElectron in lib.nix
+  signal = (pkgs.signal-desktop-bin.overrideAttrs (oldAttrs: {
+    postInstall = oldAttrs.postInstall or "" + ''
+      wrapProgram $out/bin/${oldAttrs.meta.mainProgram} \
+        --add-flags "--wayland-text-input-version=3 --disable-gpu"
+    '';
+  }));
+in {
   home.packages = with pkgs; [
-    (wrapWaylandElectron signal-desktop-bin)
+    signal
   ];
 
   # fix for needing to open it up twice
@@ -10,9 +18,9 @@ with lib; mkNsEnableModule config ./. {
     signal = {
       name = "Signal";
       exec = "${pkgs.writeShellScript "launch-signal" ''
-        ${pkgs.signal-desktop}/bin/signal-desktop &
+        ${signal}/bin/signal-desktop &
         ${pkgs.coreutils}/bin/sleep 1
-        ${pkgs.signal-desktop}/bin/signal-desktop $@
+        ${signal}/bin/signal-desktop $@
       ''} %U";
       terminal = false;
       type = "Application";
@@ -27,4 +35,4 @@ with lib; mkNsEnableModule config ./. {
   };
 
   custom.home.behavior.impermanence.dirs = [ ".config/Signal" ];
-}
+})
