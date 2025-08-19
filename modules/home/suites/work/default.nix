@@ -10,7 +10,7 @@ with lib; mkNsEnableModule config ./. {
       locker.enable = true;
     };
     behavior = {
-      persist-work.enable = true;
+      work.enable = true;
     };
   };
 }
