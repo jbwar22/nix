@@ -15,20 +15,13 @@ in {
     }];
   };
 
+  # if efi errors, run (sudo -E virsh edit <machine>) and remove (loader) and (nvram) from (<os firmware='efi'>)
   virtualisation = {
     libvirtd = {
       enable = true;
       qemu = {
-        package = pkgs.qemu_kvm;
-        runAsRoot = true;
         swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = [(pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd];
-        };
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
       };
     };
     spiceUSBRedirection.enable = true;
