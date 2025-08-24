@@ -33,6 +33,7 @@ with lib; with ns config ./.; {
       shellAliases = config.custom.home.opts.aliases;
       bashrcExtra = ''
         if [[ $- == *i* ]]; then # interactive only
+          :
           ${sourcedFiles}
         fi
         PS1="\[\033[38;5;166m\]\u\[\033[0m\]@\[${cfg.hostcolor}\]\h\[\033[0m\]:\W \! $ "
