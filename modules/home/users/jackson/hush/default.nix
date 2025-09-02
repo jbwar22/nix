@@ -9,7 +9,6 @@ with lib; {
 
       suites = {
         pc.enable = true;
-        laptop.enable = true;
         work.enable = true;
       };
 

@@ -40,8 +40,13 @@ in {
       screens = "${pkgs.sway}/bin/swaymsg -t get_outputs | ${pkgs.jq}/bin/jq -r '.[] | .name + \"\\t\" + .make + \" \" + .model + \" \" + .serial'";
     };
 
-    home.packages = with pkgs; [
-      swaybg # background
+    home.packages = with pkgs; mkMerge [
+      [
+        swaybg # background
+      ]
+      (mkIf (cfg.brightnessDevice != null) [
+        brightnessctl
+      ])
     ];
     
     home.sessionVariables = {
