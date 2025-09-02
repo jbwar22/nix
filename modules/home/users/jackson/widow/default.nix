@@ -7,6 +7,7 @@ with lib; {
     custom.home = {
       suites = {
         pc.enable = true;
+        laptop.enable = true;
         work.enable = true;
       };
 
