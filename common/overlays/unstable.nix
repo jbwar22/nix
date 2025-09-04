@@ -4,8 +4,7 @@ channels: final: prev: {
   firefox         # up-to-date browsers
   kitty           # 0.42.1 segfaulting
   librewolf       # up-to-date browsers
-  qbittorrent     # features 
-  xscreensaver;   # wayland
+  qbittorrent;    # features 
 
   linuxPackages_latest_unstable = channels.unstable.linuxPackages_latest;
 

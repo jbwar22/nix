@@ -1,0 +1,17 @@
+Since I use negative screen positions, don't reject them
+
+---
+
+--- a/driver/screens.c
++++ b/driver/screens.c
+@@ -724,9 +724,7 @@ check_monitor_sanity (monitor **monitors)
+   for (i = 0; i < count; i++)
+     {
+       if (monitors[i]->sanity != S_SANE) continue; /* already marked */
+-      if (X1    <  0      || Y1    <  0 || 
+-          W1    <= 0      || H1    <= 0 || 
+-          X1+W1 >= 0x7FFF || Y1+H1 >= 0x7FFF)
++      if (X1+W1 >= 0x7FFF || Y1+H1 >= 0x7FFF)
+         {
+           monitors[i]->sanity = S_OFFSCREEN;
+           monitors[i]->enemy = 0;

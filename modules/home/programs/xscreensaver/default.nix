@@ -8,7 +8,7 @@ with lib; with ns config ./.; {
     enable = mkEnableOption "home impermanence";
   };
 
-  config = {
+  config = mkIf cfg.enable {
     # override to add grim
     systemd.user.services.xscreensaver.Service.Environment = mkForce [ "PATH=${makeBinPath [ pkgs.xscreensaver pkgs.grim ]}" ];
 

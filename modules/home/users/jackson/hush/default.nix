@@ -29,6 +29,7 @@ with lib; {
         bash.hostcolor = "\\033[38;5;111m";
         sway.brightnessDevice = "amdgpu_bl1";
         easyeffects.enable = true;
+        xscreensaver.enable = true;
       };
 
       opts = {

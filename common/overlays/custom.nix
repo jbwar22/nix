@@ -23,4 +23,10 @@ inputs: channels: final: prev: {
     cavaSupport = false;
     mpdSupport = false;
   };
+
+  xscreensaver = channels.unstable.xscreensaver.overrideAttrs (oldAttrs: {
+    patches = oldAttrs.patches ++ [
+      ./patches/xscreensaver-no-offscreen.patch
+    ];
+  });
 }
