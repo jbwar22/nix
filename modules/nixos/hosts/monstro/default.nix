@@ -24,6 +24,7 @@ with lib; {
         skip-wait-online.enable = true;
         grub-boot.enable = true;
         virtualisation.enable = true;
+        kernel-latest.enable = true;
       };
 
       programs = {
