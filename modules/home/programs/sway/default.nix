@@ -4,6 +4,7 @@ with lib; with ns config ./.; let
   colorscheme = config.custom.home.opts.colorscheme;
   waybar = config.custom.home.programs.waybar;
   swaylock = config.custom.home.programs.swaylock;
+  xscreensaver = config.custom.home.programs.xscreensaver;
   scripts = (import ./scripts) pkgs lib config;
   geolocation = ageOrDefault config "geolocation" "0.00:0.00";
 in {
@@ -148,6 +149,15 @@ in {
           modifier = config.wayland.windowManager.sway.config.modifier;
           alt = "Mod1";
           shortcuts-launcher = import ./shortcuts/launcher.nix pkgs lib config scripts.menu;
+          lock = "${pkgs.swaylock}/bin/swaylock";
+          ss = "${pkgs.xscreensaver}/bin/xscreensaver-command -activate";
+          ss-lock = "exec ${pkgs.writeShellScript "screensaver-lock" ''
+            ${ss}
+            ${pkgs.xscreensaver}/bin/xscreensaver-command -watch | while read line; do
+              [[ "$line" == "UNBLANK"* ]] && ${pkgs.procps}/bin/pkill -P $$ xscr
+            done
+            ${lock}
+          ''}";
         in lib.mkOptionDefault { # append to default behavior
 
           # Media keys: Audio
@@ -161,7 +171,12 @@ in {
           "XF86MonBrightnessDown" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} down";
           "XF86Display" = mkIf cfg.blueLightFilter "exec pkill -USR1 gammastep";
           "XF86Favorites" = mkIf swaylock.enable "exec ${pkgs.swaylock}/bin/swaylock & systemctl suspend";
-          "${modifier}+Shift+delete" = mkIf swaylock.enable "exec ${pkgs.swaylock}/bin/swaylock";
+          "${modifier}+Shift+delete" = mkIfElse swaylock.enable (
+            mkIfElse xscreensaver.enable "exec ${ss-lock}" "exec ${lock}"
+          ) (
+            mkIf xscreensaver.enable "exec ${ss}"
+          );
+          "${modifier}+${alt}+Shift+delete" = mkIf (swaylock.enable && xscreensaver.enable) "exec ${lock}";
 
           # Screenshot
           "${modifier}+Shift+s" = "exec ${scripts.screenshot}";
