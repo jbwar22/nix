@@ -43,7 +43,7 @@ with lib; with ns config ./.; {
         options = [ "subvol=/" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
-    fileSystems."/boot/efi" =
+    fileSystems."/boot" =
       { device = "/dev/disk/by-uuid/0A74-81F6";
         fsType = "vfat";
         options = [ "umask=0077" "defaults" ];

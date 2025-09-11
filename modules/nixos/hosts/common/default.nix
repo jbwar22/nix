@@ -6,6 +6,7 @@ with lib; {
     inputs.agenix.nixosModules.default
     inputs.impermanence.nixosModules.impermanence
     inputs.nix-gaming.nixosModules.pipewireLowLatency
+    inputs.lanzaboote.nixosModules.lanzaboote
     ../..
     ../../../common
   ];

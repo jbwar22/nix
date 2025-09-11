@@ -24,6 +24,10 @@
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
     clonck = {
       url = "github:jbwar22/clonck";
       inputs.nixpkgs.follows = "nixpkgs-stable";
