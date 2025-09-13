@@ -82,7 +82,7 @@ with lib; with ns config ./.; {
         memory.size = 32;
         nvidia = true;
         interface.wifi = "wlp6s0";
-        interface.ethernet = "enp5s0";
+        interface.ethernet = "eno1";
       };
     };
   };
