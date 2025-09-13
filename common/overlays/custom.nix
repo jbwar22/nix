@@ -16,7 +16,7 @@ inputs: channels: final: prev: {
   });
 
   waybar = (channels.stable.waybar.overrideAttrs(oldAttrs: {
-    patches = oldAttrs.patches ++ [
+    patches = [
       ./patches/waybar-diskicon.patch
     ];
   })).override {
