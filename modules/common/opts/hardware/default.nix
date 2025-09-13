@@ -28,6 +28,7 @@ with lib; with ns config ./.; {
     };
     nvidia = mkEnableOption "does the system use an nvidia gpu";
     hasMicToggle = mkEnableOption "has software mic toggle button";
-    interface = mkStrOption "default wifi interface";
+    interface.wifi = mkStrOption "default wifi interface";
+    interface.ethernet = mkStrOption "default wifi interface";
   };
 }
