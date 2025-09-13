@@ -12,6 +12,7 @@ with lib; mkNsEnableModule config ./. {
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
+    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/generic.nix
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
       version = "580.65.06";
       sha256_64bit = "sha256-BLEIZ69YXnZc+/3POe1fS9ESN1vrqwFy6qGHxqpQJP8=";
@@ -20,7 +21,7 @@ with lib; mkNsEnableModule config ./. {
       settingsSha256 = "sha256-9PWmj9qG/Ms8Ol5vLQD3Dlhuw4iaFtVHNC0hSyMCU24=";
       persistencedSha256 = "sha256-ETRfj2/kPbKYX1NzE0dGr/ulMuzbICIpceXdCRDkAxA=";
     };
-    open = false;
+    open = true;
 
     modesetting.enable = true;
     powerManagement.enable = false;

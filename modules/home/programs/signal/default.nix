@@ -9,7 +9,7 @@ with lib; mkNsEnableModule config ./. (let
     '';
   }));
 in {
-  home.packages = with pkgs; [
+  home.packages = [
     signal
   ];
 
