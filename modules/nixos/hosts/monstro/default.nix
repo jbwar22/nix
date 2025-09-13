@@ -25,6 +25,7 @@ with lib; {
         grub-boot.enable = true;
         virtualisation.enable = true;
         kernel-latest.enable = true;
+        wake-on-lan.enable = true;
       };
 
       programs = {
