@@ -32,6 +32,7 @@ with lib; {
         impermanence = {
           enable = true;
         };
+        tpm.enable = true;
       };
 
       programs = {
