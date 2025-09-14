@@ -38,11 +38,13 @@ in {
     }) users);
   in mkMerge [
     (mkIf cfg.enable {
+      environment.etc."machine-id".source = "/persist/etc/machine-id";
+
       # could persist /var/db/sudo/lectured, but meh
       custom.nixos.programs.sudo.lecture = "never";
       users.mutableUsers = mkDefault false;
       users.users = genAttrs usernames (user: {
-        hashedPasswordFile = mkDefault "/persist/passwords/user/${user}"; # TODO
+        hashedPasswordFile = mkDefault "/persist/passwords/user/${user}";
       });
 
       programs.fuse.userAllowOther = mkDefault true;
@@ -52,6 +54,7 @@ in {
           "/persist" = {
             device = cfg.device;
             fsType = "btrfs";
+            neededForBoot = true; # so hashedPasswordFile can be read
             options = cfg.mntOptions ++ [ "subvol=${cfg.persist}" ];
           };
         }
@@ -62,6 +65,8 @@ in {
         }))
         (genAttrs cfg.files (file: {
           device = "/persist${file}";
+          depends = [ "/persist" ];
+          neededForBoot = true;
           options = [ "bind" ];
         }))
       ];
@@ -109,8 +114,6 @@ in {
 
       files = mkMerge [
         [
-          "/etc/machine-id"
-          "/etc/nixos"
         ]
         (mkMerge (map (userConf: 
           map (x: "/home/${userConf.username}/${x}") userConf.files
