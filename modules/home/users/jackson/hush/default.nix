@@ -39,10 +39,10 @@ with lib; {
             clamshell = true;
           };
           "Acer Technologies XV271U M3 140400E433LIJ" = {
-            sway.position = "1440 -650";
+            sway.position = "-560 -1440";
             specialisations = {
-              "work monitor above".sway = {
-                position = "-560 -1440";
+              "work monitor right".sway = {
+                position = "1440 -650";
               };
             };
           };
