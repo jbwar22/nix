@@ -22,6 +22,11 @@ with lib; with ns config ./.; let
       package = pkgs.bibata-cursors;
       size = 24;
     };
+    "posy" = {
+      name = "Posy_Cursor_Black_125_175";
+      package = pkgs.posy-cursors;
+      size = 32;
+    };
   };
 in {
   options = with types; opt {

@@ -12,4 +12,5 @@
   "steam-unwrapped"
   "vista-fonts"
   "zoom"
+  "posy-cursors"
 ]
