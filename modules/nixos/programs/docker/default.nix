@@ -6,7 +6,7 @@ with lib; with ns config ./.; (let
 in {
   options = opt {
     enable = mkEnableOption "docker";
-    enableOnBoot = mkDisableOption "enable on boot";
+    enableOnBoot = mkEnableOption "enable on boot";
   };
   config = mkIf cfg.enable {
     virtualisation.docker = {

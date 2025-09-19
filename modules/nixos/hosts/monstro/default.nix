@@ -33,7 +33,6 @@ with lib; {
         plymouth.theme = "rings";
         snapserver.enable = true;
         sunshine.enable = true;
-        docker.enableOnBoot = false;
       };
     };
 
