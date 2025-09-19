@@ -12,5 +12,6 @@ with lib; mkNsEnableModule config ./. {
     sqlitebrowser
     vlc
     zoom-us
+    mullvad-browser
   ];
 }

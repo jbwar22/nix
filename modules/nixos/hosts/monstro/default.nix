@@ -26,6 +26,7 @@ with lib; {
         virtualisation.enable = true;
         kernel-latest.enable = true;
         wake-on-lan.enable = true;
+        vpn-namespace.enable = true;
       };
 
       programs = {
