@@ -1,15 +1,22 @@
 { config, lib, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; with ns config ./.; (let
   admins = getAdmins config.custom.common.opts.host.users;
   hasBtrfsRoot = config.fileSystems."/".fsType == "btrfs";
 in {
-  virtualisation.docker = {
-    enable = true;
-    storageDriver = mkIf hasBtrfsRoot "btrfs";
+  options = opt {
+    enable = mkEnableOption "docker";
+    enableOnBoot = mkDisableOption "enable on boot";
   };
+  config = mkIf cfg.enable {
+    virtualisation.docker = {
+      enable = true;
+      storageDriver = mkIf hasBtrfsRoot "btrfs";
+      enableOnBoot = cfg.enableOnBoot;
+    };
 
-  users = setUserGroups admins [ "docker" ];
+    users = setUserGroups admins [ "docker" ];
 
-  # custom.nixos.behavior.impermanence.dirs = [ "/var/lib/docker" ];
+    # custom.nixos.behavior.impermanence.dirs = [ "/var/lib/docker" ];
+  };
 })
