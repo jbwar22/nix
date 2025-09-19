@@ -294,10 +294,12 @@ lib: with lib; rec {
     pkgs.runCommandLocal path {} "ln -s ${escapeShellArg path} $out"
   );
 
-  wrapWaylandElectron = package: package.overrideAttrs (oldAttrs: {
+  wrapAndAddFlags = package: flags: package.overrideAttrs (oldAttrs: {
     postInstall = oldAttrs.postInstall or "" + ''
       wrapProgram $out/bin/${oldAttrs.meta.mainProgram} \
-        --add-flags "--wayland-text-input-version=3"
+        --add-flags "${concatStringsSep " " flags}"
     '';
   });
+
+  wrapWaylandElectron = package: wrapAndAddFlags package [ "--wayland-text-input-version=3" ];
 }

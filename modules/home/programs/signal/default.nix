@@ -2,12 +2,10 @@
 
 with lib; mkNsEnableModule config ./. (let
   # extended from wrapWaylandElectron in lib.nix
-  signal = (pkgs.signal-desktop-bin.overrideAttrs (oldAttrs: {
-    postInstall = oldAttrs.postInstall or "" + ''
-      wrapProgram $out/bin/${oldAttrs.meta.mainProgram} \
-        --add-flags "--wayland-text-input-version=3 --disable-gpu"
-    '';
-  }));
+  signal = (wrapAndAddFlags pkgs.signal-desktop-bin [
+    "--wayland-text-input-version=3"
+    "--disable-gpu"
+  ]);
 in {
   home.packages = [
     signal

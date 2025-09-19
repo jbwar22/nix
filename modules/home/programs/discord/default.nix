@@ -15,7 +15,18 @@ with lib; mkNsEnableModule config ./. (let
   '';
 in {
   home.packages = with pkgs; [ 
-    (wrapWaylandElectron discord)
+    (wrapAndAddFlags discord [
+      "--use-gl=egl" # this appears to be the one that fixes flickering
+      "--wayland-text-input-version=3"
+      "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder"
+      "--ignore-gpu-blocklist"
+      "--enable-gpu-rasterization"
+      "--enable-zero-copy"
+      "--disable-software-rasterizer"
+      "--enable-accelerated-video-decode"
+      "--enable-accelerated-mjpeg-decode"
+      "--use-vulkan"
+    ])
     krisp-patcher
   ];
 
