@@ -47,8 +47,8 @@ in {
   };
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "${namespace}-run" ''
-      username=$(whoami)
-      sudo ip netns exec ${namespace} sudo -u $username $@
+      username=$(${pkgs.coreutils}/bin/whoami)
+      ${pkgs.sudo}/bin/sudo ${iproute2}/bin/ip netns exec ${namespace} ${pkgs.sudo}/bin/sudo -u $username $@
     '')
   ];
 })
