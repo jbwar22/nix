@@ -302,8 +302,8 @@ in {
         titlebar_padding 4 1
         font pango:monospace 7.71
 
-        bindgesture swipe:4:left workspace prev
-        bindgesture swipe:4:right workspace next
+        bindgesture swipe:4:left workspace prev_on_output
+        bindgesture swipe:4:right workspace next_on_output
         bindgesture swipe:3:right focus right
         bindgesture swipe:3:left focus left
         bindgesture swipe:3:up focus up

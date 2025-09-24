@@ -81,7 +81,7 @@ in {
         appname = "discord";
         summary = "*";
         script = "${pkgs.writeShellScript "dunst-discord" ''
-          ${pkgs.sway}/bin/swaymsg [class="discord"] urgent enable
+          ${pkgs.sway}/bin/swaymsg [app_id="discord"] urgent enable
         ''}";
       };
       slack = {
