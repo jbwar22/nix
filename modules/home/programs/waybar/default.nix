@@ -42,6 +42,9 @@ in {
         };
       }) {} (attrsToList config.custom.common.opts.hardware.batteries);
 
+    rclone = config.custom.home.services.rclone;
+    has-rclone-combined = (rclone.enable && rclone._combined != []);
+
     bar-base = conf: rec {
       layer = "top";
       position = "top";
@@ -59,6 +62,11 @@ in {
       modules-right = (mkMerge [
         [
           "custom/extras"
+        ]
+        (mkIf has-rclone-combined [
+          "custom/rclone"
+        ])
+        [
           "custom/lang"
           "network"
           "pulseaudio"
@@ -183,6 +191,41 @@ in {
             fi
             sleep 1
           done
+        '';
+      };
+
+      "custom/rclone" = mkIf has-rclone-combined {
+        format = "{}";
+        escape = true;
+        tooltip = false;
+        signal = 6;
+        exec = pkgs.writeShellScript "waybar-rclone" ''
+          if [[ -f /tmp/rclone-all-status ]]; then
+            cat /tmp/rclone-all-status
+          elif [[ -f /tmp/rclone-all-days ]]; then
+            echo -n R
+            cat /tmp/rclone-all-days
+          else
+            echo RC
+          fi
+        '';
+        on-click = let
+          scripts = config.custom.home.services.rclone._combined;
+          count = length scripts;
+        in pkgs.writeShellScript "waybar-rclone-activate" ''
+          ${pipe scripts [
+            enumerate
+            (map (p: ''
+              echo ${toString p.index}/${toString count} > /tmp/rclone-all-status
+              ${getExe p.value}
+              ${pkgs.procps}/bin/pkill -RTMIN+6 waybar
+            ''))
+            (concatStringsSep "\n")
+          ]}
+          echo ${toString count}/${toString count} > /tmp/rclone-all-status
+          sleep 2
+          rm /tmp/rclone-all-status
+          ${pkgs.procps}/bin/pkill -RTMIN+6 waybar
         '';
       };
 

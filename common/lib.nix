@@ -302,4 +302,9 @@ lib: with lib; rec {
   });
 
   wrapWaylandElectron = package: wrapAndAddFlags package [ "--wayland-text-input-version=3" ];
+
+  enumerate = l: foldl' (accum: x: accum ++ [{
+    index = length accum;
+    value = x;
+  }]) [] l;
 }
