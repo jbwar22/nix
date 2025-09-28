@@ -29,6 +29,7 @@ with lib; {
 
         rclone = {
           enable = true;
+          logDir = "~/documents/log/rclone";
           configs = {
             dh5exd2a = {
               # oncalendar = "*-*-* 05:00:00";

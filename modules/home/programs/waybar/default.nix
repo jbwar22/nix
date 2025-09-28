@@ -43,7 +43,7 @@ in {
       }) {} (attrsToList config.custom.common.opts.hardware.batteries);
 
     rclone = config.custom.home.services.rclone;
-    has-rclone-combined = (rclone.enable && rclone._combined != []);
+    has-rclone-combined = rclone.combinedPackage != null;
 
     bar-base = conf: rec {
       layer = "top";
@@ -209,24 +209,7 @@ in {
             echo RC
           fi
         '';
-        on-click = let
-          scripts = config.custom.home.services.rclone._combined;
-          count = length scripts;
-        in pkgs.writeShellScript "waybar-rclone-activate" ''
-          ${pipe scripts [
-            enumerate
-            (map (p: ''
-              echo ${toString p.index}/${toString count} > /tmp/rclone-all-status
-              ${getExe p.value}
-              ${pkgs.procps}/bin/pkill -RTMIN+6 waybar
-            ''))
-            (concatStringsSep "\n")
-          ]}
-          echo ${toString count}/${toString count} > /tmp/rclone-all-status
-          sleep 2
-          rm /tmp/rclone-all-status
-          ${pkgs.procps}/bin/pkill -RTMIN+6 waybar
-        '';
+        on-click = getExe rclone.combinedPackage;
       };
 
       "custom/extras" = {
