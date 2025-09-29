@@ -199,12 +199,20 @@ in {
         escape = true;
         tooltip = false;
         signal = 6;
-        exec = pkgs.writeShellScript "waybar-rclone" ''
+        interval = 60;
+        exec = let
+          days = if rclone.timeFile != null then ''
+            elif [[ -f ${rclone.timeFile} ]]; then
+              echo -n R
+              old=$(cat ${rclone.timeFile})
+              new=$(${pkgs.coreutils}/bin/date +%s)
+              days=$(( ($new - $old) / 86400 ))
+              echo $days
+          '' else "";
+        in pkgs.writeShellScript "waybar-rclone" ''
           if [[ -f /tmp/rclone-all-status ]]; then
             cat /tmp/rclone-all-status
-          elif [[ -f /tmp/rclone-all-days ]]; then
-            echo -n R
-            cat /tmp/rclone-all-days
+          ${days}
           else
             echo RC
           fi

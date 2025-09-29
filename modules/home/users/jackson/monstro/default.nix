@@ -30,6 +30,7 @@ with lib; {
         rclone = {
           enable = true;
           logDir = "~/documents/log/rclone";
+          timeFile = "~/data/rclone/timefile.txt";
           configs = {
             dh5exd2a = {
               # oncalendar = "*-*-* 05:00:00";

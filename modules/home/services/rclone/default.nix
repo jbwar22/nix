@@ -8,6 +8,11 @@ with lib; with ns config ./.; {
       type = with types; nullOr str;
       default = null;
     };
+    timeFile = mkOption {
+      description = "file to track time since last run";
+      type = with types; nullOr str;
+      default = null;
+    };
     combinedPackage = mkOption {
       type = with types; nullOr package;
       default = null;
@@ -97,11 +102,15 @@ with lib; with ns config ./.; {
           (concatStringsSep "\n")
         ];
         count = length combined-packages-list; 
+        writetimefile = if cfg.timeFile != null then ''
+          ${pkgs.coreutils}/bin/date +%s > ${cfg.timeFile}
+        '' else "";
       in pkgs.writeShellScriptBin "rclone-all" ''
         ${lines}
         ${signal count count}
         ${pkgs.coreutils}/bin/sleep 2
         rm ${signal-file}
+        ${writetimefile}
         ${pkgs.procps}/bin/pkill -RTMIN+6 waybar
       '');
     })
