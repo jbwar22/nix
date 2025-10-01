@@ -137,20 +137,5 @@
     in {
       nixvim = nixvim-package;
     };
-
-
-    # TODO run nixvim config from here
-    apps."x86_64-linux" = let
-      inherit (importChannelsForSystem "x86_64-linux") pkgs;
-    in {
-      monstro-memory = {
-        type = "app";
-        program = toString (
-          pkgs.writeShellScript "test" ''
-            ${pkgs.coreutils}/bin/echo ${toString homeConfigurations."monstro-jackson".config.custom.common.opts.hardware.memory.size}
-          ''
-        );
-      };
-    };
   };
 }

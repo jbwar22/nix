@@ -6,8 +6,4 @@ with lib; mkNsEnableModule config ./. {
     mssql_jdbc
     unixODBCDrivers.msodbcsql17
   ];
-
-  custom.home.opts.aliases = {
-    # TODO
-  };
 }
