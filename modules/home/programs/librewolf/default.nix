@@ -8,6 +8,9 @@ with lib; mkNsEnableModule config ./. {
       "browser.compactmode.show" = true;
       "browser.uidensity" = 1;
       # "widget.use-xdg-desktop-portal.file-picker" = 1;
+      "privacy.resistFingerprinting" = false;
+      "privacy.fingerprintingProtection" = true;
+      "privacy.fingerprintingProtection.overrides" = "+AllTargets,-JSDateTimeUTC";
     };
   };
 
