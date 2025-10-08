@@ -8,7 +8,7 @@ with lib; mkNsEnableModule config ./. {
     prismlauncher
     qbittorrent
     qpwgraph
-    spotify
+    (wrapWaylandElectron spotify)
     sqlitebrowser
     vlc
     zoom-us
