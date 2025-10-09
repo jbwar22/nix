@@ -32,7 +32,7 @@ with lib; {
       programs = {
         plymouth.theme = "rings";
         snapserver.enable = true;
-        sunshine.enable = true;
+        # sunshine.enable = true;
       };
     };
 

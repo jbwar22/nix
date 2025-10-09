@@ -8,6 +8,7 @@ with lib; mkNsEnableModule config ./. {
     capSysAdmin = true;
   };
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ evdi ];
-  boot.kernelModules = [ "evdi" ];
+  # TODO fix
+  # boot.extraModulePackages = with config.boot.kernelPackages; [ evdi ];
+  # boot.kernelModules = [ "evdi" ];
 }
