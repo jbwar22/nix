@@ -398,6 +398,18 @@
         "type": "github"
       }
     },
+    "nixos-unstable-nvidia": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-Xvz0560S5enUQas/3Q3fYjp6Zi3wza++asrKt5/kG5k=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/raw/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/raw/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1759632233,
@@ -595,6 +607,7 @@
         "lanzaboote": "lanzaboote",
         "nix-gaming": "nix-gaming",
         "nixos-hardware": "nixos-hardware",
+        "nixos-unstable-nvidia": "nixos-unstable-nvidia",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",

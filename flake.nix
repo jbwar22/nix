@@ -48,6 +48,10 @@
       url = "github:cab404/framework-dsp";
       flake = false;
     };
+    nixos-unstable-nvidia = {
+      url = "https://github.com/NixOS/nixpkgs/raw/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, ... }: let

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 with lib; mkNsEnableModule config ./. {
   specialisation.lts.configuration = let
@@ -11,16 +11,31 @@ with lib; mkNsEnableModule config ./. {
 
   services.xserver.videoDrivers = ["nvidia"];
 
-  hardware.nvidia = {
-    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/generic.nix
-    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "580.95.05";
-      sha256_64bit = "sha256-hJ7w746EK5gGss3p8RwTA9VPGpp2lGfk5dlhsv4Rgqc=";
-      sha256_aarch64 = "sha256-zLRCbpiik2fGDa+d80wqV3ZV1U1b4lRjzNQJsLLlICk=";
-      openSha256 = "sha256-RFwDGQOi9jVngVONCOB5m/IYKZIeGEle7h0+0yGnBEI=";
-      settingsSha256 = "sha256-F2wmUEaRrpR1Vz0TQSwVK4Fv13f3J9NJLtBe4UP2f14=";
-      persistencedSha256 = "sha256-QCwxXQfG/Pa7jSTBB0xD3lsIofcerAWWAHKvWjWGQtg=";
-    };
+  hardware.nvidia = let
+    parsedDriverAttrs = pipe inputs.nixos-unstable-nvidia [
+      readFile
+      (splitString "production = generic {")
+      last
+      (splitString "};")
+      head
+      trim
+      (splitString "\n")
+      (map (x: pipe x [
+        trim
+        (splitString " = ")
+        (x: {
+          name = head x;
+          value = pipe x [
+            last
+            (removePrefix "\"")
+            (removeSuffix "\";")
+          ];
+        })
+      ]))
+      listToAttrs
+    ];
+  in {
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver parsedDriverAttrs;
     open = true;
 
     modesetting.enable = true;
