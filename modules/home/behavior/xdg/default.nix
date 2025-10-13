@@ -33,10 +33,12 @@ with lib; with ns config ./.; {
     };
 
     xdg.portal = {
-      enable = true; # TODO fix
+      enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
       ];
+      xdgOpenUsePortal = true;
       config = {
         sway.default   = [ "wlr" ];
         common.default = [ "wlr" ];
