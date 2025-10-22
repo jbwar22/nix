@@ -67,5 +67,11 @@ in {
       sway.resolution = "1920x1080@60.000hz";
       bar = "bar1080";
     };
+    # work conference
+    "XXX Beyond TV 0x00010000" = {
+      sway.resolution = "4096x2160@60.000Hz";
+      sway.scale = "2";
+      bar = "bar1920_2x";
+    };
   });
 }
