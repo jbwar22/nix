@@ -30,6 +30,7 @@ with lib; {
         sway.brightnessDevice = "amdgpu_bl1";
         easyeffects.enable = true;
         # xscreensaver.enable = true;
+        fd83-ingest.enable = true;
       };
 
       opts = {
