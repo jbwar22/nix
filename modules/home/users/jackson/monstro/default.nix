@@ -19,7 +19,7 @@ with lib; {
         firefox.usePackage = true;
         virt-manager.enable = true;
         bash.hostcolor = "\\033[38;5;140m";
-        fd83-ingest.enable = true;
+        mavica-ingest.enable = true;
       };
 
       services = {

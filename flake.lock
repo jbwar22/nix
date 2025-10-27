@@ -361,6 +361,26 @@
         "type": "github"
       }
     },
+    "mavica-scripts": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1761535622,
+        "narHash": "sha256-x4N+0bab+CfhRv9UFjibctoEuZwliQY3IK/37UuYK8k=",
+        "owner": "jbwar22",
+        "repo": "mavica-scripts",
+        "rev": "12c28066ef83c52f44fd911366d3595009aa38db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jbwar22",
+        "repo": "mavica-scripts",
+        "type": "github"
+      }
+    },
     "nix-gaming": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -605,6 +625,7 @@
         "jbwar22-dunst": "jbwar22-dunst",
         "jbwar22-mpv-scripts": "jbwar22-mpv-scripts",
         "lanzaboote": "lanzaboote",
+        "mavica-scripts": "mavica-scripts",
         "nix-gaming": "nix-gaming",
         "nixos-hardware": "nixos-hardware",
         "nixos-unstable-nvidia": "nixos-unstable-nvidia",
