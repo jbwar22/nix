@@ -1,8 +1,8 @@
 { inputs, config, lib, pkgs, ... }:
 
 with lib; mkNsEnableModule config ./. {
-  home.packages = with inputs.mavica-scripts.packages.${pkgs.system}; [
-    mavica-ingest
+  home.packages = [
+    inputs.mavica-scripts.packages.${pkgs.system}.default
   ];
   home.sessionVariables = {
     MAVICA_SCRIPTS_MAKE = "Sony";
