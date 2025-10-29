@@ -1,11 +1,11 @@
 { config, lib, ... }:
 
 with lib; with ns config ./.; {
-  options = with types; opt {
+  options = opt {
     timeZone = mkOption {
       description = "Timezone for the computer";
-      type = str;
-      default = "Etc/GMT";
+      type = with types; nullOr str;
+      default = null;
     };
   };
 }

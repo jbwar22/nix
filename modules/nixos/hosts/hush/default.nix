@@ -7,12 +7,6 @@ with lib; {
 
   config = {
     custom.nixos = {
-      opts = {
-        secrets = {
-          timeZone = trim (readFile ../../../../secrets/git-crypt/strings/timezone-hush.txt);
-        };
-      };
-
       suites = {
         hardware.framework-13.enable = true;
         pc.enable = true;
