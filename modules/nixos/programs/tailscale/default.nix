@@ -3,7 +3,10 @@
 with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
 
   services.davfs2 = {
     enable = true;
