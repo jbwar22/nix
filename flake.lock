@@ -368,11 +368,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761583345,
-        "narHash": "sha256-O+1ti7e7Nn/Z4QiV0e8bMyCpGQo7U4KMD8zwOj2gx+4=",
+        "lastModified": 1761772636,
+        "narHash": "sha256-OIY1ZuRlXf4zFn6HdAi4KENnwKR/Ihwa1MXJFKAkiGM=",
         "owner": "jbwar22",
         "repo": "mavica-scripts",
-        "rev": "ce1e97ad139337b96f7a2fc7d448581898c95d61",
+        "rev": "b03bba65ee0680521a304aa3b50410527732ef74",
         "type": "github"
       },
       "original": {
