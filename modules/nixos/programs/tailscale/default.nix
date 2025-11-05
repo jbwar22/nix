@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib; mkNsEnableModule config ./. (let
   admins = getAdmins config.custom.common.opts.host.users;
@@ -6,6 +6,7 @@ in {
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";
+    package = pkgs.tailscale;
   };
 
   services.davfs2 = {

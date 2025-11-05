@@ -34,4 +34,26 @@ inputs: channels: final: prev: {
       ./patches/xscreensaver-no-offscreen.patch
     ];
   });
+
+  # support services (until added to unstable)
+  tailscale = (channels.unstable.tailscale.overrideAttrs (oldAttrs: rec {
+    version = "1.90.6";
+    src = final.fetchFromGitHub {
+      owner = "tailscale";
+      repo = "tailscale";
+      tag = "v${version}";
+      hash = "sha256-Uy5HDhZTO/lydVzT/dzp8OWgaZ8ZVQo0b7lvvzXyysI=";
+    };
+    vendorHash = "sha256-AUOjLomba75qfzb9Vxc0Sktyeces6hBSuOMgboWcDnE=";
+  })).override {
+    buildGoModule = channels.unstable.callPackage inputs.nixos-unstable-go {
+      go = channels.unstable.buildPackages.go.overrideAttrs (oldAttrs: rec {
+        version = "1.25.3";
+        src = final.fetchurl {
+          url = "https://go.dev/dl/go${version}.src.tar.gz";
+          hash = "sha256-qBpLpZPQAV4QxR4mfeP/B8eskU38oDfZUX0ClRcJd5U=";
+        };
+      });
+    };
+  };
 }

@@ -56,6 +56,10 @@
       url = "https://github.com/NixOS/nixpkgs/raw/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix";
       flake = false;
     };
+    nixos-unstable-go = {
+      url = "https://github.com/NixOS/nixpkgs/raw/nixos-unstable/pkgs/build-support/go/module.nix";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, ... }: let
