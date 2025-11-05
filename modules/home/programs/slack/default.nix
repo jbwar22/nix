@@ -2,7 +2,10 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    slack
+    (wrapAndAddFlags slack [
+      "--ozone-platform=wayland"
+      "--wayland-text-input-version=3"
+    ])
   ];
 
   custom.home.behavior.impermanence.dirs = [ ".config/Slack" ];
