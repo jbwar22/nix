@@ -8,6 +8,7 @@ with lib; mkNsEnableModule config ./. {
       locale.enable = true;
       network.enable = true;
       time.enable = true;
+      journal-management.enable = true;
     };
 
     programs = {
