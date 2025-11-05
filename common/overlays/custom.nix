@@ -46,7 +46,9 @@ inputs: channels: final: prev: {
     };
     vendorHash = "sha256-AUOjLomba75qfzb9Vxc0Sktyeces6hBSuOMgboWcDnE=";
   })).override {
-    buildGoModule = channels.unstable.callPackage inputs.nixos-unstable-go {
+    buildGoModule = let
+      go-module-file = inputs.nixpkgs-unstable + "/pkgs/build-support/go/module.nix";
+    in channels.unstable.callPackage go-module-file {
       go = channels.unstable.buildPackages.go.overrideAttrs (oldAttrs: rec {
         version = "1.25.3";
         src = final.fetchurl {

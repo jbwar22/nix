@@ -12,7 +12,8 @@ with lib; mkNsEnableModule config ./. {
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = let
-    parsedDriverAttrs = pipe inputs.nixos-unstable-nvidia [
+    parsedDriverAttrs = pipe inputs.nixpkgs-unstable [
+      (x: x + "/pkgs/os-specific/linux/nvidia-x11/default.nix")
       readFile
       (splitString "production = generic {")
       last

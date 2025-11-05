@@ -418,18 +418,6 @@
         "type": "github"
       }
     },
-    "nixos-unstable-nvidia": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-vmO8enPGsw6eZ58zdoGqVMCYaiNemfXziriuZbdm38Q=",
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/raw/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/raw/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1761656231,
@@ -628,7 +616,6 @@
         "mavica-scripts": "mavica-scripts",
         "nix-gaming": "nix-gaming",
         "nixos-hardware": "nixos-hardware",
-        "nixos-unstable-nvidia": "nixos-unstable-nvidia",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
