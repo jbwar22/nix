@@ -5,4 +5,5 @@ in {
   "vpn-namespace-wg.conf.age".publicKeys = keys;
   "vpn-namespace-ipv4.txt.age".publicKeys = keys;
   "vpn-namespace-ipv6.txt.age".publicKeys = keys;
+  "tailscale-services-env.age".publicKeys = keys;
 }

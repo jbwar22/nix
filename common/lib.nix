@@ -242,6 +242,12 @@ lib: with lib; rec {
     else null
   );
 
+  ageOrBust = (config: file:
+    if hasAttr file config.age.secrets
+    then config.age.secrets.${file}.path
+    else throw "age or bust! age secret required: ${file}"
+  );
+
   loadAgeSecretsFromDir = dir: (
     if pathExists dir then (
       pipe (builtins.readDir dir) [

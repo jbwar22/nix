@@ -32,6 +32,10 @@ with lib; {
       programs = {
         plymouth.theme = "rings";
         snapserver.enable = true;
+        tailscale.serviceContainer = {
+          enable = true;
+          volumesRoot = "/home/jackson/documents/docker/tailscale-services";
+        };
         # sunshine.enable = true;
       };
     };

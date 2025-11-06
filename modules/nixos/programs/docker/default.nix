@@ -15,6 +15,8 @@ in {
       enableOnBoot = cfg.enableOnBoot;
     };
 
+    virtualisation.oci-containers.backend = "docker";
+
     users = setUserGroups admins [ "docker" ];
 
     custom.nixos.behavior.impermanence.dirs = [ "/var/lib/docker" ];
