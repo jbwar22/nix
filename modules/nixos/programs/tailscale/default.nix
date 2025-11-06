@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
 with lib; with ns config ./.; (let
-  admins = getAdmins config.custom.common.opts.host.users;
+  users = config.custom.common.opts.host.users;
+  admins = getAdmins users;
+  tsop = getTSOp users;
 in {
   options = opt {
     enable = mkEnableOption "tailscale";
@@ -22,7 +24,7 @@ in {
   config = mkMerge [
     {
       services.tailscale = let
-        flags = [ "--accept-routes=true" ];
+        flags = [ "--accept-routes=true" "--operator=${tsop}" ];
       in {
         enable = true;
         useRoutingFeatures = "client";

@@ -120,6 +120,24 @@ lib: with lib; rec {
   # user helpers
 
   getAdmins = filterAttrs (_username: user: user.admin);
+  getTSOp = users: pipe users [
+    getAdmins
+    attrNames
+    (ns:
+      if length ns == 1
+      then head ns
+      else pipe users [
+        getAdmins
+        (filterAttrs (_username: user: user.tsop))
+        attrNames
+        (ns:
+          if length ns == 1
+          then head ns
+          else throw "must have only one admin or only one admin+tsop configured"
+        )
+      ]
+    )
+  ];
 
   # check if a user's home-manager config matches a predicate
   # example: check if javkson has bash enabled
