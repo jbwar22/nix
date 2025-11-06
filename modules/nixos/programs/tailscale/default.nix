@@ -21,10 +21,14 @@ in {
 
   config = mkMerge [
     {
-      services.tailscale = {
+      services.tailscale = let
+        flags = [ "--accept-routes=true" ];
+      in {
         enable = true;
-        useRoutingFeatures = "both";
+        useRoutingFeatures = "client";
         package = pkgs.tailscale;
+        extraUpFlags = flags;
+        extraSetFlags = flags;
       };
 
       services.davfs2 = {
