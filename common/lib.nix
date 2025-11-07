@@ -101,11 +101,12 @@ lib: with lib; rec {
   # get all files and directories in a directory matching predicates on type and name
   # example: import all directories (all must contain default.nix) except "asdf"
   # imports = filterFromDir ./. (type: type == "directory") (name: name != "asdf");
-  filterFromDir = dir: typepredicate: filepredicate: pipe (builtins.readDir dir) [
+  filterFromDir = dir: typepredicate: filepredicate: pipe dir [
+    builtins.readDir
     (filterAttrs (file: type:
       typepredicate type && filepredicate file
     ))
-    (mapAttrsToList (file: _: dir + "/${file}"))
+    (mapAttrsToList (file: _: path.append dir file))
   ];
   getDirsFilter = dir: filepredicate: filterFromDir dir (type: type == "directory") filepredicate;
   getDirs = dir: getDirsFilter dir (_: true);
@@ -113,7 +114,7 @@ lib: with lib; rec {
   getFiles = dir: getFilesFilter dir (_: true);
 
   getDir = dir: mapAttrs (file: type:
-    if type == "directory" then getDir "${dir}/${file}" else type
+    if type == "directory" then getDir (path.append dir file) else type
   ) readDir dir;
 
 
