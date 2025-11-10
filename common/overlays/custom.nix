@@ -4,37 +4,6 @@ inputs: final: prev: {
     src = inputs.jbwar22-dunst;
   })).override { withX11 = false; };
 
-  # update via flake (master branch)
-  yt-dlp = (prev.yt-dlp.overrideAttrs {
-    src = inputs.yt-dlp;
-  });
-
-  # keep cursor active when hidden
-  sway = (prev.sway.override {
-    sway-unwrapped = prev.sway-unwrapped.overrideAttrs (oldAttrs: {
-      patches = oldAttrs.patches ++ [
-        ./patches/sway-hidecursor.patch
-      ];
-    });
-  });
-
-  # allow icon (bar) format for disk module
-  waybar = (prev.waybar.overrideAttrs (oldAttrs: {
-    patches = [
-      ./patches/waybar-diskicon.patch
-    ];
-  })).override {
-    cavaSupport = false;
-    mpdSupport = false;
-  };
-
-  # allow negative coordinates for screens
-  xscreensaver = prev.xscreensaver.overrideAttrs (oldAttrs: {
-    patches = oldAttrs.patches ++ [
-      ./patches/xscreensaver-no-offscreen.patch
-    ];
-  });
-
   # fix gamescope not shutting down properly
   # remove when https://github.com/ValveSoftware/gamescope/pull/1908 is merged
   gamescope = prev.gamescope.overrideAttrs (oldAttrs: {
@@ -53,6 +22,15 @@ inputs: final: prev: {
       url = "https://downloads.slack-edge.com/desktop-releases/linux/x64/${version}/slack-desktop-${version}-amd64.deb";
       hash = "sha256-fGr4arHVd4rskw1OfXe5+ZSKg6h+hFjoIdb56N/tGA8=";
     };
+  });
+
+  # keep cursor active when hidden
+  sway = (prev.sway.override {
+    sway-unwrapped = prev.sway-unwrapped.overrideAttrs (oldAttrs: {
+      patches = oldAttrs.patches ++ [
+        ./patches/sway-hidecursor.patch
+      ];
+    });
   });
 
   # support services (until added to unstable)
@@ -78,4 +56,26 @@ inputs: final: prev: {
       });
     };
   };
+
+  # allow icon (bar) format for disk module
+  waybar = (prev.waybar.overrideAttrs (oldAttrs: {
+    patches = [
+      ./patches/waybar-diskicon.patch
+    ];
+  })).override {
+    cavaSupport = false;
+    mpdSupport = false;
+  };
+
+  # allow negative coordinates for screens
+  xscreensaver = prev.xscreensaver.overrideAttrs (oldAttrs: {
+    patches = oldAttrs.patches ++ [
+      ./patches/xscreensaver-no-offscreen.patch
+    ];
+  });
+
+  # update via flake (master branch)
+  yt-dlp = (prev.yt-dlp.overrideAttrs {
+    src = inputs.yt-dlp;
+  });
 }

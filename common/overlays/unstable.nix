@@ -9,12 +9,12 @@ channels: final: prev: {
 
   # for further overriding in custom.nix
   dunst
-  yt-dlp
   sway
   sway-unwrapped
+  tailscale
   waybar
   xscreensaver
-  tailscale
+  yt-dlp
   ;
 
   # for referencing packages that do not need to be unstable system-wide
