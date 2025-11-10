@@ -2,11 +2,11 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    wineWowPackages.staging
-    # wineWowPackages.waylandFull
     (inputs.nix-gaming.packages.${pkgs.system}.osu-stable.override {
        location = "$HOME/games/osu/prefix";
     })
+    gamescope
+    umu-launcher
   ];
   custom.home.behavior.impermanence.dirs = [
     "games"

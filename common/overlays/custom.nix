@@ -35,6 +35,17 @@ inputs: final: prev: {
     ];
   });
 
+  # fix gamescope not shutting down properly
+  # remove when https://github.com/ValveSoftware/gamescope/pull/1908 is merged
+  gamescope = prev.gamescope.overrideAttrs (oldAttrs: {
+    patches = oldAttrs.patches ++ [
+      (final.fetchpatch {
+        url = "https://github.com/zlice/gamescope/commit/fa900b0694ffc8b835b91ef47a96ed90ac94823b.diff";
+        hash = "sha256-eIHhgonP6YtSqvZx2B98PT1Ej4/o0pdU+4ubdiBgBM4=";
+      })
+    ];
+  });
+
   # support services (until added to unstable)
   tailscale = (prev.tailscale.overrideAttrs (oldAttrs: rec {
     version = "1.90.6";

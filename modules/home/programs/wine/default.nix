@@ -2,7 +2,7 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    wineWowPackages.staging
+    wineWowPackages.stable
     winetricks
   ];
 
