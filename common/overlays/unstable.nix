@@ -1,12 +1,22 @@
 channels: final: prev: {
   inherit (channels.unstable)
-  dunst           # for overriding with my up-to-date fork
+
+  # replace stable with unstable
   firefox         # up-to-date browsers
   kitty           # 0.42.1 segfaulting
   librewolf       # up-to-date browsers
-  qbittorrent;    # features 
+  qbittorrent     # features 
 
-  linuxPackages_latest_unstable = channels.unstable.linuxPackages_latest;
+  # for further overriding in custom.nix
+  dunst
+  yt-dlp
+  sway
+  sway-unwrapped
+  waybar
+  xscreensaver
+  tailscale
+  ;
 
-  mesa_unstable = channels.unstable.mesa;
+  # for referencing packages that do not need to be unstable system-wide
+  unstable = channels.unstable;
 }

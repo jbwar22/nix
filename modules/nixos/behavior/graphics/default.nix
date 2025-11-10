@@ -10,7 +10,7 @@ with lib; with ns config ./.; {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      package = mkIf cfg.useUnstableMesa pkgs.mesa_unstable;
+      package = mkIf cfg.useUnstableMesa pkgs.unstable.mesa;
     };
 
     environment.systemPackages = with pkgs; [

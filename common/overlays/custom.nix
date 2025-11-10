@@ -1,17 +1,17 @@
-inputs: channels: final: prev: {
+inputs: final: prev: {
   # scripts hack to allow sending signals while muted
-  dunst = (channels.unstable.dunst.overrideAttrs (oldAttrs: {
+  dunst = (prev.dunst.overrideAttrs (oldAttrs: {
     src = inputs.jbwar22-dunst;
   })).override { withX11 = false; };
 
   # update via flake (master branch)
-  yt-dlp = (channels.unstable.yt-dlp.overrideAttrs {
+  yt-dlp = (prev.yt-dlp.overrideAttrs {
     src = inputs.yt-dlp;
   });
 
   # keep cursor active when hidden
-  sway = (channels.stable.sway.override {
-    sway-unwrapped = channels.unstable.sway-unwrapped.overrideAttrs (oldAttrs: {
+  sway = (prev.sway.override {
+    sway-unwrapped = prev.sway-unwrapped.overrideAttrs (oldAttrs: {
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
       ];
@@ -19,7 +19,7 @@ inputs: channels: final: prev: {
   });
 
   # allow icon (bar) format for disk module
-  waybar = (channels.stable.waybar.overrideAttrs (oldAttrs: {
+  waybar = (prev.waybar.overrideAttrs (oldAttrs: {
     patches = [
       ./patches/waybar-diskicon.patch
     ];
@@ -29,14 +29,14 @@ inputs: channels: final: prev: {
   };
 
   # allow negative coordinates for screens
-  xscreensaver = channels.unstable.xscreensaver.overrideAttrs (oldAttrs: {
+  xscreensaver = prev.xscreensaver.overrideAttrs (oldAttrs: {
     patches = oldAttrs.patches ++ [
       ./patches/xscreensaver-no-offscreen.patch
     ];
   });
 
   # support services (until added to unstable)
-  tailscale = (channels.unstable.tailscale.overrideAttrs (oldAttrs: rec {
+  tailscale = (prev.tailscale.overrideAttrs (oldAttrs: rec {
     version = "1.90.6";
     src = final.fetchFromGitHub {
       owner = "tailscale";
@@ -48,8 +48,8 @@ inputs: channels: final: prev: {
   })).override {
     buildGoModule = let
       go-module-file = inputs.nixpkgs-unstable + "/pkgs/build-support/go/module.nix";
-    in channels.unstable.callPackage go-module-file {
-      go = channels.unstable.buildPackages.go.overrideAttrs (oldAttrs: rec {
+    in prev.unstable.callPackage go-module-file {
+      go = prev.unstable.buildPackages.go.overrideAttrs (oldAttrs: rec {
         version = "1.25.3";
         src = final.fetchurl {
           url = "https://go.dev/dl/go${version}.src.tar.gz";
