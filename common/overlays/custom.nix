@@ -46,6 +46,15 @@ inputs: final: prev: {
     ];
   });
 
+  # 4.46.101 doesn't launch unless I delete ~/.config/Slack
+  slack = prev.slack.overrideAttrs (oldAttrs: rec {
+    version = "4.45.64";
+    src = final.fetchurl {
+      url = "https://downloads.slack-edge.com/desktop-releases/linux/x64/${version}/slack-desktop-${version}-amd64.deb";
+      hash = "sha256-fGr4arHVd4rskw1OfXe5+ZSKg6h+hFjoIdb56N/tGA8=";
+    };
+  });
+
   # support services (until added to unstable)
   tailscale = (prev.tailscale.overrideAttrs (oldAttrs: rec {
     version = "1.90.6";
