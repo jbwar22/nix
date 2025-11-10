@@ -15,7 +15,7 @@ inputs: final: prev: {
     ];
   });
 
-  # 4.46.101 doesn't launch unless I delete ~/.config/Slack
+  # 4.46.101 and 4.46.104 don't launch unless I delete ~/.config/Slack
   slack = prev.slack.overrideAttrs (oldAttrs: rec {
     version = "4.45.64";
     src = final.fetchurl {
