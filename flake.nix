@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-yt-dlp-js.url = "github:Mynacol/nixpkgs/yt-dlp-js";
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     impermanence.url = "github:nix-community/impermanence";
@@ -58,6 +59,7 @@
     channels = {
       stable = inputs.nixpkgs-stable;
       unstable = inputs.nixpkgs-unstable;
+      yt-dlp-js = inputs.nixpkgs-yt-dlp-js;
     };
     nixpkgs-main = "stable";
     custom-lib = import ./common/lib.nix channels.${nixpkgs-main}.lib;

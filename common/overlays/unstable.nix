@@ -14,8 +14,10 @@ channels: final: prev: {
   tailscale
   waybar
   xscreensaver
-  yt-dlp
+  # yt-dlp
   ;
+
+  yt-dlp = channels.yt-dlp-js.yt-dlp;
 
   # for referencing packages that do not need to be unstable system-wide
   unstable = channels.unstable;
