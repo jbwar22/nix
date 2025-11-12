@@ -2,7 +2,7 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = with pkgs; [
-    # dolphin-emu
+    dolphin-emu
   ];
 
   custom.home.behavior.impermanence.dirs = [
