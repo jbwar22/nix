@@ -9,6 +9,7 @@ with lib; mkNsEnableModule config ./. {
       network.enable = true;
       time.enable = true;
       journal-management.enable = true;
+      nix.enable = true;
     };
 
     programs = {
