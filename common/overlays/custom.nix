@@ -66,19 +66,7 @@ inputs: final: prev: {
   });
 
   # update via flake (master branch)
-  # yt-dlp = (prev.yt-dlp.overrideAttrs {
-  #   src = inputs.yt-dlp;
-  # });
-
-  # fix not bringing package-lock.json into npmDeps
-  yt-dlp = prev.yt-dlp.overrideAttrs (oldAttrs: rec {
+  yt-dlp = prev.yt-dlp.overrideAttrs {
     src = inputs.yt-dlp;
-    npmDeps = final.fetchNpmDeps {
-      inherit src;
-      hash = "sha256-2Xzetr2pb8J2w+ghfoTVP6oZTeVbHV7EcovwxElnUbA=";
-      postPatch = ''
-        cp ${inputs.nixpkgs-yt-dlp-js + "/pkgs/by-name/yt/yt-dlp/package-lock.json"} package-lock.json
-      '';
-    };
-  });
+  };
 }

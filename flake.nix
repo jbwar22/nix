@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-yt-dlp-js.url = "github:Mynacol/nixpkgs/yt-dlp-js";
+    nixpkgs-yt-dlp-js.url = "github:NixOS/nixpkgs/7302c51"; # awaiting 460892 in unstable
     nur.url = "github:nix-community/nur";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     impermanence.url = "github:nix-community/impermanence";
