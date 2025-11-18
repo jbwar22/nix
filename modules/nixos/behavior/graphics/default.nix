@@ -13,5 +13,6 @@ with lib; mkNsEnableModule config ./. {
 
   environment.systemPackages = with pkgs; [
     dconf  # gtk
+    vulkan-tools
   ];
 }
