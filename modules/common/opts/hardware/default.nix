@@ -26,7 +26,10 @@ with lib; with ns config ./.; {
       type = int;
       description = "size of memory in gb";
     };
-    nvidia = mkEnableOption "does the system use an nvidia gpu";
+    gpu = mkOption {
+      description = "GPU vendor";
+      type = types.enum (attrValues enums.gpu-vendors);
+    };
     hasMicToggle = mkEnableOption "has software mic toggle button";
     interface.wifi = mkStrOption "default wifi interface";
     interface.ethernet = mkStrOption "default wifi interface";

@@ -13,6 +13,11 @@ with lib; with ns config ./.; {
       package = mkIf cfg.useUnstableMesa pkgs.unstable.mesa;
     };
 
+    hardware.amdgpu.amdvlk = mkIf (config.custom.common.opts.hardware.gpu == enums.gpu-vendors.amd) {
+        enable = true;
+        support32Bit.enable = true;
+    };
+
     environment.systemPackages = with pkgs; [
       dconf  # gtk
     ];

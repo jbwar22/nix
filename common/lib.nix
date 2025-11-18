@@ -5,7 +5,7 @@ lib: with lib; rec {
   _enums = {
     os = [ "nixos" "debian" ];
     cpu-vendors = [ "intel" "amd" ];
-    gpu-vendors = [ "nvidia" "intel" ];
+    gpu-vendors = [ "nvidia" "amd" "intel" ];
     namespace = [ "namespace-marker" ];
   };
 

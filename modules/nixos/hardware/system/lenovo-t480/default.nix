@@ -60,6 +60,7 @@ with lib; with ns config ./.; {
       opts.hardware = {
         cpu.threads = 8;
         memory.size = 32;
+        gpu = enums.gpu-vendors.intel;
         batteries = {
           BAT0 = {
             min = 45;

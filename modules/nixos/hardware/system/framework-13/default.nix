@@ -72,6 +72,7 @@ with lib; with ns config ./.; {
       opts.hardware = {
         cpu.threads = 16;
         memory.size = 32;
+        gpu = enums.gpu-vendors.amd;
         batteries = {
           BAT1 = {
             max = 80;

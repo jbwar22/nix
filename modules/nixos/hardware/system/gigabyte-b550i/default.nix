@@ -80,7 +80,7 @@ with lib; with ns config ./.; {
       opts.hardware = {
         cpu.threads = 12;
         memory.size = 32;
-        nvidia = true;
+        gpu = enums.gpu-vendors.nvidia;
         interface.wifi = "wlp6s0";
         interface.ethernet = "eno1";
       };
