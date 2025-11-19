@@ -17,6 +17,8 @@ channels: final: prev: {
   yt-dlp
   ;
 
+  librepods = channels.add-librepods.librepods;
+
   # for referencing packages that do not need to be unstable system-wide
   unstable = channels.unstable;
 }

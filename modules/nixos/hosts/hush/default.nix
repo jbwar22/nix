@@ -32,6 +32,7 @@ with lib; {
         fwupd.enable = true;
         plymouth.theme = "rings";
         snapserver.enable = false;
+        librepods.enable = true;
       };
     };
 
