@@ -58,9 +58,12 @@ with lib; with ns config ./.; {
 
     custom.common = {
       opts.hardware = {
-        cpu.threads = 8;
+        cpu = {
+          vendor = enums.cpu-vendors.intel;
+          threads = 8;
+        };
         memory.size = 32;
-        gpu = enums.gpu-vendors.intel;
+        gpu.vendor = enums.gpu-vendors.intel;
         batteries = {
           BAT0 = {
             min = 45;

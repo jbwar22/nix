@@ -70,9 +70,12 @@ with lib; with ns config ./.; {
 
     custom.common = {
       opts.hardware = {
-        cpu.threads = 16;
+        cpu = {
+          vendor = enums.cpu-vendors.amd;
+          threads = 16;
+        };
         memory.size = 32;
-        gpu = enums.gpu-vendors.amd;
+        gpu.vendor = enums.gpu-vendors.amd;
         batteries = {
           BAT1 = {
             max = 80;

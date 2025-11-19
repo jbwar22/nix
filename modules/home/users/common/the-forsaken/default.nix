@@ -1,12 +1,15 @@
-{ ... }:
+{ lib, ... }:
 
-{
+with lib; {
   config = {
     custom.common = {
       opt.hardware = {
-        cpu.threads = 12;
+        cpu = {
+          vendor = enums.cpu-vendors.amd;
+          threads = 12;
+        };
         memory.size = 32;
-        nvidia = true;
+        gpu.vendor = enums.gpu-vendors.nvidia;
       };
     };
   };

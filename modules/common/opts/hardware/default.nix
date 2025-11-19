@@ -18,17 +18,27 @@ with lib; with ns config ./.; {
       });
       default = {};
     };
-    cpu.threads = mkOption {
-      type = int;
-      description = "number of cpu threads";
+    cpu = {
+      vendor = mkOption {
+        description = "CPU vendor";
+        type = types.enum (attrValues enums.cpu-vendors);
+      };
+      threads = mkOption {
+        type = int;
+        description = "number of cpu threads";
+      };
     };
-    memory.size = mkOption {
-      type = int;
-      description = "size of memory in gb";
+    memory = {
+      size = mkOption {
+        type = int;
+        description = "size of memory in gb";
+      };
     };
-    gpu = mkOption {
-      description = "GPU vendor";
-      type = types.enum (attrValues enums.gpu-vendors);
+    gpu = {
+      vendor = mkOption {
+        description = "GPU vendor";
+        type = types.enum (attrValues enums.gpu-vendors);
+      };
     };
     hasMicToggle = mkEnableOption "has software mic toggle button";
     interface.wifi = mkStrOption "default wifi interface";
