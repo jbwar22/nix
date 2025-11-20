@@ -5,6 +5,7 @@ with lib; mkNsEnableModule config ./. {
     programs = {
       noconfig.work.enable = true;
       slack.enable = true;
+      gchat.enable = true;
     };
     services = {
       locker.enable = true;

@@ -84,6 +84,11 @@ in {
           ${pkgs.sway}/bin/swaymsg [app_id="discord"] urgent enable
         ''}";
       };
+      gchat = {
+        appname = "google-chat-linux";
+        summary = ".*";
+        override_pause_level = 50;
+      };
       slack = {
         appname = "Slack";
         summary = ".*";
