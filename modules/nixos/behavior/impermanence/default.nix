@@ -98,6 +98,8 @@ in {
         flatten
         listToAttrs
       ];
+
+      nix.settings.build-dir = "/persist/build";
     })
     (opt {
       dirs = mkMerge [
