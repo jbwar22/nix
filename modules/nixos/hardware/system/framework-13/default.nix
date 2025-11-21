@@ -19,7 +19,8 @@ with lib; with ns config ./.; {
     };
 
     boot.kernelParams = [
-      "amdgpu.dcdebugmask=0x410" # fix flickering issue
+      # "amdgpu.dcdebugmask=0x410" # potential flicker fix (old)
+      # "amdgpu.dcdebugmask=0x2" # potential flicker fix (new)
     ];
 
     # https://gitlab.freedesktop.org/drm/amd/-/issues/4463#note_3167900
@@ -27,6 +28,10 @@ with lib; with ns config ./.; {
       name = "fix flicker";
       patch = ./drm-amd-fix-flicker.patch;
     }];
+
+    specialisation.base-kernel.configuration = {
+      boot.kernelPatches = mkForce [];
+    };
 
     boot.initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
