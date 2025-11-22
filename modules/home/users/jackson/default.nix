@@ -15,7 +15,7 @@ with lib; {
       };
 
       services = {
-        afuse-sshfs.enable = true;
+        # afuse-sshfs.enable = true;
         afuse-archive.enable = true;
       };
     };
