@@ -13,8 +13,8 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     nixvim = {
-      url = "github:nix-community/nixvim";
-      # inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/nixvim/nixos-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     agenix = {
       url = "github:ryantm/agenix";
@@ -46,7 +46,7 @@
       flake = false;
     };
     yt-dlp = {
-      url = "github:yt-dlp/yt-dlp/master";
+      url = "github:yt-dlp/yt-dlp/release";
       flake = false;
     };
     framework-dsp = {
