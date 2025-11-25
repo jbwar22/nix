@@ -279,6 +279,16 @@ lib: with lib; rec {
   );
 
 
+  # math helpers
+
+  # why on earth do I need to write this myself
+  pow = lib.fix (self: base: power:
+    if power != 0
+    then base * (self base (power - 1))
+    else 1
+  );
+
+
   # other helpers
 
   # capitalize-dashed-string = Capitalize Dashed String

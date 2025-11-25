@@ -9,8 +9,20 @@
 
 # fit: 0,0 1,1 20,1515
 
-pkgs: slider: config:
-pkgs.writeShellScript "sway-brightness" ''
+# ax^3 + 570, a=(65535-570)/(23^2), 4<=x<=23
+# 1 912 1237 1723 2401 3304 4462 5909 7677 9797 12301 15221 18591 22440 26803 31710 37193 43285 50019 57424 65535
+
+pkgs: lib: slider: config: with lib; let
+  # a(x-d)^2 + c, a = (65535 - c)/(b - d)^2
+  genRange = b: c: d: pipe b [
+    (range 1)
+    (map (x: pipe x [
+      (x: ((((65535 - c) * 1.0) / (pow (b - d) 2)) * (pow (x - d) 2)) + c)
+      builtins.floor
+    ]))
+    toString
+  ];
+in pkgs.writeShellScript "sway-brightness" ''
   current=$(${pkgs.brightnessctl}/bin/brightnessctl \
             --device="${config.custom.home.programs.sway.brightnessDevice}" | \
             head -2 | \
@@ -22,7 +34,7 @@ pkgs.writeShellScript "sway-brightness" ''
             then "0 1 10 27 51 84 124 172 228 292 364 444 531 627 730 841 960 1087 1222 1365 1515"
             else (
             if (config.custom.home.programs.sway.brightnessDevice == "amdgpu_bl1")
-            then "1 912 1237 1723 2401 3304 4462 5909 7677 9797 12301 15221 18591 22440 26803 31710 37193 43285 50019 57424 65535" # ax^3 + 570, a=(65535-570)/(23^2), 4<=x<=23
+            then "1 ${genRange 20 5700 (-1)}"
             else ""
           )} \
         )"
