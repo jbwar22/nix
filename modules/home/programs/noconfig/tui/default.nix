@@ -5,7 +5,7 @@ with lib; mkNsEnableModule config ./. {
     htop
     btop
     pulsemixer
-    inputs.home-manager.packages.${pkgs.system}.default
-    inputs.agenix.packages.${pkgs.system}.default
+    inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }

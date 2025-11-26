@@ -3,7 +3,7 @@
 with lib; mkNsEnableModule config ./. {
   programs.librewolf = {
     enable = true;
-    package = pkgs.librewolf;
+    package = pkgs.librewolf-bin;
     settings = {
       "browser.compactmode.show" = true;
       "browser.uidensity" = 1;
@@ -36,12 +36,12 @@ with lib; mkNsEnableModule config ./. {
   in {
     librewolf = lwdesktop // {
       name = "LibreWolf (Personal)";
-      exec = "${pkgs.librewolf}/bin/librewolf -P Personal %u";
+      exec = "${config.programs.librewolf.package}/bin/librewolf -P Personal %u";
       noDisplay = false;
     };
     librewolfprofile = lwdesktop // {
       name = "LibreWolf (Profile Manager)";
-      exec = "${pkgs.librewolf}/bin/librewolf --ProfileManager %u";
+      exec = "${config.programs.librewolf.package}/bin/librewolf --ProfileManager %u";
       noDisplay = false;
     };
   };

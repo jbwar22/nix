@@ -8,7 +8,7 @@ with lib; mkNsEnableModule config ./. {
     noto-fonts-color-emoji
     freefont_ttf
     corefonts
-    vistafonts
+    vista-fonts
   ];
 
   fonts.fontconfig = {

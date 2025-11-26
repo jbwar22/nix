@@ -2,7 +2,7 @@
 
 with lib; mkNsEnableModule config ./. {
   home.packages = [
-    outputs.packages.${pkgs.system}.nixvim
+    outputs.packages.${pkgs.stdenv.hostPlatform.system}.nixvim
   ];
 
   custom.home.behavior.impermanence.dirs = [

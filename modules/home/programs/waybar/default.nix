@@ -15,7 +15,7 @@ in {
 
   config = lib.mkIf cfg.enable (let
 
-    clonck = inputs.clonck.packages.${pkgs.system}.clonck;
+    clonck = inputs.clonck.packages.${pkgs.stdenv.hostPlatform.system}.clonck;
 
     progress = import ./progress-bars.nix lib;
 

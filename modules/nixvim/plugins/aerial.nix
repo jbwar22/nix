@@ -2,7 +2,7 @@
 
 with lib.nv; {
   plugins.aerial = {
-    enable = true;
+    enable = false;
     settings = {
       attach_mode = "global";
     };

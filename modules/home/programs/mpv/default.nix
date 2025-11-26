@@ -5,7 +5,7 @@ with lib; mkNsEnableModule config ./. {
     enable = true;
     package = pkgs.mpv;
     scripts = [
-      inputs.jbwar22-mpv-scripts.packages.${pkgs.system}.downmix
+      inputs.jbwar22-mpv-scripts.packages.${pkgs.stdenv.hostPlatform.system}.downmix
     ];
 
     config = {

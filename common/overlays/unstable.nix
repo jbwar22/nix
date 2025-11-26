@@ -4,7 +4,7 @@ channels: final: prev: {
   # replace stable with unstable
   firefox         # up-to-date browsers
   kitty           # 0.42.1 segfaulting
-  librewolf       # up-to-date browsers
+  # librewolf       # up-to-date browsers
   qbittorrent     # features 
 
   # for further overriding in custom.nix

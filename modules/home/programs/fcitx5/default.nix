@@ -86,7 +86,7 @@ in {
         ${
           if dict then ''
             pushd /etc/nixos/secrets/agenix/users/${config.home.username}/common > /dev/null
-              ${inputs.agenix.packages.${pkgs.system}.default}/bin/agenix -e fcitx5-mozc-user_dictionary.age \
+              ${inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/agenix -e fcitx5-mozc-user_dictionary.age \
               < ${hconf}/mozc/user_dictionary.db
             popd > /dev/null
           '' else ""

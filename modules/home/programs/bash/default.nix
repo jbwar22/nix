@@ -17,8 +17,8 @@ with lib; with ns config ./.; {
   config = mkIf cfg.enable {
     custom.home.opts.aliases = {
       ll = "ls -hal";
-      rb = "nixos-rebuild switch --use-remote-sudo";
-      rbb = "nixos-rebuild boot --use-remote-sudo";
+      rb = "nixos-rebuild switch --sudo";
+      rbb = "nixos-rebuild boot --sudo";
       ng = "sudo nix-collect-garbage --delete-older-than 7d";
     };
 
