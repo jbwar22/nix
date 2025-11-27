@@ -6,12 +6,12 @@ channels: final: prev: {
   kitty           # 0.42.1 segfaulting
   # librewolf       # up-to-date browsers
   qbittorrent     # features 
+  tailscale       # features
 
   # for further overriding in custom.nix
   dunst
   sway
   sway-unwrapped
-  tailscale
   waybar
   xscreensaver
   yt-dlp
