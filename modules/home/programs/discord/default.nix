@@ -11,6 +11,7 @@ with lib; mkNsEnableModule config ./. (let
     ];
   } (builtins.readFile ./krisp-patcher.py);
   krisp-patcher = pkgs.writeShellScriptBin "krisp-patcher" ''
+    ${pkgs.procps}/bin/pkill -9 Discord
     ${krisp-patcher-python}/bin/krisp-patcher-python ~/.config/discord/0.*/modules/discord_krisp/discord_krisp.node
   '';
 in {
