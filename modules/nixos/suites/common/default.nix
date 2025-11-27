@@ -10,6 +10,7 @@ with lib; mkNsEnableModule config ./. {
       time.enable = true;
       journal-management.enable = true;
       nix.enable = true;
+      greeter.enable = true;
     };
 
     programs = {
