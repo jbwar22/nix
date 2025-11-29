@@ -1,6 +1,8 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns config ./.; (let
+  hf = config.custom.home.opts.hostfeatures;
+in {
   options = opt {
     enable = mkEnableOption "home impermanence";
     dirs = mkOption {
@@ -25,8 +27,8 @@ with lib; with ns config ./.; {
         ".local/share/home-manager"
         ".local/share/nix"
       ]
-      (mkIf true [ ".docker" ])
-      (mkIf true [ ".local/share/flatpak" ])
+      (mkIf hf.hasDocker [ ".docker" ])
+      (mkIf hf.hasFlatpak [ ".local/share/flatpak" ])
     ];
   });
-}
+})

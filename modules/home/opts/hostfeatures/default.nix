@@ -7,12 +7,14 @@ with lib; with ns config ./.; {
     runningSnapweb = mkDisableOption "running snapweb";
     hasCpupower = mkDisableOption "has cpupower package";
     hasSerialSupport = mkDisableOption "current user has dialout group";
-    hasLibvirtd = mkDisableOption "has cpupower package";
+    hasLibvirtd = mkDisableOption "has libvirtd";
     hasTailscale = mkDisableOption "has tailscale";
     hasFuseAllowOther = mkDisableOption "has userAllowOther for fuse";
     hasUdisks2 = mkDisableOption "has udisks2";
     hasWireplumber = mkDisableOption "has wireplumber";
     hasTmpfsRoot = mkDisableOption "root is tmpfs";
+    hasFlatpak = mkDisableOption "has flatpak";
+    hasDocker = mkDisableOption "has docker";
   };
 
   config = if (osConfig != false) then (opt {
@@ -27,5 +29,7 @@ with lib; with ns config ./.; {
     hasUdisks2 = osConfig.services.udisks2.enable;
     hasWireplumber = osConfig.services.pipewire.wireplumber.enable;
     hasTmpfsRoot = osConfig.fileSystems."/".fsType == "tmpfs";
+    hasFlatpak = osConfig.services.flatpak.enable;
+    hasDocker = osConfig.virtualisation.docker.enable;
   }) else {};
 }
