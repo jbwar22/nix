@@ -21,6 +21,7 @@ with lib; {
         systemd-boot.fixResolution = true;
         secure-boot.enable = true;
         kernel-latest.enable = true;
+        virtualisation.enable = true;
         etc-nixos-symlink = "/home/jackson/documents/nixos-config";
         impermanence = {
           enable = true;

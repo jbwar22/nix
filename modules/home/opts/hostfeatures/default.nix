@@ -8,7 +8,6 @@ with lib; with ns config ./.; {
     hasCpupower = mkDisableOption "has cpupower package";
     hasSerialSupport = mkDisableOption "current user has dialout group";
     hasLibvirtd = mkDisableOption "has cpupower package";
-    hasOvmf = mkDisableOption "has cpupower package";
     hasTailscale = mkDisableOption "has tailscale";
     hasFuseAllowOther = mkDisableOption "has userAllowOther for fuse";
     hasUdisks2 = mkDisableOption "has udisks2";
@@ -23,7 +22,6 @@ with lib; with ns config ./.; {
     hasCpupower = osConfig.custom.nixos.programs.cpupower.enable;
     hasSerialSupport = hasGroup config osConfig "dialout";
     hasLibvirtd = osConfig.virtualisation.libvirtd.enable;
-    hasOvmf = osConfig.virtualisation.libvirtd.qemu.ovmf.enable;
     hasTailscale = osConfig.services.tailscale.enable;
     hasFuseAllowOther = osConfig.programs.fuse.userAllowOther;
     hasUdisks2 = osConfig.services.udisks2.enable;

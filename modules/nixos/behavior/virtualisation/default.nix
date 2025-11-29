@@ -21,11 +21,12 @@ in {
       enable = true;
       qemu = {
         swtpm.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
       };
     };
     spiceUSBRedirection.enable = true;
   };
 
   users = setUserGroups admins [ "libvirtd" ];
+
+  custom.nixos.behavior.impermanence.dirs = [ "/var/lib/libvirt" ];
 })

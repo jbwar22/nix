@@ -31,6 +31,7 @@ with lib; {
         easyeffects.enable = true;
         # xscreensaver.enable = true;
         mavica-ingest.enable = true;
+        virt-manager.enable = true;
       };
 
       opts = {
