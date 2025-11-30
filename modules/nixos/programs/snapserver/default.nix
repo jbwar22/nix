@@ -2,7 +2,6 @@
 
 with lib; with ns config ./.; let
   configfile = ageOrNull config "snapserver-shairport-config";
-  admins = getAdmins config.custom.common.opts.host.users;
 in {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
@@ -34,39 +33,48 @@ in {
     # override firewall
     # use nixos-firewall-tool open 1780 to open http port temporarily
     # use nixos-firewall-tool reset to close when done
-    networking.firewall.allowedTCPPorts = [ config.services.snapserver.port ];
+    networking.firewall.allowedTCPPorts = [ config.services.snapserver.settings.stream.port ];
 
     services.snapserver = {
       enable = true;
       openFirewall = false;
-      tcp = {
-        enable = true;
-      };
-      http = {
-        enable = true;
-        docRoot = "${pkgs.snapweb}";
-      };
-      streams = {
-        airplay = {
-          type = "airplay";
-          location = "${pkgs.shairport-sync}/bin/shairport-sync";
-          query = {
-            name = "AirPlay";
-            devicename = "${capitalizeDashedString config.custom.common.opts.host.hostname} Snapcast";
-            params = let
-              params = singleton "--port=${toString cfg.shairport-port}"
-                ++ optional (configfile != null) "--configfile=\${CREDENTIALS_DIRECTORY}/configfile";
-            in concatStringsSep " " params;
-          };
+      settings = {
+        tcp = {
+          enable = true;
         };
-        pulse = mkIf cfg.sink {
-          type = "pipe";
-          location = "/run/snapserver/fifo";
-          query = {
-            name = "PipeWire";
-            mode = "create";
-          };
+        http = {
+          enable = true;
+          docRoot = "${pkgs.snapweb}";
         };
+        stream.source = let
+          getQuery = x: pipe x.query [
+            attrsToList
+            (map (x: "${x.name}=${x.value}"))
+            (concatStringsSep "&")
+          ];
+          toURI = (x: "${x.type}://${x.location}?${getQuery x}");
+        in mkMerge [
+          [(toURI {
+            type = "airplay";
+            location = "${pkgs.shairport-sync}/bin/shairport-sync";
+            query = {
+              name = "AirPlay";
+              devicename = "${capitalizeDashedString config.custom.common.opts.host.hostname} Snapcast";
+              params = let
+                params = singleton "--port=${toString cfg.shairport-port}"
+                  ++ optional (configfile != null) "--configfile=\${CREDENTIALS_DIRECTORY}/configfile";
+              in concatStringsSep " " params;
+            };
+          })]
+          [(mkIf cfg.sink (toURI {
+            type = "pipe";
+            location = "/run/snapserver/fifo";
+            query = {
+              name = "PipeWire";
+              mode = "create";
+            };
+          }))]
+        ];
       };
     };
 
