@@ -12,8 +12,8 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/nixvim/nixos-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     agenix = {
       url = "github:ryantm/agenix";
