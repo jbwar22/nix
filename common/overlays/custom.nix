@@ -21,6 +21,9 @@ inputs: final: prev: {
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
       ];
+      preConfigure = ''
+        substituteInPlace sway.desktop --replace "Exec=sway" "Exec=sway --unsupported-gpu"
+      '';
     });
   });
 
