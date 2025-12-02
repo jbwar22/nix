@@ -22,8 +22,10 @@ pkgs.writeShellScript "sway-screenshot" ''
   home=${config.home.homeDirectory}
   scrdir=$home/pictures/screenshots/grim
 
-  ${pkgs.wayfreeze}/bin/wayfreeze --hide-cursor & PID=$!
-  ${pkgs.coreutils}/bin/sleep 0.02
+  # wayfreeze breaks slurp
+  # see slurp#181
+  # ${pkgs.wayfreeze}/bin/wayfreeze --hide-cursor & PID=$!
+  # ${pkgs.coreutils}/bin/sleep 0.02
 
   if [ $fullscreen = true ]; then
     area="$(${pkgs.slurp}/bin/slurp -o -w 0)"
@@ -43,5 +45,5 @@ pkgs.writeShellScript "sway-screenshot" ''
           $outputfile \
           > /dev/null
 
-  ${pkgs.util-linux}/bin/kill $PID
+  # ${pkgs.util-linux}/bin/kill $PID
 ''
