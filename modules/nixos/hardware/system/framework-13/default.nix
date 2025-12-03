@@ -93,6 +93,7 @@ with lib; with ns config ./.; {
           };
         };
         interface.wifi = "wlp192s0";
+        interface.ethernet = "enp195s0f0u2";
       };
     };
   };
