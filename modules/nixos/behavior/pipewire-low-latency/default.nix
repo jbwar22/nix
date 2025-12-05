@@ -3,5 +3,5 @@
 with lib; mkNsEnableModule config ./. {
   # from nix-gaming
   services.pipewire.lowLatency.enable = true;
-  services.pipewire.lowLatency.quantum = 48;
+  services.pipewire.lowLatency.quantum = 64;
 }
