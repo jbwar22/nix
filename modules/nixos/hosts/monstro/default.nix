@@ -27,6 +27,7 @@ with lib; {
         kernel-latest.enable = true;
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
+        tpm.enable = true;
       };
 
       programs = {
