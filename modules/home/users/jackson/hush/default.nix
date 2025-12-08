@@ -32,6 +32,7 @@ with lib; {
         # xscreensaver.enable = true;
         mavica-ingest.enable = true;
         virt-manager.enable = true;
+        quickshell.enable = true;
       };
 
       opts = {

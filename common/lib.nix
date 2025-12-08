@@ -117,6 +117,11 @@ lib: with lib; rec {
     if type == "directory" then getDir (path.append dir file) else type
   ) readDir dir;
 
+  getConfigPath = config: configPath: pipe configPath [
+    (path.removePrefix ../.)
+    (substring 1 (-1))
+    (x: config.custom.common.opts.hardware.configLocation + x)
+  ];
 
   # user helpers
 

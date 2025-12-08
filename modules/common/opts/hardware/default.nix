@@ -43,5 +43,8 @@ with lib; with ns config ./.; {
     hasMicToggle = mkEnableOption "has software mic toggle button";
     interface.wifi = mkStrOption "default wifi interface";
     interface.ethernet = mkStrOption "default wifi interface";
+
+    # TODO find a new home for this option
+    configLocation = mkStrOption "where the nixos config lives";
   };
 }

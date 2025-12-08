@@ -22,7 +22,7 @@ with lib; {
         secure-boot.enable = true;
         kernel-latest.enable = true;
         virtualisation.enable = true;
-        etc-nixos-symlink = "/home/jackson/documents/nixos-config";
+        etc-nixos-symlink.enable = true;
         impermanence = {
           enable = true;
         };
@@ -43,6 +43,9 @@ with lib; {
         librepods.enable = true;
       };
     };
+
+    # TODO move this!
+    custom.common.opts.hardware.configLocation = "/home/jackson/documents/nixos-config";
 
     networking.hostName = "hush";
 
