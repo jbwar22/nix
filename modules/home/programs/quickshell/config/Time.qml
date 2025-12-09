@@ -8,11 +8,11 @@ Scope {
 
   Process {
     id: clonck
-    command: ["clonck", "once"]
+    command: ["clonck"]
     running: true
-    stdout: StdioCollector {
-      onStreamFinished: {
-        root.time = text.split('\n')[0]
+    stdout: SplitParser {
+      onRead: data => {
+        root.time = data
         clonck.running = true
       }
     }
