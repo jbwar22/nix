@@ -18,7 +18,6 @@ RowLayout {
       id: workspace_selector
 
       property var ws_left_padding: [ "NE135A1M-NY1" ].includes(screen.model) ? 8 : 0
-      property var ws_width: 20 + (index == 0 ? ws_left_padding : 0)
       property var ws_underline_width: 2
       property var workspace: workspace_repeater.workspaces[index]
       property bool isActive: I3.focusedWorkspace?.number === workspace.num
