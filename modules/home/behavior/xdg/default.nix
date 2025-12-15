@@ -50,7 +50,7 @@ with lib; with ns config ./.; {
       screencast = {
         max_fps = 60;
         chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+        chooser_cmd = "${pkgs.slurp}/bin/slurp -f \"Monitor: %o\" -or";
       };
     };
 
