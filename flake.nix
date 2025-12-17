@@ -21,8 +21,8 @@
       inputs.home-manager.follows = "home-manager";
     };
     nix-gaming = {
-      url = "github:fufexan/nix-gaming/c3bf5ff"; # upstream nixpkgs breaking main
-      # inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
