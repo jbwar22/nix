@@ -7,10 +7,12 @@ with lib; mkNsEnableModule config ./. {
     })
     gamescope
     umu-launcher
+    prismlauncher
   ];
   custom.home.behavior.impermanence.dirs = [
     "games"
     ".local/share/umu"
     ".local/share/osu" # osu-lazer
+    ".local/share/PrismLauncher"
   ];
 }

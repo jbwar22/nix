@@ -5,7 +5,6 @@ with lib; mkNsEnableModule config ./. {
     gimp3
     element-desktop
     feh
-    prismlauncher
     qbittorrent
     qpwgraph
     (wrapWaylandElectron spotify)
