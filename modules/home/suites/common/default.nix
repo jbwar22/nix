@@ -13,6 +13,7 @@ with lib; mkNsEnableModule config ./. {
       noconfig.gui.enable = true;
       noconfig.tui.enable = true;
       noconfig.util.enable = true;
+      atuin.enable = true;
       bash.enable = true;
       blueman.enable = true;
       chromium.enable = true;
