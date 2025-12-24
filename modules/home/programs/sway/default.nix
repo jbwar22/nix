@@ -303,7 +303,7 @@ in {
       };
       extraConfig = ''
         titlebar_padding 4 1
-        font pango:monospace 7.71
+        font pango:monospace 7.68
 
         bindgesture swipe:4:left workspace prev_on_output
         bindgesture swipe:4:right workspace next_on_output
