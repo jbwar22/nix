@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib; with ns config ./.; {
   options = opt {
@@ -17,8 +17,10 @@ with lib; with ns config ./.; {
   config = mkIf cfg.enable {
     custom.home.opts.aliases = {
       ll = "ls -hal";
-      rb = "nixos-rebuild switch --sudo";
-      rbb = "nixos-rebuild boot --sudo";
+      # rb = "nixos-rebuild switch --sudo";
+      rb = "${pkgs.nh}/bin/nh os switch /etc/nixos";
+      # rbb = "nixos-rebuild boot --sudo";
+      rbb = "${pkgs.nh}/bin/nh os boot /etc/nixos";
       ng = "sudo nix-collect-garbage --delete-older-than 7d";
     };
 
