@@ -7,6 +7,7 @@ channels: final: prev: {
   # librewolf       # up-to-date browsers
   qbittorrent     # features 
   tailscale       # features
+  umu-launcher    # nix-gaming override
 
   # for further overriding in custom.nix
   dunst
