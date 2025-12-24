@@ -82,6 +82,7 @@ Scope {
 
           BarWidget {
             frac: rootfsSource.frac
+            barcolor: rootfsSource.barcolor
             label: "R"
             barwidth: 20
           }
@@ -93,6 +94,7 @@ Scope {
 
           BarWidget {
             frac: memorySource.frac
+            barcolor: memorySource.barcolor
             label: "M"
             barwidth: 50
           }

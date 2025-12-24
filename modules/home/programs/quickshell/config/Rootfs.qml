@@ -5,6 +5,7 @@ import QtQuick
 Scope {
   id: root
   property string frac
+  property string barcolor
 
   Process {
     id: df
@@ -17,6 +18,7 @@ Scope {
         let total = parseInt(rootfs[1])
         let used = parseInt(rootfs[2])
         root.frac = used / total
+        root.barcolor = root.frac > 0.8 ? '#FF0000' : '#FFFFFF'
       }
     }
     Component.onCompleted: running = true

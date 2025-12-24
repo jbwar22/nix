@@ -31,6 +31,7 @@ in {
       description = "device for brightnessctl";
       default = null;
     };
+    useWaybar = mkDisableOption "use waybar";
   };
 
   config = lib.mkIf cfg.enable (recursiveUpdate (opt {
@@ -73,6 +74,8 @@ in {
           exec echo $3 > ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path}
       esac
     '');
+
+    wayland.systemd.target = "sway-session.target";
 
     wayland.windowManager.sway = {
       enable = true;
@@ -214,9 +217,9 @@ in {
           "${modifier}+Shift+Left" = null;
           "${modifier}+Shift+Right" = null;
         };
-        bars = [{
+        bars = mkIfElse cfg.useWaybar [{
           "command" = mkIf waybar.enable "${pkgs.waybar}/bin/waybar";
-        }];
+        }] (mkForce []);
         colors = rec {
           background = colorscheme.wm.background;
           focused = {
