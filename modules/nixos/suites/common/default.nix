@@ -11,6 +11,7 @@ with lib; mkNsEnableModule config ./. {
       journal-management.enable = true;
       nix.enable = true;
       greeter.enable = true;
+      upower.enable = true;
     };
 
     programs = {
