@@ -15,7 +15,6 @@ with lib; mkNsEnableModule config ./. {
     "PATH=${
       makeBinPath (with pkgs; [
         inputs.clonck.packages.${pkgs.stdenv.hostPlatform.system}.clonck
-        acpi
         bash
         coreutils
         jq

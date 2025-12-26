@@ -47,6 +47,8 @@ with lib; {
     # TODO move this!
     custom.common.opts.hardware.configLocation = "/home/jackson/documents/nixos-config";
 
+    services.upower.enable = true;
+
     networking.hostName = "hush";
 
     system.stateVersion = "24.11";
