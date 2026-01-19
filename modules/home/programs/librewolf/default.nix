@@ -3,7 +3,7 @@
 with lib; mkNsEnableModule config ./. {
   programs.librewolf = {
     enable = true;
-    package = pkgs.librewolf-bin;
+    package = pkgs.librewolf;
     settings = {
       "browser.compactmode.show" = true;
       "browser.uidensity" = 1;

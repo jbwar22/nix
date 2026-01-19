@@ -6,7 +6,6 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-add-librepods.url = "github:Cameo007/nixpkgs/add-librepods";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    impermanence.url = "github:nix-community/impermanence";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-stable";
