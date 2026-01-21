@@ -28,6 +28,7 @@ with lib; {
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
         tpm.enable = true;
+        pipewire-low-latency.enable = true;
       };
 
       programs = {
