@@ -12,6 +12,7 @@ with lib; mkNsEnableModule config ./. {
       nix.enable = true;
       greeter.enable = true;
       upower.enable = true;
+      skip-wait-online.enable = true;
     };
 
     programs = {
