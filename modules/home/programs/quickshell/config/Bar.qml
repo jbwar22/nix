@@ -72,7 +72,13 @@ Scope {
             horizontalAlignment: contentWidth <= innerWidth ? Text.AlignHCenter : Text.AlignLeft
             rightPadding: paddings.right
             leftPadding: paddings.left
+            topPadding: -2
             elide: Text.ElideRight
+
+            font {
+              pixelSize: 12
+              family: "Noto Sans Mono"
+            }
           }
 
         }
