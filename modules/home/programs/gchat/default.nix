@@ -10,5 +10,5 @@ in {
     gchat
   ];
 
-  custom.home.behavior.impermanence.dirs = [ ".config/google-chat-linux" ];
+  custom.home.behavior.impermanence.paths = [ ".config/google-chat-linux" ];
 })

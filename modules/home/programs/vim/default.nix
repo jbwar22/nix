@@ -5,8 +5,8 @@ with lib; mkNsEnableModule config ./. {
     vim
   ];
 
-  custom.home.behavior.impermanence.files = [
-    ".vimrc" # define in nix?
+  custom.home.behavior.impermanence.paths = [
+    { path = ".vimrc"; file = true; } # define in nix?
     # ".viminfo"
   ];
 }

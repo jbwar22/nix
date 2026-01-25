@@ -3,5 +3,5 @@
 with lib; mkNsEnableModule config ./. {
   networking.networkmanager.enable = true;
 
-  custom.nixos.behavior.impermanence.dirs = [ "/etc/NetworkManager/system-connections" ];
+  custom.nixos.behavior.impermanence.paths = [ "/etc/NetworkManager/system-connections" ];
 }

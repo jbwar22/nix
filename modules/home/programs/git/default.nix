@@ -6,5 +6,7 @@ with lib; mkNsEnableModule config ./. {
     git-crypt
   ];
 
-  custom.home.behavior.impermanence.files = [ ".gitconfig" ];
+  custom.home.behavior.impermanence.paths = [
+    { path = ".gitconfig"; file = true; }
+  ];
 }

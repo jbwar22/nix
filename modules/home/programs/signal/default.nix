@@ -32,5 +32,5 @@ in {
     };
   };
 
-  custom.home.behavior.impermanence.dirs = [ ".config/Signal" ];
+  custom.home.behavior.impermanence.paths = [ ".config/Signal" ];
 })

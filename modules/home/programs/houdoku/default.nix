@@ -21,5 +21,5 @@ in {
     };
   };
 
-  custom.home.behavior.impermanence.dirs = [ ".config/Houdoku" ];
+  custom.home.behavior.impermanence.paths = [ ".config/Houdoku" ];
 })

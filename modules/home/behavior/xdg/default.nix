@@ -76,7 +76,7 @@ with lib; with ns config ./.; {
       };
     };
 
-    custom.home.behavior.impermanence.dirs = [
+    custom.home.behavior.impermanence.paths = [
       "documents"
       "downloads"
       "pictures"

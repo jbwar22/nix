@@ -19,6 +19,6 @@ in {
 
     users = setUserGroups admins [ "docker" ];
 
-    custom.nixos.behavior.impermanence.dirs = [ "/var/lib/docker" ];
+    custom.nixos.behavior.impermanence.paths = [ "/var/lib/docker" ];
   };
 })

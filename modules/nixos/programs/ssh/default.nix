@@ -13,5 +13,5 @@ with lib; mkNsEnableModule config ./. {
   networking.firewall.allowedTCPPorts = [ 22 ];
 
   # in main module because host key is needed for agenix
-  # custom.nixos.behavior.impermanence.dirs = [ "/etc/ssh" ];
+  # custom.nixos.behavior.impermanence.paths = [ "/etc/ssh" ];
 }

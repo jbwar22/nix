@@ -7,7 +7,7 @@ with lib; mkNsEnableModule config ./. {
   };
   services.blueman.enable = true;
 
-  custom.nixos.behavior.impermanence.dirs = [
+  custom.nixos.behavior.impermanence.paths = [
     "/var/lib/blueman"
     "/var/lib/bluetooth"
   ];

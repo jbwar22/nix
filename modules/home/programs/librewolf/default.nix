@@ -46,5 +46,5 @@ with lib; mkNsEnableModule config ./. {
     };
   };
 
-  custom.home.behavior.impermanence.dirs = [ ".librewolf" ];
+  custom.home.behavior.impermanence.paths = [ ".librewolf" ];
 }

@@ -15,5 +15,5 @@ in {
     exec = "${slack-x11}/bin/slack";
   };
 
-  custom.home.behavior.impermanence.dirs = [ ".config/Slack" ];
+  custom.home.behavior.impermanence.paths = [ ".config/Slack" ];
 })

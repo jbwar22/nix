@@ -8,7 +8,7 @@ in {
     arduino-ide
   ]);
 
-  custom.home.behavior.impermanence.dirs = [
+  custom.home.behavior.impermanence.paths = [
     ".arduino15"
     # ".arduinoIDE"
   ];

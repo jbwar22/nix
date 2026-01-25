@@ -39,7 +39,7 @@ in {
 
       users = setUserGroups admins [ "davfs2" ];
 
-      custom.nixos.behavior.impermanence.dirs = [ "/var/lib/tailscale" ];
+      custom.nixos.behavior.impermanence.paths = [ "/var/lib/tailscale" ];
     }
     (mkIf cfg.serviceContainer.enable {
       virtualisation.oci-containers.containers."monstro-services-tailscale" = {

@@ -10,5 +10,5 @@ with lib; mkNsEnableModule config ./. {
     };
   };
 
-  custom.home.behavior.impermanence.dirs = [ ".local/share/direnv" ];
+  custom.home.behavior.impermanence.paths = [ ".local/share/direnv" ];
 }

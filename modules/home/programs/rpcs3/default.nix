@@ -5,7 +5,7 @@ with lib; mkNsEnableModule config ./. {
     rpcs3
   ];
 
-  custom.home.behavior.impermanence.dirs = [
+  custom.home.behavior.impermanence.paths = [
     { path = ".cache/rpcs3"; local = true; }
   ];
 }

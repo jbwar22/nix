@@ -7,7 +7,9 @@ in {
   services.ntp.enable = true;
   time.timeZone = config.custom.nixos.opts.secrets.timeZone;
 
-  custom.nixos.behavior.impermanence.files = mkIf null-tz [ "/etc/localtime" ];
+  custom.nixos.behavior.impermanence.paths = mkIf null-tz [
+    { path = "/etc/localtime"; file = true; }
+  ];
 
   # timedatectl complains when /etc/localtime is a bind mount or otherwise can't be overwritten
   # as a fix, we only care about the bind mount at boot. As long as both are updated it's fine

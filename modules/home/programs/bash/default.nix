@@ -42,6 +42,8 @@ with lib; with ns config ./.; {
       '';
     };
 
-    custom.home.behavior.impermanence.files = [ ".bash_history" ];
+    custom.home.behavior.impermanence.paths = [
+      { path = ".bash_history"; file = true; }
+    ];
   };
 }

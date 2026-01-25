@@ -16,5 +16,5 @@ with lib; mkNsEnableModule config ./. {
     };
   };
 
-  custom.home.behavior.impermanence.dirs = [ ".local/share/atuin" ];
+  custom.home.behavior.impermanence.paths = [ ".local/share/atuin" ];
 }

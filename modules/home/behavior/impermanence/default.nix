@@ -2,36 +2,29 @@
 
 with lib; with ns config ./.; (let
   hf = config.custom.home.opts.hostfeatures;
-
-  impermanentPathType = types.submodule {
-    options = {
-      path = mkStrOption "path";
-      local = mkEnableOption "should the path live in /persist/local/root";
-      neededForBoot = mkEnableOption "needed in early stages";
-    };
-  };
-  impermanentOptType = with types; listOf (coercedTo str (x:
-    if typeOf x == "string" then {
-      path = x;
-    } else x
-  ) impermanentPathType);
 in {
   options = opt {
     enable = mkEnableOption "home impermanence";
-    dirs = mkOption {
-      type = impermanentOptType;
-      description = "extra dirs to persist, back";
-      default = [];
-    };
-    files = mkOption {
-      type = impermanentOptType;
-      description = "extra files to persist, back";
+    paths = mkOption {
+      type = with types; listOf (coercedTo str (x:
+        if typeOf x == "string" then {
+          path = x;
+        } else x
+      ) (submodule {
+        options = {
+          path = mkStrOption "path";
+          file = mkEnableOption "is the path a file rather than a dir";
+          local = mkEnableOption "should the path live in /persist/local/root";
+          neededForBoot = mkEnableOption "needed in early stages";
+        };
+      }));
+      description = "extra paths to persist, back";
       default = [];
     };
   };
 
   config = mkIf cfg.enable (opt {
-    dirs = mkMerge [
+    paths = mkMerge [
       [
         ".ssh"
         ".local/share/home-manager"

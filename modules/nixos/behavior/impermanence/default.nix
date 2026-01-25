@@ -3,19 +3,6 @@
 with lib; with ns config ./.; (let
   users = config.custom.common.opts.host.users;
   usernames = (attrNames users) ++ [ "root" ];
-
-  impermanentPathType = types.submodule {
-    options = {
-      path = mkStrOption "path";
-      local = mkEnableOption "should the path live in /persist/local/root";
-      neededForBoot = mkEnableOption "needed in early stages";
-    };
-  };
-  impermanentOptType = with types; listOf (coercedTo str (x:
-    if typeOf x == "string" then {
-      path = x;
-    } else x
-  ) impermanentPathType);
 in {
   options = opt {
     enable = mkEnableOption "impermanence on btrfs";
@@ -28,24 +15,27 @@ in {
       description = "btrfs mount options";
       default = [];
     };
-
-    dirs = mkOption {
-      type = impermanentOptType;
-      description = "extra dirs to persist";
-      default = [];
-    };
-
-    files = mkOption {
-      type = impermanentOptType;
-      description = "extra dirs to persist";
+    paths = mkOption {
+      type = with types; listOf (coercedTo str (x:
+        if typeOf x == "string" then {
+          path = x;
+        } else x
+      ) (submodule {
+        options = {
+          path = mkStrOption "path";
+          file = mkEnableOption "is the path a file rather than a dir";
+          local = mkEnableOption "should the path live in /persist/local/root";
+          neededForBoot = mkEnableOption "needed in early stages";
+        };
+      }));
+      description = "extra paths to persist";
       default = [];
     };
   };
   config = let
     userConfs = (getHMOptWithUsername config (hmconfig: username: {
       inherit username;
-      dirs = hmconfig.custom.home.behavior.impermanence.dirs;
-      files = hmconfig.custom.home.behavior.impermanence.files;
+      paths = hmconfig.custom.home.behavior.impermanence.paths;
     }) users);
   in mkMerge [
     (mkIf cfg.enable {
@@ -70,31 +60,21 @@ in {
           };
         }
 
-        (pipe cfg.dirs [
-          (map (dir: {
-            name = dir.path;
+        (pipe cfg.paths [
+          (map (path: {
+            name = path.path;
             value = let
-              prefix = if dir.local then "local" else "back";
-            in {
+              prefix = if path.local then "local" else "back";
+            in if path.file then {
+              device = "/persist/${prefix}/root${path.path}";
+              depends = [ "/persist" ];
+              neededForBoot = path.neededForBoot;
+              options = [ "bind" ];
+            } else {
               device = cfg.device;
               fsType = "btrfs";
-              neededForBoot = dir.neededForBoot;
-              options = cfg.mntOptions ++ [ "subvol=${prefix}/root${dir.path}" ];
-            };
-          }))
-          listToAttrs
-        ])
-
-        (pipe cfg.files [
-          (map (file: {
-            name = file.path;
-            value = let
-              prefix = if file.local then "local" else "back";
-            in {
-              device = "/persist/${prefix}/root${file.path}";
-              depends = [ "/persist" ];
-              neededForBoot = file.neededForBoot;
-              options = [ "bind" ];
+              neededForBoot = path.neededForBoot;
+              options = cfg.mntOptions ++ [ "subvol=${prefix}/root${path.path}" ];
             };
           }))
           listToAttrs
@@ -103,7 +83,7 @@ in {
 
       # make sure home folder mountpoint parent folders have correct permissions
       custom.nixos.behavior.tmpfiles = pipe userConfs [
-        (map (userConf: pipe (userConf.dirs ++ userConf.files) [
+        (map (userConf: pipe (userConf.paths) [
           (map (x: x.path))
           (map (splitString "/"))
           (map (dropEnd 1))
@@ -133,7 +113,7 @@ in {
       nix.settings.build-dir = "/persist/local/build";
     })
     (opt {
-      dirs = mkMerge [
+      paths = mkMerge [
         [
           # host key, needed for agenix
           { path = "/etc/ssh"; neededForBoot = true; }
@@ -143,19 +123,9 @@ in {
         ]
         (mkMerge (map (userConf: 
           map (x: {
-            inherit (x) local neededForBoot;
+            inherit (x) file local neededForBoot;
             path = "/home/${userConf.username}/${x.path}";
-          }) userConf.dirs
-        ) userConfs))
-      ];
-
-      files = mkMerge [
-        [ ]
-        (mkMerge (map (userConf: 
-          map (x: {
-            inherit (x) local neededForBoot;
-            path = "/home/${userConf.username}/${x.path}";
-          }) userConf.files
+          }) userConf.paths
         ) userConfs))
       ];
     })

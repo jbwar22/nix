@@ -9,7 +9,7 @@ with lib; mkNsEnableModule config ./. {
     umu-launcher
     prismlauncher
   ];
-  custom.home.behavior.impermanence.dirs = [
+  custom.home.behavior.impermanence.paths = [
     "games"
     ".local/share/umu"
     ".local/share/osu" # osu-lazer

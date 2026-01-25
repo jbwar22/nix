@@ -31,5 +31,5 @@ in {
     krisp-patcher
   ];
 
-  custom.home.behavior.impermanence.dirs = [ ".config/discord" ];
+  custom.home.behavior.impermanence.paths = [ ".config/discord" ];
 })

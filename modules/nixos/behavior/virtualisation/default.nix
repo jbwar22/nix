@@ -28,5 +28,5 @@ in {
 
   users = setUserGroups admins [ "libvirtd" ];
 
-  custom.nixos.behavior.impermanence.dirs = [ "/var/lib/libvirt" ];
+  custom.nixos.behavior.impermanence.paths = [ "/var/lib/libvirt" ];
 })

@@ -10,5 +10,5 @@ with lib; mkNsEnableModule config ./. {
     pkiBundle = "/var/lib/sbctl";
   };
 
-  custom.nixos.behavior.impermanence.dirs = [ "/var/lib/sbctl" ];
+  custom.nixos.behavior.impermanence.paths = [ "/var/lib/sbctl" ];
 }

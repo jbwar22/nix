@@ -37,7 +37,7 @@ in {
       "mozc/user_dictionary.db".source = mkIf (cfg.user-dictionary != null) (config.lib.file.mkOutOfStoreSymlink cfg.user-dictionary);
     };
 
-    custom.home.behavior.impermanence.dirs = [ ".config/mozc" ];
+    custom.home.behavior.impermanence.paths = [ ".config/mozc" ];
 
     home.packages = mkIf (!cfg.basic) (let
       hconf = config.xdg.configHome;
