@@ -2,27 +2,30 @@
 
 with lib; with ns config ./.; (let
   hf = config.custom.home.opts.hostfeatures;
+
+  impermanentPathType = types.submodule {
+    options = {
+      path = mkStrOption "path";
+      local = mkEnableOption "should the path live in /persist/local/root";
+      neededForBoot = mkEnableOption "needed in early stages";
+    };
+  };
+  impermanentOptType = with types; listOf (coercedTo str (x:
+    if typeOf x == "string" then {
+      path = x;
+    } else x
+  ) impermanentPathType);
 in {
   options = opt {
     enable = mkEnableOption "home impermanence";
     dirs = mkOption {
-      type = with types; listOf str;
+      type = impermanentOptType;
       description = "extra dirs to persist, back";
       default = [];
     };
-    dirsLocal = mkOption {
-      type = with types; listOf str;
-      description = "extra dirs to persist, local";
-      default = [];
-    };
     files = mkOption {
-      type = with types; listOf str;
+      type = impermanentOptType;
       description = "extra files to persist, back";
-      default = [];
-    };
-    filesLocal = mkOption {
-      type = with types; listOf str;
-      description = "extra files to persist, local";
       default = [];
     };
   };
@@ -33,14 +36,12 @@ in {
         ".ssh"
         ".local/share/home-manager"
         ".local/share/nix"
+        { path = ".cache/nix"; local = true; }
+        { path = ".cache/mesa_shader_cache"; local = true; }
+        { path = ".cache/mesa_shader_cache_db"; local = true; }
       ]
       (mkIf hf.hasDocker [ ".docker" ])
       (mkIf hf.hasFlatpak [ ".local/share/flatpak" ])
-    ];
-    dirsLocal = [
-      ".cache/nix"
-      ".cache/mesa_shader_cache"
-      ".cache/mesa_shader_cache_db"
     ];
   });
 })

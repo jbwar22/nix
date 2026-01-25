@@ -8,9 +8,7 @@ with lib; mkNsEnableModule config ./. {
 
   custom.home.behavior.impermanence.dirs = [
     ".wine"
-  ];
-  custom.home.behavior.impermanence.dirsLocal = [
-    ".cache/wine"
-    ".cache/winetricks"
+    { path = ".cache/wine"; local = true; }
+    { path = ".cache/winetricks"; local = true; }
   ];
 }
