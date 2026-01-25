@@ -3,8 +3,6 @@
 with lib; mkNsEnableModule config ./. {
   environment.systemPackages = with pkgs; [ sbctl ];
 
-  custom.nixos.behavior.systemd-boot.efiAtSlashBoot = true;
-
   boot.loader.systemd-boot.enable = lib.mkForce false;
 
   boot.lanzaboote = {

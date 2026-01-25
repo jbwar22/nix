@@ -21,7 +21,12 @@ with lib; {
       };
 
       behavior = {
-        grub-boot.enable = true;
+        systemd-boot.enable = true;
+        systemd-boot.fixResolution = true;
+        impermanence = {
+          enable = true;
+        };
+        etc-nixos-symlink.enable = true;
         virtualisation.enable = true;
         kernel-latest.enable = true;
         wake-on-lan.enable = true;
@@ -40,6 +45,9 @@ with lib; {
         # sunshine.enable = true;
       };
     };
+
+    # TODO move this!
+    custom.common.opts.hardware.configLocation = "/home/jackson/documents/nixos-config";
 
     networking.hostName = "monstro";
 

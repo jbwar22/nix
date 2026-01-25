@@ -3,7 +3,6 @@
 with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "systemd-boot";
-    efiAtSlashBoot = mkEnableOption "efi at /boot";
     fixResolution = mkEnableOption "consolemode -> auto";
   };
 
@@ -15,7 +14,6 @@ with lib; with ns config ./.; {
       };
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = mkIf (!cfg.efiAtSlashBoot) "/boot/efi";
       };
     };
   };

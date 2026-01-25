@@ -6,7 +6,9 @@ with lib; mkNsEnableModule config ./. {
   ];
 
   custom.home.behavior.impermanence.dirs = [
-    ".cache/dolphin-emu"
     ".local/share/dolphin-emu"
+  ];
+  custom.home.behavior.impermanence.dirsLocal = [
+    ".cache/dolphin-emu"
   ];
 }

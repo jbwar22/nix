@@ -15,7 +15,7 @@ with lib; with ns config ./.; {
       enable = true;
       device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
       mntOptions = [ "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-      persist = "@new_persist";
+      # persist = "@new_persist";
     };
 
     boot.kernelParams = [

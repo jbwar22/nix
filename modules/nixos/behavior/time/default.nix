@@ -16,7 +16,7 @@ in {
       sudo umount -q /etc/localtime
       sudo rm /etc/localtime
       sudo timedatectl set-timezone $1
-      cat /etc/localtime | sudo tee /persist/etc/localtime > /dev/null
+      cat /etc/localtime | sudo tee /persist/back/root/etc/localtime > /dev/null
     '')
   ]);
 })

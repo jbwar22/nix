@@ -15,18 +15,24 @@ in {
       description = "btrfs mount options";
       default = [];
     };
-    persist = mkOption {
-      type = types.str;
-      description = "persist subvol";
-    };
     dirs = mkOption {
       type = with types; listOf str;
-      description = "extra dirs to persist";
+      description = "extra dirs to persist, back";
+      default = [];
+    };
+    dirsLocal = mkOption {
+      type = with types; listOf str;
+      description = "extra dirs to persist, local";
       default = [];
     };
     files = mkOption {
       type = with types; listOf str;
-      description = "extra files to persist";
+      description = "extra files to persist, back";
+      default = [];
+    };
+    filesLocal = mkOption {
+      type = with types; listOf str;
+      description = "extra files to persist, local";
       default = [];
     };
   };
@@ -34,17 +40,19 @@ in {
     userConfs = (getHMOptWithUsername config (hmconfig: username: {
       inherit username;
       dirs = hmconfig.custom.home.behavior.impermanence.dirs;
+      dirsLocal = hmconfig.custom.home.behavior.impermanence.dirsLocal;
       files = hmconfig.custom.home.behavior.impermanence.files;
+      filesLocal = hmconfig.custom.home.behavior.impermanence.filesLocal;
     }) users);
   in mkMerge [
     (mkIf cfg.enable {
-      environment.etc."machine-id".source = "/persist/etc/machine-id";
+      environment.etc."machine-id".source = "/persist/back/other/machine-id";
 
       # could persist /var/db/sudo/lectured, but meh
       custom.nixos.programs.sudo.lecture = "never";
       users.mutableUsers = mkDefault false;
       users.users = genAttrs usernames (user: {
-        hashedPasswordFile = mkDefault "/persist/passwords/user/${user}";
+        hashedPasswordFile = mkDefault "/persist/back/passwords/user/${user}";
       });
 
       programs.fuse.userAllowOther = mkDefault true;
@@ -55,16 +63,27 @@ in {
             device = cfg.device;
             fsType = "btrfs";
             neededForBoot = true; # so hashedPasswordFile can be read
-            options = cfg.mntOptions ++ [ "subvol=${cfg.persist}" ];
+            options = cfg.mntOptions ++ [ "subvol=/" ];
           };
         }
         (genAttrs cfg.dirs (dir: {
           device = cfg.device;
           fsType = "btrfs";
-          options = cfg.mntOptions ++ [ "subvol=${cfg.persist}${dir}" ];
+          options = cfg.mntOptions ++ [ "subvol=back/root${dir}" ];
+        }))
+        (genAttrs cfg.dirsLocal (dir: {
+          device = cfg.device;
+          fsType = "btrfs";
+          options = cfg.mntOptions ++ [ "subvol=local/root${dir}" ];
         }))
         (genAttrs cfg.files (file: {
-          device = "/persist${file}";
+          device = "/persist/back/root${file}";
+          depends = [ "/persist" ];
+          neededForBoot = true;
+          options = [ "bind" ];
+        }))
+        (genAttrs cfg.filesLocal (file: {
+          device = "/persist/local/root${file}";
           depends = [ "/persist" ];
           neededForBoot = true;
           options = [ "bind" ];
@@ -73,7 +92,7 @@ in {
 
       # make sure home folder mountpoint parent folders have correct permissions
       custom.nixos.behavior.tmpfiles = pipe userConfs [
-        (map (userConf: pipe (userConf.dirs ++ userConf.files) [
+        (map (userConf: pipe (userConf.dirs ++ userConf.dirsLocal ++ userConf.files ++ userConf.filesLocal) [
           (map (splitString "/"))
           (map (dropEnd 1))
           (map (foldl (acc: x: if (acc == []) then [x] else (
@@ -99,7 +118,7 @@ in {
         listToAttrs
       ];
 
-      nix.settings.build-dir = "/persist/build";
+      nix.settings.build-dir = "/persist/local/build";
     })
     (opt {
       dirs = mkMerge [
@@ -107,10 +126,18 @@ in {
           "/etc/ssh"                  # host key, needed for agenix
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
-          "/var/log"
         ]
         (mkMerge (map (userConf: 
           map (x: "/home/${userConf.username}/${x}") userConf.dirs
+        ) userConfs))
+      ];
+
+      dirsLocal = mkMerge [
+        [
+          "/var/log"
+        ]
+        (mkMerge (map (userConf: 
+          map (x: "/home/${userConf.username}/${x}") userConf.dirsLocal
         ) userConfs))
       ];
 
@@ -119,6 +146,14 @@ in {
         ]
         (mkMerge (map (userConf: 
           map (x: "/home/${userConf.username}/${x}") userConf.files
+        ) userConfs))
+      ];
+
+      filesLocal = mkMerge [
+        [
+        ]
+        (mkMerge (map (userConf: 
+          map (x: "/home/${userConf.username}/${x}") userConf.filesLocal
         ) userConfs))
       ];
     })

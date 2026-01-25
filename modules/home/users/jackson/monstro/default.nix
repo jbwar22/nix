@@ -11,6 +11,16 @@ with lib; {
 
       behavior = {
         xdg.defaultBrowser = "firefox.desktop";
+        impermanence = {
+          enable = true;
+        };
+        default-audio = {
+          enable = true;
+          default-routes = ''
+            [default-routes]
+            alsa_card.pci-0000_09_00.4:output:analog-output-lineout={"channelMap":["FL", "FR"], "mute":false, "latencyOffsetNsec":0, "channelVolumes":[0.125000, 0.125000]}
+          '';
+        };
       };
 
       programs = {
