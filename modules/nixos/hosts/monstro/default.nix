@@ -23,6 +23,7 @@ with lib; {
       behavior = {
         systemd-boot.enable = true;
         systemd-boot.fixResolution = true;
+        secure-boot.enable = true;
         impermanence = {
           enable = true;
         };
