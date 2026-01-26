@@ -14,6 +14,7 @@ with lib; {
         impermanence = {
           enable = true;
         };
+        bulk-link.enable = true;
         default-audio = {
           enable = true;
           default-routes = ''
