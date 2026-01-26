@@ -18,8 +18,11 @@ with lib; {
         default-audio = {
           enable = true;
           default-routes = ''
-            [default-routes]
             alsa_card.pci-0000_09_00.4:output:analog-output-lineout={"channelMap":["FL", "FR"], "mute":false, "latencyOffsetNsec":0, "channelVolumes":[0.125000, 0.125000]}
+          '';
+          default-nodes = ''
+            default.configured.audio.sink=alsa_output.pci-0000_09_00.4.analog-stereo
+            default.configured.audio.sink.0=alsa_output.usb-Universal_Audio_Volt_176_21502038005257-00.analog-stereo
           '';
         };
       };

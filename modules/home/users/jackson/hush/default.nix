@@ -19,7 +19,6 @@ with lib; {
         default-audio = {
           enable = true;
           default-routes = ''
-            [default-routes]
             alsa_card.pci-0000_c1_00.6:output:analog-output-speaker={"channelMap":["FL", "FR"], "channelVolumes":[0.125000, 0.125000], "latencyOffsetNsec":0, "mute":true}
           '';
         };
