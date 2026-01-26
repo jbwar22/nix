@@ -32,6 +32,7 @@ with lib; {
           encryptedFilesDir = "/persist/initrd";
           ethernetKernelModules = [ "r8152" ];
           tpmRegister = "0x81000005";
+          mode = 1;
         };
       };
 

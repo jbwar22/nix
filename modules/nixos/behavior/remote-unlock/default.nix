@@ -22,6 +22,11 @@ with lib; with ns config ./.; {
       description = "defines which pcrs are used";
       default = "sha256:0,1,7";
     };
+    mode = mkOption {
+      description = "0: unseal aes, 1: encryptdecrypt";
+      type = types.enum [ 0 1 ];
+      default = 0;
+    };
   };
   config = mkIf cfg.enable {
     boot.initrd = {
@@ -46,11 +51,30 @@ with lib; with ns config ./.; {
         tpm2.enable = true;
         initrdBin = with pkgs; [
           tpm2-tools
+          openssl
+          unixtools.xxd
+          # coreutils
         ];
         extraBin = {
           tpm2_encryptdecrypt = "${pkgs.tpm2-tools}/bin/tpm2_encryptdecrypt";
+          openssl = "${pkgs.openssl}/bin/openssl";
+          xxd = "${pkgs.unixtools.xxd}/bin/xxd";
+          # tr = "${pkgs.coreutils}/bin/tr";
+          # rm = "${pkgs.coreutils}/bin/rm";
+          # rmdir = "${pkgs.coreutils}/bin/rmdir";
         };
-        services.sshd.preStart = ''
+        services.sshd.after = [ "tpm2.target" ];
+        services.sshd.preStart = mkIfElse (cfg.mode == 0) ''
+          tpm2_unseal -c ${cfg.tpmRegister} -p pcr:${cfg.pcrStr} -o /etc/ssh/wrapkey.aes
+
+          openssl enc -d -aes-256-ctr \
+          -K "$(xxd -p /etc/ssh/wrapkey.aes | tr -d '\n')" \
+          -iv "$(xxd -p /etc/ssh/iv.bin | tr -d '\n')" \
+          -in /etc/ssh/encrypted_host_key -out /etc/ssh/decrypted_host_key
+
+          rm /etc/ssh/wrapkey.aes
+          chmod 400 /etc/ssh/decrypted_host_key
+        '' ''
           tpm2_encryptdecrypt -c ${cfg.tpmRegister} -p pcr:${cfg.pcrStr} -t /etc/ssh/iv.bin -d -o /etc/ssh/decrypted_host_key /etc/ssh/encrypted_host_key
           chmod 400 /etc/ssh/decrypted_host_key
         '';

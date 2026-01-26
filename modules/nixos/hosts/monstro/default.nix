@@ -32,8 +32,15 @@ with lib; {
         kernel-latest.enable = true;
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
-        tpm.enable = true;
         pipewire-low-latency.enable = true;
+        tpm.enable = true;
+        remote-unlock = {
+          enable = true;
+          authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDiOojnsKqTIJry1LND86oZe7EsGSJSwyBLK98SF0equ" ];
+          encryptedFilesDir = "/persist/back/initrd";
+          ethernetKernelModules = [ "r8169" ];
+          tpmRegister = "0x81000005";
+        };
       };
 
       programs = {
