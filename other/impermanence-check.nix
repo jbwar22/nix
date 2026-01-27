@@ -1,5 +1,5 @@
-cname: outputs: pkgs: lib: with lib; let
-  mounts = pipe outputs.nixosConfigurations.${cname}.config.fileSystems [
+outputs: pkgs: lib: with lib; let
+  getMounts = cfg: pipe cfg.config.fileSystems [
     attrsToList
     (filter (x: x.value.fsType == "btrfs"))
     (map (x: pipe x [
@@ -12,8 +12,26 @@ cname: outputs: pkgs: lib: with lib; let
     (imap0 (i: x: "mounts[${toString i}]=\"${x}\""))
     concatLines
   ];
+  impermanenceHosts = pipe outputs.nixosConfigurations [
+    attrsToList
+    (filter (x: x.value.config.custom.nixos.behavior.impermanence.enable))
+  ];
+  hasHosts = (length impermanenceHosts) != 0;
+  mounts = (pipe impermanenceHosts [
+    (imap0 (i: x: ''
+      ${if i == 0 then "" else "el"}if [[ "$1" == "${x.name}" ]]; then
+        ${getMounts x.value}
+    ''))
+    concatLines
+  ]) + ''
+    ${if hasHosts then "else" else ""}
+      echo enter a hostname for which impermanence is enabled
+      exit 1
+    ${if hasHosts then "fi" else ""}
+  '';
 in pkgs.writeShellScriptBin "impermanence-check" ''
   mapfile -t subvols < <(${pkgs.btrfs-progs}/bin/btrfs subvolume list /persist | ${pkgs.coreutils}/bin/cut -d" " -f9- | ${pkgs.gnugrep}/bin/grep -e "\(local\|back\)/root/")
+
   ${mounts}
 
   echo no matching subvol:
