@@ -140,6 +140,8 @@
       };
     in {
       nixvim = nixvim-package;
+      impermanence-check-hush = (import ./other/impermanence-check.nix) "hush" self pkgs lib;
+      impermanence-check-monstro = (import ./other/impermanence-check.nix) "monstro" self pkgs lib;
     };
   };
 }
