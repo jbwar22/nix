@@ -16,12 +16,10 @@ with lib; {
         impermanence = {
           enable = true;
         };
-        default-audio = {
-          enable = true;
-          default-routes = ''
-            alsa_card.pci-0000_c1_00.6:output:analog-output-speaker={"channelMap":["FL", "FR"], "channelVolumes":[0.125000, 0.125000], "latencyOffsetNsec":0, "mute":true}
-          '';
-        };
+        bulk-link.enable = true;
+        default-audio.default-routes = ''
+          alsa_card.pci-0000_c1_00.6:output:analog-output-speaker={"channelMap":["FL", "FR"], "channelVolumes":[0.125000, 0.125000], "latencyOffsetNsec":0, "mute":true}
+        '';
       };
 
       programs = {

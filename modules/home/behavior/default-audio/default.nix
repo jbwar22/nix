@@ -4,19 +4,20 @@ with lib; with ns config ./.; (let
   hf = config.custom.home.opts.hostfeatures;
 in {
   options = opt {
-    enable = mkEnableOption "default audio wireplumber config";
     default-routes = mkOption {
-      type = types.lines;
+      type = with types; nullOr lines;
       description = "text";
+      default = null;
     };
     default-nodes = mkOption {
-      type = types.lines;
+      type = with types; nullOr lines;
       description = "text";
+      default = null;
     };
   };
 
-  config = mkIf cfg.enable {
-    home.file.".local/state/wireplumber/default-routes.hm-default" = warnIfNot hf.hasWireplumber "default-audio module requires wireplumber" {
+  config = {
+    home.file.".local/state/wireplumber/default-routes.hm-default" = mkIf (cfg.default-routes != null) (warnIfNot hf.hasWireplumber "default-audio module requires wireplumber" {
       text = ''
         [default-routes]
       '' + cfg.default-routes;
@@ -24,8 +25,8 @@ in {
         cp ~/.local/state/wireplumber/default-routes.hm-default ~/.local/state/wireplumber/default-routes
         chmod 644 ~/.local/state/wireplumber/default-routes
       '';
-    };
-    home.file.".local/state/wireplumber/default-nodes.hm-default" = warnIfNot hf.hasWireplumber "default-audio module requires wireplumber" {
+    });
+    home.file.".local/state/wireplumber/default-nodes.hm-default" = mkIf (cfg.default-nodes != null) (warnIfNot hf.hasWireplumber "default-audio module requires wireplumber" {
       text = ''
         [default-nodes]
       '' + cfg.default-nodes;
@@ -33,6 +34,6 @@ in {
         cp ~/.local/state/wireplumber/default-nodes.hm-default ~/.local/state/wireplumber/default-nodes
         chmod 644 ~/.local/state/wireplumber/default-nodes
       '';
-    };
+    });
   };
 })

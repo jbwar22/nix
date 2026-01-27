@@ -33,12 +33,6 @@ with lib; with ns config ./.; {
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
-    # fileSystems."/" =
-    #   { device = "/dev/disk/by-uuid/5d351eb3-6fc5-4d3d-a4cb-42904a48d439";
-    #     fsType = "btrfs";
-    #     options = [ "subvol=@tmp_root" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-    #   };
-
     fileSystems."/boot" =
       { device = "/dev/disk/by-uuid/A550-E7F5";
         fsType = "vfat";

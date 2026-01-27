@@ -11,11 +11,11 @@ with lib; with ns config ./.; {
 
   config = lib.mkIf cfg.enable {
     custom.nixos.hardware.cpu.amd.enable = true;
+
     custom.nixos.behavior.impermanence = { # sets up most mounts
       enable = true;
       device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
       mntOptions = [ "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-      # persist = "@new_persist";
     };
 
     boot.kernelParams = [
@@ -48,12 +48,6 @@ with lib; with ns config ./.; {
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
-    fileSystems."/toplevel" =
-      { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
-        fsType = "btrfs";
-        options = [ "subvol=/" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-      };
-
     fileSystems."/boot" =
       { device = "/dev/disk/by-uuid/0A74-81F6";
         fsType = "vfat";
@@ -63,13 +57,19 @@ with lib; with ns config ./.; {
     fileSystems."/nix" =
       { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
         fsType = "btrfs";
-        options = [ "subvol=@nix" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+        options = [ "subvol=local/@nix" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+      };
+
+    fileSystems."/bulk" =
+      { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
+        fsType = "btrfs";
+        options = [ "subvol=local/@bulk" "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
       };
 
     fileSystems."/swap" =
       { device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
         fsType = "btrfs";
-        options = [ "subvol=@swap" "noatime" "ssd" ];
+        options = [ "subvol=local/@swap" "noatime" "ssd" ];
       };
 
     swapDevices = [{
