@@ -5,5 +5,6 @@ with lib; mkNsEnableModule config ./. {
     # jetbrains.pycharm-professional
     mssql_jdbc
     unixODBCDrivers.msodbcsql17
+    libreoffice
   ];
 }
