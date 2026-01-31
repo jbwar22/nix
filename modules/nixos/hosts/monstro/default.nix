@@ -29,7 +29,7 @@ with lib; {
         };
         etc-nixos-symlink.enable = true;
         virtualisation.enable = true;
-        kernel-latest.enable = true;
+        kernel-zen.enable = true;
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
         pipewire-low-latency.enable = true;
