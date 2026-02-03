@@ -35,4 +35,8 @@ in {
       [[ -f "$tofi_cache" ]] && rm "$tofi_cache"
     '';
   };
+
+  custom.home.behavior.impermanence.paths = [
+    { path = ".local/state/tofi-drun-history"; file = true; }
+  ];
 })
