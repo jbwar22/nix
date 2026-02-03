@@ -45,7 +45,7 @@ inputs: final: prev: {
   });
 
   # update via flake (master branch)
-  yt-dlp = prev.yt-dlp.overrideAttrs {
-    src = inputs.yt-dlp;
-  };
+  # yt-dlp = prev.yt-dlp.overrideAttrs {
+  #   src = inputs.yt-dlp;
+  # };
 }
