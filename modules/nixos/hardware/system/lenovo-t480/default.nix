@@ -74,6 +74,8 @@ with lib; with ns config ./.; {
             max = 55;
           };
         };
+        interface.wifi = "wlp3s0";
+        interface.ethernet = "enp0s31f6";
         hasMicToggle = true;
       };
     };
