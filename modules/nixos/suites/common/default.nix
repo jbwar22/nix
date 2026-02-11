@@ -13,6 +13,7 @@ with lib; mkNsEnableModule config ./. {
       greeter.enable = true;
       upower.enable = true;
       skip-wait-online.enable = true;
+      zswap.enable = true;
     };
 
     programs = {
