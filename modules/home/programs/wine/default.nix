@@ -8,7 +8,7 @@ with lib; mkNsEnableModule config ./. {
 
   custom.home.behavior.impermanence.paths = [
     ".wine"
-    { path = ".cache/wine"; local = true; }
-    { path = ".cache/winetricks"; local = true; }
+    { path = ".cache/wine"; origin = "local"; }
+    { path = ".cache/winetricks"; origin = "local"; }
   ];
 }

@@ -14,7 +14,11 @@ in {
         options = {
           path = mkStrOption "path";
           file = mkEnableOption "is the path a file rather than a dir";
-          local = mkEnableOption "should the path live in /persist/local/root";
+          origin = mkOption {
+            type = nullOr str;
+            description = "origin of path";
+            default = null;
+          };
           neededForBoot = mkEnableOption "needed in early stages";
         };
       }));
@@ -29,9 +33,9 @@ in {
         ".ssh"
         ".local/share/home-manager"
         ".local/share/nix"
-        { path = ".cache/nix"; local = true; }
-        { path = ".cache/mesa_shader_cache"; local = true; }
-        { path = ".cache/mesa_shader_cache_db"; local = true; }
+        { path = ".cache/nix"; origin = "local"; }
+        { path = ".cache/mesa_shader_cache"; origin = "local"; }
+        { path = ".cache/mesa_shader_cache_db"; origin = "local"; }
       ]
       (mkIf hf.hasDocker [ ".docker" ])
       (mkIf hf.hasFlatpak [ ".local/share/flatpak" ])

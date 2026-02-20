@@ -6,6 +6,6 @@ with lib; mkNsEnableModule config ./. {
   ];
 
   custom.home.behavior.impermanence.paths = [
-    { path = ".cache/rpcs3"; local = true; }
+    { path = ".cache/rpcs3"; origin = "local"; }
   ];
 }

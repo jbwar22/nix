@@ -12,10 +12,32 @@ with lib; with ns config ./.; {
   config = lib.mkIf cfg.enable {
     custom.nixos.hardware.cpu.amd.enable = true;
 
-    custom.nixos.behavior.impermanence = { # sets up most mounts
+    custom.nixos.behavior.impermanence = {
       enable = true;
-      device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
-      mntOptions = [ "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+      defaultOrigin = "back";
+      devices = [
+        {
+          device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
+          mntOptions = [ "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+          subvol="/";
+          mntPoint = "/persist";
+          origins = [
+            {
+              path = "back/root";
+              label = "back";
+            }
+            {
+              path = "local/root";
+              label = "local";
+            }
+          ];
+        }
+      ];
+      extras = {
+        machine-id.path = "/persist/back/other/machine-id";
+        passwords.path = "/persist/back/passwords/user";
+        build.path = "/persist/local/build";
+      };
     };
 
     boot.kernelParams = [
