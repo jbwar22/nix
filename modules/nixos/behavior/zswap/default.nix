@@ -7,4 +7,7 @@ with lib; mkNsEnableModule config ./. {
     "zswap.max_pool_percent=20"
     "zswap.shrinker_enabled=1"
   ];
+
+  boot.kernelModules = [ "lz4" ];
+  boot.initrd.kernelModules = [ "lz4" ];
 }
