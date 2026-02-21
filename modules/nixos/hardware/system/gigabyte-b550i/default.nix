@@ -14,30 +14,9 @@ with lib; with ns config ./.; {
 
     custom.nixos.behavior.impermanence = {
       enable = true;
-      defaultOrigin = "back";
-      devices = [
-        {
-          device = "/dev/disk/by-uuid/5d351eb3-6fc5-4d3d-a4cb-42904a48d439";
-          mntOptions = [ "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
-          subvol = "/";
-          mntPoint = "/persist";
-          origins = [
-            {
-              path = "back/root";
-              label = "back";
-            }
-            {
-              path = "local/root";
-              label = "local";
-            }
-          ];
-        }
-      ];
-      extras = {
-        machine-id.path = "/persist/back/other/machine-id";
-        passwords.path = "/persist/back/passwords/user";
-        build.path = "/persist/local/build";
-      };
+      device = "/dev/disk/by-uuid/5d351eb3-6fc5-4d3d-a4cb-42904a48d439";
+      mntOptions = [ "noatime" "compress=lzo" "ssd" "space_cache=v2" ];
+      subvol = "/";
     };
 
     boot.initrd = {
