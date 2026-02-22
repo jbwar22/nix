@@ -1,8 +1,6 @@
 { config, lib, ... }:
 
-with lib; with ns config ./.; (let
-  users = config.custom.common.opts.host.users;
-in {
+with lib; with ns config ./.; {
   options = opt {
     enable = mkEnableOption "impermanence on btrfs";
     defaultOrigin = mkStrOption "default origin if unspecified";
@@ -51,14 +49,17 @@ in {
     };
   };
   config = let
-    userConfs = (getHMOptWithUsername config (hmconfig: username: {
-      inherit username;
-      paths = hmconfig.custom.home.behavior.impermanence-subvolumes.paths;
-    }) users);
+    userConfs = if (hasAttr "home-manager" config) then pipe config.home-manager.users [
+      attrsToList
+      (filter (user: hasAttr "impermanence-subvolumes" user.value.custom.home.behavior))
+      (filter (user: user.value.custom.home.behavior.impermanence-subvolumes.enable))
+      (map (user: {
+        username = user.name;
+        paths = user.value.custom.home.behavior.impermanence-subvolumes.paths;
+      }))
+    ] else [];
   in mkMerge [
     (mkIf cfg.enable {
-      programs.fuse.userAllowOther = mkDefault true;
-
       fileSystems = mkMerge [
         (pipe cfg.devices [
           (map (device: {
@@ -105,7 +106,7 @@ in {
       ];
 
       # make sure home folder mountpoint parent folders have correct permissions
-      custom.nixos.behavior.tmpfiles = pipe userConfs [
+      systemd.tmpfiles.rules = pipe userConfs [
         (map (userConf: pipe (userConf.paths) [
           (map (x: x.path))
           (map (splitString "/"))
@@ -116,40 +117,19 @@ in {
           flatten
           unique
           (map (x: "/home/${userConf.username}/${x}"))
-          (map (x: {
-            name = x;
-            value = {
-              type = "d";
-              path = x;
-              mode = "0755";
-              user = userConf.username;
-              group = "users";
-              age = "-";
-              argument = "-";
-            };
-          }))
+          (map (x: "d ${x} 0755 ${userConf.username} users - -"))
         ]))
         flatten
-        listToAttrs
       ];
     })
     (opt {
-      paths = mkMerge [
-        [
-          # host key, needed for agenix
-          { path = "/etc/ssh"; neededForBoot = true; }
-          "/var/lib/nixos"
-          "/var/lib/systemd/coredump"
-          { path = "/var/log"; origin = "local"; }
-        ]
-        (mkMerge (map (userConf: 
-          map (x: {
-            inherit (x) file neededForBoot;
-            origin = mkIf (x.origin != null) x.origin;
-            path = "/home/${userConf.username}/${x.path}";
-          }) userConf.paths
-        ) userConfs))
-      ];
+      paths = (mkMerge (map (userConf: 
+        map (x: {
+          inherit (x) file neededForBoot;
+          origin = mkIf (x.origin != null) x.origin;
+          path = "/home/${userConf.username}/${x.path}";
+        }) userConf.paths
+      ) userConfs));
     })
   ];
-})
+}

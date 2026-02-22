@@ -21,7 +21,6 @@ in {
   config = mkIf cfg.enable {
     custom.nixos.behavior.impermanence-subvolumes = {
       enable = true;
-      inherit (cfg) paths;
       defaultOrigin = "back";
       devices = [
         {
@@ -39,7 +38,20 @@ in {
           ];
         }
       ];
+      paths = mkMerge [
+        cfg.paths
+        [
+          # host key, needed for agenix
+          { path = "/etc/ssh"; neededForBoot = true; }
+          "/var/lib/nixos"
+          "/var/lib/systemd/coredump"
+          { path = "/var/log"; origin = "local"; }
+        ]
+      ];
     };
+
+    # might not be needed
+    programs.fuse.userAllowOther = mkDefault true;
 
     environment.etc."machine-id".source = "/persist/back/other/machine-id";
 
