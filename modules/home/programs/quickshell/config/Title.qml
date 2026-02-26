@@ -8,7 +8,7 @@ Scope {
 
   Process {
     id: sway_title
-    command: ["sh", "-c", "swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .name // empty'; swaymsg -t subscribe -m \"[\\\"window\\\"]\" | jq 'select(.change == \"focus\" or .change == \"title\") | .container | select(.focused? == true) | .name' -r --unbuffered"]
+    command: ["sh", "-c", "swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .name // empty'; swaymsg -t subscribe -m \"[\\\"window\\\",\\\"workspace\\\"]\" | jq 'select(.change == \"focus\" or .change == \"title\") | if has(\"container\") then (.container | select(.focused? == true) | .name) else \"\" end' -r --unbuffered"]
     running: true
     stdout: SplitParser {
       onRead: data => {
