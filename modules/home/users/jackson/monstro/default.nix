@@ -102,7 +102,7 @@ with lib; {
             };
           };
         };
-        wallpaper = ../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png;
+        wallpaper.base = ../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png;
         colorscheme = import ./colorscheme.nix;
       };
     };

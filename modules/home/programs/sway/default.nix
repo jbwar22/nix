@@ -44,7 +44,24 @@ in {
 
     home.packages = with pkgs; mkMerge [
       [
-        swaybg # background
+        (writeShellScriptBin "wallpaper" ''
+          if [[ $# == 1 ]]; then
+              outname="wallpaper"
+              filename="$1"
+          elif [[ $# == 2 ]]; then
+              outname="$1"
+              filename="$2"
+          else
+              echo "Usage: wallpaper [link] file"
+              exit 1
+          fi
+
+          ${pkgs.coreutils}/bin/ln -sf \
+            "$filename" \
+            "/home/${config.home.username}/pictures/wallpapers/''${outname}"
+          ${pkgs.sway}/bin/swaymsg \
+            "output * bg \"/home/${config.home.username}/pictures/wallpapers/''${outname}\" fill #000000"
+        '')
       ]
       (mkIf (cfg.brightnessDevice != null) [
         brightnessctl
@@ -144,7 +161,7 @@ in {
           "${screen.name} Unknown" = mkIf screen.value.noserial screen-def;
         })) {
           "*" = {
-            bg = "${config.custom.home.opts.wallpaper} fill";
+            bg = "${config.custom.home.opts.wallpaper.base} fill #000000";
           };
         } (attrsToList config.custom.home.opts.screens);
 
