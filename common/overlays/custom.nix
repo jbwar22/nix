@@ -1,4 +1,11 @@
 inputs: final: prev: {
+  # regex replace nix store paths with /n/s/ to shorten lines
+  btop = prev.btop.overrideAttrs {
+    patches = [
+      ./patches/btop-nix-store-replace.patch
+    ];
+  };
+
   # scripts hack to allow sending signals while muted
   dunst = (prev.dunst.overrideAttrs (oldAttrs: {
     src = inputs.jbwar22-dunst;

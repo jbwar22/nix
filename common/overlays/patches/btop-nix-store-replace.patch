@@ -1,0 +1,25 @@
+regex replace nix store paths with /n/s/ to shorten lines
+
+---
+
+--- a/src/btop_draw.cpp
++++ b/src/btop_draw.cpp
+@@ -21,6 +21,7 @@ tab-size = 4
+ #include <cmath>
+ #include <iterator>
+ #include <ranges>
++#include <regex>
+ #include <stdexcept>
+ #include <string>
+ #include <string_view>
+@@ -2071,7 +2072,9 @@ namespace Proc {
+ 				}
+ 			}
+ 
+-			const auto san_cmd = replace_ascii_control(p.cmd);
++			const auto original_san_cmd = replace_ascii_control(p.cmd);
++			std::regex nix_store_re("\\/nix\\/store\\/.*?-");
++			const auto san_cmd = regex_replace(original_san_cmd, nix_store_re, "/n/s/");
+ 
+ 			if (not p_wide_cmd.contains(p.pid)) p_wide_cmd[p.pid] = ulen(san_cmd) != ulen(san_cmd, true);
+ 
