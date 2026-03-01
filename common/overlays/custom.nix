@@ -50,9 +50,4 @@ inputs: final: prev: {
       ./patches/xscreensaver-no-offscreen.patch
     ];
   });
-
-  # update via flake (master branch)
-  # yt-dlp = prev.yt-dlp.overrideAttrs {
-  #   src = inputs.yt-dlp;
-  # };
 }

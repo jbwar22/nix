@@ -43,10 +43,6 @@
       url = "github:jbwar22/dunst";
       flake = false;
     };
-    yt-dlp = {
-      url = "github:yt-dlp/yt-dlp/release";
-      flake = false;
-    };
     framework-dsp = {
       url = "github:cab404/framework-dsp";
       flake = false;
