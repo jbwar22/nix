@@ -40,6 +40,17 @@ in {
       users = setUserGroups admins [ "davfs2" ];
 
       custom.nixos.behavior.impermanence.paths = [ "/var/lib/tailscale" ];
+
+      # https://github.com/tailscale/tailscale/issues/10688
+      systemd.services."tailscale-resume" = {
+        serviceConfig = {
+          ExecStart = "${pkgs.systemd}/bin/systemctl restart tailscaled.service";
+          Type = "oneshot";
+        };
+        description = "Restart Tailscale after resume";
+        after = ["suspend.target" "hibernate.target" "hybrid-sleep.target"];
+        wantedBy = ["post-resume.target"];
+      };
     }
     (mkIf cfg.serviceContainer.enable {
       virtualisation.oci-containers.containers."monstro-services-tailscale" = {
