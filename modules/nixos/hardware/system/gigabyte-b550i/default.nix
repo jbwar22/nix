@@ -60,7 +60,7 @@ with lib; with ns config ./.; {
 
     swapDevices = [{
       device = "/swap/swapfile";
-      size = 8 * 1024;
+      size = 16 * 1024;
     }];
 
     boot.kernel.sysctl."vm.swapiness" = 1;
