@@ -25,7 +25,8 @@ with lib; with ns config ./.; {
     ];
 
     # https://gitlab.freedesktop.org/drm/amd/-/issues/4463#note_3167900
-    boot.kernelPatches = [{
+    # https://github.com/torvalds/linux/commit/318917e1d8ecc89f820f4fabf79935f4fed718cd
+    boot.kernelPatches = mkIf (config.boot.kernelPackages.kernelOlder "7.0") [{
       name = "fix flicker";
       patch = ./drm-amd-fix-flicker.patch;
     }];
