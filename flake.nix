@@ -134,9 +134,15 @@
         module = import ./modules/nixvim;
         extraSpecialArgs = { inherit inputs; lib = nixvim-lib; };
       };
+
+      nixpkgs-overlay = import inputs.nixpkgs-stable {
+        system = "x86_64-linux";
+        overlays = [ (import ./common/overlays/custom.nix inputs) ];
+      };
     in {
       nixvim = nixvim-package;
       impermanence-check = (import ./other/impermanence-check.nix) self pkgs lib;
+      sway = nixpkgs-overlay.sway;
     };
   };
 }
