@@ -1,13 +1,12 @@
 channels: final: prev: {
   inherit (channels.unstable)
 
+  # only in unstable
+  librepods
+
   # replace stable with unstable
-  firefox         # up-to-date browsers
-  kitty           # 0.42.1 segfaulting
-  # librewolf       # up-to-date browsers
-  qbittorrent     # features 
   tailscale       # features
-  umu-launcher    # nix-gaming override
+  umu-launcher    # features
 
   # for further overriding in custom.nix
   dunst
@@ -17,8 +16,6 @@ channels: final: prev: {
   xscreensaver
   yt-dlp
   ;
-
-  librepods = channels.add-librepods.librepods;
 
   # for referencing packages that do not need to be unstable system-wide
   unstable = channels.unstable;

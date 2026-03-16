@@ -1,20 +1,13 @@
-{ inputs, config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
-with lib; with ns config ./.; let
+with lib; mkNsEnableModule config ./. (let
   users = config.custom.common.opts.host.users;
 in {
-  imports = [
-    (inputs.nixpkgs-add-librepods + "/nixos/modules/programs/librepods.nix")
+  environment.systemPackages = with pkgs; [
+    librepods
   ];
 
-  options = with types; opt {
-    enable = mkEnableOption "plymouth splash screen on boot";
-  };
-
-  config = lib.mkIf cfg.enable {
-    programs.librepods.enable = true;
-
-    users = setUserGroups users [ "librepods" ];
-  };
-}
+  # TODO is this needed?
+  users = setUserGroups users [ "librepods" ];
+})
 

@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-add-librepods.url = "github:Cameo007/nixpkgs/add-librepods";
+    systems.url = "github:nix-systems/x86_64-linux";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -13,15 +13,20 @@
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.nuschtosSearch.inputs.flake-utils.inputs.systems.follows = "systems";
     };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-stable";
       inputs.home-manager.follows = "home-manager";
+      inputs.systems.follows = "systems";
     };
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.flake-parts.follows = "flake-parts";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
@@ -39,6 +44,9 @@
       url = "github:jbwar22/mpv-scripts";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+    };
     jbwar22-dunst = {
       url = "github:jbwar22/dunst";
       flake = false;
@@ -53,7 +61,6 @@
     channels = {
       stable = inputs.nixpkgs-stable;
       unstable = inputs.nixpkgs-unstable;
-      add-librepods = inputs.nixpkgs-add-librepods;
     };
     nixpkgs-main = "stable";
     custom-lib = import ./common/lib.nix channels.${nixpkgs-main}.lib;
