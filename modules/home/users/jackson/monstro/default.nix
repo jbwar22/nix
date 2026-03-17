@@ -34,6 +34,7 @@ with lib; {
         bash.hostcolor = "\\033[38;5;140m";
         bash.sourcedFiles = [ "/home/jackson/documents/scripts/monstrorc" ];
         mavica-ingest.enable = true;
+        easyeffects.enable = true;
       };
 
       services = {

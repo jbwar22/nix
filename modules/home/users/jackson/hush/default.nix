@@ -26,11 +26,15 @@ with lib; {
         bash.hostcolor = "\\033[38;5;111m";
         sway.brightnessDevice = "amdgpu_bl1";
         sway.useWaybar = false;
-        easyeffects.enable = true;
         # xscreensaver.enable = true;
         mavica-ingest.enable = true;
         virt-manager.enable = true;
         quickshell.enable = true;
+
+        easyeffects = {
+          enable = true;
+          preset = "gracefu";
+        };
       };
 
       opts = {
