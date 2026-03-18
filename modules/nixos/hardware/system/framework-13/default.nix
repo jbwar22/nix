@@ -9,9 +9,10 @@ with lib; with ns config ./.; {
     enable = mkEnableOption "framework 13 hardware configuration";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable (let
+      kernelNeedsPatch = config.boot.kernelPackages.kernelOlder "6.19.6";
+  in {
     custom.nixos.hardware.cpu.amd.enable = true;
-
     custom.nixos.behavior.impermanence = {
       enable = true;
       device = "/dev/disk/by-uuid/b2dc4ba3-1dc1-4294-a842-4b1e151a54bf";
@@ -26,13 +27,15 @@ with lib; with ns config ./.; {
 
     # https://gitlab.freedesktop.org/drm/amd/-/issues/4463#note_3167900
     # https://github.com/torvalds/linux/commit/318917e1d8ecc89f820f4fabf79935f4fed718cd
-    boot.kernelPatches = mkIf (config.boot.kernelPackages.kernelOlder "7.0") [{
+    boot.kernelPatches = mkIf kernelNeedsPatch [{
       name = "fix flicker";
       patch = ./drm-amd-fix-flicker.patch;
     }];
 
-    specialisation.base-kernel.configuration = {
-      boot.kernelPatches = mkForce [];
+    specialisation = mkIf kernelNeedsPatch {
+      base-kernel.configuration = {
+        boot.kernelPatches = mkForce [];
+      };
     };
 
     boot.initrd = {
@@ -98,5 +101,5 @@ with lib; with ns config ./.; {
         interface.ethernet = "enp195s0f0u2";
       };
     };
-  };
+  });
 }
