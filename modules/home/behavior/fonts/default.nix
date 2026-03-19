@@ -9,6 +9,7 @@ with lib; mkNsEnableModule config ./. {
     freefont_ttf
     corefonts
     vista-fonts
+    jigmo
   ];
 
   fonts.fontconfig = {

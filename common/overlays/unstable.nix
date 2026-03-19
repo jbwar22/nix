@@ -7,6 +7,7 @@ channels: final: prev: {
   # replace stable with unstable
   tailscale       # features
   umu-launcher    # features
+  jigmo           # CJK Extension J support
 
   # for further overriding in custom.nix
   dunst
