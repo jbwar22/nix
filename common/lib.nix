@@ -1,4 +1,4 @@
-lib: with lib; rec {
+{ lib, config ? {} }: with lib; rec {
   # enum helpers
 
   # definition list of enums
@@ -70,6 +70,30 @@ lib: with lib; rec {
     cfg = getAttrFromPath customNamespaceList config;   # config.custom.home.programs.example
     opt = setAttrByPath customNamespaceList;            # (val: { custom.home.programs.example = val; })
   };
+
+  # ns module helpers
+
+  mkNsEnableModule = config: modulePath: body: with ns config modulePath; let
+    flakeRoot = ./..;
+    relativeModulePath = path.removePrefix flakeRoot modulePath;
+  in {
+    options = opt {
+      enable = mkEnableOption "the module located at ${relativeModulePath}";
+    };
+    config = mkIf cfg.enable body;
+  };
+
+  # ns import helpers
+
+  augmentNamespaceArg = module: moduleArgs: let
+    nsArg = rec {
+      enable = mkNsEnableModule config module;
+      full = ns config module;
+      inherit (full) cfg opt;
+    };
+  in ((import module) (moduleArgs // { ns = nsArg; }));
+
+  allAugmentNamespaceArg = imports: map (imp: augmentNamespaceArg imp) imports;
 
 
   # non-path based namespace helpers
@@ -183,19 +207,6 @@ lib: with lib; rec {
   getUserGroups = config: user: config.users.users.${user}.extraGroups;
 
   hasGroup = config: osConfig: group: elem group (getUserGroups osConfig config.home.username);
-
-
-  # module helpers
-
-  mkNsEnableModule = config: modulePath: body: with ns config modulePath; let
-    flakeRoot = ./..;
-    relativeModulePath = path.removePrefix flakeRoot modulePath;
-  in {
-    options = opt {
-      enable = mkEnableOption "the module located at ${relativeModulePath}";
-    };
-    config = mkIf cfg.enable body;
-  };
 
 
   # option helpers

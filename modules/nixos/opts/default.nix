@@ -1,5 +1,5 @@
-{ lib, ... }:
+{ clib, ... }:
 
-with lib; {
-  imports = getDirs ./.;
+{
+  imports = with clib; allAugmentNamespaceArg (getDirs ./.);
 }
