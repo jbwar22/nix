@@ -85,7 +85,8 @@ lib: with lib; rec {
 
   # ns import helpers
 
-  augmentNamespaceArg = config: module: moduleArgs: let
+  # home-manager freaks out if pkgs isn't a required input!
+  augmentNamespaceArg = config: module: { pkgs, ... }@moduleArgs: let
     nsArg = rec {
       enable = mkNsEnableModule config module;
       full = ns config module;
