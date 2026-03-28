@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; with ns config ./.; let
+with lib; with ns; let
   configfile = ageOrNull config "snapserver-shairport-config";
 in {
   options = opt {

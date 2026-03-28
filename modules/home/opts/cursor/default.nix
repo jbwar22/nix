@@ -1,6 +1,6 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, ns, ... }:
 
-with lib; with ns config ./.; let
+with lib; with ns; let
   cursors = {
     "macos" = { # the only one that's small enough at size 24?
       name = "macOS";

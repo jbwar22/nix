@@ -1,6 +1,6 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
   options = opt {
     enable = mkEnableOption "firefox";
     usePackage = with types; mkOption {

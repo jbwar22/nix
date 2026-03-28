@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
   options = opt {
     bee = mkEnableOption "bee careful with sudo";
     lecture = mkOption {

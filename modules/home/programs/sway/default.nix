@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; with ns config ./.; let
+with lib; with ns; let
   colorscheme = config.custom.home.opts.colorscheme;
   waybar = config.custom.home.programs.waybar;
   swaylock = config.custom.home.programs.swaylock;

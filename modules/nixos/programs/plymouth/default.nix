@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
   options = with types; opt {
     enable = mkEnableOption "plymouth splash screen on boot";
     theme = mkOption {

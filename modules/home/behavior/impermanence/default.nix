@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; (let
+with lib; with ns; (let
   hf = config.custom.home.opts.hostfeatures;
 in {
   options = opt {

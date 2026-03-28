@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; (let
+with lib; with ns; (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
   options = opt {

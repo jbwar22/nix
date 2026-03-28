@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; let
+with lib; with ns; let
   sway-output-option = mkOption {
     type = with types; attrsOf str;
     description = "sway output config";

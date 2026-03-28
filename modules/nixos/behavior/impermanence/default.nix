@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; (let
+with lib; with ns; (let
   users = config.custom.common.opts.host.users;
   usernames = (attrNames users) ++ [ "root" ];
 in {

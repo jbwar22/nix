@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
   options = opt {
     enable = mkEnableOption "extra required options for easy use of shairport-sync";
     ports = mkOption {

@@ -1,12 +1,12 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; let
+with lib; let
   mkColor = mkOption {
     type = with types; str;
     default = "#00FF00";
   };
 in {
-  options = with types; opt {
+  options = with types; ns.opt {
     terminal = mkOption {
       description = "terminal colors";
       type = (submodule {

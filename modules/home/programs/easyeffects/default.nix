@@ -1,6 +1,6 @@
-{ inputs, config, lib, ... }:
+{ inputs, config, lib, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
   options = opt {
     enable = mkEnableOption "easyeffects";
     preset = mkOption {

@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
 
   # works with wayland (sorta)
 

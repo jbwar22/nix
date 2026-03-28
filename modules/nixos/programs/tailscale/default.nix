@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; with ns config ./.; (let
+with lib; with ns; (let
   users = config.custom.common.opts.host.users;
   admins = getAdmins users;
   tsop = getTSOp users;

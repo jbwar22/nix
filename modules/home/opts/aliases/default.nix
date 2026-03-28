@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; {
-  options = opt (mkOption {
+with lib; {
+  options = ns.opt (mkOption {
     type = with types; attrsOf str;
     description = "aliases";
   });

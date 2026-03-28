@@ -1,6 +1,6 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ns, ... }:
 
-with lib; with ns config ./.; let
+with lib; with ns; let
   colorscheme = config.custom.home.opts.colorscheme;
   hf = config.custom.home.opts.hostfeatures;
 in {

@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
   options = opt (mkOption {
     description = "tmp file definitions";
     type = with types; attrsOf (submodule {

@@ -1,6 +1,6 @@
-{ inputs, config, lib, modulesPath, ... }:
+{ inputs, config, lib, modulesPath, ns, ... }:
 
-with lib; with ns config ./.; {
+with lib; with ns; {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
