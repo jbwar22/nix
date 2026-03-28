@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable (let
+ns.enable (let
   houdoku = (pkgs.appimageTools.wrapType2 {
     pname = "houdoku";
     version = "2.16.0";

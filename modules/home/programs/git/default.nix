@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = with pkgs; [
     git
     git-crypt

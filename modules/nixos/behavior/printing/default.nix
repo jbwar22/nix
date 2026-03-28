@@ -1,4 +1,4 @@
-{ config, lib, ns, ... }:
+{ lib, ns, ... }:
 
 with lib; ns.enable {
   services.printing.enable = true;

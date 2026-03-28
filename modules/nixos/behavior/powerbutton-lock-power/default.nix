@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   services.logind.settings.Login = {
     HandlePowerKey = "lock";
     HandlePowerKeyLongPress = "poweroff";

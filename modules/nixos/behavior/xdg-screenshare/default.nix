@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   xdg.portal = {
     enable = true;
     config = {

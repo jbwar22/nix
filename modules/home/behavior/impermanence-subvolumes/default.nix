@@ -1,7 +1,7 @@
-{ config, lib, ns, ... }:
+{ lib, ns, ... }:
 
-with lib; {
-  options = ns.opt {
+{
+  options = with lib; ns.opt {
     enable = mkEnableOption "home impermanence";
     paths = mkOption {
       type = with types; listOf (coercedTo str (x:

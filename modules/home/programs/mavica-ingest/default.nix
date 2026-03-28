@@ -1,6 +1,6 @@
-{ inputs, config, lib, pkgs, ns, ... }:
+{ inputs, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = [
     inputs.mavica-scripts.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];

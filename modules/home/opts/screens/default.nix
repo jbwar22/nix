@@ -1,4 +1,4 @@
-{ config, lib, ns, ... }:
+{ lib, ns, ... }:
 
 with lib; with ns; let
   sway-output-option = mkOption {

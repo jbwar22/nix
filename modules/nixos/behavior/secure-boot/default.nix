@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ lib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   environment.systemPackages = with pkgs; [ sbctl ];
 
   boot.loader.systemd-boot.enable = lib.mkForce false;

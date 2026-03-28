@@ -1,5 +1,5 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   environment.systemPackages = [ config.boot.kernelPackages.cpupower ];
 }

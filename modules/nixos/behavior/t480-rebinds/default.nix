@@ -1,6 +1,6 @@
-{ config, lib, ns, ...}:
+{ ns, ...}:
 
-with lib; ns.enable {
+ns.enable {
   services.keyd = {
     enable = true;
     keyboards.default.settings = {

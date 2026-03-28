@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   networking.networkmanager.enable = true;
 
   custom.nixos.behavior.impermanence.paths = [ "/etc/NetworkManager/system-connections" ];

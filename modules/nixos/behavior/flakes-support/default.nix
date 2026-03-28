@@ -1,5 +1,5 @@
-{ config, lib, ns, ...}:
+{ ns, ...}:
 
-with lib; ns.enable {
+ns.enable {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

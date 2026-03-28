@@ -1,5 +1,5 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   programs.gamemode.enable = true;
 }

@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   custom.nixos = {
     behavior = {
       bluetooth.enable = true;

@@ -1,6 +1,6 @@
-{ config, lib, pkgs, inputs, outputs, ns, ... }:
+{ pkgs, inputs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = with pkgs; [
     htop
     btop

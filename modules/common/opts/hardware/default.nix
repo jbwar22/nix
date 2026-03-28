@@ -1,10 +1,10 @@
-{ config, lib, ns, ... }:
+{ lib, ns, ... }:
 
-with lib; {
-  options = with types; ns.opt {
+{
+  options = with lib; ns.opt {
     batteries = mkOption {
       description = "definition for each battery";
-      type = attrsOf (submodule {
+      type = with types; attrsOf (submodule {
         options = {
           min = mkOption {
             type = int;
@@ -24,13 +24,13 @@ with lib; {
         type = types.enum (attrValues enums.cpu-vendors);
       };
       threads = mkOption {
-        type = int;
+        type = types.int;
         description = "number of cpu threads";
       };
     };
     memory = {
       size = mkOption {
-        type = int;
+        type = types.int;
         description = "size of memory in gb";
       };
     };

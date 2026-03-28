@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;

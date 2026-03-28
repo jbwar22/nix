@@ -1,6 +1,6 @@
-{ config, lib, ns, ...}:
+{ ns, ...}:
 
-with lib; ns.enable {
+ns.enable {
   i18n = {
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [

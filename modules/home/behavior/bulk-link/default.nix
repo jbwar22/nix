@@ -1,5 +1,5 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.file."bulk".source = config.lib.file.mkOutOfStoreSymlink "/bulk/${config.home.username}";
 }

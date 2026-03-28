@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ns, ... }:
+{ lib, pkgs, ns, ... }:
 
 with lib; ns.enable {
   services.flatpak.enable = true;

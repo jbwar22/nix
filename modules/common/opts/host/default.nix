@@ -1,7 +1,7 @@
-{ config, lib, ns, ... }:
+{ lib, ns, ... }:
 
-with lib; {
-  options = ns.opt (mkSubmoduleOption "basic host setup" {
+{
+  options = with lib; ns.opt (mkSubmoduleOption "basic host setup" {
     hostname = mkStrOption "system hostname";
     system = mkStrOption "system";
     os = mkStrOption "os";

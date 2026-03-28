@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   services.gnome-keyring.enable = true;
 
   custom.home.behavior.impermanence.paths = [

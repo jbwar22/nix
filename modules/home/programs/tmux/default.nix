@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   programs.tmux = {
     enable = true;
     clock24 = true;

@@ -1,6 +1,6 @@
-{ config, lib, pkgs, inputs, ns, ... }:
+{ pkgs, inputs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = with pkgs; [
     (inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.osu-stable.override {
        location = "$HOME/games/osu/prefix";

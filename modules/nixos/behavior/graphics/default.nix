@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

@@ -1,5 +1,5 @@
-{ config, lib, pkgs, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   boot.kernelPackages = pkgs.linuxPackages_6_12;
 }

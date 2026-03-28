@@ -1,15 +1,15 @@
-{ config, lib, ns, ... }:
+{ lib, ns, ... }:
 
 with lib; let
   mkColor = mkOption {
-    type = with types; str;
+    type = types.str;
     default = "#00FF00";
   };
 in {
-  options = with types; ns.opt {
+  options = ns.opt {
     terminal = mkOption {
       description = "terminal colors";
-      type = (submodule {
+      type = (types.submodule {
         options = {
           foreground = mkColor;
           background = mkColor;
@@ -39,7 +39,7 @@ in {
     };
     wm = mkOption {
       description = "wm colors";
-      type = (submodule {
+      type = (types.submodule {
         options = {
           background = mkColor;
           text = mkColor;
@@ -61,7 +61,7 @@ in {
     };
     ime = mkOption {
       description = "ime colors";
-      type = (submodule {
+      type = (types.submodule {
         options = {
           background = mkColor;
           border = mkColor;

@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   custom.nixos = {
     hardware.system.framework-13.enable = true;
     behavior.regdomain.enable = true;

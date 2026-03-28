@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, lib, ns, ... }:
 
 with lib; ns.enable (let
   admins = getAdmins config.custom.common.opts.host.users;

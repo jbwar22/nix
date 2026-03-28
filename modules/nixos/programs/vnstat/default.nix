@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   services.vnstat.enable = true;
 
   custom.nixos.behavior.impermanence.paths = [ "/var/lib/vnstat" ];

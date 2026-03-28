@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   programs.atuin = {
     enable = true;
     daemon.enable = true;

@@ -1,4 +1,4 @@
-{ inputs, config, lib, ns, ... }:
+{ inputs, lib, ns, ... }:
 
 with lib; with ns; {
   options = opt {

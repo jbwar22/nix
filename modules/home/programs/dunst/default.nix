@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, pkgs, ns, ... }:
 
-with lib; ns.enable (let
+ns.enable (let
   colorscheme = config.custom.home.opts.colorscheme;
 in {
   services.dunst = {

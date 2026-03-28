@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   environment.systemPackages = with pkgs; [
     git-crypt   # needed for using this repo
   ];

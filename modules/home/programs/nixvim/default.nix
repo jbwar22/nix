@@ -1,6 +1,6 @@
-{ config, lib, pkgs, outputs, ns, ... }:
+{ pkgs, outputs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = [
     outputs.packages.${pkgs.stdenv.hostPlatform.system}.nixvim
   ];

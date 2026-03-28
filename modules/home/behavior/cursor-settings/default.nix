@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ config, ns, ... }:
 
-with lib; ns.enable (let
+ns.enable (let
   cursorTheme = config.custom.home.opts.cursor.theme;
 in {
   gtk = {

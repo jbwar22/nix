@@ -1,6 +1,6 @@
-{ pkgs, config, lib, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans

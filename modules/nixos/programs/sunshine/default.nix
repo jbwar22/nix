@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   services.sunshine = {
     enable = true;
     autoStart = false;

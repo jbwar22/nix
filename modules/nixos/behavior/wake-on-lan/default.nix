@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   networking.interfaces.${config.custom.common.opts.hardware.interface.ethernet}.wakeOnLan = {
     enable = true;
   };

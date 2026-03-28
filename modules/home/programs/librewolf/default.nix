@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   programs.librewolf = {
     enable = true;
     package = pkgs.librewolf;

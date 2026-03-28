@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ...}:
+{ pkgs, ns, ...}:
 
-with lib; ns.enable {
+ns.enable {
   systemd.services.journal-vacuum = {
     description = "vacuum journal, keep 2 weeks";
     serviceConfig = {
