@@ -17,6 +17,10 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.nuschtosSearch.inputs.flake-utils.inputs.systems.follows = "systems";
     };
+    wrappers = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-stable";
