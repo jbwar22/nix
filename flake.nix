@@ -64,7 +64,7 @@
     };
     nixpkgs-main = "stable";
     nix-lib = channels.${nixpkgs-main}.lib;
-    custom-lib = import ./common/lib.nix { lib = nix-lib; };
+    custom-lib = import ./common/lib.nix nix-lib;
   in with channels.${nixpkgs-main}.lib; with custom-lib.flake-helpers; let
     hosts = import ./common/hosts.nix custom-lib.enums;
 
@@ -77,7 +77,7 @@
         config.allowUnfreePredicate = pkg: elem (getName pkg) (import ./common/unfree.nix);
       }) channels;
       pkgs = imported-channels.${nixpkgs-main};
-      custom-lib = import ./common/lib.nix { lib = pkgs.lib; };
+      custom-lib = import ./common/lib.nix pkgs.lib;
       lib = pkgs.lib.extend (_: prev: prev // custom-lib);
     };
 
@@ -96,7 +96,7 @@
     # nixos-rebuild switch --flake .#HOSTNAME
     nixosConfigurations = forAllHostnames nixos-hosts (hostname: let
       inherit (importChannelsForHostname hostname) host imported-channels pkgs lib;
-      clib = import ./common/lib.nix { lib = nix-lib; config = system; };
+      clib = import ./common/lib.nix nix-lib;
       system = nixosSystem {
         inherit pkgs;
         specialArgs = { inherit inputs lib clib; outputs = self; };
@@ -107,11 +107,13 @@
             custom.common.opts.host = host;
             nixpkgs.hostPlatform = host.system;
             nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
-            home-manager.useGlobalPkgs = true;
-            home-manager.extraSpecialArgs = { inherit inputs clib; outputs = self; };
-            home-manager.users = genAttrs (attrNames host.users) (username: {
-              imports = genHMModules hostname username;
-            });
+            home-manager = {
+              useGlobalPkgs = true;
+              extraSpecialArgs = { inherit inputs clib; outputs = self; };
+              users = genAttrs (attrNames host.users) (username: {
+                imports = genHMModules hostname username;
+              });
+            };
           }
         ];
       };

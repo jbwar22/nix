@@ -1,4 +1,4 @@
-{ lib, config ? {} }: with lib; rec {
+lib: with lib; rec {
   # enum helpers
 
   # definition list of enums
@@ -85,7 +85,7 @@
 
   # ns import helpers
 
-  augmentNamespaceArg = module: moduleArgs: let
+  augmentNamespaceArg = config: module: moduleArgs: let
     nsArg = rec {
       enable = mkNsEnableModule config module;
       full = ns config module;
@@ -93,7 +93,7 @@
     };
   in ((import module) (moduleArgs // { ns = nsArg; }));
 
-  allAugmentNamespaceArg = imports: map (imp: augmentNamespaceArg imp) imports;
+  allAugmentNamespaceArg = config: imports: map (imp: augmentNamespaceArg config imp) imports;
 
 
   # non-path based namespace helpers
