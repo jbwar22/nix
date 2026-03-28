@@ -1,4 +1,4 @@
-pkgs: config: select-area:
+pkgs: select-area:
 
 pkgs.writeShellScript "sway-screenshot" ''
   copyonly=false
@@ -19,8 +19,7 @@ pkgs.writeShellScript "sway-screenshot" ''
     esac
   done
 
-  home=${config.home.homeDirectory}
-  scrdir=$home/pictures/screenshots/grim
+  scrdir=$${XDG_PICTURES_DIR:-~/Pictures}/screenshots/grim
 
   # wayfreeze breaks slurp
   # see slurp#181

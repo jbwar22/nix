@@ -1,0 +1,112 @@
+two changes:
+don't clear focus on cursor when hiding
+clear focus on cursor if hidden when switching workspaces
+
+---
+
+diff --git a/include/sway/input/cursor.h b/include/sway/input/cursor.h
+index 527d0350..16a1522b 100644
+--- a/include/sway/input/cursor.h
++++ b/include/sway/input/cursor.h
+@@ -104,6 +104,7 @@ void cursor_handle_activity_from_idle_source(struct sway_cursor *cursor,
+ 		enum sway_input_idle_source idle_source);
+ void cursor_handle_activity_from_device(struct sway_cursor *cursor,
+ 		struct wlr_input_device *device);
++void cursor_hide(struct sway_cursor *cursor, bool clear_focus);
+ void cursor_unhide(struct sway_cursor *cursor);
+ int cursor_get_timeout(struct sway_cursor *cursor);
+ void cursor_notify_key_press(struct sway_cursor *cursor);
+diff --git a/sway/input/cursor.c b/sway/input/cursor.c
+index 1fd57ec4..87d39596 100644
+--- a/sway/input/cursor.c
++++ b/sway/input/cursor.c
+@@ -180,15 +180,17 @@ void cursor_update_image(struct sway_cursor *cursor,
+ 	}
+ }
+ 
+-static void cursor_hide(struct sway_cursor *cursor) {
++void cursor_hide(struct sway_cursor *cursor, bool clear_focus) {
+ 	wlr_cursor_unset_image(cursor->cursor);
+ 	cursor->hidden = true;
+-	wlr_seat_pointer_notify_clear_focus(cursor->seat->wlr_seat);
++	if (clear_focus) {
++		wlr_seat_pointer_notify_clear_focus(cursor->seat->wlr_seat);
++	}
+ }
+ 
+ static int hide_notify(void *data) {
+ 	struct sway_cursor *cursor = data;
+-	cursor_hide(cursor);
++	cursor_hide(cursor, false);
+ 	return 1;
+ }
+ 
+@@ -231,7 +233,7 @@ void cursor_notify_key_press(struct sway_cursor *cursor) {
+ 	}
+ 
+ 	if (cursor->hide_when_typing == HIDE_WHEN_TYPING_ENABLE) {
+-		cursor_hide(cursor);
++		cursor_hide(cursor, false);
+ 	}
+ }
+ 
+@@ -405,7 +407,7 @@ static void handle_touch_down(struct wl_listener *listener, void *data) {
+ 	struct sway_cursor *cursor = wl_container_of(listener, cursor, touch_down);
+ 	struct wlr_touch_down_event *event = data;
+ 	cursor_handle_activity_from_device(cursor, &event->touch->base);
+-	cursor_hide(cursor);
++	cursor_hide(cursor, false);
+ 
+ 	struct sway_seat *seat = cursor->seat;
+ 
+@@ -1180,7 +1182,9 @@ void cursor_warp_to_container(struct sway_cursor *cursor,
+ 	double y = container->pending.y + container->pending.height / 2.0;
+ 
+ 	wlr_cursor_warp(cursor->cursor, NULL, x, y);
+-	cursor_unhide(cursor);
++	if (cursor->hidden) {
++		cursor_hide(cursor, true);
++	}
+ }
+ 
+ /**
+@@ -1197,7 +1201,9 @@ void cursor_warp_to_workspace(struct sway_cursor *cursor,
+ 	double y = workspace->y + workspace->height / 2.0;
+ 
+ 	wlr_cursor_warp(cursor->cursor, NULL, x, y);
+-	cursor_unhide(cursor);
++	if (cursor->hidden) {
++		cursor_hide(cursor, true);
++	}
+ }
+ 
+ uint32_t get_mouse_bindsym(const char *name, char **error) {
+diff --git a/sway/input/seatop_default.c b/sway/input/seatop_default.c
+index 6a7dddd9..d15121d4 100644
+--- a/sway/input/seatop_default.c
++++ b/sway/input/seatop_default.c
+@@ -1111,7 +1111,9 @@ static void handle_rebase(struct sway_seat *seat, uint32_t time_msec) {
+ 
+ 	if (surface) {
+ 		if (seat_is_input_allowed(seat, surface)) {
+-			wlr_seat_pointer_notify_enter(seat->wlr_seat, surface, sx, sy);
++			if (!cursor -> hidden) {
++				wlr_seat_pointer_notify_enter(seat->wlr_seat, surface, sx, sy);
++			}
+ 			wlr_seat_pointer_notify_motion(seat->wlr_seat, time_msec, sx, sy);
+ 		}
+ 	} else {
+diff --git a/sway/tree/workspace.c b/sway/tree/workspace.c
+index f2be4cd1..013ebb25 100644
+--- a/sway/tree/workspace.c
++++ b/sway/tree/workspace.c
+@@ -592,6 +592,9 @@ bool workspace_switch(struct sway_workspace *workspace) {
+ 	}
+ 	seat_set_focus(seat, next);
+ 	arrange_workspace(workspace);
++	if (seat->cursor->hidden) {
++		cursor_hide(seat->cursor, true);
++	}
+ 	return true;
+ }
+ 

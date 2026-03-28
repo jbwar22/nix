@@ -5,7 +5,7 @@ rec {
   select-area = (import ./select-area.nix) pkgs;
   slider = (import ./slider.nix) pkgs;
   # main scripts
-  screenshot = (import ./screenshot.nix) pkgs config select-area;
+  screenshot = (import ./screenshot.nix) pkgs select-area;
   volume = (import ./volume.nix) pkgs slider;
   brightness = (import ./brightness.nix) pkgs lib clib slider config;
   menu = (import ./menu.nix) pkgs lib config;

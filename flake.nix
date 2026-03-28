@@ -142,6 +142,12 @@
     in {
       nixvim = nixvim-package;
       impermanence-check = (import ./other/impermanence-check.nix) self pkgs;
+      sway = (import ./packages/sway) pkgs inputs;
+      sway2 = (import ./packages/sway/override.nix) inputs;
     });
+
+    options = {
+
+    };
   };
 }
