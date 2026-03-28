@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   colorscheme = config.custom.home.opts.colorscheme;
 in {
   programs.tofi = {

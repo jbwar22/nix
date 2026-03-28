@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   custom.nixos = {
     hardware.system.framework-13.enable = true;
     behavior.regdomain.enable = true;

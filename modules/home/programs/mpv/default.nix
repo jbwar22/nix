@@ -1,6 +1,6 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   programs.mpv = {
     enable = true;
     package = pkgs.mpv;

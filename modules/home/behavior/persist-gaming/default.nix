@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   custom.home.behavior.impermanence.paths = [
     # very minor stuff, some kind of language setting
     { path = ".steam"; origin = "local"; }

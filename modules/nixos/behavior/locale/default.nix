@@ -1,6 +1,6 @@
-{ config, lib, ...}:
+{ config, lib, ns, ...}:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   i18n = {
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [

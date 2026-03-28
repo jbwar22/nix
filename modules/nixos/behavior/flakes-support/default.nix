@@ -1,5 +1,5 @@
-{ config, lib, ...}:
+{ config, lib, ns, ...}:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

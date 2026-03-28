@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   slack = wrapWaylandElectron pkgs.slack;
   slack-x11 = (wrapAndAddFlags pkgs.slack [
     "--ozone-platform=x11"

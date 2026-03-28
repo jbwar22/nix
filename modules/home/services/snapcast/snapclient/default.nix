@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   systemd.user.enable = mkDefault true;
   systemd.user.services.snapclient = {
     Unit = {

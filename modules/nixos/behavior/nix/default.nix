@@ -1,6 +1,6 @@
-{ inputs, outputs, config, lib, ...}:
+{ inputs, outputs, config, lib, ns, ...}:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   nix = let
     flake-filter = (filterAttrs (_: v: hasAttr "_type" v && v._type == "flake"));
   in rec {

@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   hf = config.custom.home.opts.hostfeatures;
 in {
   home.packages = warnIf (!(hf.hasLibvirtd)) "enabling virt-manager when libvirtd is not enabled" (with pkgs; [

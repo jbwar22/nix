@@ -1,6 +1,6 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   home.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans

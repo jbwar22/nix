@@ -1,5 +1,5 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   boot.kernelPackages = pkgs.linuxPackages_6_12;
 }

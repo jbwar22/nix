@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   services.printing.enable = true;
   services.avahi = {
     enable = mkDefault true;

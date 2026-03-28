@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   services.logind.settings.Login = {
     HandlePowerKey = "lock";
     HandlePowerKeyLongPress = "poweroff";

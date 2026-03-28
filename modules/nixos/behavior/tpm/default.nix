@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
   security.tpm2 = {

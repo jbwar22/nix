@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   custom.nixos = {
     hardware.system.gigabyte-b550i.enable = true;
   };

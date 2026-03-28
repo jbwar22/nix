@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   systemd.user.services.locker = {
     Unit = {
       Description = "run locker server";

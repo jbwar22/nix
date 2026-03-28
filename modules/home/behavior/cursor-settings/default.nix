@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   cursorTheme = config.custom.home.opts.cursor.theme;
 in {
   gtk = {

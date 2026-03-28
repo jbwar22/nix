@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   # extended from wrapWaylandElectron in lib.nix
   signal = (wrapAndAddFlags pkgs.signal-desktop-bin [
     "--wayland-text-input-version=3"

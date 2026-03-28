@@ -1,6 +1,6 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   pw_rnnoise_config = {
     "context.modules" = [{
       "name" = "libpipewire-module-filter-chain";

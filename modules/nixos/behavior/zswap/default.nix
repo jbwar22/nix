@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   boot.kernelParams = [
     "zswap.enabled=1"
     "zswap.compressor=lz4"

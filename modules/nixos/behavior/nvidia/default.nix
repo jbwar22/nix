@@ -1,6 +1,6 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   specialisation.lts.configuration = let
     kernelPackages = pkgs.linuxPackages_6_12;
   in {

@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   # from nix-gaming
   services.pipewire.lowLatency.enable = true;
   services.pipewire.lowLatency.quantum = 64;

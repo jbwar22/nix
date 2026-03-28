@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   # github:sersorrel/sys
   krisp-patcher-python = pkgs.writers.writePython3Bin "krisp-patcher-python" {
     libraries = with pkgs.python3Packages; [ capstone pyelftools ];

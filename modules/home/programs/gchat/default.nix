@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. (let
+with lib; ns.enable (let
   gchat = (wrapAndAddFlags pkgs.google-chat-linux [
     "--ozone-platform=wayland"
     "--wayland-text-input-version=3"

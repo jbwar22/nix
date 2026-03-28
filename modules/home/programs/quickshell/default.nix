@@ -1,6 +1,6 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   programs.quickshell = {
     enable = true;
     systemd.enable = true;

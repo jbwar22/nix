@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   security.pam.services.swaylock = {};
   # security.pam.services.swaylock.fprintAuth = mkIf config.services.fprintd.enable true;
   security.pam.services.swaylock.text = mkIf config.services.fprintd.enable ''

@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, ns, ... }:
 
-with lib; mkNsEnableModule config ./. {
+with lib; ns.enable {
   programs.captive-browser = {
     enable = true;
     interface = config.custom.common.opts.hardware.interface.wifi;
