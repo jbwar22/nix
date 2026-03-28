@@ -1,14 +1,17 @@
 { lib, pkgs, ns, ... }:
 
-with lib; ns.enable (let
-  gchat = (wrapAndAddFlags pkgs.google-chat-linux [
-    "--ozone-platform=wayland"
-    "--wayland-text-input-version=3"
-  ]);
-in {
+with lib; ns.enable {
   home.packages = [
-    gchat
+    (inputs.wrappers.lib.wrapPackage ({ ... }: {
+      inherit pkgs;
+      package = pkgs.google-chat-linux;
+      flagSeparator = "=";
+      flags = {
+        "--wayland-text-input-version" = "3";
+        "--ozone-platform" = "wayland";
+      };
+    }))
   ];
 
   custom.home.behavior.impermanence.paths = [ ".config/google-chat-linux" ];
-})
+}

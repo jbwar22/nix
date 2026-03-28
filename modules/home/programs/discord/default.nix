@@ -1,4 +1,4 @@
-{ lib, pkgs, ns, ... }:
+{ inputs, lib, pkgs, ns, ... }:
 
 with lib; ns.enable (let
   # github:sersorrel/sys
@@ -16,18 +16,23 @@ with lib; ns.enable (let
   '';
 in {
   home.packages = with pkgs; [ 
-    (wrapAndAddFlags discord [
-      "--use-gl=egl" # this appears to be the one that fixes flickering
-      "--wayland-text-input-version=3"
-      "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder"
-      "--ignore-gpu-blocklist"
-      "--enable-gpu-rasterization"
-      "--enable-zero-copy"
-      "--disable-software-rasterizer"
-      "--enable-accelerated-video-decode"
-      "--enable-accelerated-mjpeg-decode"
-      "--use-vulkan"
-    ])
+    (inputs.wrappers.lib.wrapPackage ({ ... }: {
+      inherit pkgs;
+      package = pkgs.discord;
+      flagSeparator = "=";
+      flags = {
+        "--use-gl" = "egl"; # this appears to be the one that fixes flickering
+        "--wayland-text-input-version" = "3";
+        "--enable-features" = "VaapiVideoDecoder,VaapiVideoEncoder";
+        "--ignore-gpu-blocklist" = true;
+        "--enable-gpu-rasterization" = true;
+        "--enable-zero-copy" = true;
+        "--disable-software-rasterizer" = true;
+        "--enable-accelerated-video-decode" = true;
+        "--enable-accelerated-mjpeg-decode" = true;
+        "--use-vulkan" = true;
+      };
+    }))
     krisp-patcher
   ];
 

@@ -1,7 +1,7 @@
 { pkgs, inputs, ns, ... }:
 
 ns.enable (let
-  signal = inputs.wrappers.lib.wrapPackage ({ config, wlib, lib, ... }: {
+  signal = inputs.wrappers.lib.wrapPackage ({ ... }: {
     inherit pkgs;
     package = pkgs.signal-desktop-bin;
     flagSeparator = "=";

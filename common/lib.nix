@@ -346,14 +346,13 @@ lib: with lib; rec {
     pkgs.runCommandLocal path {} "ln -s ${escapeShellArg path} $out"
   );
 
-  wrapAndAddFlags = package: flags: package.overrideAttrs (oldAttrs: {
-    postInstall = oldAttrs.postInstall or "" + ''
-      wrapProgram $out/bin/${oldAttrs.meta.mainProgram} \
-        --add-flags "${concatStringsSep " " flags}"
-    '';
+  wrapWaylandElectron = inputs: pkgs: package: inputs.wrappers.lib.wrapPackage ({ config, wlib, lib, ... }: {
+    inherit pkgs package;
+    flagSeparator = "=";
+    flags = {
+      "--wayland-text-input-version" = "3";
+    };
   });
-
-  wrapWaylandElectron = package: wrapAndAddFlags package [ "--wayland-text-input-version=3" ];
 
   enumerate = l: foldl' (accum: x: accum ++ [{
     index = length accum;
