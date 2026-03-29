@@ -1,7 +1,7 @@
-{ lib, ns, ... }:
+{ lib, clib, ns, ... }:
 
 {
-  options = with lib; ns.opt {
+  options = with lib; with clib; ns.opt {
     batteries = mkOption {
       description = "definition for each battery";
       type = with types; attrsOf (submodule {

@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, clib, ... }:
 
-with lib; {
+{
   config = {
     home.stateVersion = "24.05";
 
@@ -47,7 +47,7 @@ with lib; {
           enable = true;
           logDir = "~/documents/log/rclone";
           timeFile = "~/bulk/data/rclone/timefile.txt";
-          configs = {
+          configs = with clib; {
             dh5exd2a = {
               # oncalendar = "*-*-* 05:00:00";
               rcloneargs = ageOrNull config "rclone-dh5exd2a-args";

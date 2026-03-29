@@ -1,12 +1,12 @@
-{ inputs, lib, pkgs, ns, ... }:
+{ inputs, clib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = with pkgs; [
     gimp3
     element-desktop
     feh
     qpwgraph
-    (wrapWaylandElectron inputs pkgs spotify)
+    (clib.wrapWaylandElectron inputs pkgs pkgs.spotify)
     sqlitebrowser
     vlc
     zoom-us

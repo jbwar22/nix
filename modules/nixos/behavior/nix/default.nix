@@ -1,4 +1,4 @@
-{ inputs, outputs, config, lib, ns, ...}:
+{ inputs, self, lib, ns, ...}:
 
 with lib; ns.enable {
   nix = let
@@ -11,14 +11,14 @@ with lib; ns.enable {
     };
     channel.enable = false;
     nixPath = [
-      "self=${outputs.outPath}"
+      "self=${self.outPath}"
       "nixpkgs=${inputs.nixpkgs-stable.outPath}"
     ] ++ pipe inputs [
       flake-filter
       (mapAttrsToList (n: v: "${n}=${v.outPath}"))
     ];
     registry = {
-      self.flake = outputs;
+      self.flake = self;
       nixpkgs.flake = inputs.nixpkgs-stable;
     } // pipe inputs [
       flake-filter

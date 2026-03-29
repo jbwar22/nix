@@ -50,6 +50,7 @@
     };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs-stable";
     };
     jbwar22-dunst = {
       url = "github:jbwar22/dunst";
@@ -67,27 +68,19 @@
       unstable = inputs.nixpkgs-unstable;
     };
     nixpkgs-main = "stable";
-    nix-lib = channels.${nixpkgs-main}.lib;
-    custom-lib = import ./common/lib.nix nix-lib;
-  in with channels.${nixpkgs-main}.lib; with custom-lib.flake-helpers; let
-    hosts = import ./common/hosts.nix custom-lib.enums;
-
+    lib = channels.${nixpkgs-main}.lib;
+    clib = import ./common/lib.nix lib;
+  in with lib; with clib.flake-helpers; let
+    hosts = fixHosts (import ./common/hosts.nix clib.enums);
     nixos-hosts = getNixosHosts hosts;
 
     importChannelsForSystem = system: rec {
       imported-channels = mapAttrs (_name: channel: import channel {
         inherit system;
-        overlays = [ (getConfigurationRevisionOverlay channel) ];
-        config.allowUnfreePredicate = pkg: elem (getName pkg) (import ./common/unfree.nix);
+        overlays = [ (getConfigurationRevisionOverlay channel) ]; # TODO remove
+        config.allowUnfreePredicate = pkg: elem (getName pkg) (import ./common/unfree.nix); # TODO remove
       }) channels;
       pkgs = imported-channels.${nixpkgs-main};
-      custom-lib = import ./common/lib.nix pkgs.lib;
-      lib = pkgs.lib.extend (_: prev: prev // custom-lib);
-    };
-
-    importChannelsForHostname = hostname: rec {
-      host = hosts.${hostname} // { inherit hostname; };
-      inherit (importChannelsForSystem host.system) imported-channels pkgs custom-lib lib;
     };
 
     genHMModules = hostname: username: [
@@ -97,23 +90,22 @@
       { home.username = mkDefault username; }
     ];
   in rec {
-    # nixos-rebuild switch --flake .#HOSTNAME
     nixosConfigurations = forAllHostnames nixos-hosts (hostname: let
-      inherit (importChannelsForHostname hostname) host imported-channels pkgs lib;
-      clib = import ./common/lib.nix nix-lib;
+      inherit (importChannelsForSystem host.system) imported-channels pkgs;
+      host = hosts.${hostname};
       system = nixosSystem {
-        inherit pkgs;
-        specialArgs = { inherit inputs lib clib; outputs = self; };
+        inherit pkgs; # TODO remove
+        specialArgs = { inherit self inputs clib; };
         modules = [
           ./modules/nixos/hosts/common
           ./modules/nixos/hosts/${hostname}
           {
             custom.common.opts.host = host;
             nixpkgs.hostPlatform = host.system;
-            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
+            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib;
             home-manager = {
               useGlobalPkgs = true;
-              extraSpecialArgs = { inherit inputs clib; outputs = self; };
+              extraSpecialArgs = { inherit inputs clib self; };
               users = genAttrs (attrNames host.users) (username: {
                 imports = genHMModules hostname username;
               });
@@ -123,42 +115,31 @@
       };
     in system);
 
-    # home-manager switch --flake .#HOSTNAME-USERNAME
     homeConfigurations = forAllHostUserPairs (genHostUserPairs hosts) (hostname: username: let
-      inherit (importChannelsForHostname hostname) host imported-channels pkgs lib;
-      home-manager-lib = lib.extend (_: _: inputs.home-manager.lib);
+      inherit (importChannelsForHostname hostname) imported-channels pkgs;
+      host = hosts.${hostname};
     in
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs;
-          lib = home-manager-lib;
-          outputs = self;
-          osConfig = nixosConfigurations.${hostname}.config;
+          inherit inputs clib self;
+          osConfig = if isNixosHost host then nixosConfigurations.${hostname}.config else false;
         };
         modules = (genHMModules hostname username) ++ [(if isNixosHost host then {
-          nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib;
+          nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib; # TODO remove
         } else ./modules/home/users/common/${hostname})];
       }
     );
 
-    packages."x86_64-linux" = let
-      inherit (importChannelsForSystem "x86_64-linux") pkgs lib;
-      nixvim-lib = lib.extend inputs.nixvim.lib.overlay;
-      nixvim-package = inputs.nixvim.legacyPackages."x86_64-linux".makeNixvimWithModule {
-        inherit pkgs;
+    packages = genAttrs [ "x86_64-linux" ] (system: let
+      pkgs = channels.${nixpkgs-main}.legacyPackages.${system};
+      nixvim-package = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
         module = import ./modules/nixvim;
-        extraSpecialArgs = { inherit inputs; lib = nixvim-lib; };
-      };
-
-      nixpkgs-overlay = import inputs.nixpkgs-stable {
-        system = "x86_64-linux";
-        overlays = [ (import ./common/overlays/custom.nix inputs) ];
+        extraSpecialArgs = { inherit inputs clib self; };
       };
     in {
       nixvim = nixvim-package;
-      impermanence-check = (import ./other/impermanence-check.nix) self pkgs lib;
-      sway = nixpkgs-overlay.sway;
-    };
+      impermanence-check = (import ./other/impermanence-check.nix) self pkgs;
+    });
   };
 }

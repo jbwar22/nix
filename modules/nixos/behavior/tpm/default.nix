@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ config, clib, ns, ... }:
 
-with lib; ns.enable (let
+with clib; ns.enable (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
   security.tpm2 = {

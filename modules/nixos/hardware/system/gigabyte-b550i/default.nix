@@ -1,4 +1,4 @@
-{ lib, modulesPath, ns, ... }:
+{ lib, clib, modulesPath, ns, ... }:
 
 with lib; with ns; {
   imports = [
@@ -9,7 +9,7 @@ with lib; with ns; {
     enable = mkEnableOption "gigabyte b550i hardware configuration";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     custom.nixos.hardware.cpu.amd.enable = true;
 
     custom.nixos.behavior.impermanence = {
@@ -92,7 +92,7 @@ with lib; with ns; {
       };
 
     custom.common = {
-      opts.hardware = {
+      opts.hardware = with clib; {
         cpu = {
           vendor = enums.cpu-vendors.amd;
           threads = 12;

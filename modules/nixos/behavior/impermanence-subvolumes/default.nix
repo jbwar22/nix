@@ -1,7 +1,7 @@
-{ config, lib, ns, ... }:
+{ config, lib, clib, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
+  options = with clib; opt {
     enable = mkEnableOption "impermanence on btrfs";
     defaultOrigin = mkStrOption "default origin if unspecified";
     devices = mkOption {

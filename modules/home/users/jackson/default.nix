@@ -1,6 +1,6 @@
-{ lib, config, ... }:
+{ clib, config, ... }:
 
-with lib; {
+{
   config = {
     custom.home = {
       suites = {
@@ -11,7 +11,7 @@ with lib; {
       };
 
       programs = {
-        fcitx5.user-dictionary = ageOrNull config "fcitx5-mozc-user_dictionary";
+        fcitx5.user-dictionary = clib.ageOrNull config "fcitx5-mozc-user_dictionary";
       };
 
       services = {

@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, ns, ... }:
+{ config, lib, clib, modulesPath, ns, ... }:
 
 with lib; with ns; {
   imports = [
@@ -85,7 +85,7 @@ with lib; with ns; {
     boot.kernel.sysctl."vm.swapiness" = 1;
 
     custom.common = {
-      opts.hardware = {
+      opts.hardware = with clib; {
         cpu = {
           vendor = enums.cpu-vendors.amd;
           threads = 16;

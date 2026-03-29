@@ -1,10 +1,10 @@
-{ config, lib, ns, ... }:
+{ config, lib, clib, ns, ... }:
 
 with lib; with ns; (let
   users = config.custom.common.opts.host.users;
   usernames = (attrNames users) ++ [ "root" ];
 in {
-  options = opt {
+  options = with clib; opt {
     enable = mkEnableOption "impermanence";
     device = mkStrOption "btrfs device";
     mntOptions = mkOption {

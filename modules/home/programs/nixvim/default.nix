@@ -1,8 +1,8 @@
-{ pkgs, outputs, ns, ... }:
+{ pkgs, self, ns, ... }:
 
 ns.enable {
   home.packages = [
-    outputs.packages.${pkgs.stdenv.hostPlatform.system}.nixvim
+    self.packages.${pkgs.stdenv.hostPlatform.system}.nixvim
   ];
 
   custom.home.behavior.impermanence.paths = [

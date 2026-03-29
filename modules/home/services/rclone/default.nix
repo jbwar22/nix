@@ -1,6 +1,6 @@
-{ lib, pkgs, ns, ... }:
+{ lib, clib, pkgs, ns, ... }:
 
-with lib; with ns; {
+with lib; with clib; with ns; {
   options = opt {
     enable = mkEnableOption "rclone";
     logDir = mkOption {

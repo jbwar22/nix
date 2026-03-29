@@ -26,6 +26,8 @@ lib: with lib; rec {
   # flake helpers
 
   flake-helpers = {
+    fixHosts = mapAttrs (hostname: host: host // { inherit hostname; });
+
     forAllHostnames = hosts: genAttrs (attrNames hosts);
 
     forAllHostUserPairs = pairs: f: listToAttrs (map ({hostname, username}:

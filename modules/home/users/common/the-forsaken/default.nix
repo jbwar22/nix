@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ lib, clib, ... }:
 
-with lib; {
+with lib; with clib; {
   config = {
     custom.common = {
       opt.hardware = {

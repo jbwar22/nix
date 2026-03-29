@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, lib, clib, pkgs, ns, ... }:
 
 with lib; ns.enable (let
   mounter = pkgs.writeShellScript "afuse-archive-mounter" ''
@@ -42,7 +42,7 @@ in {
     Service = {
       Type = "forking";
       ExecStart = pkgs.writeShellScript "afuse-archive-all-dirs" ''
-        ${pkgs.coreutils}/bin/cat ${ageOrDefault config "afuse-archive-dirs" ""} | \
+        ${pkgs.coreutils}/bin/cat ${clib.ageOrDefault config "afuse-archive-dirs" ""} | \
         while read dir; do
           ${afuse-archive} $dir
         done

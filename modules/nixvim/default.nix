@@ -1,8 +1,8 @@
-{ lib, ... }:
+{ lib, clib, ... }:
 
-with lib.nv; with lib; {
+with clib.nv; with lib; {
   
-  imports = getDirs ./.;
+  imports = clib.getDirs ./.;
 
   config = {
     colorscheme = "moonfly";

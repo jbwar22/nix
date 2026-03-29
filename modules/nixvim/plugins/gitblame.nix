@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ clib, ... }:
 
-with lib.nv; {
+with clib.nv; {
   plugins.gitblame = {
     enable = true;
   };

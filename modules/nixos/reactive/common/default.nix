@@ -1,9 +1,9 @@
-{ config, lib, ns, ... }:
+{ config, clib, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   custom.nixos = {
     behavior = {
-      nvidia.enable = config.custom.common.opts.hardware.gpu.vendor == enums.gpu-vendors.nvidia;
+      nvidia.enable = config.custom.common.opts.hardware.gpu.vendor == clib.enums.gpu-vendors.nvidia;
     };
   };
 }

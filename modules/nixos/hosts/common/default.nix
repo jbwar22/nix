@@ -1,6 +1,6 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, clib, inputs, ... }:
 
-with lib; {
+with lib; with clib; {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.agenix.nixosModules.default

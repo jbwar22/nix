@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, clib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   environment.etc."nixos" = {
-    source = myMkOutOfStoreSymlink pkgs config.custom.common.opts.hardware.configLocation;
+    source = clib.myMkOutOfStoreSymlink pkgs config.custom.common.opts.hardware.configLocation;
   };
 }

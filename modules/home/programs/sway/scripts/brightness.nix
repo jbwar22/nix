@@ -12,7 +12,7 @@
 # ax^3 + 570, a=(65535-570)/(23^2), 4<=x<=23
 # 1 912 1237 1723 2401 3304 4462 5909 7677 9797 12301 15221 18591 22440 26803 31710 37193 43285 50019 57424 65535
 
-pkgs: lib: slider: config: with lib; let
+pkgs: lib: clib: slider: config: with lib; with clib; let
   # a(x-d)^2 + c, a = (65535 - c)/(b - d)^2
   genRange = b: c: d: pipe b [
     (range 1)

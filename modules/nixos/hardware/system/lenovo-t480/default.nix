@@ -1,4 +1,4 @@
-{ lib, modulesPath, ns, ... }:
+{ lib, clib, modulesPath, ns, ... }:
 
 with lib; with ns; {
   imports = [
@@ -57,7 +57,7 @@ with lib; with ns; {
     swapDevices = [ ];
 
     custom.common = {
-      opts.hardware = {
+      opts.hardware = with clib; {
         cpu = {
           vendor = enums.cpu-vendors.intel;
           threads = 8;

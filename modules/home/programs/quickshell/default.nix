@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ns, ... }:
+{ inputs, config, lib, clib, pkgs, ns, ... }:
 
 with lib; ns.enable {
   programs.quickshell = {
@@ -7,7 +7,7 @@ with lib; ns.enable {
     configs = {
       default = ./config;
       # live-update config is meant for rapid testing, not actual usage
-      live-update = config.lib.file.mkOutOfStoreSymlink (getConfigPath config ./config);
+      live-update = config.lib.file.mkOutOfStoreSymlink (clib.getConfigPath config ./config);
     };
   };
 

@@ -1,4 +1,4 @@
-pkgs: lib: config:
+pkgs: lib: clib: config:
 
 rec {
   # helper scripts
@@ -7,7 +7,7 @@ rec {
   # main scripts
   screenshot = (import ./screenshot.nix) pkgs config select-area;
   volume = (import ./volume.nix) pkgs slider;
-  brightness = (import ./brightness.nix) pkgs lib slider config;
+  brightness = (import ./brightness.nix) pkgs lib clib slider config;
   menu = (import ./menu.nix) pkgs lib config;
   runner = (import ./runner.nix) pkgs lib menu;
 }

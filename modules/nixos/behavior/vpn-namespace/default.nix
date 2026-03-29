@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ...}:
+{ config, lib, clib, pkgs, ns, ...}:
 
-with lib; ns.enable (let
+with lib; with clib; ns.enable (let
   namespace = "airns";
   interfaceName = "${namespace}wg0";
   configfile = ageOrNull config "vpn-namespace-wg.conf";

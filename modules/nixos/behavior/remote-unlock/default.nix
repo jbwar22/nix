@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, lib, clib, pkgs, ns, ... }:
 
-with lib; with ns; {
+with lib; with clib; with ns; {
   options = opt {
     enable = mkEnableOption "sway wm";
     authorizedKeys = mkOption {

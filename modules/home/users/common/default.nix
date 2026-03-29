@@ -1,6 +1,6 @@
-{ inputs, lib, config, osConfig, ... }:
+{ inputs, lib, clib, config, osConfig, ... }:
 
-with lib; {
+{
   imports = [
     inputs.agenix.homeManagerModules.default
     ../../../common
@@ -9,8 +9,8 @@ with lib; {
 
   config = {
     custom.common = osConfig.custom.common; # TODO unsafe on standalone hm on non nixos systems
-    home.homeDirectory = mkDefault "/home/${config.home.username}";
-    age = {
+    home.homeDirectory = lib.mkDefault "/home/${config.home.username}";
+    age = with clib; {
       secrets = (
         loadAgeSecretsFromDir ../../../../secrets/agenix/users/${config.home.username}/common
       ) // ( 

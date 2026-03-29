@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ns, ... }:
+{ config, lib, clib, pkgs, inputs, ns, ... }:
 
 with lib; with ns; let
   colorscheme = config.custom.home.opts.colorscheme;
@@ -13,7 +13,7 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable (let
+  config = mkIf cfg.enable (let
 
     clonck = inputs.clonck.packages.${pkgs.stdenv.hostPlatform.system}.clonck;
 
@@ -155,7 +155,7 @@ in {
       };
 
       "pulseaudio" = let
-        mkIfElseMic = mkIfElse config.custom.common.opts.hardware.hasMicToggle; 
+        mkIfElseMic = clib.mkIfElse config.custom.common.opts.hardware.hasMicToggle; 
       in {
         format = "V{volume}{format_source}";
         format-muted = "VM{format_source}";

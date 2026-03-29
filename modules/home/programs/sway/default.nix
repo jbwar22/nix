@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, lib, clib, pkgs, ns, ... }:
 
-with lib; with ns; let
+with lib; with clib; with ns; let
   colorscheme = config.custom.home.opts.colorscheme;
   waybar = config.custom.home.programs.waybar;
   swaylock = config.custom.home.programs.swaylock;
   xscreensaver = config.custom.home.programs.xscreensaver;
-  scripts = (import ./scripts) pkgs lib config;
+  scripts = (import ./scripts) pkgs lib clib config;
   geolocation = ageOrDefault config "geolocation" "0.00:0.00";
 in {
   options = opt {

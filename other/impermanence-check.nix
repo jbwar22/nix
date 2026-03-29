@@ -1,4 +1,4 @@
-outputs: pkgs: lib: with lib; let
+outputs: pkgs: with pkgs.lib; let
   subvolPrefixes = cfg: pipe cfg.config.custom.nixos.behavior.impermanence.devices [
     (map (device: map (origin: let
       subvolRoot = if device.subvol == "/" then "" else "${device.subvol}/";

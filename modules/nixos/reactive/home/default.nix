@@ -1,6 +1,6 @@
-{ config, lib, ns, ... }:
+{ config, lib, clib, ns, ... }:
 
-with lib; ns.enable (let
+with clib; ns.enable (let
   users = config.custom.common.opts.host.users;
 in {
   custom.nixos = {
@@ -13,7 +13,7 @@ in {
       xdg-screenshare.enable = mkIfAnyHMOpt config (config: config.wayland.windowManager.sway.enable) true;
       shairport-support = mkIfAnyHMOpt config (config: config.custom.home.services.shairport.enable) {
         enable = true;
-        ports = pipe users [
+        ports = with lib; pipe users [
           (getHMOpt config (config:
             if config.custom.home.services.shairport.enable then (
               config.custom.home.services.shairport.port

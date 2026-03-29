@@ -1,8 +1,8 @@
-{ inputs, lib, pkgs, ns, ... }:
+{ inputs, clib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = [
-    (wrapWaylandElectron inputs pkgs spotify)
+    (clib.wrapWaylandElectron inputs pkgs pkgs.slack)
   ];
 
   custom.home.behavior.impermanence.paths = [ ".config/Slack" ];

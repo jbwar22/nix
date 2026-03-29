@@ -1,6 +1,6 @@
-{ lib, pkgs, ns, ... }:
+{ inputs, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   home.packages = [
     (inputs.wrappers.lib.wrapPackage ({ ... }: {
       inherit pkgs;

@@ -1,5 +1,5 @@
-{ lib, ... }:
+{ clib, ... }:
 
-with lib; {
-  imports = getFilesFilter ./. (name: name != "default.nix");
+{
+  imports = clib.getFilesFilter ./. (name: name != "default.nix");
 }

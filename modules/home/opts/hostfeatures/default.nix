@@ -1,6 +1,6 @@
-{ config, lib, osConfig, ns, ... }:
+{ config, clib, osConfig, ns, ... }:
 
-with lib; with ns; {
+with clib; with ns; {
   options = opt {
     userIsAdmin = mkDisableOption "current user is admin on host";
     usesNixosFirewall = mkDisableOption "uses nixos firewall";

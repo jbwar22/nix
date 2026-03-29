@@ -1,6 +1,6 @@
-{ lib, ns, ... }:
+{ lib, clib, ns, ... }:
 
-with lib; with ns; {
+with lib; with clib; with ns; {
   options = opt (mkOption {
     description = "tmp file definitions";
     type = with types; attrsOf (submodule {
