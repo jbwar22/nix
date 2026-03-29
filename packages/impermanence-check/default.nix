@@ -1,4 +1,13 @@
-outputs: pkgs: with pkgs.lib; let
+{
+  lib,
+  btrfs-progs,
+  coreutils,
+  gawk,
+  writeShellScriptBin,
+  nixosConfigurations ? {}
+}:
+
+with lib; let
   subvolPrefixes = cfg: pipe cfg.config.custom.nixos.behavior.impermanence.devices [
     (map (device: map (origin: let
       subvolRoot = if device.subvol == "/" then "" else "${device.subvol}/";
@@ -21,12 +30,12 @@ outputs: pkgs: with pkgs.lib; let
   getSubvolAppends = cfg: pipe cfg [
     subvolPrefixes
     (map (x: ''
-      mapfile -t subvolstmp < <(${pkgs.coreutils}/bin/printf '%s\n' "''${subvolsraw[@]}" | ${pkgs.gawk}/bin/awk -v s="${x}" 'index($0, s) == 1')
+      mapfile -t subvolstmp < <(${coreutils}/bin/printf '%s\n' "''${subvolsraw[@]}" | ${gawk}/bin/awk -v s="${x}" 'index($0, s) == 1')
       subvols+=("''${subvolstmp[@]}")
     ''))
     concatLines
   ];
-  impermanenceHosts = pipe outputs.nixosConfigurations [
+  impermanenceHosts = pipe nixosConfigurations [
     attrsToList
     (filter (x: x.value.config.custom.nixos.behavior.impermanence.enable))
   ];
@@ -44,20 +53,20 @@ outputs: pkgs: with pkgs.lib; let
       exit 1
     ${if hasHosts then "fi" else ""}
   '';
-in pkgs.writeShellScriptBin "impermanence-check" ''
-  mapfile -t subvolsraw < <(${pkgs.btrfs-progs}/bin/btrfs subvolume list /persist | ${pkgs.coreutils}/bin/cut -d" " -f9-)
+in writeShellScriptBin "impermanence-check" ''
+  mapfile -t subvolsraw < <(${btrfs-progs}/bin/btrfs subvolume list /persist | ${coreutils}/bin/cut -d" " -f9-)
   subvols=()
 
   ${mounts}
 
   echo no matching subvol:
-  ${pkgs.coreutils}/bin/comm -13 \
-    <(${pkgs.coreutils}/bin/printf '%s\n' "''${subvols[@]}" | ${pkgs.coreutils}/bin/sort) \
-    <(${pkgs.coreutils}/bin/printf '%s\n' "''${mounts[@]}" | ${pkgs.coreutils}/bin/sort)
+  ${coreutils}/bin/comm -13 \
+    <(${coreutils}/bin/printf '%s\n' "''${subvols[@]}" | ${coreutils}/bin/sort) \
+    <(${coreutils}/bin/printf '%s\n' "''${mounts[@]}" | ${coreutils}/bin/sort)
 
   echo
   echo unused btrfs subvols:
-  ${pkgs.coreutils}/bin/comm -23 \
-    <(${pkgs.coreutils}/bin/printf '%s\n' "''${subvols[@]}" | ${pkgs.coreutils}/bin/sort) \
-    <(${pkgs.coreutils}/bin/printf '%s\n' "''${mounts[@]}" | ${pkgs.coreutils}/bin/sort)
+  ${coreutils}/bin/comm -23 \
+    <(${coreutils}/bin/printf '%s\n' "''${subvols[@]}" | ${coreutils}/bin/sort) \
+    <(${coreutils}/bin/printf '%s\n' "''${mounts[@]}" | ${coreutils}/bin/sort)
 ''

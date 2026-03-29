@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ self, config, lib, ... }:
 
-with lib; {
+{
   config = {
     home.stateVersion = "23.11";
 
@@ -46,7 +46,7 @@ with lib; {
           };
         };
         wallpaper.base = ../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png;
-        colorscheme = import ./colorscheme.nix;
+        colorscheme = (self.sharedOptions.colorschemes lib).schemes.red;
       };
     };
 

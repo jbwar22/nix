@@ -139,15 +139,19 @@
         module = import ./modules/nixvim;
         extraSpecialArgs = { inherit inputs clib self; };
       };
-    in {
+    in rec {
       nixvim = nixvim-package;
-      impermanence-check = (import ./other/impermanence-check.nix) self pkgs;
-      sway = (import ./packages/sway) pkgs inputs;
-      sway2 = (import ./packages/sway/override.nix) inputs;
+      impermanence-check = pkgs.callPackage ./packages/impermanence-check { inherit nixosConfigurations; };
+      sway = pkgs.callPackage ./packages/sway {
+        nixpkgs = pkgs;
+        wrappers = inputs.wrappers;
+        colorschemes = self.sharedOptions.colorschemes pkgs.lib;
+      };
+      sway2 = pkgs.callPackage ./packages/sway/override.nix { sway-module-wrapped = sway; };
     });
 
-    options = {
-
+    sharedOptions = {
+      colorschemes = import ./options/colorschemes;
     };
   };
 }

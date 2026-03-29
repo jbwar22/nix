@@ -1,22 +1,32 @@
-ipkgs: inputs:
+{
+  nixpkgs,
+  wrappers,
+  colorschemes,
+}:
 
-inputs.wrappers.lib.wrapPackage ({ config, wlib, lib, pkgs, ... }: {
+wrappers.lib.wrapPackage ({ config, wlib, lib, pkgs, ... }: {
   options = with lib; {
     # cursorTheme = true;
     # screens = true;
     # bar = true;
     # blueLightStrength = true;
     colorscheme = mkOption {
-
+      type = colorschemes.types.colorscheme;
+      default = colorschemes.schemes.default;
     };
     terminal = mkOption {
       type = types.str;
       default = "${pkgs.kitty}/bin/kitty";
     };
+
+    bg = mkOption {
+      type = types.str;
+      default = "#440022";
+    };
   };
 
   config = {
-    pkgs = ipkgs;
+    pkgs = nixpkgs;
 
     package = (pkgs.sway.override {
       sway-unwrapped = pkgs.sway-unwrapped.overrideAttrs (oldAttrs: {
@@ -35,6 +45,11 @@ inputs.wrappers.lib.wrapPackage ({ config, wlib, lib, pkgs, ... }: {
       "--unsupported-gpu" = true;
       "--config" = pkgs.writeTextFile {
         name = "sway.conf";
+        text = ''
+          output * bg /foo fill ${config.bg}
+        '';
+
+        /*
         text = let
           c = config.colorscheme.wm;
         in ''
@@ -322,6 +337,7 @@ inputs.wrappers.lib.wrapPackage ({ config, wlib, lib, pkgs, ... }: {
           for_window [con_mark=^prop.*:shellpopup:] floating enable ; resize set width 1000 ; resize set height 55
           for_window [con_mark=^prop:] mark --toggle "prop:$$PROP:" ; set $$PROP none
         '';
+        */
       };
     };
   };

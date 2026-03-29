@@ -1,5 +1,7 @@
-inputs:
+{
+  sway-module-wrapped
+}:
 
-inputs.self.packages."x86_64-linux".sway.wrap ({ ... }: {
+sway-module-wrapped.wrap ({ ... }: {
   bg = "#664040";
 })

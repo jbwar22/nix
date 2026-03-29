@@ -1,4 +1,4 @@
-{ config, clib, ... }:
+{ self, config, lib, clib, ... }:
 
 {
   config = {
@@ -103,7 +103,7 @@
           };
         };
         wallpaper.base = ../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png;
-        colorscheme = import ./colorscheme.nix;
+        colorscheme = (self.sharedOptions.colorschemes lib).schemes.orange;
       };
     };
 

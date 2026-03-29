@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ self, config, lib, ... }:
 
 with lib; {
   config = {
@@ -59,7 +59,7 @@ with lib; {
           };
         };
         wallpaper.base = "/home/${config.home.username}/pictures/wallpapers/wallpaper";
-        colorscheme = import ./colorscheme.nix;
+        colorscheme = (self.sharedOptions.colorschemes lib).schemes.orange;
       };
     };
 
