@@ -74,6 +74,8 @@
     hosts = fixHosts (import ./common/hosts.nix clib.enums);
     nixos-hosts = getNixosHosts hosts;
 
+    supportedSystems = import inputs.systems;
+
     importChannelsForSystem = system: rec {
       imported-channels = mapAttrs (_name: channel: import channel {
         inherit system;
@@ -131,7 +133,7 @@
       }
     );
 
-    packages = genAttrs [ "x86_64-linux" ] (system: let
+    packages = genAttrs supportedSystems (system: let
       pkgs = channels.${nixpkgs-main}.legacyPackages.${system};
       nixvim-package = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
         module = import ./modules/nixvim;
