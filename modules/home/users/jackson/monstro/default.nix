@@ -62,16 +62,19 @@
         };
       };
 
-      opts = {
+      opts = let
+        wallpaper = "/home/${config.home.username}/pictures/wallpapers/wallpaper";
+        wallpaper_bg2 = "/home/${config.home.username}/pictures/wallpapers/wallpaper_bg2";
+      in {
         screens = {
           "ASUSTek COMPUTER INC VG278 J8LMQS104073" = {
             sway = {
               position = "0 0";
               adaptive_sync = "off";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png} fill";
+              bg = "${wallpaper} fill #000000";
             };
             specialisations = {
-              bg2.sway.bg = "${../../../../../secrets/git-crypt/wallpaper/p2up0wv6.png} fill";
+              bg2.sway.bg = "${wallpaper_bg2} fill #000000";
             };
           };
           "ASUSTek COMPUTER INC VG27AQL1A S1LMQS102258" = {
@@ -79,30 +82,30 @@
               position = "1920 0";
               adaptive_sync = "off";
               transform = "0";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png} fill";
+              bg = "${wallpaper} fill #000000";
             };
             specialisations = {
               vert.sway = {
                 transform = "90";
                 position = "1920 -740";
               };
-              bg2.sway.bg = "${../../../../../secrets/git-crypt/wallpaper/p2up0wv6.png} fill";
+              bg2.sway.bg = "${wallpaper_bg2} fill #000000";
             };
           };
           "BNQ BenQ GW2780 V1J07047SL0" = {
             sway = {
               position = "4480 0";
-              bg = "${../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png} fill";
+              bg = "${wallpaper} fill #000000";
             };
             specialisations = {
               vert.sway = {
                 position = "3360 0";
               };
-              bg2.sway.bg = "${../../../../../secrets/git-crypt/wallpaper/p2up0wv6.png} fill";
+              bg2.sway.bg = "${wallpaper_bg2} fill #000000";
             };
           };
         };
-        wallpaper.base = ../../../../../secrets/git-crypt/wallpaper/iyxxfe0y.png;
+        wallpaper.base = wallpaper;
         colorscheme = import ./colorscheme.nix;
       };
     };

@@ -45,7 +45,7 @@ with lib; {
             sway.position = "-1920 0";
           };
         };
-        wallpaper.base = ../../../../../secrets/git-crypt/wallpaper/r9yiw8xx.png;
+        wallpaper.base = "/home/${config.home.username}/pictures/wallpapers/wallpaper";
         colorscheme = import ./colorscheme.nix;
       };
     };

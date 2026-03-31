@@ -7,12 +7,6 @@ with lib; {
 
   config = {
     custom.nixos = {
-      opts = {
-        secrets = {
-          timeZone = trim (readFile ../../../../secrets/git-crypt/strings/timezone-monstro.txt);
-        };
-      };
-
       suites = {
         hardware.gigabyte-b550i.enable = true;
 

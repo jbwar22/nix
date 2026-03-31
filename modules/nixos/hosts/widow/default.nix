@@ -7,12 +7,6 @@ with lib; {
 
   config = {
     custom.nixos = {
-      opts = {
-        secrets = {
-          timeZone = trim (readFile ../../../../secrets/git-crypt/strings/timezone-widow.txt);
-        };
-      };
-
       suites = {
         hardware.lenovo-t480.enable = true;
 
