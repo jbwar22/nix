@@ -35,6 +35,7 @@
         bash.sourcedFiles = [ "/home/jackson/documents/scripts/monstrorc" ];
         mavica-ingest.enable = true;
         easyeffects.enable = true;
+        osu.enable = true;
       };
 
       services = {
