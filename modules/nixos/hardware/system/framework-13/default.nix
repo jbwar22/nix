@@ -10,7 +10,15 @@ with lib; with ns; {
   };
 
   config = lib.mkIf cfg.enable (let
-      kernelNeedsPatch = config.boot.kernelPackages.kernelOlder "6.19.6";
+    kernelOlder = config.boot.kernelPackages.kernelOlder;
+    kernelAtLeast = config.boot.kernelPackages.kernelAtLeast;
+    # fixed in linux 7.0
+    # backported to 6.19.6
+    # backported (lts) to 6.18.16
+    # NEED TO CHECK 6.12.X
+    kernelNeedsPatch =
+      (kernelOlder "6.19.6" && kernelAtLeast "6.19")
+      || (kernelOlder "6.18.16");
   in {
     custom.nixos.hardware.cpu.amd.enable = true;
     custom.nixos.behavior.impermanence = {
