@@ -2,13 +2,9 @@
 
 with lib; with ns; {
   options = opt {
-    base = mkOption {
+    dir = mkOption {
       type = with types; oneOf [str path];
-      description = "file path of wallpaper";
-    };
-    lock-screen = mkOption {
-      type = with types; oneOf [str path];
-      description = "file path of wallpaper";
+      description = "dir for wallpaper symlinks";
       default = cfg.base;
     };
   };

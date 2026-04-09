@@ -44,23 +44,51 @@ in {
 
     home.packages = with pkgs; mkMerge [
       [
-        (writeShellScriptBin "wallpaper" ''
-          if [[ $# == 1 ]]; then
-              outname="wallpaper"
-              filename="$1"
-          elif [[ $# == 2 ]]; then
-              outname="$1"
-              filename="$2"
-          else
-              echo "Usage: wallpaper [link] file"
-              exit 1
-          fi
+        (let
+          wallpaperDir = config.custom.home.opts.wallpaper.dir;
+          forEachScreen = render: pipe config.custom.home.opts.screens [
+            attrsToList
+            (map render)
+            concatLines
+          ];
+        in writeShellScriptBin "wallpaper" ''
+          set_default () {
+            ${forEachScreen (screen: ''
+              ${pkgs.coreutils}/bin/ln -sf "${wallpaperDir}/default" "${wallpaperDir}/${screen.name}"
+            '')}
+          }
 
-          ${pkgs.coreutils}/bin/ln -sf \
-            "$filename" \
-            "/home/${config.home.username}/pictures/wallpapers/''${outname}"
-          ${pkgs.sway}/bin/swaymsg \
-            "output * bg \"/home/${config.home.username}/pictures/wallpapers/''${outname}\" fill #000000"
+          set_wallpaper () {
+            outname="$1"
+            filename="$(${pkgs.coreutils}/bin/readlink -f "$2")"
+            ${pkgs.coreutils}/bin/ln -sf "$filename" "${wallpaperDir}/$outname"
+          }
+
+          reload_wallpapers () {
+            ${pkgs.sway}/bin/swaymsg 'output "*" bg "${wallpaperDir}/default" fill #000000'
+            ${forEachScreen (screen: ''
+              ${if screen.value.noserial then ''
+                ${pkgs.sway}/bin/swaymsg 'output "${screen.name} Unknown" bg "${wallpaperDir}/${screen.name}" fill #000000'
+              '' else ""}
+              ${pkgs.sway}/bin/swaymsg 'output "${screen.name}" bg "${wallpaperDir}/${screen.name}" fill #000000'
+            '')}
+          }
+
+          if [[ $# == 1 ]]; then
+            outname="default"
+            filename="$1"
+            set_default
+            set_wallpaper "$outname" "$filename"
+            reload_wallpapers
+          elif [[ $# == 2 ]]; then
+            outname="$1"
+            filename="$2"
+            set_wallpaper "$outname" "$filename"
+            reload_wallpapers
+          else
+            echo "Usage: wallpaper [link] file"
+            exit 1
+          fi
         '')
       ]
       (mkIf (cfg.brightnessDevice != null) [
@@ -155,13 +183,16 @@ in {
         };
 
         output = foldl' (accum: screen: accum // (let
-          screen-def = screen.value.sway;
+          screen-def = screen.value.sway // {
+            bg = "\"${config.custom.home.opts.wallpaper.dir}/${screen.name}\" fill #000000";
+          };
         in {
-          "${screen.name}" = screen-def; # don't mkIf this one! some options don't work otherwise!
+          # don't mkIf this one! some options don't work otherwise!
+          "${screen.name}" = screen-def;
           "${screen.name} Unknown" = mkIf screen.value.noserial screen-def;
         })) {
           "*" = {
-            bg = "${config.custom.home.opts.wallpaper.base} fill #000000";
+            bg = "\"${config.custom.home.opts.wallpaper.dir}/default\" fill #000000";
           };
         } (attrsToList config.custom.home.opts.screens);
 

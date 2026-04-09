@@ -58,7 +58,7 @@ with lib; {
             sway.position = "0 -1080";
           };
         };
-        wallpaper.base = "/home/${config.home.username}/pictures/wallpapers/wallpaper";
+        wallpaper.dir = "/home/${config.home.username}/pictures/wallpapers/active";
         colorscheme = import ./colorscheme.nix;
       };
     };

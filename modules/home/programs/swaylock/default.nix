@@ -7,7 +7,7 @@ ns.enable {
     settings = {
       show-keyboard-layout = true;
       show-failed-attempts = true;
-      image = "${config.custom.home.opts.wallpaper.lock-screen}";
+      image = "${config.custom.home.opts.wallpaper.dir}/lockscreen";
       inside-color = "660000";
       inside-clear-color = "666666";
       inside-caps-lock-color = "660000";
