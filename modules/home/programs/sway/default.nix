@@ -53,6 +53,7 @@ in {
           ];
         in writeShellScriptBin "wallpaper" ''
           set_default () {
+            ${pkgs.coreutils}/bin/ln -sf "${wallpaperDir}/default" "${wallpaperDir}/lockscreen"
             ${forEachScreen (screen: ''
               ${pkgs.coreutils}/bin/ln -sf "${wallpaperDir}/default" "${wallpaperDir}/${screen.name}"
             '')}
@@ -62,6 +63,14 @@ in {
             outname="$1"
             filename="$(${pkgs.coreutils}/bin/readlink -f "$2")"
             ${pkgs.coreutils}/bin/ln -sf "$filename" "${wallpaperDir}/$outname"
+          }
+
+          set_from_dir () {
+            dirname="$(${pkgs.coreutils}/bin/readlink -f "$1")"
+            for filename in "$dirname/"*; do
+              outname="$(${pkgs.coreutils}/bin/basename "$filename")"
+              set_wallpaper "$outname" "$filename"
+            done
           }
 
           reload_wallpapers () {
@@ -75,10 +84,18 @@ in {
           }
 
           if [[ $# == 1 ]]; then
-            outname="default"
             filename="$1"
-            set_default
-            set_wallpaper "$outname" "$filename"
+            if [[ -d $filename ]]; then
+              set_default
+              set_from_dir "$filename"
+            elif [[ -f $filename ]]; then
+              set_default
+              outname="default"
+              set_wallpaper "$outname" "$filename"
+            else
+              echo "invalid file"
+              exit 1
+            fi
             reload_wallpapers
           elif [[ $# == 2 ]]; then
             outname="$1"
