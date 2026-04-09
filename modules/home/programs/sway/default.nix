@@ -53,20 +53,20 @@ in {
           ];
         in writeShellScriptBin "wallpaper" ''
           set_default () {
-            ${pkgs.coreutils}/bin/ln -sf "${wallpaperDir}/default" "${wallpaperDir}/lockscreen"
+            ${pkgs.coreutils}/bin/ln -sf default "${wallpaperDir}/lockscreen"
             ${forEachScreen (screen: ''
-              ${pkgs.coreutils}/bin/ln -sf "${wallpaperDir}/default" "${wallpaperDir}/${screen.name}"
+              ${pkgs.coreutils}/bin/ln -sf default "${wallpaperDir}/${screen.name}"
             '')}
           }
 
           set_wallpaper () {
             outname="$1"
-            filename="$(${pkgs.coreutils}/bin/readlink -f "$2")"
+            filename="$(${pkgs.coreutils}/bin/realpath -s --relative-to="${wallpaperDir}" "$2")"
             ${pkgs.coreutils}/bin/ln -sf "$filename" "${wallpaperDir}/$outname"
           }
 
           set_from_dir () {
-            dirname="$(${pkgs.coreutils}/bin/readlink -f "$1")"
+            dirname="$(${pkgs.coreutils}/bin/realpath -s "$1")"
             for filename in "$dirname/"*; do
               outname="$(${pkgs.coreutils}/bin/basename "$filename")"
               set_wallpaper "$outname" "$filename"
