@@ -21,7 +21,10 @@ with lib; with ns; {
       rb = "${pkgs.nh}/bin/nh os switch /etc/nixos";
       # rbb = "nixos-rebuild boot --sudo";
       rbb = "${pkgs.nh}/bin/nh os boot /etc/nixos";
-      ng = "sudo nix-collect-garbage --delete-older-than 7d";
+      # rbt = "nixos-rebuild test";
+      rbt = "${pkgs.nh}/bin/nh os test /etc/nixos";
+      ng = "sudo nix-collect-garbage -d";
+      ng7 = "sudo nix-collect-garbage --delete-older-than 7d";
     };
 
     programs.bash = let
