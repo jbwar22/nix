@@ -21,8 +21,6 @@ with lib; with ns; {
       luks.devices."root".device = "/dev/disk/by-uuid/c9a1bcf9-6e95-4e1c-a244-d8314c3009e9";
     };
 
-    boot.kernel.sysctl."vm.swapiness" = 0;
-
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/46f5a669-adab-462d-ba14-6f1282a06bc5";
         fsType = "btrfs";

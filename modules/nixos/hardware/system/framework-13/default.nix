@@ -90,8 +90,6 @@ with lib; with ns; {
       size = 8 * 1024;
     }];
 
-    boot.kernel.sysctl."vm.swapiness" = 1;
-
     custom.common = {
       opts.hardware = with clib; {
         cpu = {

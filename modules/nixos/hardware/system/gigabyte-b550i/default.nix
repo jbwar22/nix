@@ -63,8 +63,6 @@ with lib; with ns; {
       size = 16 * 1024;
     }];
 
-    boot.kernel.sysctl."vm.swapiness" = 1;
-
     # Additional Filesystems
 
     fileSystems."/mnt/red" =
