@@ -19,6 +19,7 @@ ns.enable {
       plymouth.enable = true;
       udisks2.enable = true;
       captive-browser.enable = true;
+      obs-studio.enable = true;
     };
   };
 }
