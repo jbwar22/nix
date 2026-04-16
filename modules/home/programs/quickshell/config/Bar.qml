@@ -98,8 +98,10 @@ Scope {
             label: "C"
           }
 
-          BarWidget {
+          MemBarWidget {
             frac: memorySource.frac
+            rfrac: memorySource.rfrac
+            bfrac: memorySource.bfrac
             barcolor: memorySource.barcolor
             label: "M"
             barwidth: 50
