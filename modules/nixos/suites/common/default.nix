@@ -4,6 +4,7 @@ ns.enable {
   custom.nixos = {
     behavior = {
       appimage.enable = true;
+      earlyoom.enable = true;
       flakes-support.enable = true;
       locale.enable = true;
       network.enable = true;
