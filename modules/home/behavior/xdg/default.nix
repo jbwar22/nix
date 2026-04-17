@@ -49,8 +49,8 @@ with lib; with ns; {
     xdg.configFile."xdg-desktop-portal-wlr/config".text = generators.toINI {} {
       screencast = {
         max_fps = 60;
-        chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f \"Monitor: %o\" -or";
+        chooser_type = "dmenu";
+        chooser_cmd = "${pkgs.rofi}/bin/rofi -dmenu -p 'Select a source to share:'";
       };
     };
 

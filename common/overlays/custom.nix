@@ -24,13 +24,19 @@ inputs: final: prev: {
 
   # keep cursor active when hidden
   sway = (prev.sway.override {
-    sway-unwrapped = prev.sway-unwrapped.overrideAttrs (oldAttrs: {
+    sway-unwrapped = (prev.sway-unwrapped.override {
+      wlroots_0_19 = final.unstable.wlroots_0_20;
+    }).overrideAttrs (oldAttrs: rec {
+      version = "1.12-rc1";
+      src = final.fetchFromGitHub {
+        owner = "swaywm";
+        repo = "sway";
+        rev = version;
+        hash = "sha256-JAark5YnhjNRxPAJvfCPUxKa8WdOS3ZQnFUC5I0vUis=";
+      };
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
       ];
-      preConfigure = ''
-        substituteInPlace sway.desktop --replace "Exec=sway" "Exec=sway --unsupported-gpu"
-      '';
     });
   });
 
@@ -43,6 +49,16 @@ inputs: final: prev: {
     cavaSupport = false;
     mpdSupport = false;
   };
+
+  xdg-desktop-portal-wlr = prev.xdg-desktop-portal-wlr.overrideAttrs (oldAttrs: rec {
+    version = "0.8.2";
+    src = final.fetchFromGitHub {
+      owner = "emersion";
+      repo = "xdg-desktop-portal-wlr";
+      rev = "v${version}";
+      sha256 = "sha256-HITf/hgiASWvn/z49mzS8IS1vuyXwdk1JiAOOHRSQMo=";
+    };
+  });
 
   # allow negative coordinates for screens
   xscreensaver = prev.xscreensaver.overrideAttrs (oldAttrs: {

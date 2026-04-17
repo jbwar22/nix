@@ -10,7 +10,6 @@ in {
     };
 
     behavior = {
-      xdg-screenshare.enable = mkIfAnyHMOpt config (config: config.wayland.windowManager.sway.enable) true;
       shairport-support = mkIfAnyHMOpt config (config: config.custom.home.services.shairport.enable) {
         enable = true;
         ports = with lib; pipe users [

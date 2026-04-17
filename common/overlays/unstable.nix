@@ -14,6 +14,7 @@ channels: final: prev: {
   sway
   sway-unwrapped
   waybar
+  xdg-desktop-portal-wlr
   xscreensaver
   yt-dlp
   ;
