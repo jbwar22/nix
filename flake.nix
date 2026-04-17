@@ -118,7 +118,7 @@
     in system);
 
     homeConfigurations = forAllHostUserPairs (genHostUserPairs hosts) (hostname: username: let
-      inherit (importChannelsForHostname hostname) imported-channels pkgs;
+      inherit (importChannelsForSystem hosts.${hostname}.system) imported-channels pkgs;
       host = hosts.${hostname};
     in
       inputs.home-manager.lib.homeManagerConfiguration {

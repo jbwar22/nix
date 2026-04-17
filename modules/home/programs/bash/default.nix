@@ -23,6 +23,8 @@ with lib; with ns; {
       rbb = "${pkgs.nh}/bin/nh os boot /etc/nixos";
       # rbt = "nixos-rebuild test";
       rbt = "${pkgs.nh}/bin/nh os test /etc/nixos";
+      # rbbb = "nixos-rebuild build";
+      rbbb = "${pkgs.nh}/bin/nh os build /etc/nixos";
       ng = "sudo nix-collect-garbage -d";
       ng7 = "sudo nix-collect-garbage --delete-older-than 7d";
     };
