@@ -38,6 +38,7 @@ in {
     shortcuts = import ./shortcuts pkgs lib config;
   }) {
     custom.home.opts.aliases = {
+      sway = mkIf (config.custom.common.opts.hardware.gpu.vendor == enums.gpu-vendors.nvidia) "${pkgs.sway}/bin/sway --unsupported-gpu";
       screens = "${pkgs.sway}/bin/swaymsg -t get_outputs | ${pkgs.jq}/bin/jq -r '.[] | .name + \"\\t\" + .make + \" \" + .model + \" \" + .serial'";
     };
 
