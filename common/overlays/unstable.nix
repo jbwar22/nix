@@ -8,6 +8,7 @@ channels: final: prev: {
   tailscale       # features
   umu-launcher    # features
   jigmo           # CJK Extension J support
+  librewolf
 
   # for further overriding in custom.nix
   dunst

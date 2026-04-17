@@ -1,4 +1,4 @@
-{ lib, clib, modulesPath, ns, ... }:
+{ options, lib, clib, modulesPath, ns, ... }:
 
 with lib; with ns; {
   imports = [
@@ -19,6 +19,8 @@ with lib; with ns; {
     boot.initrd = {
       availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
       luks.devices."root".device = "/dev/disk/by-uuid/c9a1bcf9-6e95-4e1c-a244-d8314c3009e9";
+      # tmp until PR #510953
+      luks.cryptoModules = subtractLists [ "aes_generic" ] options.boot.initrd.luks.cryptoModules.default;
     };
 
     fileSystems."/" =

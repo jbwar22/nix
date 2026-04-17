@@ -1,4 +1,4 @@
-{ lib, clib, modulesPath, ns, ... }:
+{ options, lib, clib, modulesPath, ns, ... }:
 
 with lib; with ns; {
   imports = [
@@ -26,6 +26,8 @@ with lib; with ns; {
         device = "/dev/disk/by-uuid/bf17b001-806a-4773-b3f9-862597fb3c87";
         bypassWorkqueues = true;
       };
+      # tmp until PR #510953
+      luks.cryptoModules = subtractLists [ "aes_generic" ] options.boot.initrd.luks.cryptoModules.default;
     };
 
     fileSystems."/" = {
