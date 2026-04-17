@@ -27,12 +27,12 @@ inputs: final: prev: {
     sway-unwrapped = (prev.sway-unwrapped.override {
       wlroots_0_19 = final.unstable.wlroots_0_20;
     }).overrideAttrs (oldAttrs: rec {
-      version = "1.12-rc1";
+      version = "1.12-rc2";
       src = final.fetchFromGitHub {
         owner = "swaywm";
         repo = "sway";
         rev = version;
-        hash = "sha256-JAark5YnhjNRxPAJvfCPUxKa8WdOS3ZQnFUC5I0vUis=";
+        hash = "sha256-oAdj1LHEIENlw/sOtp2KucwOyzz0KzyK0e3KQi6SdNg=";
       };
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
