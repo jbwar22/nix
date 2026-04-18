@@ -6,6 +6,15 @@ inputs: final: prev: {
     ];
   };
 
+  # screenshare broke with version 0.0.127
+  discord = prev.discord.overrideAttrs (oldAttrs: rec {
+    version = "0.0.125";
+    src = final.fetchurl {
+      url = "https://stable.dl2.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
+      hash = "sha256-AyKUq2GJjMam2r7oQjdQBhBsTYbhVtnUaTeLP4emRIE=";
+    };
+  });
+
   # scripts hack to allow sending signals while muted
   dunst = (prev.dunst.overrideAttrs (oldAttrs: {
     src = inputs.jbwar22-dunst;
