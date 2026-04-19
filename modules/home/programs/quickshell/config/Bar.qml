@@ -36,8 +36,10 @@ Scope {
       property var screenSettings: {
         if (
           screen.devicePixelRatio == 1
-          && screen.width == 2560
-          && screen.height == 1440
+          && (
+            (screen.width == 2560 && screen.height == 1440)
+            || (screen.width == 1440 && screen.height == 2560)
+          )
         ) {
           // 1440p
           return {
@@ -54,8 +56,10 @@ Scope {
           }
         } else if (
           screen.devicePixelRatio == 2
-          && screen.width == 2880
-          && screen.height == 1920
+          && (
+            (screen.width == 2880 && screen.height == 1920)
+            || (screen.width == 1920 && screen.height == 2880)
+          )
         ) {
           // framework laptop
           return {
@@ -73,8 +77,10 @@ Scope {
           }
         } else if (
           screen.devicePixelRatio == 1
-          && screen.width == 1366
-          && screen.height == 768
+          && (
+            (screen.width == 1366 && screen.height == 768)
+            || (screen.width == 768 && screen.height == 1366)
+          )
         ) {
           // T480
           return {
