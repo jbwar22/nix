@@ -4,8 +4,7 @@ import QtQuick
 
 Scope {
   id: root
-  property string fracs: JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  property var cores: 16
+  property string fracs: JSON.stringify([0])
 
   Process {
     id: proc_stat
@@ -14,6 +13,7 @@ Scope {
     stdout: StdioCollector {
       onStreamFinished: {
         let lines = text.split('\n')
+        let cores = parseInt(/\((\d+) CPU\)/.exec(lines[0])[1])
         let fracsNew = []
         for (let i = 0; i < cores; i++) {
           let col = i + 4

@@ -36,6 +36,8 @@
         mavica-ingest.enable = true;
         easyeffects.enable = true;
         osu.enable = true;
+        sway.useWaybar = false;
+        quickshell.enable = true;
       };
 
       services = {

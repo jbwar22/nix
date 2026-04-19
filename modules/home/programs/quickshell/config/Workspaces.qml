@@ -3,9 +3,13 @@ import QtQuick
 import QtQuick.Layouts
 
 RowLayout {
-  id: workspace_wrapper
+  required property var screenSettings
+
+  id: root
 
   spacing: 0
+
+  height: screenSettings.barHeight
 
   Repeater {
     id: workspace_repeater
@@ -14,71 +18,70 @@ RowLayout {
 
     model: workspaces.length
 
-    MouseArea {
-        id: workspace_selector
+    Item {
+      id: workspace_selector
+      property var workspace: workspace_repeater.workspaces[index]
+      property bool isActive: I3.focusedWorkspace?.number === workspace.num
+      property bool isHovered: false
 
-        property var ws_left_padding: 8 // tmp
-        property var ws_underline_width: 2
-        property var workspace: workspace_repeater.workspaces[index]
-        property bool isActive: I3.focusedWorkspace?.number === workspace.num
-        property bool isHovered: false
+      width: screenSettings.wsWidth + (index == 0 ? screenSettings.leftPadding : 0)
+      height: screenSettings.barHeight
 
-        width: 20 + (index == 0 ? ws_left_padding : 0)
-        height: 16
-
+      MouseArea {
+        anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
-
-        onEntered: () => isHovered = true
-        onExited: () => isHovered = false
+        onEntered: () => workspace_selector.isHovered = true
+        onExited: () => workspace_selector.isHovered = false
         onPressed: () => I3.dispatch("workspace number " + workspace.number)
+      }
 
-        ColumnLayout {
+      Rectangle {
+        anchors.fill: parent
+        color: workspace_selector.isActive ? "#772200" : (workspace_selector.isHovered ? "#441100" : "#000000")
+      }
 
-          spacing: 0
+      Rectangle {
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: screenSettings.wsUnder
+        color: workspace_selector.isActive ? "#FB5000" : (workspace_selector.isHovered ? "#772200" : "#000000")
+      }
 
-          Rectangle {
+      Item {
+        implicitHeight: text.implicitHeight
+        width: parent.width
 
-            width: workspace_selector.width
-            height: workspace_selector.height - workspace_selector.ws_underline_width
-            color: workspace_selector.isActive ? "#772200" : (workspace_selector.isHovered ? "#441100" : "#000000")
+        y: parent.height - height - screenSettings.baseline
 
-            Text {
-              function numToDisplay(num) {
-                switch (num) {
-                  case 1:  return "一";
-                  case 2:  return "二";
-                  case 3:  return "三";
-                  case 4:  return "四";
-                  case 5:  return "五";
-                  case 6:  return "六";
-                  case 7:  return "七";
-                  case 8:  return "八";
-                  case 9:  return "九";
-                  case 10: return "十";
-                }
-              }
-              width: workspace_selector.width
-              horizontalAlignment: Text.AlignHCenter
 
-              text: numToDisplay(workspace_selector.workspace.num)
-              color: "#FFFFFF"
-
-              topPadding: -2
-              leftPadding: index == 0 ? workspace_selector.ws_left_padding : 0
-              font {
-                pixelSize: 12
-                family: "Noto Sans Mono"
-              }
+        Text {
+          id: text
+          text: {
+            switch (workspace_selector.workspace.num) {
+              case 1:  return "一";
+              case 2:  return "二";
+              case 3:  return "三";
+              case 4:  return "四";
+              case 5:  return "五";
+              case 6:  return "六";
+              case 7:  return "七";
+              case 8:  return "八";
+              case 9:  return "九";
+              case 10: return "十";
             }
           }
 
-          Rectangle {
-            color: workspace_selector.isActive ? "#FB5000" : (workspace_selector.isHovered ? "#772200" : "#000000")
-            width: workspace_selector.width
-            height: workspace_selector.ws_underline_width
+          width: parent.width
+          horizontalAlignment: Text.AlignHCenter
+
+          color: "#FFFFFF"
+          font {
+            pixelSize: screenSettings.fontSize
+            family: "Noto Sans Mono"
           }
         }
       }
+    }
   }
 }

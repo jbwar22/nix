@@ -51,7 +51,7 @@ with clib.nv; with lib; {
 
     autoCmd = [
       { event = "FileType";
-        pattern = [ "elm" "yaml" "nix" "html" "htmldjango" "vue" "javascript" ];
+        pattern = [ "elm" "yaml" "nix" "html" "htmldjango" "vue" "javascript" "qml" ];
         command = "setlocal sw=2 ts=2 sts=2";
       }
     ];
