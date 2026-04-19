@@ -5,10 +5,12 @@ Item {
   required property var label
   required property var screenSettings
 
+  property int extraWidth: 0
+
   required default property Item child
 
   height: screenSettings.barHeight
-  implicitWidth: bwrap.implicitWidth + screenSettings.wgap
+  implicitWidth: bwrap.implicitWidth + extraWidth
 
   Item {
     id: bwrap
@@ -16,7 +18,7 @@ Item {
 
     property var tw: Math.ceil(text.implicitWidth)
     implicitWidth: tw + 8 + outer.child.width
-    width: parent.width - outer.screenSettings.wgap
+    width: parent.width - outer.extraWidth
 
     y: parent.height - height - screenSettings.baseline
 

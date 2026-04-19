@@ -18,217 +18,168 @@ Scope {
   Variants {
     model: Quickshell.screens
 
-    PanelWindow {
-      id: pw
-
+    Scope {
       required property var modelData
-      screen: modelData
 
-      anchors {
-        top: true
-        left: true
-        right: true
+      ScreenSettings {
+        id: screenSettings
+        screen: modelData
       }
 
-      // color: "#900000"
-      color: "#000000"
+      PanelWindow {
+        id: barPanel
 
-      property var screenSettings: {
-        if (
-          screen.devicePixelRatio == 1
-          && (
-            (screen.width == 2560 && screen.height == 1440)
-            || (screen.width == 1440 && screen.height == 2560)
-          )
-        ) {
-          // 1440p
-          return {
-            barHeight: 29,
-            fontSize: 15,
-            leftPadding: 0,
-            wsWidth: 24,
-            wsUnder: 3,
-            baseline: 5,
-            wbarHeight: 12,
-            wbarBase: 4,
-            wgap: 9,
-            wvwidth: 7,
-          }
-        } else if (
-          screen.devicePixelRatio == 2
-          && (
-            (screen.width == 2880 && screen.height == 1920)
-            || (screen.width == 1920 && screen.height == 2880)
-          )
-        ) {
-          // framework laptop
-          return {
-            barHeight: 16,
-            fontSize: 12,
-            // leftPadding: ["NE135A1M-NY1"].includes(screen.model) ? 8 : 0,
-            leftPadding: 8, // tmp
-            wsWidth: 20,
-            wsUnder: 2,
-            baseline: 2,
-            wbarHeight: 10,
-            wbarBase: 3,
-            wgap: 10,
-            wvwidth: 5,
-          }
-        } else if (
-          screen.devicePixelRatio == 1
-          && (
-            (screen.width == 1366 && screen.height == 768)
-            || (screen.width == 768 && screen.height == 1366)
-          )
-        ) {
-          // T480
-          return {
-            barHeight: 20,
-            fontSize: 15,
-            leftPadding: 0,
-            wsWidth: 22,
-            wsUnder: 2,
-            baseline: 2,
-            wbarHeight: 12,
-            wbarBase: 3,
-            wgap: 10,
-            wvwidth: 5,
-          }
-        } else {
-          // default (optimize for 1080p)
-          return {
-            barHeight: 20,
-            fontSize: 13,
-            leftPadding: 0,
-            wsWidth: 22,
-            wsUnder: 2,
-            baseline: 1,
-            wbarHeight: 10,
-            wbarBase: 3,
-            wgap: 7,
-            wvwidth: 5,
-          }
+        screen: modelData
+
+        exclusionMode: ExclusionMode.Normal
+        exclusiveZone: screenSettings.barHeight
+
+        anchors {
+          top: true
+          left: true
+          right: true
         }
-      }
-      
-      implicitHeight: screenSettings.barHeight
 
-      RowLayout {
-        id: bar
-        anchors.fill: parent
+        // color: "#900000"
+        color: "#000000"
 
-        RowLayout {
-          id: left_widgets
-          height: parent.height
-
-          Workspaces {
-            screenSettings: pw.screenSettings
-          }
-
-          ClockWidget {
-            time: timeSource.time
-            screenSettings: pw.screenSettings
-          }
-        }
+        implicitHeight: bar.implicitHeight
 
         Item {
-          Layout.fillWidth: true
-          height: parent.height
-
-          Item {
-            id: titlep
-
-            implicitHeight: titletext.implicitHeight
-            implicitWidth: parent.width
-
-
-            y: parent.height - height - screenSettings.baseline
-
-            Text {
-              id: titletext
-              property var left_width: left_widgets.width + bar.spacing
-              property var right_width: right_widgets.width + bar.spacing
-              property var innerWidth: bar.width - (2 * Math.max(left_width, right_width))
-              property var leftBias: left_widgets.width > right_widgets.width
-              function getPaddings() {
-                if (contentWidth > innerWidth) {
-                  return { left: 0, right: 0 }
-                }
-                if (leftBias) {
-                    return { left: 0, right: left_width - right_width }
-                } else {
-                    return { left: right_width - left_width, right: 0 }
-                }
-              }
-              property var paddings: getPaddings()
-              color: "#FFF"
-              // text: "################################################################################################"
-              text: titleSource.title
-              width: titlep.width
-              horizontalAlignment: contentWidth <= innerWidth ? Text.AlignHCenter : Text.AlignLeft
-              rightPadding: paddings.right
-              leftPadding: paddings.left
-              topPadding: -2
-              elide: Text.ElideRight
-
-              font {
-                pixelSize: screenSettings.fontSize
-                family: "Noto Sans Mono"
-              }
-            }
-
-          }
+          
         }
 
         RowLayout {
-          id: right_widgets
+          id: bar
+          implicitHeight: screenSettings.barHeight
 
+          anchors.top: barPanel.top
+          width: parent.width
 
-          BarWrapWidget {
-            label: "R"
-            screenSettings: pw.screenSettings
-            BarWidget {
-              screenSettings: pw.screenSettings
-              frac: rootfsSource.frac
-              barcolor: rootfsSource.barcolor
-              barwidth: 4
+          RowLayout {
+            id: left_widgets
+            Layout.fillHeight: true
+
+            Workspaces {
+              screenSettings: screenSettings
+              screen: barPanel.screen
+            }
+
+            ClockWidget {
+              time: timeSource.time
+              screenSettings: screenSettings
             }
           }
 
-          BarWrapWidget {
-            label: "C"
-            screenSettings: pw.screenSettings
-            VBarWidget {
-              screenSettings: pw.screenSettings
-              fracs: cpuSource.fracs
-            }
-          }
+          Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
-          BarWrapWidget {
-            label: "M"
-            screenSettings: pw.screenSettings
-            MemBarWidget {
-              screenSettings: pw.screenSettings
-              frac: memorySource.frac
-              rfrac: memorySource.rfrac
-              bfrac: memorySource.bfrac
-              barcolor: memorySource.barcolor
-              barwidth: 10
-            }
-          }
+            Item {
+              id: titlep
 
-          Repeater {
-            model: batterySource.batteries.length
-            BarWrapWidget {
-              label: "B"
-              screenSettings: pw.screenSettings
-              BarWidget {
-                screenSettings: pw.screenSettings
-                frac: batterySource.fracs[index]
-                barcolor: batterySource.barcolors[index]
-                barwidth: 20
+              implicitHeight: titletext.implicitHeight
+              implicitWidth: parent.width
+
+
+              y: parent.height - height - screenSettings.baseline
+
+              Text {
+                id: titletext
+                property var left_width: left_widgets.width + bar.spacing
+                property var right_width: right_widgets.width + bar.spacing
+                property var innerWidth: bar.width - (2 * Math.max(left_width, right_width))
+                property var leftBias: left_widgets.width > right_widgets.width
+                function getPaddings() {
+                  if (contentWidth > innerWidth) {
+                    return { left: 0, right: 0 }
+                  }
+                  if (leftBias) {
+                      return { left: 0, right: left_width - right_width }
+                  } else {
+                      return { left: right_width - left_width, right: 0 }
+                  }
+                }
+                property var paddings: getPaddings()
+                color: "#FFF"
+                // text: "################################################################################################"
+                text: titleSource.title
+                width: titlep.width
+                horizontalAlignment: contentWidth <= innerWidth ? Text.AlignHCenter : Text.AlignLeft
+                rightPadding: paddings.right
+                leftPadding: paddings.left
+                topPadding: -2
+                elide: Text.ElideRight
+
+                font {
+                  pixelSize: screenSettings.fontSize
+                  family: "Noto Sans Mono"
+                }
               }
+
+            }
+          }
+
+          RowLayout {
+            id: right_widgets
+            Layout.fillHeight: true
+            spacing: screenSettings.wgap
+
+            VolumeWidget {
+              screenSettings: screenSettings
+            }
+
+            BarWrapWidget {
+              label: "R"
+              screenSettings: screenSettings
+              BarWidget {
+                screenSettings: screenSettings
+                frac: rootfsSource.frac
+                barcolor: rootfsSource.barcolor
+                barwidth: 4
+              }
+            }
+
+            BarWrapWidget {
+              label: "C"
+              screenSettings: screenSettings
+              VBarWidget {
+                screenSettings: screenSettings
+                fracs: cpuSource.fracs
+              }
+            }
+
+            BarWrapWidget {
+              label: "M"
+              screenSettings: screenSettings
+              MemBarWidget {
+                screenSettings: screenSettings
+                frac: memorySource.frac
+                rfrac: memorySource.rfrac
+                bfrac: memorySource.bfrac
+                barcolor: memorySource.barcolor
+                barwidth: 10
+              }
+            }
+
+            Repeater {
+              model: batterySource.batteries.length
+              BarWrapWidget {
+                label: "B"
+                screenSettings: screenSettings
+                BarWidget {
+                  screenSettings: screenSettings
+                  frac: batterySource.fracs[index]
+                  barcolor: batterySource.barcolors[index]
+                  barwidth: 20
+                }
+              }
+            }
+
+            // add a gap on the right
+            Item {
+              height: parent.height
+              width: 0
             }
           }
         }

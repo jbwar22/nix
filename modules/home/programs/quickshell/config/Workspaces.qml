@@ -4,6 +4,7 @@ import QtQuick.Layouts
 
 RowLayout {
   required property var screenSettings
+  required property var screen
 
   id: root
 
