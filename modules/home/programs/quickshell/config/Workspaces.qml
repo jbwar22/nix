@@ -24,8 +24,9 @@ RowLayout {
       property var workspace: workspace_repeater.workspaces[index]
       property bool isActive: I3.focusedWorkspace?.number === workspace.num
       property bool isHovered: false
+      property int extraLeft: index == 0 ? screenSettings.leftPadding : 0
 
-      width: screenSettings.wsWidth + (index == 0 ? screenSettings.leftPadding : 0)
+      width: screenSettings.wsWidth + extraLeft
       height: screenSettings.barHeight
 
       MouseArea {
@@ -51,8 +52,9 @@ RowLayout {
 
       Item {
         implicitHeight: text.implicitHeight
-        width: parent.width
+        width: parent.width - extraLeft
 
+        x: extraLeft
         y: parent.height - height - screenSettings.baseline
 
 

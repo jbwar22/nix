@@ -8,11 +8,7 @@ Item {
   required property var screenSettings
 
   PwObjectTracker {
-    objects: [ Pipewire.defaultAudioSink ]
-  }
-
-  Connections {
-    target: Pipewire.defaultAudioSink?.audio
+    objects: Pipewire.defaultAudioSink ? [ Pipewire.defaultAudioSink ] : []
   }
 
   height: root.screenSettings.barHeight

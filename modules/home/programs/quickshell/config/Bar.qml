@@ -159,15 +159,18 @@ Scope {
             }
 
             Repeater {
+              id: battery_repeater
+              property var foo: screenSettings // why?
               model: batterySource.batteries.length
               BarWrapWidget {
+                required property int index
                 label: "B"
-                screenSettings: screenSettings
+                screenSettings: battery_repeater.foo
                 BarWidget {
-                  screenSettings: screenSettings
-                  frac: batterySource.fracs[index]
-                  barcolor: batterySource.barcolors[index]
-                  barwidth: 20
+                  screenSettings: battery_repeater.foo
+                  frac: batterySource.batteries[index].frac
+                  barcolor: batterySource.batteries[index].barcolor
+                  barwidth: 4
                 }
               }
             }

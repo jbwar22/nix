@@ -36,8 +36,8 @@ Scope {
     } else if (
       screen.devicePixelRatio == 2
       && (
-        (screen.width == 2880 && screen.height == 1920)
-        || (screen.width == 1920 && screen.height == 2880)
+        (screen.width == 1440 && screen.height == 960)
+        || (screen.width == 960 && screen.height == 1440)
       )
     ) {
       // framework laptop
@@ -48,10 +48,10 @@ Scope {
         leftPadding: 8, // tmp
         wsWidth: 20,
         wsUnder: 2,
-        baseline: 2,
+        baseline: 0,
         wbarHeight: 10,
         wbarBase: 3,
-        wgap: 10,
+        wgap: 12,
         wvwidth: 5,
       }
     } else if (
