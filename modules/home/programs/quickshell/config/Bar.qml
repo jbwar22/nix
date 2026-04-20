@@ -45,10 +45,6 @@ Scope {
 
         implicitHeight: bar.implicitHeight
 
-        Item {
-          
-        }
-
         RowLayout {
           id: bar
           implicitHeight: screenSettings.barHeight

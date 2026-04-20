@@ -5,6 +5,19 @@ import QtQuick
 Scope {
   id: root
   property string fracs: JSON.stringify([0])
+  property var needs_fill: true
+
+  Process {
+    id: nproc
+    command: ["nproc"]
+    running: true
+    stdout: StdioCollector {
+      onStreamFinished: {
+        let count = parseInt(text)
+        if (needs_fill) fracs = JSON.stringify(Array(count).fill(0))
+      }
+    }
+  }
 
   Process {
     id: proc_stat
@@ -12,6 +25,7 @@ Scope {
     running: true
     stdout: StdioCollector {
       onStreamFinished: {
+        needs_fill = false
         let lines = text.split('\n')
         let cores = parseInt(/\((\d+) CPU\)/.exec(lines[0])[1])
         let fracsNew = []
