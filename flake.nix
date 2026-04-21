@@ -52,6 +52,10 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs-stable";
     };
+    shell = {
+      url = "github:jbwar22/shell";
+      flake = false;
+    };
     jbwar22-dunst = {
       url = "github:jbwar22/dunst";
       flake = false;

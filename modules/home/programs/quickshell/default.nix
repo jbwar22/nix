@@ -5,9 +5,7 @@ with lib; ns.enable {
     enable = true;
     systemd.enable = true;
     configs = {
-      default = ./config;
-      # live-update config is meant for rapid testing, not actual usage
-      live-update = config.lib.file.mkOutOfStoreSymlink (clib.getConfigPath config ./config);
+      default = inputs.shell;
     };
   };
 

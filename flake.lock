@@ -530,6 +530,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
+        "shell": "shell",
         "systems": "systems",
         "wrappers": "wrappers"
       }
@@ -552,6 +553,22 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "shell": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776735430,
+        "narHash": "sha256-+dGVpe8NYtHN5wFZ3XXH2vNV4chcLlDtmsCZIR70NT4=",
+        "owner": "jbwar22",
+        "repo": "shell",
+        "rev": "a5bc827871d03846286918ff90a40e00ad228fac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jbwar22",
+        "repo": "shell",
         "type": "github"
       }
     },
