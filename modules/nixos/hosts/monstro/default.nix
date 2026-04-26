@@ -28,6 +28,7 @@ with lib; {
         vpn-namespace.enable = true;
         pipewire-low-latency.enable = true;
         tpm.enable = true;
+        i2c.enable = true;
         remote-unlock = {
           enable = true;
           authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDiOojnsKqTIJry1LND86oZe7EsGSJSwyBLK98SF0equ" ];
