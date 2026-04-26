@@ -559,11 +559,11 @@
     "shell": {
       "flake": false,
       "locked": {
-        "lastModified": 1776735430,
-        "narHash": "sha256-+dGVpe8NYtHN5wFZ3XXH2vNV4chcLlDtmsCZIR70NT4=",
+        "lastModified": 1777178506,
+        "narHash": "sha256-A+y0G6YcPkQbxctbtpGhCSqiIXp86qaEQEH0kek27Ic=",
         "owner": "jbwar22",
         "repo": "shell",
-        "rev": "a5bc827871d03846286918ff90a40e00ad228fac",
+        "rev": "f6b298e1327e9662519b7f41a254cef2a313dd71",
         "type": "github"
       },
       "original": {

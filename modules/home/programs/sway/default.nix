@@ -225,11 +225,12 @@ in {
             done
             ${lock}
           ''}";
+          qs-ipc = "${pkgs.quickshell}/bin/qs ipc -i $(${pkgs.quickshell}/bin/qs list --all --json | ${pkgs.jq}/bin/jq -r '.[].id') call main";
         in lib.mkOptionDefault { # append to default behavior
 
           # Media keys: Audio
-          "XF86AudioRaiseVolume" = "exec ${scripts.volume} up";
-          "XF86AudioLowerVolume" = "exec ${scripts.volume} down";
+          "XF86AudioRaiseVolume" = if cfg.useWaybar then "exec ${scripts.volume} up" else "exec ${qs-ipc} volume up";
+          "XF86AudioLowerVolume" = if cfg.useWaybar then "exec ${scripts.volume} down" else "exec ${qs-ipc} volume down";
           "XF86AudioMute" = "exec ${scripts.volume} mute";
           "XF86AudioMicMute" = "exec ${scripts.volume} micmute";
 
