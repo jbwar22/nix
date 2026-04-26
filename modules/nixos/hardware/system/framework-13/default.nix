@@ -53,8 +53,6 @@ with lib; with ns; {
         device = "/dev/disk/by-uuid/41c4368d-eb26-45c7-ba3d-06c87e50ceda";
         bypassWorkqueues = true;
       };
-      # tmp until PR #510953
-      luks.cryptoModules = subtractLists [ "aes_generic" ] options.boot.initrd.luks.cryptoModules.default;
     };
 
     fileSystems."/" = { 
