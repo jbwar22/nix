@@ -17,7 +17,6 @@ channels: final: prev: {
   waybar
   xdg-desktop-portal-wlr
   xscreensaver
-  yt-dlp
   ;
 
   # for referencing packages that do not need to be unstable system-wide
