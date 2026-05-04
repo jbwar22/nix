@@ -10,7 +10,6 @@ ns.enable {
       swaylock.enable = true;
       swayidle.enable = true;
       tofi.enable = true;
-      waybar.enable = true;
 
     };
   };

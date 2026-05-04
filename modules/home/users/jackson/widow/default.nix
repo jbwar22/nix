@@ -20,6 +20,7 @@ with lib; {
       programs = {
         bash.hostcolor = "\\033[38;5;160m";
         sway.brightnessDevice = "intel_backlight";
+        waybar.enable = true;
       };
 
       opts = {

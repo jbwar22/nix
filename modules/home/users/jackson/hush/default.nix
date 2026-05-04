@@ -25,7 +25,6 @@ with lib; {
       programs = {
         bash.hostcolor = "\\033[38;5;111m";
         sway.brightnessDevice = "amdgpu_bl1";
-        sway.useWaybar = false;
         # xscreensaver.enable = true;
         mavica-ingest.enable = true;
         virt-manager.enable = true;

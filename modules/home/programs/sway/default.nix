@@ -31,7 +31,6 @@ in {
       description = "device for brightnessctl";
       default = null;
     };
-    useWaybar = mkDisableOption "use waybar";
   };
 
   config = lib.mkIf cfg.enable (recursiveUpdate (opt {
@@ -229,8 +228,8 @@ in {
         in lib.mkOptionDefault { # append to default behavior
 
           # Media keys: Audio
-          "XF86AudioRaiseVolume" = if cfg.useWaybar then "exec ${scripts.volume} up" else "exec ${qs-ipc} volume up";
-          "XF86AudioLowerVolume" = if cfg.useWaybar then "exec ${scripts.volume} down" else "exec ${qs-ipc} volume down";
+          "XF86AudioRaiseVolume" = if waybar.enable then "exec ${scripts.volume} up" else "exec ${qs-ipc} volume up";
+          "XF86AudioLowerVolume" = if waybar.enable then "exec ${scripts.volume} down" else "exec ${qs-ipc} volume down";
           "XF86AudioMute" = "exec ${scripts.volume} mute";
           "XF86AudioMicMute" = "exec ${scripts.volume} micmute";
 
@@ -282,8 +281,8 @@ in {
           "${modifier}+Shift+Left" = null;
           "${modifier}+Shift+Right" = null;
         };
-        bars = mkIfElse cfg.useWaybar [{
-          "command" = mkIf waybar.enable "${pkgs.waybar}/bin/waybar";
+        bars = mkIfElse waybar.enable [{
+          "command" = "${pkgs.waybar}/bin/waybar";
         }] (mkForce []);
         colors = rec {
           background = colorscheme.wm.background;
