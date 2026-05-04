@@ -9,8 +9,11 @@ ns.enable {
     ffmpeg
     file
     gawk
+    hydra-check
     jq
     ncdu
+    nh
+    nix-output-monitor
     nmap
     p7zip
     ripgrep
