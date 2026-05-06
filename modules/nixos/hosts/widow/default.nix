@@ -18,7 +18,7 @@ with lib; {
 
       behavior = {
         systemd-boot.enable = true;
-        kernel-latest.enable = true;
+        kernel-6_18.enable = true;
       };
 
       programs = {

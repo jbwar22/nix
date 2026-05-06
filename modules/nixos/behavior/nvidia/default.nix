@@ -1,12 +1,12 @@
 { inputs, config, lib, pkgs, ns, ... }:
 
 with lib; ns.enable {
-  specialisation.lts.configuration = let
-    kernelPackages = pkgs.linuxPackages_6_12;
+  specialisation.old.configuration = let
+    kernelPackages = pkgs.linuxPackages_6_18;
   in {
-    environment.etc.specialisation.text = "6.12, NVIDIA latest 565";
+    environment.etc.specialisation.text = "6.18, NVIDIA stable";
     boot.kernelPackages = mkForce kernelPackages;
-    hardware.nvidia.package = mkForce kernelPackages.nvidiaPackages.latest;
+    hardware.nvidia.package = mkForce kernelPackages.nvidiaPackages.stable;
   };
 
   services.xserver.videoDrivers = ["nvidia"];
