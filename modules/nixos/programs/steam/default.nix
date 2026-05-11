@@ -5,6 +5,11 @@ ns.enable {
 
   programs.steam = {
     enable = true;
+    package = pkgs.steam.override {
+      extraLibraries = pkgs: with pkgs; [
+        hidapi
+      ];
+    };
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];
