@@ -45,6 +45,7 @@ inputs: final: prev: {
       };
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
+        ./patches/sway-revert.patch
       ];
       preConfigure = ''
         substituteInPlace sway.desktop --replace "Exec=sway" "Exec=sway --unsupported-gpu"
