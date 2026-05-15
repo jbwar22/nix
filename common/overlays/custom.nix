@@ -36,16 +36,15 @@ inputs: final: prev: {
     sway-unwrapped = (prev.sway-unwrapped.override {
       wlroots_0_19 = final.unstable.wlroots_0_20;
     }).overrideAttrs (oldAttrs: rec {
-      version = "1.12-rc3";
+      version = "1.12-rc2";
       src = final.fetchFromGitHub {
         owner = "swaywm";
         repo = "sway";
         rev = version;
-        hash = "sha256-SuVEUxz/PN9kJV4GG4bW4BojY6KEoW0qf3UF93AxCDI=";
+        hash = "sha256-oAdj1LHEIENlw/sOtp2KucwOyzz0KzyK0e3KQi6SdNg=";
       };
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
-        ./patches/sway-revert.patch
       ];
       preConfigure = ''
         substituteInPlace sway.desktop --replace "Exec=sway" "Exec=sway --unsupported-gpu"
