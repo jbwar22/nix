@@ -9,6 +9,7 @@ channels: final: prev: {
   umu-launcher    # features
   jigmo           # CJK Extension J support
   librewolf
+  firefox
 
   # for further overriding in custom.nix
   dunst
