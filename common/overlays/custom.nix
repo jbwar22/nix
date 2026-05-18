@@ -34,15 +34,15 @@ inputs: final: prev: {
   # keep cursor active when hidden
   sway = (prev.sway.override {
     sway-unwrapped = (prev.sway-unwrapped.override {
-      wlroots_0_19 = final.unstable.wlroots_0_20;
+      # wlroots_0_19 = final.unstable.wlroots_0_20;
     }).overrideAttrs (oldAttrs: rec {
-      version = "1.12-rc1";
-      src = final.fetchFromGitHub {
-        owner = "swaywm";
-        repo = "sway";
-        rev = version;
-        hash = "sha256-JAark5YnhjNRxPAJvfCPUxKa8WdOS3ZQnFUC5I0vUis=";
-      };
+      # version = "1.12-rc1";
+      # src = final.fetchFromGitHub {
+      #   owner = "swaywm";
+      #   repo = "sway";
+      #   rev = version;
+      #   hash = "sha256-JAark5YnhjNRxPAJvfCPUxKa8WdOS3ZQnFUC5I0vUis=";
+      # };
       patches = oldAttrs.patches ++ [
         ./patches/sway-hidecursor.patch
       ];
