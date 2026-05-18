@@ -20,5 +20,6 @@ ns.enable {
     ];
     extest.enable = true; # steam input on wayland
     localNetworkGameTransfers.openFirewall = true;
+    protontricks.enable = true;
   };
 }
