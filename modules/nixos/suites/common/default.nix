@@ -3,23 +3,25 @@
 ns.enable {
   custom.nixos = {
     behavior = {
+      ad65-keyboard-not-joystick.enable = true;
       appimage.enable = true;
       earlyoom.enable = true;
       flakes-support.enable = true;
+      greeter.enable = true;
+      journal-management.enable = true;
       locale.enable = true;
       network.enable = true;
-      time.enable = true;
-      journal-management.enable = true;
       nix.enable = true;
-      greeter.enable = true;
-      upower.enable = true;
       skip-wait-online.enable = true;
+      time.enable = true;
+      upower.enable = true;
       zswap.enable = true;
     };
 
     programs = {
-      noconfig.util.enable = true;
       noconfig.tui.enable = true;
+      noconfig.util.enable = true;
+
       ssh.enable = true;
       tailscale.enable = true;
       vnstat.enable = true;
