@@ -37,6 +37,7 @@
         easyeffects.enable = true;
         osu.enable = true;
         quickshell.enable = true;
+        rpcs3.enable = true;
       };
 
       services = {

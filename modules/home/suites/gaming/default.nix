@@ -8,7 +8,6 @@ ns.enable {
     programs = {
       noconfig.gaming.enable = true;
       dolphin.enable = true;
-      rpcs3.enable = true;
       wine.enable = true;
     };
   };
