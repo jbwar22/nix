@@ -376,6 +376,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-discord": {
+      "locked": {
+        "lastModified": 1779195837,
+        "narHash": "sha256-FMUh4vXmj6+EjxXyQ2LLe5yUPmQ3+zXQN7KVeYLMGEw=",
+        "owner": "FlameFlag",
+        "repo": "nixpkgs",
+        "rev": "90cdc6283e794e7e276fa60f6d27b98a27454f15",
+        "type": "github"
+      },
+      "original": {
+        "owner": "FlameFlag",
+        "ref": "flameflag/push-vmswpuqmvzpt",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1779622335,
@@ -469,6 +485,7 @@
         "mavica-scripts": "mavica-scripts",
         "nix-gaming": "nix-gaming",
         "nixos-hardware": "nixos-hardware",
+        "nixpkgs-discord": "nixpkgs-discord",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",

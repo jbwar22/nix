@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-discord.url = "github:FlameFlag/nixpkgs/flameflag/push-vmswpuqmvzpt";
     systems.url = "github:nix-systems/x86_64-linux";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
@@ -69,6 +70,7 @@
     channels = {
       stable = inputs.nixpkgs-stable;
       unstable = inputs.nixpkgs-unstable;
+      discord = inputs.nixpkgs-discord;
     };
     nixpkgs-main = "stable";
     lib = channels.${nixpkgs-main}.lib;

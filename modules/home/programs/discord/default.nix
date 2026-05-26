@@ -1,21 +1,7 @@
-{ inputs, lib, pkgs, ns, ... }:
+{ inputs, pkgs, ns, ... }:
 
-with lib; ns.enable (let
-  # github:sersorrel/sys
-  krisp-patcher-python = pkgs.writers.writePython3Bin "krisp-patcher-python" {
-    libraries = with pkgs.python3Packages; [ capstone pyelftools ];
-    flakeIgnore = [
-      "E501" # line too long (82 > 79 characters)
-      "F403" # ‘from module import *’ used; unable to detect undefined names
-      "F405" # name may be undefined, or defined from star imports: module
-    ];
-  } (builtins.readFile ./krisp-patcher.py);
-  krisp-patcher = pkgs.writeShellScriptBin "krisp-patcher" ''
-    ${pkgs.procps}/bin/pkill -9 Discord
-    ${krisp-patcher-python}/bin/krisp-patcher-python ~/.config/discord/0.*/modules/discord_krisp/discord_krisp.node
-  '';
-in {
-  home.packages = with pkgs; [ 
+ns.enable {
+  home.packages = [
     (inputs.wrappers.lib.wrapPackage ({ ... }: {
       inherit pkgs;
       package = pkgs.discord;
@@ -33,8 +19,7 @@ in {
         "--use-vulkan" = true;
       };
     }))
-    krisp-patcher
   ];
 
   custom.home.behavior.impermanence.paths = [ ".config/discord" ];
-})
+}
