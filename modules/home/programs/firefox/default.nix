@@ -138,6 +138,6 @@ with lib; with ns; {
       };
     };
 
-    custom.home.behavior.impermanence.paths = [ ".mozilla/firefox" ".config/mozilla/firefox" ];
+    custom.home.behavior.impermanence.paths = [ ".config/mozilla/firefox" ];
   };
 }
