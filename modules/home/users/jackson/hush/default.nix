@@ -39,11 +39,11 @@ with lib; {
       opts = {
         screens = {
           "BOE NE135A1M-NY1" = {
-            sway.position = "0 0";
+            sway.position = "2560 650";
             clamshell = true;
           };
           "Acer Technologies XV271U M3 140400E433LIJ" = {
-            sway.position = "-2560 -650";
+            sway.position = "0 0";
             specialisations = {
               "work monitor right".sway = {
                 position = "1440 -650";
