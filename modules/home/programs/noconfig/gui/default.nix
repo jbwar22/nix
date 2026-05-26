@@ -8,8 +8,15 @@ ns.enable {
     qpwgraph
     (clib.wrapWaylandElectron inputs pkgs pkgs.spotify)
     sqlitebrowser
-    vlc
     zoom-us
     mullvad-browser
+
+    (inputs.wrappers.lib.wrapPackage ({ ... }: {
+      inherit pkgs;
+      package = pkgs.vlc;
+      env = {
+        DISPLAY = "";
+      };
+    }))
   ];
 }
