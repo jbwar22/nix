@@ -26,6 +26,7 @@ with lib; with ns; {
       templates = null;
       videos = "${config.home.homeDirectory}/videos";
       createDirectories = false;
+      setSessionVariables = true;
     };
 
     xdg.systemDirs = {

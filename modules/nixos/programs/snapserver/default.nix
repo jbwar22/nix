@@ -33,7 +33,7 @@ in {
     # override firewall
     # use nixos-firewall-tool open 1780 to open http port temporarily
     # use nixos-firewall-tool reset to close when done
-    networking.firewall.allowedTCPPorts = [ config.services.snapserver.settings.stream.port ];
+    networking.firewall.allowedTCPPorts = [ config.services.snapserver.settings.tcp-streaming.port ];
 
     services.snapserver = {
       enable = true;

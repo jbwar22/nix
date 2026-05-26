@@ -2,20 +2,19 @@
   description = "jbwar22's system config, home config, and more";
 
   inputs = {
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     systems.url = "github:nix-systems/x86_64-linux";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      url = "github:nix-community/nixvim/nixos-26.05";
+      # inputs.nixpkgs.follows = "nixpkgs-stable";
       inputs.systems.follows = "systems";
       inputs.flake-parts.follows = "flake-parts";
-      inputs.nuschtosSearch.inputs.flake-utils.inputs.systems.follows = "systems";
     };
     wrappers = {
       url = "github:BirdeeHub/nix-wrapper-modules";

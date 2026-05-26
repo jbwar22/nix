@@ -89,6 +89,7 @@ with lib; with ns; {
               device = let
                 fixedPath = if origin.path == "" then "" else "/${origin.path}";
               in "${origin.mntPoint}${fixedPath}${path.path}";
+              fsType = "auto";
               depends = [ origin.mntPoint ];
               neededForBoot = path.neededForBoot;
               options = [ "bind" ];

@@ -3,7 +3,7 @@
 ns.enable (let
   signal = inputs.wrappers.lib.wrapPackage ({ ... }: {
     inherit pkgs;
-    package = pkgs.signal-desktop-bin;
+    package = pkgs.signal-desktop;
     flagSeparator = "=";
     flags = {
       "--wayland-text-input-version" = "3";

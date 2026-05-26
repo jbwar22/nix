@@ -3,8 +3,8 @@
 ns.enable {
   services.swayidle = {
     enable = true;
-    events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock"; }
-    ];
+    events = {
+      "before-sleep" = "${pkgs.swaylock}/bin/swaylock";
+    };
   };
 }

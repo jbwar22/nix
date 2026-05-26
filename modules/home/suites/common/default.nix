@@ -26,7 +26,6 @@ ns.enable {
       kitty.enable = true;
       librewolf.enable = true;
       mpv.enable = true;
-      neofetch.enable = true;
       nixvim.enable = true;
       ranger.enable = true;
       signal.enable = true;
