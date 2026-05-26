@@ -1,4 +1,4 @@
-{ lib, pkgs, ns, ... }:
+{ lib, pkgs, config, ns, ... }:
 
 with lib; with ns; {
   options = opt {
@@ -19,6 +19,8 @@ with lib; with ns; {
     programs.firefox = {
       enable = !cfg.usePackage;
       package = pkgs.firefox;
+
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
 
       profiles = let
         # baseextensions = with channels.nur.repos.rycee.firefox-addons; [ # TODO
@@ -136,6 +138,6 @@ with lib; with ns; {
       };
     };
 
-    custom.home.behavior.impermanence.paths = [ ".mozilla/firefox" ];
+    custom.home.behavior.impermanence.paths = [ ".mozilla/firefox" ".config/mozilla/firefox" ];
   };
 }
