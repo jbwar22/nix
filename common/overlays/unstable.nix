@@ -1,29 +1,20 @@
 channels: final: prev: {
-  inherit (channels.unstable)
+  # inherit (channels.unstable)
 
   # only in unstable
-  librepods
 
   # replace stable with unstable
-  tailscale       # features
-  umu-launcher    # features
-  jigmo           # CJK Extension J support
-  librewolf
-  firefox
 
   # for further overriding in custom.nix
-  dunst
-  sway
-  sway-unwrapped
-  waybar
-  xdg-desktop-portal-wlr
-  xscreensaver
-  ;
+
+  # ;
 
   # for referencing packages that do not need to be unstable system-wide
   unstable = channels.unstable;
 
+
   # other channels
+
   # #506089 (1/2) krisp patch
   discord = channels.discord.discord;
 }
