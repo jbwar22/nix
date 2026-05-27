@@ -1,13 +1,10 @@
 channels: final: prev: {
-  # inherit (channels.unstable)
-
-  # only in unstable
+  inherit (channels.unstable)
 
   # replace stable with unstable
+  sway-unwrapped
 
-  # for further overriding in custom.nix
-
-  # ;
+  ;
 
   # for referencing packages that do not need to be unstable system-wide
   unstable = channels.unstable;
