@@ -40,10 +40,10 @@ in {
       openFirewall = false;
       settings = {
         tcp = {
-          enable = true;
+          enabled = true;
         };
         http = {
-          enable = true;
+          enabled = true;
           docRoot = "${pkgs.snapweb}";
         };
         stream.source = let
