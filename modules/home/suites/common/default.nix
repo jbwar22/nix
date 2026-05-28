@@ -29,6 +29,7 @@ ns.enable {
       nixvim.enable = true;
       ranger.enable = true;
       signal.enable = true;
+      spotify.enable = true;
       sqlitebrowser.enable = true;
       tmux.enable = true;
       udiskie.enable = true;

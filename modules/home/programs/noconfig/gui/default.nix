@@ -1,4 +1,4 @@
-{ inputs, clib, pkgs, ns, ... }:
+{ inputs, pkgs, ns, ... }:
 
 ns.enable {
   home.packages = with pkgs; [
@@ -6,7 +6,6 @@ ns.enable {
     element-desktop
     feh
     qpwgraph
-    (clib.wrapWaylandElectron inputs pkgs pkgs.spotify)
     sqlitebrowser
     zoom-us
     mullvad-browser
