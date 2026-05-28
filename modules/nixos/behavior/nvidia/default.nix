@@ -38,19 +38,19 @@ with lib; ns.enable (let
   };
 
   # define drivers
-  stagingDriver = mkUnstableDriver "production";
+  mainDriver = mkUnstableDriver "production";
   stableDriver = driver-580-142;
 in {
 
-  specialisation.nvidia-staging.configuration = {
-    environment.etc.specialisation.text = "NVIDIA staging";
-    hardware.nvidia.package = mkForce stagingDriver;
+  specialisation.nvidia-stable.configuration = {
+    environment.etc.specialisation.text = "nvidia-stable";
+    hardware.nvidia.package = mkForce stableDriver;
   };
 
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
-    package = stableDriver;
+    package = mainDriver;
     open = true;
 
     modesetting.enable = true;
