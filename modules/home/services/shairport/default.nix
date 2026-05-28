@@ -23,7 +23,7 @@ with lib; with clib; with ns; {
           password-file = ageOrNull config "shairport-password";
           password-arg = if password-file == null then "" else "--password=\"$(${pkgs.coreutils}/bin/cat ${password-file})\"";
         in pkgs.writeShellScript "shairport-sync" ''
-          ${pkgs.shairport-sync}/bin/shairport-sync -o pa -p ${toString cfg.port} \
+          ${pkgs.shairport-sync}/bin/shairport-sync -o pulseaudio -p ${toString cfg.port} \
           -a "${capitalizeDashedString config.custom.common.opts.host.hostname}" ${password-arg}
         '';
       };
