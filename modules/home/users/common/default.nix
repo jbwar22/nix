@@ -3,6 +3,7 @@
 {
   imports = [
     inputs.agenix.homeManagerModules.default
+    inputs.nixcord.homeModules.nixcord
     ../../../common
     ../..
   ];

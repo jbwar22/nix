@@ -6,11 +6,6 @@ inputs: final: prev: {
     ];
   };
 
-  # #506089 (2/2) krisp patch
-  discord = prev.discord.override {
-    withKrisp = true;
-  };
-
   # scripts hack to allow sending signals while muted
   dunst = (prev.dunst.overrideAttrs (oldAttrs: {
     src = inputs.jbwar22-dunst;
