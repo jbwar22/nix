@@ -39,6 +39,14 @@ in {
           if (v == true) then n else "${n}=${v}"
         ) flags;
       };
+      config = {
+        plugins = {
+          favoriteGifSearch.enable = true;
+          fixYoutubeEmbeds.enable = true;
+          fullSearchContext.enable = true;
+          noMiddleClickPaste.enable = true;
+        };
+      };
     };
 
     custom.home.behavior.impermanence.paths = [ ".config/discord" ];
