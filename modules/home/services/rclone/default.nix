@@ -17,6 +17,7 @@ with lib; with clib; with ns; {
       type = with types; nullOr package;
       default = null;
     };
+    installCombinedPackage = mkDisableOption "rclone-combined in path";
     configs = mkOfSubmoduleOption "configs for services" types.attrsOf {
       oncalendar = mkOption {
         description = "set oncalendar for systemd timer, and create systemd service";
@@ -113,6 +114,11 @@ with lib; with clib; with ns; {
         ${writetimefile}
         ${pkgs.procps}/bin/pkill -RTMIN+6 waybar
       '');
+    })
+    (mkIf cfg.installCombinedPackage {
+      home.packages = [
+        cfg.combinedPackage
+      ];
     })
   ]);
 }
