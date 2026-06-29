@@ -3,6 +3,7 @@ channels: final: prev: {
 
   # replace stable with unstable
   sway-unwrapped
+  rpcs3
 
   ;
 
