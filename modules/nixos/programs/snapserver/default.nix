@@ -5,22 +5,30 @@ with lib; with clib; with ns; let
 in {
   options = opt {
     enable = mkEnableOption "snapserver to control multi room audio";
-    sink = mkOption {
-      description = "custom pulse sync";
-      type = with types; bool;
-      default = true;
+    sink = {
+      enable = clib.mkDisableOption "custom pulse sync";
     };
-    shairport-port = mkOption {
-      description = "port for shairport to listen on";
-      type = with types; number;
-      default = 5000;
+    tcp-server = {
+      enable = clib.mkDisableOption "tcp server input";
+      port = mkOption {
+        description = "port for tcp server input to listen on";
+        type = types.number;
+        default = 4953;
+      };
+    };
+    airplay = {
+      port = mkOption {
+        description = "port for shairport to listen on";
+        type = with types; number;
+        default = 5000;
+      };
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     custom.nixos.behavior.shairport-support = {
       enable = mkDefault true;
-      ports = [ cfg.shairport-port ];
+      ports = [ cfg.airplay.port ];
     };
 
     # override systemd service
@@ -33,7 +41,14 @@ in {
     # override firewall
     # use nixos-firewall-tool open 1780 to open http port temporarily
     # use nixos-firewall-tool reset to close when done
-    networking.firewall.allowedTCPPorts = [ config.services.snapserver.settings.tcp-streaming.port ];
+    networking.firewall.allowedTCPPorts = mkMerge [
+      [
+        config.services.snapserver.settings.tcp-streaming.port
+      ]
+      (mkIf cfg.tcp-server.enable [
+        cfg.tcp-server.port
+      ])
+    ];
 
     services.snapserver = {
       enable = true;
@@ -47,12 +62,12 @@ in {
           docRoot = "${pkgs.snapweb}";
         };
         stream.source = let
-          getQuery = x: pipe x.query [
+          getQuery = x: pipe x [
             attrsToList
-            (map (x: "${x.name}=${x.value}"))
+            (map (y: "${y.name}=${y.value}"))
             (concatStringsSep "&")
           ];
-          toURI = (x: "${x.type}://${x.location}?${getQuery x}");
+          toURI = (x: "${x.type}://${x.location}?${getQuery x.query}");
         in mkMerge [
           [(toURI {
             type = "airplay";
@@ -61,12 +76,19 @@ in {
               name = "AirPlay";
               devicename = "${capitalizeDashedString config.custom.common.opts.host.hostname} Snapcast";
               params = let
-                params = singleton "--port=${toString cfg.shairport-port}"
+                params = singleton "--port=${toString cfg.airplay.port}"
                   ++ optional (configfile != null) "--configfile=\${CREDENTIALS_DIRECTORY}/configfile";
               in concatStringsSep " " params;
             };
           })]
-          [(mkIf cfg.sink (toURI {
+          [(mkIf cfg.tcp-server.enable (toURI {
+            type = "tcp";
+            location = "0.0.0.0:${toString cfg.tcp-server.port}";
+            query = {
+              name = "TCP Stream";
+            };
+          }))]
+          [(mkIf cfg.sink.enable (toURI {
             type = "pipe";
             location = "/run/snapserver/fifo";
             query = {
@@ -78,7 +100,7 @@ in {
       };
     };
 
-    services.pipewire.configPackages = [
+    services.pipewire.configPackages = mkIf cfg.sink.enable [
       (pkgs.writeTextDir "share/pipewire/pipewire-pulse.conf.d/50-snapserver-fifo.conf" ''
         pulse.cmd = [{ 
           cmd = "load-module"
