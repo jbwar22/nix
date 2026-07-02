@@ -34,7 +34,9 @@ in {
       "fcitx5/conf/mozc.conf".source = ./config/fcitx5/conf/mozc.conf;
       "fcitx5/conf/classicui.conf".source = ./config/fcitx5/conf/classicui.conf;
       "mozc/config1.db".source = ./config/mozc/config1.db;
-      "mozc/user_dictionary.db".source = mkIf (cfg.user-dictionary != null) (config.lib.file.mkOutOfStoreSymlink cfg.user-dictionary);
+      "mozc/user_dictionary.db" = mkIf (cfg.user-dictionary != null) {
+        source = config.lib.file.mkOutOfStoreSymlink cfg.user-dictionary;
+      };
     };
 
     custom.home.behavior.impermanence.paths = [ ".config/mozc" ];
