@@ -23,7 +23,7 @@ with lib; with ns; {
     };
     
     networking.firewall = {
-      allowedTCPPorts = cfg.ports;
+      allowedTCPPorts = throwIfNot (allUnique cfg.ports) "shairport-support: duplicate shairport ports set" cfg.ports;
       allowedUDPPortRanges = [ { from = 6001; to = 6011; } ];
     };
   };

@@ -5,7 +5,10 @@ with lib; {
     home.stateVersion = "24.11";
 
     custom.home = {
-      services.locker.enable = mkForce false;
+      services = {
+        locker.enable = mkForce false;
+        shairport.enable = true;
+      };
 
       suites = {
         pc.enable = true;
