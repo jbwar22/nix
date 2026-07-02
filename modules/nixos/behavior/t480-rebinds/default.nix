@@ -13,4 +13,11 @@ ns.enable {
       };
     };
   };
+
+  # environment.etc."libinput/local-overrides.quirks".text = lib.mkForce ''
+    # [Serial Keyboards]
+    # MatchUdevType=keyboard
+    # MatchName=keyd virtual keyboard
+    # AttrKeyboardIntegration=internal
+  # '';
 }
