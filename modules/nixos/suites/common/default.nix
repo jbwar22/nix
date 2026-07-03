@@ -13,6 +13,7 @@ ns.enable {
       network.enable = true;
       nix.enable = true;
       skip-wait-online.enable = true;
+      sysrq.enable = true;
       time.enable = true;
       upower.enable = true;
       zswap.enable = true;
