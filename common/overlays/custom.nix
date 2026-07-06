@@ -22,13 +22,6 @@ inputs: final: prev: {
     ];
   });
 
-  # awaiting #530692 to be merged
-  rpcs3 = prev.rpcs3.override {
-    glew = final.glew.override {
-      enableEGL = false;
-    };
-  };
-
   # keep cursor active when hidden
   sway = (prev.sway.override {
     sway-unwrapped = prev.sway-unwrapped.overrideAttrs (oldAttrs: {
