@@ -20,6 +20,7 @@ with lib; with clib; with ns; {
       };
       Service = {
         PrivateTmp = true;
+        KillSignal = "SIGINT"; # hangs on SIGTERM
         ExecStart = let
           password-file = ageOrNull config "shairport-password";
         in pkgs.writeShellScript "shairport-sync" (if password-file == null then ''
