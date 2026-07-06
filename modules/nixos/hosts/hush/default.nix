@@ -19,7 +19,7 @@ with lib; {
         systemd-boot.enable = true;
         systemd-boot.fixResolution = true;
         secure-boot.enable = true;
-        kernel-latest.enable = true;
+        kernel-6_18.enable = true;
         virtualisation.enable = true;
         etc-nixos-symlink.enable = true;
         impermanence = {
