@@ -17,6 +17,7 @@ in {
   options = opt {
     enable = mkEnableOption "discord";
     useNixcord = clib.mkDisableOption "true: use nixcord module to install discord. false: manually wrap nixcord package";
+    usePlugins = mkEnableOption "use vencord / plugins";
   };
 
   config = mkIf cfg.enable {
@@ -35,11 +36,13 @@ in {
       enable = true;
       discord = {
         krisp.enable = true;
+        vencord.enable = cfg.usePlugins;
+        silenceNoModClientWarning = true;
         commandLineArgs = mapAttrsToList (n: v:
           if (v == true) then n else "${n}=${v}"
         ) flags;
       };
-      config = {
+      config = mkIf cfg.usePlugins {
         plugins = {
           favoriteGifSearch.enable = true;
           fixYoutubeEmbeds.enable = true;
