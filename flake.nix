@@ -38,7 +38,7 @@
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
-    nixcord.url = "github:FlameFlag/nixcord";
+    nixcord.url = "github:4evy/nixcord";
     clonck = {
       url = "github:jbwar22/clonck";
       inputs.nixpkgs.follows = "nixpkgs-stable";
