@@ -25,7 +25,10 @@ in {
           { path = ".cache/mesa_shader_cache_db"; origin = "local"; }
         ]
         (mkIf hf.hasDocker [ ".docker" ])
-        (mkIf hf.hasFlatpak [ ".local/share/flatpak" ])
+        (mkIf hf.hasFlatpak [
+          ".local/share/flatpak"
+          ".var/app"
+        ])
       ];
     };
   };

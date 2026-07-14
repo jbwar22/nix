@@ -7,4 +7,6 @@ with lib; ns.enable {
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     config.common.default = "gtk";
   };
+
+  custom.nixos.behavior.impermanence.paths = [ "/var/lib/flatpak" ];
 }
