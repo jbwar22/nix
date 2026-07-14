@@ -2,8 +2,9 @@ channels: final: prev: {
   inherit (channels.unstable)
 
   # replace stable with unstable
-  sway-unwrapped
+  discord # screenshare broken on stable (maybe PR #530836)
   rpcs3
+  sway-unwrapped
 
   ;
 
