@@ -13,6 +13,10 @@ with lib; with ns; let
     "--enable-accelerated-mjpeg-decode" = true;
     "--use-vulkan" = true;
   };
+  argsList = mapAttrsToList (n: v:
+    if (v == true) then n else "${n}=${v}"
+  ) flags;
+  argsString = join " " argsList;
 in {
   options = opt {
     enable = mkEnableOption "discord";
@@ -38,7 +42,7 @@ in {
 
         # from https://github.com/NixOS/nixpkgs/pull/538735
         # almost no confidence this works long term
-        patchedDiscord = pkgs.discord.overrideAttrs (old: {
+        patchedDiscord = (pkgs.discord.overrideAttrs (old: {
           # use rsync to copy modules instead of symlinking
           # see nixpkgs discord package for original implementation
           stageModules = pkgs.writeShellScript "discord-stage-mine" ''
@@ -70,14 +74,11 @@ in {
             ${pkgs.findutils}/bin/find "$out/opt/Discord/modules" \
               -name 'discord_krisp.node' -exec ${discordPatcher}/bin/krisp-patcher-python {} \;
           '';
-        });
+        })).override {
+          commandLineArgs = argsString;
+        };
       in [
-        (inputs.wrappers.lib.wrapPackage ({ ... }: {
-          inherit pkgs;
-          package = patchedDiscord;
-          flagSeparator = "=";
-          inherit flags;
-        }))
+        patchedDiscord
       ];
     })
     (mkIf cfg.useNixcord {
@@ -88,9 +89,7 @@ in {
           vencord.enable = cfg.usePlugins;
           openASAR.enable = false;
           silenceNoModClientWarning = true;
-          commandLineArgs = mapAttrsToList (n: v:
-            if (v == true) then n else "${n}=${v}"
-          ) flags;
+          commandLineArgs = argsList;
         };
         config = mkIf cfg.usePlugins {
           plugins = {
