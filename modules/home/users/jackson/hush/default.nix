@@ -22,6 +22,7 @@ with lib; {
         bulk-link.enable = true;
         default-audio.default-routes = ''
           alsa_card.pci-0000_c1_00.6:output:analog-output-speaker={"channelMap":["FL", "FR"], "channelVolumes":[0.125000, 0.125000], "latencyOffsetNsec":0, "mute":true}
+          alsa_card.pci-0000_c1_00.6:input:analog-input-internal-mic={"channelVolumes":[0.015625, 0.015625], "mute":false, "latencyOffsetNsec":0, "channelMap":["FL", "FR"]}
         '';
       };
 
