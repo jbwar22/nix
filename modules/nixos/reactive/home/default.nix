@@ -21,6 +21,7 @@ in {
           (filter (x: x != null))
         ];
       };
+      kdeconnect-ports.enable = mkIfAnyHMOpt config (config: config.services.kdeconnect.enable) true;
     };
   };
 })

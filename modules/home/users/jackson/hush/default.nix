@@ -33,6 +33,7 @@ with lib; {
         mavica-ingest.enable = true;
         virt-manager.enable = true;
         quickshell.enable = true;
+        kdeconnect.enable = true;
 
         easyeffects = {
           enable = true;
