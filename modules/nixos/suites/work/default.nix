@@ -1,7 +1,7 @@
 { ns, ... }:
 
 ns.enable {
-  custom.nixos.programs = {
-    clamav.enable = true;
+  custom.nixos.behavior = {
+    apparmor.enable = true;
   };
 }
