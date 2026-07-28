@@ -8,6 +8,7 @@ ns.enable {
     };
     behavior = {
       gamepad-support.enable = true;
+      ntsync.enable = true;
     };
   };
 }

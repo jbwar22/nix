@@ -360,4 +360,13 @@ lib: with lib; rec {
     index = length accum;
     value = x;
   }]) [] l;
+
+  writeUdevFile = pkgs: dname: num: text: pkgs.writeTextFile rec {
+    name = "${dname}-rules";
+    destination = "/lib/udev/rules.d/${toString num}-${dname}.rules";
+    checkPhase = ''
+      ${pkgs.systemd}/bin/udevadm verify $out${destination}
+    '';
+    inherit text;
+  };
 }
