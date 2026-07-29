@@ -9,7 +9,13 @@ with lib; with ns; {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkMerge [(mkIf (cfg.enable || config.custom.home.programs.librewolf.enable) {
+    # fixes issue #546204, PR #546288
+    xdg.systemDirs.data = [
+      "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
+      "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
+    ];
+  }) (mkIf cfg.enable {
 
     home.packages = with pkgs; mkIf cfg.usePackage [
       firefox
@@ -138,5 +144,5 @@ with lib; with ns; {
     };
 
     custom.home.behavior.impermanence.paths = [ ".config/mozilla/firefox" ];
-  };
+  })];
 }
