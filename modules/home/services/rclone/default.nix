@@ -1,8 +1,7 @@
 { lib, clib, pkgs, ns, ... }:
 
 with lib; with clib; with ns; {
-  options = opt {
-    enable = mkEnableOption "rclone";
+  options = eopt {
     logDir = mkOption {
       description = "directory to write log files";
       type = with types; nullOr str;

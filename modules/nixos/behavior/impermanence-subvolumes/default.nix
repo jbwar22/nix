@@ -1,8 +1,7 @@
 { config, lib, clib, ns, ... }:
 
 with lib; with ns; {
-  options = with clib; opt {
-    enable = mkEnableOption "impermanence on btrfs";
+  options = with clib; eopt {
     defaultOrigin = mkStrOption "default origin if unspecified";
     devices = mkOption {
       type = with types; listOf (submodule {

@@ -8,8 +8,7 @@ with lib; with clib; with ns; let
   scripts = (import ./scripts) pkgs lib clib config;
   geolocation = ageOrDefault config "geolocation" "0.00:0.00";
 in {
-  options = opt {
-    enable = mkEnableOption "sway wm";
+  options = eopt {
     blueLightFilter = mkOption {
       type = with types; bool;
       description = "run a blue light filter at night";

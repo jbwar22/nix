@@ -1,8 +1,7 @@
 { inputs, lib, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "easyeffects";
+  options = eopt {
     preset = mkOption {
       description = "preset";
       type = with types; nullOr str;

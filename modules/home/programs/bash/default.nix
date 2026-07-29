@@ -1,8 +1,7 @@
 { config, lib, pkgs, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "bash";
+  options = eopt {
     hostcolor = mkOption {
       type = with types; str;
       description = "ansi color for host in PS1";

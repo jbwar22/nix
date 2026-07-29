@@ -5,8 +5,7 @@ with lib; with clib; with ns; (let
   admins = getAdmins users;
   tsop = getTSOp users;
 in {
-  options = opt {
-    enable = mkEnableOption "tailscale";
+  options = eopt {
     serviceContainer = {
       enable = mkEnableOption "services";
       volumesRoot = mkOption {

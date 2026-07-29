@@ -4,8 +4,7 @@ with lib; with ns; let
   colorscheme = config.custom.home.opts.colorscheme;
   hf = config.custom.home.opts.hostfeatures;
 in {
-  options = opt {
-    enable = mkEnableOption "waybar";
+  options = eopt {
     memoryWidth = mkOption {
       type = with types; int;
       default = 12;

@@ -1,8 +1,7 @@
 { config, lib, clib, pkgs, ns, ... }:
 
 with lib; with clib; with ns; {
-  options = opt {
-    enable = mkEnableOption "sway wm";
+  options = eopt {
     authorizedKeys = mkOption {
       type = with types; listOf str;
       description = "list of keys that can connect to root in initrd to unlock disks";

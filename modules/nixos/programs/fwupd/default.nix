@@ -3,8 +3,7 @@
 with lib; with clib; with ns; (let
   admins = getAdmins config.custom.common.opts.host.users;
 in {
-  options = opt {
-    enable = mkEnableOption "fwupd";
+  options = eopt {
     enableService = mkDisableOption "fwupd service";
   };
   config = mkIf cfg.enable {

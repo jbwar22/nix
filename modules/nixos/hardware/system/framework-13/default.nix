@@ -5,9 +5,7 @@ with lib; with ns; {
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  options = opt {
-    enable = mkEnableOption "framework 13 hardware configuration";
-  };
+  options = eopt {};
 
   config = lib.mkIf cfg.enable (let
     kernelOlder = config.boot.kernelPackages.kernelOlder;

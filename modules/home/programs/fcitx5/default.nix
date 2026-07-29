@@ -3,8 +3,7 @@
 with lib; with ns; let
   colorscheme = config.custom.home.opts.colorscheme;
 in {
-  options = opt {
-    enable = mkEnableOption "fcitx5 (japanese ime)";
+  options = eopt {
     basic = mkEnableOption "don't set configuration";
     user-dictionary = mkOption {
       description = "path to user_dictionary.db file";

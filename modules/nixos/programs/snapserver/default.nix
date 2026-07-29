@@ -3,8 +3,7 @@
 with lib; with clib; with ns; let
   configfile = ageOrNull config "snapserver-shairport-config";
 in {
-  options = opt {
-    enable = mkEnableOption "snapserver to control multi room audio";
+  options = eopt {
     sink = {
       enable = clib.mkDisableOption "custom pulse sync";
     };

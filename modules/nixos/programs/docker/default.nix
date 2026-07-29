@@ -4,8 +4,7 @@ with lib; with clib; with ns; (let
   admins = getAdmins config.custom.common.opts.host.users;
   hasBtrfsRoot = config.fileSystems."/".fsType == "btrfs";
 in {
-  options = opt {
-    enable = mkEnableOption "docker";
+  options = eopt {
     enableOnBoot = mkEnableOption "enable on boot";
   };
   config = mkIf cfg.enable {

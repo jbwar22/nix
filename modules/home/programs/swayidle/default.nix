@@ -1,8 +1,7 @@
 { ns, lib, pkgs, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "swayidle";
+  options = eopt {
     sleep-timeout = mkOption {
       type = with types; nullOr int;
       default = null;

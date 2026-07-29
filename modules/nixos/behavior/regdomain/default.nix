@@ -1,8 +1,7 @@
 { lib, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "modprobe config for regulatory domain";
+  options = eopt {
     country = mkOption {
       type = with types; str;
       description = "country code";

@@ -4,8 +4,7 @@ with lib; with ns; (let
   users = config.custom.common.opts.host.users;
   usernames = (attrNames users) ++ [ "root" ];
 in {
-  options = with clib; opt {
-    enable = mkEnableOption "impermanence";
+  options = with clib; eopt {
     device = mkStrOption "btrfs device";
     mntOptions = mkOption {
       type = with types; listOf str;

@@ -1,8 +1,7 @@
 { lib, pkgs, ns, ... }:
 
 with lib; with ns; {
-  options = with types; opt {
-    enable = mkEnableOption "plymouth splash screen on boot";
+  options = with types; eopt {
     theme = mkOption {
       type = str;
       default = "red_loader";

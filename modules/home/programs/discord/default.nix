@@ -18,8 +18,7 @@ with lib; with ns; let
   ) flags;
   argsString = join " " argsList;
 in {
-  options = opt {
-    enable = mkEnableOption "discord";
+  options = eopt {
     usePythonPatch = clib.mkDisableOption "patch via older python patcher";
     useNixcord = mkEnableOption "true: use nixcord module to install discord. false: manually wrap nixcord package";
     usePlugins = mkEnableOption "use vencord / plugins";

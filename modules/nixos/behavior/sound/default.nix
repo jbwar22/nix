@@ -1,8 +1,7 @@
 { lib, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "sound output via pipewire";
+  options = eopt {
     minQuantum = mkOption {
       type = with types; int;
       description = "clock min quantum for low latency support";

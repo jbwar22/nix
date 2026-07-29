@@ -5,9 +5,7 @@ with lib; with ns; {
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  options = opt {
-    enable = mkEnableOption "lenovo t480 hardware configuration";
-  };
+  options = eopt {};
 
   config = lib.mkIf cfg.enable {
     custom.nixos.hardware.cpu.intel.enable = true;

@@ -5,9 +5,7 @@ with lib; with ns; {
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  options = opt {
-    enable = mkEnableOption "gigabyte b550i hardware configuration";
-  };
+  options = eopt {};
 
   config = mkIf cfg.enable {
     custom.nixos.hardware.cpu.amd.enable = true;

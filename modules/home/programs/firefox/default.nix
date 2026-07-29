@@ -1,8 +1,7 @@
 { lib, pkgs, config, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "firefox";
+  options = eopt {
     usePackage = with types; mkOption {
       description = "use just the package rather than configuration";
       type = bool;

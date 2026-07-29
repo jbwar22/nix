@@ -1,8 +1,7 @@
 { config, lib, clib, pkgs, ns, ... }:
 
 with lib; with clib; with ns; {
-  options = opt {
-    enable = mkEnableOption "shairport-sync systemd service";
+  options = eopt {
     port = mkOption {
       description = "port for shairport to listen on";
       type = with types; number;

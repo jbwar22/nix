@@ -1,8 +1,7 @@
 { lib, clib, ns, ... }:
 
 {
-  options = with lib; with clib; ns.opt {
-    enable = mkEnableOption "home impermanence";
+  options = with lib; with clib; ns.eopt {
     paths = mkOption {
       type = with types; listOf (coercedTo str (x:
         if typeOf x == "string" then {

@@ -1,8 +1,7 @@
 { config, lib, pkgs, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "firefox";
+  options = eopt {
     defaultBrowser = mkOption {
       description = "default browser desktop file";
       type = types.str;

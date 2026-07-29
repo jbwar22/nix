@@ -1,8 +1,7 @@
 { config, lib, pkgs, inputs, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "mpv";
+  options = eopt {
     compat = mkEnableOption "compatibility";
   };
 

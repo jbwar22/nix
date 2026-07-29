@@ -3,8 +3,7 @@
 with lib; with ns; (let
   hf = config.custom.home.opts.hostfeatures;
 in {
-  options = opt {
-    enable = mkEnableOption "home impermanence";
+  options = eopt {
     paths = mkOption {
       type = with types; listOf anything;
       default = [];

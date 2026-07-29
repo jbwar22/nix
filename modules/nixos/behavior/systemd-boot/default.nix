@@ -1,8 +1,7 @@
 { lib, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "systemd-boot";
+  options = eopt {
     fixResolution = mkEnableOption "consolemode -> auto";
   };
 

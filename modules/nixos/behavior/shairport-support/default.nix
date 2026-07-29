@@ -1,8 +1,7 @@
 { lib, ns, ... }:
 
 with lib; with ns; {
-  options = opt {
-    enable = mkEnableOption "extra required options for easy use of shairport-sync";
+  options = eopt {
     ports = mkOption {
       description = "ports to open for shairport-sync";
       type = with types; listOf number;

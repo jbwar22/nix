@@ -52,6 +52,14 @@ lib: with lib; rec {
 
   # namespace helper
 
+  # basic definition for an enable option
+  getEnableOpt = modulePath: let
+    flakeRoot = ./..;
+    relativeModulePath = path.removePrefix flakeRoot modulePath;
+  in {
+    enable = mkEnableOption "the module located at ${relativeModulePath}";
+  };
+
   # generate namespace helpers given config and a path, from which the namespace will be determined
   # example: (in which ./. refers to flakeRoot/modules/home/programs/example)
   # x = ns config ./.;
@@ -68,20 +76,16 @@ lib: with lib; rec {
       tail                                    # [ "home" "programs" "example" ]
       (concat [ "custom" ])                   # [ "custom" "home" "programs" "example" ]
     ];
-  in {
+  in rec {
     cfg = getAttrFromPath customNamespaceList config;   # config.custom.home.programs.example
     opt = setAttrByPath customNamespaceList;            # (val: { custom.home.programs.example = val; })
+    eopt = val: opt ((getEnableOpt modulePath) // val);
   };
 
   # ns module helpers
 
-  mkNsEnableModule = config: modulePath: body: with ns config modulePath; let
-    flakeRoot = ./..;
-    relativeModulePath = path.removePrefix flakeRoot modulePath;
-  in {
-    options = opt {
-      enable = mkEnableOption "the module located at ${relativeModulePath}";
-    };
+  mkNsEnableModule = config: modulePath: body: with ns config modulePath; {
+    options = opt (getEnableOpt modulePath);
     config = mkIf cfg.enable body;
   };
 
@@ -92,7 +96,7 @@ lib: with lib; rec {
     nsArg = rec {
       enable = mkNsEnableModule config module;
       full = ns config module;
-      inherit (full) cfg opt;
+      inherit (full) cfg opt eopt;
     };
   in ((import module) (moduleArgs // { ns = nsArg; }));
 
