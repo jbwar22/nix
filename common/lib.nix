@@ -92,13 +92,22 @@ lib: with lib; rec {
   # ns import helpers
 
   # home-manager freaks out if pkgs isn't a required input!
-  augmentNamespaceArg = config: module: { pkgs, ... }@moduleArgs: let
+  augmentNamespaceArg = config: modulePath: let
     nsArg = rec {
-      enable = mkNsEnableModule config module;
-      full = ns config module;
+      enable = mkNsEnableModule config modulePath;
+      full = ns config modulePath;
       inherit (full) cfg opt eopt;
     };
-  in ((import module) (moduleArgs // { ns = nsArg; }));
+    moduleFunc = import modulePath;
+    moduleArgs = pipe moduleFunc [
+      functionArgs
+      (filterAttrs (n: v: n != "ns"))
+    ];
+    finalModuleFunc = pipe moduleFunc [
+      (moduleFunc: args: moduleFunc (args // { ns = nsArg; }))
+      (moduleFunc: setFunctionArgs moduleFunc moduleArgs)
+    ];
+  in finalModuleFunc;
 
   allAugmentNamespaceArg = config: imports: map (imp: augmentNamespaceArg config imp) imports;
 
