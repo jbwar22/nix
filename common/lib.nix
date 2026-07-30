@@ -52,6 +52,17 @@ lib: with lib; rec {
 
   # namespace helper
 
+  # magic sauce to add extra arguments to a function
+  # needed for ns because home-manager seems to check functionArgs when specifying args to modules
+  partiallyApplyFormal = innerFunc: extraArgs: let
+    innerFuncArgs = functionArgs innerFunc;
+    extraArgNames = attrNames extraArgs;
+    attrNotInExtraArgNames = (n: v: !(any (x: x == n) extraArgNames));
+    outerFuncArgs = filterAttrs attrNotInExtraArgNames innerFuncArgs;
+    basicOuterFunc = (outerArgs: innerFunc (outerArgs // extraArgs));
+    outerFunc = setFunctionArgs basicOuterFunc outerFuncArgs;
+  in outerFunc;
+
   # basic definition for an enable option
   getEnableOpt = modulePath: let
     flakeRoot = ./..;
@@ -91,23 +102,13 @@ lib: with lib; rec {
 
   # ns import helpers
 
-  # home-manager freaks out if pkgs isn't a required input!
-  augmentNamespaceArg = config: modulePath: let
-    nsArg = rec {
+  augmentNamespaceArg = config: modulePath: partiallyApplyFormal (import modulePath) {
+    ns = rec {
       enable = mkNsEnableModule config modulePath;
       full = ns config modulePath;
       inherit (full) cfg opt eopt;
     };
-    moduleFunc = import modulePath;
-    moduleArgs = pipe moduleFunc [
-      functionArgs
-      (filterAttrs (n: v: n != "ns"))
-    ];
-    finalModuleFunc = pipe moduleFunc [
-      (moduleFunc: args: moduleFunc (args // { ns = nsArg; }))
-      (moduleFunc: setFunctionArgs moduleFunc moduleArgs)
-    ];
-  in finalModuleFunc;
+  };
 
   allAugmentNamespaceArg = config: imports: map (imp: augmentNamespaceArg config imp) imports;
 
