@@ -92,7 +92,7 @@ in {
         };
         config = mkIf cfg.usePlugins {
           plugins = {
-            favoriteGifSearch.enable = true;
+            # favoriteGifSearch.enable = true;
             fixYoutubeEmbeds.enable = true;
             fullSearchContext.enable = true;
             noMiddleClickPaste.enable = true;
