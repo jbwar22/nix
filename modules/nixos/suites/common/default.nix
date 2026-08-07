@@ -12,6 +12,7 @@ ns.enable {
       locale.enable = true;
       network.enable = true;
       nix.enable = true;
+      nix-ld.enable = true;
       skip-wait-online.enable = true;
       sysrq.enable = true;
       time.enable = true;
