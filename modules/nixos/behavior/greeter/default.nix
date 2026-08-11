@@ -1,13 +1,27 @@
-{ pkgs, ns, ... }:
+{ pkgs, lib, ns, ... }:
 
-ns.enable {
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --sessions ${pkgs.sway}/share/wayland-sessions --remember --remember-user-session";
-        user = "greeter";
+with lib; with ns; {
+  options = eopt {
+    sessions = mkOption {
+      type = with types; listOf package;
+      description = "sessions to be used";
+      default = [];
+    };
+  };
+
+  config = mkIf cfg.enable {
+    services.greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --remember --remember-user-session";
+          user = "greeter";
+        };
       };
     };
+
+    services.displayManager.sessionPackages = cfg.sessions;
+
+    custom.nixos.behavior.impermanence.paths = [ "/var/cache/tuigreet" ];
   };
 }

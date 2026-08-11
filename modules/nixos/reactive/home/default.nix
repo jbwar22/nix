@@ -1,6 +1,6 @@
 { config, lib, clib, ns, ... }:
 
-with clib; ns.enable (let
+with lib; with clib; ns.enable (let
   users = config.custom.common.opts.host.users;
 in {
   custom.nixos = {
@@ -12,7 +12,7 @@ in {
     behavior = {
       shairport-support = mkIfAnyHMOpt config (config: config.custom.home.services.shairport.enable) {
         enable = true;
-        ports = with lib; pipe users [
+        ports = pipe users [
           (getHMOpt config (config:
             if config.custom.home.services.shairport.enable then (
               config.custom.home.services.shairport.port
@@ -22,6 +22,10 @@ in {
         ];
       };
       kdeconnect-ports.enable = mkIfAnyHMOpt config (config: config.services.kdeconnect.enable) true;
+      greeter.sessions = pipe users [
+        (getHMOpt config (config: config.custom.home.opts.sessions))
+        mkMerge
+      ];
     };
   };
 })
