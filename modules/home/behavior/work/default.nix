@@ -19,7 +19,10 @@ ns.enable {
     timers.work-hourly = {
       Unit.Description = "timer for hourly work script";
       Install.WantedBy = [ "timers.target" ];
-      Timer.OnCalendar = "hourly";
+      Timer = {
+        OnCalendar = "hourly";
+        Persistent = false;
+      };
     };
   };
 }
