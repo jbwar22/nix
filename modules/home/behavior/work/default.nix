@@ -20,8 +20,8 @@ ns.enable {
       Unit.Description = "timer for hourly work script";
       Install.WantedBy = [ "timers.target" ];
       Timer = {
-        OnCalendar = "hourly";
-        Persistent = false;
+        OnActiveSec = "1h";
+        OnUnitActiveSec = "1h";
       };
     };
   };
