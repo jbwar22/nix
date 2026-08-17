@@ -10,11 +10,7 @@ with lib; with ns; {
   };
 
   config = mkMerge [(mkIf (cfg.enable || config.custom.home.programs.librewolf.enable) {
-    # fixes issue #546204, PR #546288
-    xdg.systemDirs.data = [
-      "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
-      "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
-    ];
+    # shared firefox/librewolf config goes here
   }) (mkIf cfg.enable {
 
     home.packages = with pkgs; mkIf cfg.usePackage [
