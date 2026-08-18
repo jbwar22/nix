@@ -1,5 +1,5 @@
 outputs: pkgs: with pkgs.lib; let
-  subvolPrefixes = cfg: pipe cfg.config.custom.nixos.behavior.impermanence.devices [
+  subvolPrefixes = cfg: pipe cfg.config.custom.nixos.behavior.impermanence-subvolumes.devices [
     (map (device: map (origin: let
       subvolRoot = if device.subvol == "/" then "" else "${device.subvol}/";
     in "${subvolRoot}${origin.path}") device.origins))
@@ -28,7 +28,7 @@ outputs: pkgs: with pkgs.lib; let
   ];
   impermanenceHosts = pipe outputs.nixosConfigurations [
     attrsToList
-    (filter (x: x.value.config.custom.nixos.behavior.impermanence.enable))
+    (filter (x: x.value.config.custom.nixos.behavior.impermanence-subvolumes.enable))
   ];
   hasHosts = (length impermanenceHosts) != 0;
   mounts = (pipe impermanenceHosts [
