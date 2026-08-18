@@ -238,6 +238,26 @@
         "type": "github"
       }
     },
+    "impermanence-subvolumes": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787083356,
+        "narHash": "sha256-B7Xxg3A093teTXeMl4EH6xVDSl927eVLOdCJGlusT3A=",
+        "owner": "jbwar22",
+        "repo": "impermanence-subvolumes",
+        "rev": "ae1c53a76e4fad0f745e7c7bb73003e513853951",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jbwar22",
+        "repo": "impermanence-subvolumes",
+        "type": "github"
+      }
+    },
     "jbwar22-dunst": {
       "flake": false,
       "locked": {
@@ -535,6 +555,7 @@
         "flake-parts": "flake-parts",
         "framework-dsp": "framework-dsp",
         "home-manager": "home-manager",
+        "impermanence-subvolumes": "impermanence-subvolumes",
         "jbwar22-dunst": "jbwar22-dunst",
         "jbwar22-mpv-scripts": "jbwar22-mpv-scripts",
         "lanzaboote": "lanzaboote",

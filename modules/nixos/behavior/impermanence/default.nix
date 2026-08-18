@@ -18,7 +18,7 @@ in {
     };
   };
   config = mkIf cfg.enable {
-    custom.nixos.behavior.impermanence-subvolumes = {
+    environment.impermanence-subvolumes = {
       enable = true;
       defaultOrigin = "back";
       devices = [

@@ -11,7 +11,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    custom.home.behavior.impermanence-subvolumes = {
+    environment.impermanence-subvolumes = {
       enable = true;
       paths = mkMerge [
         cfg.paths

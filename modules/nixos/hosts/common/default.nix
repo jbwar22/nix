@@ -6,6 +6,7 @@ with lib; with clib; {
     inputs.agenix.nixosModules.default
     inputs.nix-gaming.nixosModules.pipewireLowLatency
     inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.impermanence-subvolumes.nixosModules.impermanence-subvolumes
     ../..
     ../../../common
   ];

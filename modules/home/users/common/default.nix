@@ -4,6 +4,7 @@
   imports = [
     inputs.agenix.homeManagerModules.default
     inputs.nixcord.homeModules.nixcord
+    inputs.impermanence-subvolumes.homeManagerModules.impermanence-subvolumes
     ../../../common
     ../..
   ];

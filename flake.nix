@@ -5,6 +5,11 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     systems.url = "github:nix-systems/x86_64-linux";
+    impermanence-subvolumes = {
+      # url = "git+file:///home/jackson/documents/repos/impermanence-subvolumes";
+      url = "github:jbwar22/impermanence-subvolumes";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -141,14 +146,16 @@
     );
 
     packages = genAttrs supportedSystems (system: let
-      pkgs = channels.${nixpkgs-main}.legacyPackages.${system};
+      # pkgs = channels.${nixpkgs-main}.legacyPackages.${system};
       nixvim-package = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
         module = import ./modules/nixvim;
         extraSpecialArgs = { inherit inputs clib self; };
       };
+      ic-pkgs =  inputs.impermanence-subvolumes.packages;
     in {
       nixvim = nixvim-package;
-      impermanence-check = (import ./other/impermanence-check.nix) self pkgs;
-    });
+    } // (if (hasAttr system ic-pkgs) then {
+      impermanence-check = ic-pkgs.${system}.impermanence-check.override { inherit nixosConfigurations; };
+    } else {}));
   };
 }
