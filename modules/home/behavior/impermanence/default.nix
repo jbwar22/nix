@@ -30,5 +30,9 @@ in {
         ])
       ];
     };
+
+    home.activation.createTmp = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      [[ -L "$HOME/tmp" ]] || run mkdir -p "$HOME/tmp"
+    '';
   };
 })
