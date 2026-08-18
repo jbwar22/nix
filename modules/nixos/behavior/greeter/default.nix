@@ -22,6 +22,8 @@ with lib; with ns; {
 
     services.displayManager.sessionPackages = cfg.sessions;
 
-    custom.nixos.behavior.impermanence.paths = [ "/var/cache/tuigreet" ];
+    custom.nixos.behavior.impermanence.paths = [
+      { path = "/var/cache/tuigreet"; origin = "local"; }
+    ];
   };
 }
