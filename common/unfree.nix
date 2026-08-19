@@ -6,7 +6,6 @@
   "nvidia-settings"
   "nvidia-x11"
   "pycharm-professional"
-  "rpcs3"
   "slack"
   "spotify"
   "steam"

@@ -2,7 +2,6 @@ channels: final: prev: {
   inherit (channels.unstable)
 
   # replace stable with unstable
-  rpcs3
   sway-unwrapped
 
   ;
