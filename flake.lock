@@ -245,15 +245,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1787083356,
-        "narHash": "sha256-B7Xxg3A093teTXeMl4EH6xVDSl927eVLOdCJGlusT3A=",
+        "lastModified": 1787107081,
+        "narHash": "sha256-ezZE33uO9MpnFSqq1FgZHzVnqDyHR6OZw4atHBNl694=",
         "owner": "jbwar22",
         "repo": "impermanence-subvolumes",
-        "rev": "ae1c53a76e4fad0f745e7c7bb73003e513853951",
+        "rev": "9bd597f82c7012d94a724f03337f59d09d0a4732",
         "type": "github"
       },
       "original": {
         "owner": "jbwar22",
+        "ref": "26.05",
         "repo": "impermanence-subvolumes",
         "type": "github"
       }

@@ -7,7 +7,7 @@
     systems.url = "github:nix-systems/x86_64-linux";
     impermanence-subvolumes = {
       # url = "git+file:///home/jackson/documents/repos/impermanence-subvolumes";
-      url = "github:jbwar22/impermanence-subvolumes";
+      url = "github:jbwar22/impermanence-subvolumes/26.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     nixos-hardware = {

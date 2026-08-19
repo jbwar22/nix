@@ -1,4 +1,4 @@
-{ config, lib, clib, ns, ... }:
+{ inputs, self, config, lib, clib, pkgs, ns, ... }:
 
 with lib; with ns; (let
   users = config.custom.common.opts.host.users;
@@ -62,5 +62,15 @@ in {
     });
 
     nix.settings.build-dir = "/persist/local/build";
+
+    environment.systemPackages = let
+      is-pkgs = inputs.impermanence-subvolumes.packages.${pkgs.stdenv.hostPlatform.system};
+      check = is-pkgs.impermanence-check.override { inherit (self) nixosConfigurations; };
+      hostname = config.custom.common.opts.host.hostname;
+    in [
+      (pkgs.writeShellScriptBin "impermanence-check" ''
+        exec -a "$0" sudo ${check}/bin/impermanence-check ${hostname} "$@"
+      '')
+    ];
   };
 })
