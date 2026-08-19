@@ -5,5 +5,6 @@ ns.enable {
     openvpn
     networkmanager-openvpn
     wireguard-tools
+    wireproxy
   ];
 }
