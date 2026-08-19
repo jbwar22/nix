@@ -1,6 +1,6 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 
-with lib; {
+{
   imports = [
     inputs.nixos-hardware.nixosModules.gigabyte-b550
   ];
@@ -27,6 +27,7 @@ with lib; {
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
         pipewire-low-latency.enable = true;
+        sound.rnnoise.enable = true;
         tpm.enable = true;
         i2c.enable = true;
         remote-unlock = {
