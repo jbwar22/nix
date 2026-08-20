@@ -151,11 +151,8 @@
         module = import ./modules/nixvim;
         extraSpecialArgs = { inherit inputs clib self; };
       };
-      ic-pkgs =  inputs.impermanence-subvolumes.packages;
     in {
       nixvim = nixvim-package;
-    } // (if (hasAttr system ic-pkgs) then {
-      impermanence-check = ic-pkgs.${system}.impermanence-check.override { inherit nixosConfigurations; };
-    } else {}));
+    });
   };
 }
