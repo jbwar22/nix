@@ -1,4 +1,4 @@
-{ inputs, config, lib, clib, pkgs, ns, ... }:
+{ config, lib, clib, ns, ... }:
 
 with lib; with ns; (let
   users = config.custom.common.opts.host.users;
@@ -62,11 +62,5 @@ in {
     });
 
     nix.settings.build-dir = "/persist/local/build";
-
-    environment.systemPackages = let
-      is-pkgs = inputs.impermanence-subvolumes.packages.${pkgs.stdenv.hostPlatform.system};
-    in [
-      (is-pkgs.impermanence-check.override { inherit config; })
-    ];
   };
 })
