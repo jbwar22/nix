@@ -245,11 +245,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787250178,
-        "narHash": "sha256-TA7nfQ6kE+K7aH5IBQEG7YEkQ8udWH4mheDbTwGdVNk=",
+        "lastModified": 1787326648,
+        "narHash": "sha256-1yxC/jKf/1JiOulc3Mn9YTUp75BsEsi4OITScRLWhu8=",
         "owner": "jbwar22",
         "repo": "impermanence-subvolumes",
-        "rev": "2d5467c37d7cb3741ce858e9dde8c4aae4478199",
+        "rev": "35fb78bae32e9e9ecf992fdcab6b683e79e04e41",
         "type": "github"
       },
       "original": {
