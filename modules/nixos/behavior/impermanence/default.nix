@@ -17,7 +17,7 @@ in {
       default = [];
     };
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     environment.impermanence-subvolumes = {
       enable = true;
       defaultOrigin = "back";

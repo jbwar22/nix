@@ -13,7 +13,7 @@ with lib; with ns; {
       default = [];
     };
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     custom.home.opts.aliases = {
       ll = "ls -hal";
       # rb = "nixos-rebuild switch --sudo";

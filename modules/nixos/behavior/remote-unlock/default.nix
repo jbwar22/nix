@@ -27,7 +27,7 @@ with lib; with clib; with ns; {
       default = 0;
     };
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     boot.initrd = {
       network = {
         enable = true;

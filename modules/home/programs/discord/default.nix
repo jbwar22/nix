@@ -24,7 +24,7 @@ in {
     usePlugins = mkEnableOption "use vencord / plugins";
   };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = ecfg (mkMerge [
     { # shared options
       custom.home.behavior.impermanence.paths = [ ".config/discord" ];
     }

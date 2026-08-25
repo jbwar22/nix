@@ -12,7 +12,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
 
     i18n.inputMethod = {
       enable = true;

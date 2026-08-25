@@ -9,7 +9,7 @@ with lib; with ns; {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     home.packages = with pkgs; [
       xdg-utils
     ];

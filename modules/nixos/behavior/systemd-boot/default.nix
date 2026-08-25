@@ -5,7 +5,7 @@ with lib; with ns; {
     fixResolution = mkEnableOption "consolemode -> auto";
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     boot.loader = {
       systemd-boot = {
         enable = true;

@@ -11,7 +11,7 @@ with lib; with ns; {
 
   config = mkMerge [(mkIf (cfg.enable || config.custom.home.programs.librewolf.enable) {
     # shared firefox/librewolf config goes here
-  }) (mkIf cfg.enable {
+  }) (ecfg {
 
     home.packages = with pkgs; mkIf cfg.usePackage [
       firefox

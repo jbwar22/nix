@@ -8,7 +8,7 @@ with lib; with ns; {
       default = null;
     };
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     services.easyeffects = {
       enable = true;
       preset = mkIf (cfg.preset != null) cfg.preset;

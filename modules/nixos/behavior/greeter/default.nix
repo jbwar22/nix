@@ -9,7 +9,7 @@ with lib; with ns; {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     services.greetd = {
       enable = true;
       settings = {

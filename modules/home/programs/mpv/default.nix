@@ -5,7 +5,7 @@ with lib; with ns; {
     compat = mkEnableOption "compatibility";
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     programs.mpv = {
       enable = true;
 

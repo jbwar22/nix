@@ -8,7 +8,7 @@ with lib; with ns; {
       default = [ 5000 ];
     };
   };
-  config = lib.mkIf cfg.enable {
+  config = ecfg {
     # taken from:
     # https://github.com/NixOS/nixpkgs/blob/nixos-24.11/nixos/modules/services/networking/shairport-sync.nix
     # needed separate because I want to run shairport-sync itself via home-manager as a user service

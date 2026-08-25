@@ -9,7 +9,7 @@ with lib; with clib; with ns; {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     systemd.user.enable = mkDefault true;
     systemd.user.services.shairport-sync = {
       Unit = {

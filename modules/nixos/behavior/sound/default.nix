@@ -5,7 +5,7 @@ with lib; with ns; {
     rnnoise.enable = mkEnableOption "rnnoise denoising for input";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = ecfg {
     security.rtkit.enable = true;
 
     services.pipewire = mkMerge [{

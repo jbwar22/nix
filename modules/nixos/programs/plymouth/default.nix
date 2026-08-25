@@ -9,7 +9,7 @@ with lib; with ns; {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = ecfg {
     boot.kernelParams = [ "quiet" ];
     boot.initrd.systemd.enable = true;
     boot.plymouth = rec {

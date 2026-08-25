@@ -63,51 +63,33 @@ lib: with lib; rec {
     outerFunc = setFunctionArgs basicOuterFunc outerFuncArgs;
   in outerFunc;
 
-  # basic definition for an enable option
-  getEnableOpt = modulePath: let
-    flakeRoot = ./..;
-    relativeModulePath = path.removePrefix flakeRoot modulePath;
-  in {
-    enable = mkEnableOption "the module located at ${relativeModulePath}";
-  };
-
   # generate namespace helpers given config and a path, from which the namespace will be determined
   # example: (in which ./. refers to flakeRoot/modules/home/programs/example)
-  # x = ns config ./.;
-  # x = {
-  #   cfg = config.custom.home.programs.example;
-  #   opt = (val: { custom.home.programs.example = val; });
-  # }
+  # x = mkNsHelpers config ./.;
   # (code annotated with example)
-  ns = config: modulePath: let
+  mkNsHelpers = config: modulePath: let
     modulesRoot = ../modules;
-    customNamespaceList = pipe modulePath [   # flakeRoot/modules/home/programs/example
-      (path.removePrefix modulesRoot)         # "./home/programs/example"
-      (splitString "/")                       # [ "." "home" "programs" "example" ]
-      tail                                    # [ "home" "programs" "example" ]
-      (concat [ "custom" ])                   # [ "custom" "home" "programs" "example" ]
+    relativeModulePath = path.removePrefix modulesRoot modulePath;
+    customNamespaceList = pipe relativeModulePath [ # "./home/programs/example"
+      (splitString "/")                             # [ "." "home" "programs" "example" ]
+      tail                                          # [ "home" "programs" "example" ]
+      (concat [ "custom" ])                         # [ "custom" "home" "programs" "example" ]
     ];
   in rec {
     cfg = getAttrFromPath customNamespaceList config;   # config.custom.home.programs.example
     opt = setAttrByPath customNamespaceList;            # (val: { custom.home.programs.example = val; })
-    eopt = val: opt ((getEnableOpt modulePath) // val);
-  };
-
-  # ns module helpers
-
-  mkNsEnableModule = config: modulePath: body: with ns config modulePath; {
-    options = opt (getEnableOpt modulePath);
-    config = mkIf cfg.enable body;
+    ecfg = val: mkIf cfg.enable val;
+    eopt = val: opt ({ enable = mkEnableOption "the module ${relativeModulePath}"; } // val);
+    enable = body: {
+      options = eopt {};
+      config = ecfg body;
+    };
   };
 
   # ns import helpers
 
   augmentNamespaceArg = config: modulePath: partiallyApplyFormal (import modulePath) {
-    ns = rec {
-      enable = mkNsEnableModule config modulePath;
-      full = ns config modulePath;
-      inherit (full) cfg opt eopt;
-    };
+    ns = mkNsHelpers config modulePath;
   };
 
   allAugmentNamespaceArg = config: imports: map (imp: augmentNamespaceArg config imp) imports;
@@ -121,13 +103,13 @@ lib: with lib; rec {
   # get a list of attrset names leading to nsref in a simple attrset
   # example:
   # [ "a" ] { b.c.d = nsref; } -> [ "a", "b", "c", "d" ]
-  getPathFromAttr = currpath: attr: if attr == ns then currpath else let
+  getPathFromAttr = currpath: attr: if attr == nsref then currpath else let
     next = findFirst (_: true) null (attrNames attr);
   in getPathFromAttr (currpath ++ [ next ]) attr.${next};
 
   # generate namespace helpers given simple attrset defining namespace 
   # example: use `with` to bring helpers into module context
-  # with lib; with manualns config { home.programs.test = nsref }; { ... }
+  # with clib.manualns config { home.programs.test = nsref }; { ... }
   manualns = config: namespace: let
     customNamespaceList = getPathFromAttr [ "custom" ] namespace;
   in {

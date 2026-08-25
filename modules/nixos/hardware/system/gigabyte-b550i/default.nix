@@ -7,7 +7,7 @@ with lib; with ns; {
 
   options = eopt {};
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     custom.nixos.hardware.cpu.amd.enable = true;
 
     custom.nixos.behavior.impermanence = {

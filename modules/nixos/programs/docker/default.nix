@@ -7,7 +7,7 @@ in {
   options = eopt {
     enableOnBoot = mkEnableOption "enable on boot";
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     virtualisation.docker = {
       enable = true;
       storageDriver = mkIf hasBtrfsRoot "btrfs";

@@ -8,7 +8,7 @@ with lib; with ns; {
       default = "US";
     };
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     boot.extraModprobeConfig = ''
       options cfg80211 ieee80211_regdom="${cfg.country}"
     '';

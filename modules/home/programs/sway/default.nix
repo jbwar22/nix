@@ -32,9 +32,10 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable (recursiveUpdate (opt {
+  config = ecfg (mkMerge [(opt {
     shortcuts = import ./shortcuts pkgs lib config;
-  }) {
+  })
+  {
     custom.home.opts = {
       sessions = [ pkgs.sway ];
       aliases = {
@@ -400,5 +401,5 @@ in {
         (concatStringsSep "\n")
       ]);
     };
-  });
+  }]);
 }

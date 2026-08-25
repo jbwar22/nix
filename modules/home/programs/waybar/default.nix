@@ -12,7 +12,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (let
+  config = ecfg (let
 
     clonck = inputs.clonck.packages.${pkgs.stdenv.hostPlatform.system}.clonck;
 

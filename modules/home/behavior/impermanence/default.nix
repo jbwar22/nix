@@ -10,7 +10,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     environment.impermanence-subvolumes = {
       enable = true;
       paths = mkMerge [

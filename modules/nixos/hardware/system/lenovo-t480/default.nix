@@ -7,7 +7,7 @@ with lib; with ns; {
 
   options = eopt {};
 
-  config = lib.mkIf cfg.enable {
+  config = ecfg {
     custom.nixos.hardware.cpu.intel.enable = true;
 
     # nixos-hardware overrides

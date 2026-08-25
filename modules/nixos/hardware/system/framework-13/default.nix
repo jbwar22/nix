@@ -7,7 +7,7 @@ with lib; with ns; {
 
   options = eopt {};
 
-  config = lib.mkIf cfg.enable (let
+  config = ecfg (let
     kernelOlder = config.boot.kernelPackages.kernelOlder;
     kernelAtLeast = config.boot.kernelPackages.kernelAtLeast;
     # fixed in linux 7.0

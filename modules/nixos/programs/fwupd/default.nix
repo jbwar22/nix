@@ -6,7 +6,7 @@ in {
   options = eopt {
     enableService = mkDisableOption "fwupd service";
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     services.fwupd.enable = true;
     users = setUserGroups admins [ "input" ];
     systemd.timers.fwupd-refresh.enable = cfg.enableService;

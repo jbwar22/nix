@@ -24,7 +24,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = ecfg {
     custom.nixos.behavior.shairport-support = {
       enable = mkDefault true;
       ports = [ cfg.airplay.port ];

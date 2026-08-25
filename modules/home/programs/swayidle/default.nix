@@ -8,7 +8,7 @@ with lib; with ns; {
       description = "lock timeout in seconds, or null for no lock timeout";
     };
   };
-  config = mkIf cfg.enable {
+  config = ecfg {
     services.swayidle = let
       swaylock-command = "${pkgs.swaylock}/bin/swaylock -f";
     in {

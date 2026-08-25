@@ -29,7 +29,7 @@ with lib; with clib; with ns; {
     };
   };
 
-  config = mkIf cfg.enable (let
+  config = ecfg (let
     configs = filterAttrs (name: c: let 
       valid = c.rcloneargs != null && c.rcloneconf != null;
     in warnIfNot valid "missing agenix files for rclone def ${name}" valid) cfg.configs;
