@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 
 with lib; {
   imports = [
@@ -19,7 +19,10 @@ with lib; {
         systemd-boot.enable = true;
         systemd-boot.fixResolution = true;
         secure-boot.enable = true;
-        kernel-6_18.enable = true;
+        kernel = {
+          default = pkgs.linuxPackages_7_2;
+          extra = [ pkgs.linuxPackages_6_18 ];
+        };
         virtualisation.enable = true;
         etc-nixos-symlink.enable = true;
         impermanence = {

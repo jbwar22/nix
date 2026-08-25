@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports = [
@@ -23,7 +23,7 @@
         };
         etc-nixos-symlink.enable = true;
         virtualisation.enable = true;
-        kernel-zen.enable = true;
+        kernel.default = pkgs.linuxPackages_zen;
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
         pipewire-low-latency.enable = true;

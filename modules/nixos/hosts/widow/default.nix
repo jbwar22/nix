@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 
 with lib; {
   imports = [
@@ -18,7 +18,7 @@ with lib; {
 
       behavior = {
         systemd-boot.enable = true;
-        kernel-6_18.enable = true;
+        kernel.default = pkgs.linuxPackages_6_18;
       };
 
       programs = {
