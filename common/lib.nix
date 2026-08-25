@@ -95,30 +95,6 @@ lib: with lib; rec {
   allAugmentNamespaceArg = config: imports: map (imp: augmentNamespaceArg config imp) imports;
 
 
-  # non-path based namespace helpers
-
-  # for use in attrset that determines namespace
-  nsref = enums.namespace.namespace-marker;
-
-  # get a list of attrset names leading to nsref in a simple attrset
-  # example:
-  # [ "a" ] { b.c.d = nsref; } -> [ "a", "b", "c", "d" ]
-  getPathFromAttr = currpath: attr: if attr == nsref then currpath else let
-    next = findFirst (_: true) null (attrNames attr);
-  in getPathFromAttr (currpath ++ [ next ]) attr.${next};
-
-  # generate namespace helpers given simple attrset defining namespace 
-  # example: use `with` to bring helpers into module context
-  # with clib.manualns config { home.programs.test = nsref }; { ... }
-  manualns = config: namespace: let
-    customNamespaceList = getPathFromAttr [ "custom" ] namespace;
-  in {
-    cfg = getAttrFromPath customNamespaceList config;
-    opt = setAttrByPath customNamespaceList;
-  };
-
-
-
   # file helpers
 
   # get all files and directories in a directory matching predicates on type and name
