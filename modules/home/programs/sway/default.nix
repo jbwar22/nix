@@ -269,6 +269,8 @@ in {
           "${modifier}+${alt}+space" = "focus mode_toggle";
           "${modifier}+${alt}+s" = "layout stacking";
 
+          "${modifier}+${alt}+d" = "sticky toggle";
+
           # Basic behavior
           "${modifier}+Shift+a" = "focus child";
 
