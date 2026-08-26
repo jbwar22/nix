@@ -21,6 +21,8 @@ with lib; with clib; {
       extraGroups = mkIf user.admin [ "wheel" ];
     }) users;
 
+    nixpkgs.hostPlatform = config.custom.common.opts.host.system;
+
     nix.settings.trusted-users = attrNames admins;
 
     # load common suite

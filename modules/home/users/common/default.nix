@@ -10,7 +10,7 @@
   ];
 
   config = {
-    custom.common = osConfig.custom.common; # TODO unsafe on standalone hm on non nixos systems
+    custom.common = lib.mkIf (osConfig != false) osConfig.custom.common;
     home.homeDirectory = lib.mkDefault "/home/${config.home.username}";
     age = with clib; {
       secrets = (

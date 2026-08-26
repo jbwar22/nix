@@ -115,7 +115,6 @@
           ./modules/nixos/hosts/${hostname}
           {
             custom.common.opts.host = host;
-            nixpkgs.hostPlatform = host.system;
             nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib;
             home-manager = {
               useGlobalPkgs = true;
@@ -139,9 +138,16 @@
           inherit inputs clib self;
           osConfig = if isNixosHost host then nixosConfigurations.${hostname}.config else false;
         };
-        modules = (genHMModules hostname username) ++ [(if isNixosHost host then {
-          nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib; # TODO remove
-        } else ./modules/home/users/common/${hostname})];
+        modules = (genHMModules hostname username) ++ [
+          {
+            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib;
+          }
+        ] ++ (if !(isNixosHost host) then [
+          ./modules/home/users/common/${hostname}
+          {
+            custom.common.opts.host = host;
+          }
+        ] else []);
       }
     );
 
