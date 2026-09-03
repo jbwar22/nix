@@ -21,7 +21,6 @@
         impermanence = {
           enable = true;
         };
-        etc-nixos-symlink.enable = true;
         virtualisation.enable = true;
         kernel.default = pkgs.linuxPackages_zen;
         wake-on-lan.enable = true;

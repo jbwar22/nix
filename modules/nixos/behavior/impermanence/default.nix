@@ -54,13 +54,17 @@ in {
 
     environment.etc."machine-id".source = "/persist/back/other/machine-id";
 
-    # could persist /var/db/sudo/lectured, but meh
-    custom.nixos.programs.sudo.lecture = "never";
     users.mutableUsers = mkDefault false;
     users.users = genAttrs usernames (user: {
       hashedPasswordFile = mkDefault "/persist/back/passwords/user/${user}";
     });
 
     nix.settings.build-dir = "/persist/local/build";
+
+    custom.nixos = {
+      # could persist /var/db/sudo/lectured, but meh
+      programs.sudo.lecture = mkDefault "never";
+      behavior.etc-nixos-symlink.enable = true;
+    };
   };
 })

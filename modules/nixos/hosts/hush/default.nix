@@ -24,7 +24,6 @@ with lib; {
           extra = [ pkgs.linuxPackages_6_18 ];
         };
         virtualisation.enable = true;
-        etc-nixos-symlink.enable = true;
         impermanence = {
           enable = true;
         };
