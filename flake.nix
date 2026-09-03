@@ -98,7 +98,7 @@
     };
 
     genHMModules = hostname: username: [
-      ./modules/home/users/common
+      ./modules/home/users/common # fully loads custom.common on nixos systems (both hm module and standalone)
       ./modules/home/users/${username}
       ./modules/home/users/${username}/${hostname}
       { home.username = mkDefault username; }
@@ -114,7 +114,7 @@
           ./modules/nixos/hosts/common
           ./modules/nixos/hosts/${hostname}
           {
-            custom.common.opts.host = host;
+            custom.common.opts.host = host; # other common opts (opts.hardware) specified in modules
             nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib;
             home-manager = {
               useGlobalPkgs = true;
@@ -143,7 +143,8 @@
             nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib;
           }
         ] ++ (if !(isNixosHost host) then [
-          ./modules/home/users/common/${hostname}
+          # since there is no osConfig for non-nixos systems, all of custom.common needs to be specified
+          ./modules/home/users/common/${hostname} # mainly to load common.opts.hardware
           {
             custom.common.opts.host = host;
           }
