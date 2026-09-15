@@ -5,21 +5,94 @@ with lib; with clib; with ns; let
     type = with types; attrsOf str;
     description = "sway output config";
   };
-in {
-  options = opt (mkOfSubmoduleOption "screen configs" types.attrsOf {
-    sway = sway-output-option;
-    specialisations = mkOption {
-      description = "specialisations for shortcuts";
-      type = with types; nullOr (attrsOf (submodule {
-        options = {
-          sway = sway-output-option;
-        };
-      }));
-      default = null;
+  screens-option-type = with types; attrsOf (submodule {
+    options = {
+      sway = sway-output-option;
+      specialisations = mkOption {
+        description = "specialisations for shortcuts";
+        type = with types; nullOr (attrsOf (submodule {
+          options = {
+            sway = sway-output-option;
+          };
+        }));
+        default = null;
+      };
+      bar = mkStrOption "bar def name";
+      noserial = mkEnableOption "screen name does not enclude serial number";
+      clamshell = mkEnableOption "screen clamshell behavior";
     };
-    bar = mkStrOption "bar def name";
-    noserial = mkEnableOption "screen name does not enclude serial number";
-    clamshell = mkEnableOption "screen clamshell behavior";
+  });
+in {
+  options = opt (mkOption {
+    description = "screen configs";
+    type = with types; coercedTo anything (screens:
+      let
+        toXY = position: pipe position [
+          (splitString " ")
+          (imap0 (i: v: {
+            name = if i == 0 then "x" else "y";
+            value = toInt v;
+          }))
+          listToAttrs
+        ];
+        fromXY = posxy: "${toString posxy.x} ${toString posxy.y}";
+
+        extractPos = v: if v?sway.position then [v.sway.position] else [];
+        offset = pipe screens [
+          attrValues
+          (map (v:
+            (extractPos v)
+            ++ (if v?specialisations && v.specialisations != null then (pipe v.specialisations [
+              attrValues
+              (map extractPos)
+            ]) else [])
+          ))
+          flatten
+          (map toXY)
+          (foldl (accum: posxy: {
+            x = min accum.x posxy.x;
+            y = min accum.y posxy.y;
+          }) { x = 0; y = 0; })
+        ];
+
+        hasOffset = offset.x != 0 || offset.y != 0;
+
+        fixPos = position: pipe position [
+          toXY
+          (posxy: {
+            x = posxy.x - offset.x;
+            y = posxy.y - offset.y;
+          })
+          fromXY
+        ];
+
+        fixedScreens = mapAttrs (_name: screen-def: pipe screen-def [
+          (screen-def:
+            if screen-def?sway.position
+            then recursiveUpdate screen-def {
+              sway.position = fixPos screen-def.sway.position;
+            }
+            else screen-def
+          )
+          (screen-def:
+            if screen-def?specialisations && screen-def.specialisations != null
+            then recursiveUpdate screen-def {
+              specialisations = (mapAttrs (_name: spec-def:
+                if spec-def?sway.position
+                then recursiveUpdate spec-def {
+                  sway.position = fixPos spec-def.sway.position;
+                }
+                else spec-def
+              ) screen-def.specialisations);
+            }
+            else screen-def
+          )
+        ]) screens;
+      in
+      if hasOffset
+      then fixedScreens
+      else screens
+    ) screens-option-type;
   });
 
   config = opt (mkEachDefault {

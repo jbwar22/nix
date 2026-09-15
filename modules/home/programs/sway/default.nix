@@ -32,72 +32,8 @@ with lib; with clib; with ns; {
     xscreensaver = config.custom.home.programs.xscreensaver;
     scripts = (import ./scripts) pkgs lib clib config;
     geolocation = ageOrDefault config "geolocation" "0.00:0.00";
-
-
-    toXY = position: pipe position [
-      (splitString " ")
-      (imap0 (i: v: {
-        name = if i == 0 then "x" else "y";
-        value = toInt v;
-      }))
-      listToAttrs
-    ];
-    fromXY = posxy: "${toString posxy.x} ${toString posxy.y}";
-
-    extractPos = v: if v.sway?position then [v.sway.position] else [];
-    offset = pipe config.custom.home.opts.screens [
-      attrValues
-      (map (v:
-        (extractPos v)
-        ++ (if v.specialisations != null then (pipe v.specialisations [
-          attrValues
-          (map extractPos)
-        ]) else [])
-      ))
-      flatten
-      (map toXY)
-      (foldl (accum: posxy: {
-        x = min accum.x posxy.x; 
-        y = min accum.y posxy.y; 
-      }) { x = 0; y = 0; })
-    ];
-
-    fixPos = position: pipe position [
-      toXY
-      (posxy: {
-        x = posxy.x + offset.x;
-        y = posxy.y + offset.y;
-      })
-      fromXY
-    ];
-
-    # fix positions on screens so that there are no negative coordinates
-    # negative coordinates break some (xwayland?) apps for some reason
-    # TODO integrate this preprocessing into the option itself
-    screens = mapAttrs (_name: screen-def: pipe screen-def [
-      (screen-def:
-        if screen-def.sway?position
-        then recursiveUpdate screen-def {
-          sway.position = fixPos screen-def.sway.position;
-        }
-        else screen-def
-      )
-      (screen-def:
-        if screen-def.specialisations != null
-        then recursiveUpdate screen-def {
-          specialisations = (mapAttrs (_name: spec-def:
-            if spec-def.sway?position
-            then recursiveUpdate spec-def {
-              sway.position = fixPos spec-def.sway.position;
-            }
-            else spec-def
-          ) screen-def.specialisations);
-        }
-        else screen-def
-      )
-    ]) config.custom.home.opts.screens;
   in mkMerge [(opt {
-    shortcuts = import ./shortcuts pkgs lib config screens;
+    shortcuts = import ./shortcuts pkgs lib config;
   })
   {
     custom.home.opts = {
@@ -112,7 +48,7 @@ with lib; with clib; with ns; {
       [
         (let
           wallpaperDir = config.custom.home.opts.wallpaper.dir;
-          forEachScreen = render: pipe screens [
+          forEachScreen = render: pipe config.custom.home.opts.screens [
             attrsToList
             (map render)
             concatLines
@@ -276,7 +212,7 @@ with lib; with clib; with ns; {
           "*" = {
             bg = "\"${config.custom.home.opts.wallpaper.dir}/default\" fill #000000";
           };
-        } (attrsToList screens);
+        } (attrsToList config.custom.home.opts.screens);
 
         keybindings = let
           modifier = config.wayland.windowManager.sway.config.modifier;
@@ -453,7 +389,7 @@ with lib; with clib; with ns; {
         for_window [con_mark=^prop.*:fullscreen:] fullscreen enable
         for_window [con_mark=^prop.*:shellpopup:] floating enable ; resize set width 1000 ; resize set height 55
         for_window [con_mark=^prop:] mark --toggle "prop:$$PROP:" ; set $$PROP none
-      '' + (pipe screens [
+      '' + (pipe config.custom.home.opts.screens [
         attrsToList
         (map (x: if x.value.clamshell then (let
           name = if x.value.noserial then x.name + " Unknown" else x.name;

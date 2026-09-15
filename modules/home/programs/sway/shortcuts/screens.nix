@@ -1,6 +1,8 @@
-pkgs: lib: config: screens:
+pkgs: lib: config:
 
 with lib; let
+  screens = config.custom.home.opts.screens;
+
   getUndo = specialisation-def: output-def: pipe specialisation-def [
     (mapAttrs (setting-name: setting-value: if typeOf setting-value == "set" then (
       getUndo setting-value output-def.${setting-name}
