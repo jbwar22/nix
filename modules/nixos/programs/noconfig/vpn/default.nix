@@ -1,10 +1,10 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  environment.systemPackages = with pkgs; [
-    openvpn
-    networkmanager-openvpn
-    wireguard-tools
-    wireproxy
+  environment.systemPackages = [
+    pkgs.openvpn
+    pkgs.networkmanager-openvpn
+    pkgs.wireguard-tools
+    pkgs.wireproxy
   ];
 }

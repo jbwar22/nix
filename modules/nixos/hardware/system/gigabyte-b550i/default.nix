@@ -1,13 +1,16 @@
-{ options, lib, clib, modulesPath, ns, ... }:
+{ clib, modulesPath, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (clib)
+  enums;
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  options = eopt {};
+  options = ns.eopt {};
 
-  config = ecfg {
+  config = ns.ecfg {
     custom.nixos.hardware.cpu.amd.enable = true;
 
     custom.nixos.behavior.impermanence = {
@@ -88,7 +91,7 @@ with lib; with ns; {
       };
 
     custom.common = {
-      opts.hardware = with clib; {
+      opts.hardware = {
         cpu = {
           vendor = enums.cpu-vendors.amd;
           threads = 12;

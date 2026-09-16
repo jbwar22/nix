@@ -12,7 +12,17 @@
 # ax^3 + 570, a=(65535-570)/(23^2), 4<=x<=23
 # 1 912 1237 1723 2401 3304 4462 5909 7677 9797 12301 15221 18591 22440 26803 31710 37193 43285 50019 57424 65535
 
-pkgs: lib: clib: slider: config: with lib; with clib; let
+pkgs: lib: clib: slider: config: let
+  inherit (lib)
+  pipe
+  range;
+  inherit (clib)
+  pow;
+  inherit (pkgs)
+  brightnessctl
+  dunst
+  writeShellScript;
+
   # a(x-d)^2 + c, a = (65535 - c)/(b - d)^2
   genRange = b: c: d: pipe b [
     (range 1)
@@ -22,8 +32,8 @@ pkgs: lib: clib: slider: config: with lib; with clib; let
     ]))
     toString
   ];
-in pkgs.writeShellScript "sway-brightness" ''
-  current=$(${pkgs.brightnessctl}/bin/brightnessctl \
+in writeShellScript "sway-brightness" ''
+  current=$(${brightnessctl}/bin/brightnessctl \
             --device="${config.custom.home.programs.sway.brightnessDevice}" | \
             head -2 | \
             tail -1 | \
@@ -44,9 +54,9 @@ in pkgs.writeShellScript "sway-brightness" ''
   num=''${newp2[2]}
   max=''${newp2[3]}
   if [ "$new" != "$current" ] ; then
-      ${pkgs.brightnessctl}/bin/brightnessctl \
+      ${brightnessctl}/bin/brightnessctl \
       --device="${config.custom.home.programs.sway.brightnessDevice}" set $new
   fi
-  ${pkgs.dunst}/bin/dunstify -a mediakeys -t 1000 -r 100 -u normal \
+  ${dunst}/bin/dunstify -a mediakeys -t 1000 -r 100 -u normal \
   -h int:value:$per -h string:hlcolor:#660000 Brightness:\ $num/$max
 ''

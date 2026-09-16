@@ -1,6 +1,25 @@
 { config, lib, clib, pkgs, ns, ... }:
 
-with lib; with clib; with ns; let
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  attrsToList
+  concatStringsSep
+  mkDefault
+  mkIf
+  mkMerge
+  mkOption
+  optional
+  pipe
+  singleton;
+  inherit (lib.types)
+  number;
+  inherit (clib)
+  ageOrNull
+  capitalizeDashedString;
   configfile = ageOrNull config "snapserver-shairport-config";
 in {
   options = eopt {
@@ -11,14 +30,14 @@ in {
       enable = clib.mkDisableOption "tcp server input";
       port = mkOption {
         description = "port for tcp server input to listen on";
-        type = types.number;
+        type = number;
         default = 4953;
       };
     };
     airplay = {
       port = mkOption {
         description = "port for shairport to listen on";
-        type = with types; number;
+        type = number;
         default = 5000;
       };
     };

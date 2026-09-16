@@ -1,14 +1,26 @@
 { ns, lib, pkgs, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  opt;
+  inherit (lib)
+  genAttrs'
+  mkForce
+  mkOption
+  nameValuePair;
+  inherit (lib.types)
+  listOf
+  raw;
+in {
   options = opt {
     default = mkOption {
-      type = types.raw;
+      type = raw;
       default = pkgs.linuxPackages_6_18;
       description = "default kernel to install";
     };
     extra = mkOption {
-      type = with types; listOf raw;
+      type = listOf raw;
       default = [];
       description = "other kernels to add as specialisations";
     };

@@ -1,10 +1,22 @@
 { config, lib, clib, pkgs, ns, ... }:
 
-with lib; with clib; with ns; {
+let
+  inherit (ns)
+  ecfg
+  eopt
+  cfg;
+  inherit (lib)
+  mkDefault
+  mkOption
+  types;
+  inherit (clib)
+  ageOrNull
+  capitalizeDashedString;
+in {
   options = eopt {
     port = mkOption {
       description = "port for shairport to listen on";
-      type = with types; number;
+      type = types.number;
       default = 5000;
     };
   };

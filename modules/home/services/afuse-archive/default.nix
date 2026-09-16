@@ -1,6 +1,6 @@
 { config, lib, clib, pkgs, ns, ... }:
 
-with lib; ns.enable (let
+ns.enable (let
   mounter = pkgs.writeShellScript "afuse-archive-mounter" ''
     r=$1
     m=$2
@@ -32,7 +32,7 @@ with lib; ns.enable (let
     $mountpoint
   '';
 in {
-  systemd.user.enable = mkDefault true;
+  systemd.user.enable = lib.mkDefault true;
 
   systemd.user.services.afuse-archive = {
     Unit = {

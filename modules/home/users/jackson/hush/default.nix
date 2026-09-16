@@ -1,12 +1,12 @@
 { config, lib, ... }:
 
-with lib; {
+{
   config = {
     home.stateVersion = "24.11";
 
     custom.home = {
       services = {
-        locker.enable = mkForce false;
+        locker.enable = lib.mkForce false;
         shairport.enable = true;
       };
 

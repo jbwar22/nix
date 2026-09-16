@@ -6,6 +6,15 @@ ns.enable (let
   join
   mapAttrs
   mapAttrsToList;
+  inherit (pkgs)
+  writers
+  discord
+  writeShellScript
+  rsync
+  findutils;
+  inherit (pkgs.python3Packages)
+  capstone
+  pyelftools;
 
   flags = {
     "--use-gl" = "egl"; # this appears to be the one that fixes flickering
@@ -24,8 +33,8 @@ ns.enable (let
   ) flags;
   argsString = join " " argsList;
 
-  discordPatcher = pkgs.writers.writePython3Bin "krisp-patcher-python" {
-    libraries = with pkgs.python3Packages; [ capstone pyelftools ];
+  discordPatcher = writers.writePython3Bin "krisp-patcher-python" {
+    libraries = [ capstone pyelftools ];
     flakeIgnore = [
       "E501" # line too long (82 > 79 characters)
       "F403" # ‘from module import *’ used; unable to detect undefined names
@@ -35,10 +44,10 @@ ns.enable (let
 
   # from https://github.com/NixOS/nixpkgs/pull/538735
   # almost no confidence this works long term
-  patchedDiscord = (pkgs.discord.overrideAttrs (old: {
+  patchedDiscord = (discord.overrideAttrs (old: {
     # use rsync to copy modules instead of symlinking
     # see nixpkgs discord package for original implementation
-    stageModules = pkgs.writeShellScript "discord-stage-mine" ''
+    stageModules = writeShellScript "discord-stage-mine" ''
       # ${old.stageModules} "$@"
       store_modules="$1"
       modules_dir="''${XDG_CONFIG_HOME:-$HOME/.config}/discord/${old.version}/modules"
@@ -51,7 +60,7 @@ ns.enable (let
           rm "$dest"
         fi
 
-        ${getExe' pkgs.rsync "rsync"} -a --checksum --delete "$m/" "$dest"
+        ${getExe' rsync "rsync"} -a --checksum --delete "$m/" "$dest"
       done
 
       chmod -R u+w "$modules_dir"
@@ -64,7 +73,7 @@ ns.enable (let
 
     # fix krisp in nix store modules
     postFixup = (old.postFixup or "") + ''
-      ${pkgs.findutils}/bin/find "$out/opt/Discord/modules" \
+      ${findutils}/bin/find "$out/opt/Discord/modules" \
         -name 'discord_krisp.node' -exec ${discordPatcher}/bin/krisp-patcher-python {} \;
     '';
   })).override {

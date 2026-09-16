@@ -1,6 +1,6 @@
-enums: with enums.os; { # options to generate systems from
+enums: { # options to generate systems from
   monstro = { # desktop
-    os = nixos;
+    os = enums.os.nixos;
     system = "x86_64-linux";
     users = {
       jackson = {
@@ -9,7 +9,7 @@ enums: with enums.os; { # options to generate systems from
     };
   };
   widow = { # laptop
-    os = nixos;
+    os = enums.os.nixos;
     system = "x86_64-linux";
     users = {
       jackson = {
@@ -18,7 +18,7 @@ enums: with enums.os; { # options to generate systems from
     };
   };
   hush = {
-    os = nixos;
+    os = enums.os.nixos;
     system = "x86_64-linux";
     users = {
       jackson = {
@@ -27,14 +27,14 @@ enums: with enums.os; { # options to generate systems from
     };
   };
   the-forsaken = { # server (config unused, but an example of how this would work)
-    os = debian;
+    os = enums.os.debian;
     system = "x86_64-linux";
     users = {
       jackson = {};
     };
   };
   nix-1 = { # VM
-    os = nixos;
+    os = enums.os.nixos;
     system = "x86_64-linux";
     users = {
       jackson = {

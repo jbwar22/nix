@@ -1,10 +1,23 @@
 { lib, clib, ns, ... }:
 
-{
-  options = with lib; with clib; ns.opt {
+let
+  inherit (lib)
+  attrValues
+  mkEnableOption
+  mkOption;
+  inherit (lib.types)
+  attrsOf
+  enum
+  int
+  submodule;
+  inherit (clib)
+  enums
+  mkStrOption;
+in {
+  options = ns.opt {
     batteries = mkOption {
       description = "definition for each battery";
-      type = with types; attrsOf (submodule {
+      type = attrsOf (submodule {
         options = {
           min = mkOption {
             type = int;
@@ -21,23 +34,23 @@
     cpu = {
       vendor = mkOption {
         description = "CPU vendor";
-        type = types.enum (attrValues enums.cpu-vendors);
+        type = enum (attrValues enums.cpu-vendors);
       };
       threads = mkOption {
-        type = types.int;
+        type = int;
         description = "number of cpu threads";
       };
     };
     memory = {
       size = mkOption {
-        type = types.int;
+        type = int;
         description = "size of memory in gb";
       };
     };
     gpu = {
       vendor = mkOption {
         description = "GPU vendor";
-        type = types.enum (attrValues enums.gpu-vendors);
+        type = enum (attrValues enums.gpu-vendors);
       };
     };
     hasMicToggle = mkEnableOption "has software mic toggle button";

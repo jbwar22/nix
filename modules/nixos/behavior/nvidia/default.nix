@@ -1,6 +1,17 @@
-{ inputs, config, lib, pkgs, ns, ... }:
+{ inputs, config, lib, ns, ... }:
 
-with lib; ns.enable (let
+let
+  inherit (lib)
+  head
+  last
+  listToAttrs
+  pipe
+  readFile
+  removePrefix
+  removeSuffix
+  splitString
+  trim;
+in ns.enable (let
   mkDriver = config.boot.kernelPackages.nvidiaPackages.mkDriver;
 
   mkUnstableDriver = branch: pipe inputs.nixpkgs-unstable [

@@ -1,6 +1,14 @@
 { lib, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  mkEnableOption
+  mkIf;
+in {
   options = eopt {
     fixResolution = mkEnableOption "consolemode -> auto";
   };

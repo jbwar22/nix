@@ -1,7 +1,7 @@
 { lib, pkgs, ns, ... }:
 
-with lib; ns.enable {
-  systemd.user.enable = mkDefault true;
+ns.enable {
+  systemd.user.enable = lib.mkDefault true;
   systemd.user.services.snapclient = {
     Unit = {
       Description = "snapclient to localhost";

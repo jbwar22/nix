@@ -1,6 +1,6 @@
-{ inputs, config, lib, clib, pkgs, ns, ... }:
+{ inputs, lib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   programs.quickshell = {
     enable = true;
     systemd.enable = true;
@@ -11,14 +11,14 @@ with lib; ns.enable {
 
   systemd.user.services.quickshell.Service.Environment = [
     "PATH=${
-      makeBinPath (with pkgs; [
+      lib.makeBinPath ([
         inputs.clonck.packages.${pkgs.stdenv.hostPlatform.system}.clonck
-        bash
-        coreutils
-        jq
-        procps
-        sway
-        sysstat
+        pkgs.bash
+        pkgs.coreutils
+        pkgs.jq
+        pkgs.procps
+        pkgs.sway
+        pkgs.sysstat
       ])
     }"
   ];

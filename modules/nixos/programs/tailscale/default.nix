@@ -1,6 +1,23 @@
 { config, lib, clib, pkgs, ns, ... }:
 
-with lib; with clib; with ns; (let
+let
+  inherit (ns)
+  cfg
+  eopt;
+  inherit (lib)
+  mkEnableOption
+  mkIf
+  mkMerge
+  mkOption;
+  inherit (lib.types)
+  nullOr
+  str;
+  inherit (clib)
+  ageOrBust
+  getAdmins
+  getTSOp
+  setUserGroups;
+
   users = config.custom.common.opts.host.users;
   admins = getAdmins users;
   tsop = getTSOp users;
@@ -9,12 +26,12 @@ in {
     serviceContainer = {
       enable = mkEnableOption "services";
       volumesRoot = mkOption {
-        type = with types; nullOr str;
+        type = nullOr str;
         description = "dir where volumes live";
         default = null;
       };
       tag = mkOption {
-        type = types.str;
+        type = str;
         default = "tag:container";
       };
     };
@@ -100,4 +117,4 @@ in {
       };
     })
   ];
-})
+}

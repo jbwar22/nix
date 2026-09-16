@@ -1,6 +1,10 @@
 { clib, ... }:
 
-with clib.nv; {
+let
+  inherit (clib.nv)
+  mkMap
+  mkMapEx;
+in {
   plugins.fzf-lua = {
     enable = true;
   };

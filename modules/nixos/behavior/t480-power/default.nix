@@ -1,6 +1,10 @@
 { config, lib, ns, ...}:
 
-with lib; ns.enable {
+let
+  inherit (lib)
+  attrsToList
+  foldl';
+in ns.enable {
   services.tlp = {
     enable = true;
     settings = foldl' (accum: x: {

@@ -1,14 +1,28 @@
 { config, lib, pkgs, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  concatLines
+  mkOption
+  pipe;
+  inherit (lib.types)
+  listOf
+  oneOf
+  path
+  str;
+in {
   options = eopt {
     hostcolor = mkOption {
-      type = with types; str;
+      type = str;
       description = "ansi color for host in PS1";
       default = "\\033[33m";
     };
     sourcedFiles = mkOption {
-      type = with types; listOf (oneOf [str path]);
+      type = listOf (oneOf [str path]);
       description = "list of paths to source";
       default = [];
     };

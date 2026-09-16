@@ -1,7 +1,7 @@
 { lib, pkgs, ns, ... }:
 
-with lib; ns.enable {
-  systemd.user.enable = mkDefault true;
+ns.enable {
+  systemd.user.enable = lib.mkDefault true;
   systemd.user.services.snapcast-local-tcp-sink = {
     Unit = {
       Description = "tcp sink for local snapcast snapserver";

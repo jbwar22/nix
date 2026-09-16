@@ -1,7 +1,7 @@
 { config, clib, ... }:
 
 {
-  imports = with clib; allAugmentNamespaceArg config (
-    getDirsFilter ./. (name: name != "hosts")
+  imports = clib.allAugmentNamespaceArg config (
+    clib.getDirsFilter ./. (name: name != "hosts")
   );
 }

@@ -1,6 +1,6 @@
-{ inputs, pkgs, lib, ... }:
+{ inputs, pkgs, ... }:
 
-with lib; {
+{
   imports = [
     inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];

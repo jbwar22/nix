@@ -1,10 +1,23 @@
 { lib, pkgs, config, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  mkOption
+  types
+  mkIf
+  mkMerge;
+  inherit (pkgs)
+  firefox
+  nixos-icons;
+in {
   options = eopt {
-    usePackage = with types; mkOption {
+    usePackage = mkOption {
       description = "use just the package rather than configuration";
-      type = bool;
+      type = types.bool;
       default = false;
     };
   };
@@ -13,13 +26,13 @@ with lib; with ns; {
     # shared firefox/librewolf config goes here
   }) (ecfg {
 
-    home.packages = with pkgs; mkIf cfg.usePackage [
+    home.packages = mkIf cfg.usePackage [
       firefox
     ];
 
     programs.firefox = {
       enable = !cfg.usePackage;
-      package = pkgs.firefox;
+      package = firefox;
 
       configPath = "${config.xdg.configHome}/mozilla/firefox";
 
@@ -50,7 +63,7 @@ with lib; with ns; {
                     { name = "query"; value = "{searchTerms}"; }
                   ];
                 }];
-                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                icon = "${nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@np" ];
               };
               "Home Manager Options" = {
@@ -61,12 +74,12 @@ with lib; with ns; {
                     { name = "query"; value = "{searchTerms}"; }
                   ];
                 }];
-                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                icon = "${nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@hmo" ];
               };
               "NixOS Wiki" = {
                 urls = [{ template = "https://wiki.nixos.org/index.php?search={searchTerms}"; }];
-                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                icon = "${nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@nw" ];
               };
               "google".metaData.alias = "@g";
@@ -96,10 +109,10 @@ with lib; with ns; {
           #     version = "2021.3.27";
           #     url = "https://addons.mozilla.org/firefox/downloads/file/3750702/red_theme_2-1.0.xpi";
           #     sha256 = "IcPg3VsYmX5fKD2h8waV1ITbTJIR1uJZbLjvil6mDdc=";
-          #     meta = with lib; {
+          #     meta = {
           #       description = "Red Theme";
-          #       license = licenses.cc-by-30;
-          #       platforms = platforms.all;
+          #       license = lib.licenses.cc-by-30;
+          #       platforms = lib.platforms.all;
           #     };
           #   })
           # ]);
@@ -129,12 +142,12 @@ with lib; with ns; {
     in {
       firefox = fxdesktop // {
         name = "Firefox (Personal)";
-        exec = "${pkgs.firefox}/bin/firefox -P Personal %u";
+        exec = "${firefox}/bin/firefox -P Personal %u";
         noDisplay = false;
       };
       firefoxprofile = fxdesktop // {
         name = "Firefox (Profile Manager)";
-        exec = "${pkgs.firefox}/bin/firefox --ProfileManager %u";
+        exec = "${firefox}/bin/firefox --ProfileManager %u";
         noDisplay = false;
       };
     };

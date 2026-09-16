@@ -1,6 +1,12 @@
 { lib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+let
+  inherit (lib)
+  concatLines
+  pipe
+  readFile
+  splitString;
+in ns.enable {
   programs.fastfetch = {
     enable = true;
     settings = {

@@ -6,8 +6,8 @@ ns.enable {
     enable32Bit = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    dconf  # gtk
-    vulkan-tools
+  environment.systemPackages = [
+    pkgs.dconf  # gtk
+    pkgs.vulkan-tools
   ];
 }

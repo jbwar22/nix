@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ns, ... }:
+{ config, lib, clib, pkgs, ns, ... }:
 
-with lib; ns.enable {
-  systemd.user.enable = mkDefault true;
+ns.enable {
+  systemd.user.enable = lib.mkDefault true;
 
   systemd.user.services.afuse-sshfs = {
     Unit = {
@@ -18,7 +18,7 @@ with lib; ns.enable {
         -o flushwrites \
         -o mount_template="${pkgs.sshfs}/bin/sshfs %r:/ %m" \
         -o unmount_template="fusermount -u -z %m" \
-        -o populate_root_command="${pkgs.coreutils}/bin/cat ${ageOrDefault config "afuse-sshfs-hosts" "localhost"}" \
+        -o populate_root_command="${pkgs.coreutils}/bin/cat ${clib.ageOrDefault config "afuse-sshfs-hosts" "localhost"}" \
         -f \
         ~/sshfs
       '';

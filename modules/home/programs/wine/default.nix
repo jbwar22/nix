@@ -1,9 +1,9 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = with pkgs; [
-    wineWow64Packages.stable
-    winetricks
+  home.packages = [
+    pkgs.wineWow64Packages.stable
+    pkgs.winetricks
   ];
 
   custom.home.behavior.impermanence.paths = [

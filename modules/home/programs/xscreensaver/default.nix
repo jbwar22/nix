@@ -1,13 +1,23 @@
 { lib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+let
+  inherit (lib)
+  concatLines
+  makeBinPath
+  mkForce
+  pipe;
+  inherit (pkgs)
+  fortune
+  grim
+  xscreensaver;
+in ns.enable {
   # works with wayland (sorta)
   # override to add grim
-  systemd.user.services.xscreensaver.Service.Environment = mkForce [ "PATH=${makeBinPath [ pkgs.xscreensaver pkgs.grim ]}" ];
+  systemd.user.services.xscreensaver.Service.Environment = mkForce [ "PATH=${makeBinPath [ xscreensaver grim ]}" ];
 
   services.xscreensaver = {
     enable = true;
-    package = pkgs.xscreensaver; # ensure unstable, version 6.11 minimum!
+    package = xscreensaver; # ensure unstable, version 6.11 minimum!
     settings = {
       lock = false; # not working in wayland
       grabDesktopImages = false;
@@ -20,7 +30,7 @@ with lib; ns.enable {
       mode = "random";
 
       textMode = "program";
-      textProgram = "${pkgs.fortune}/bin/fortune";
+      textProgram = "${fortune}/bin/fortune";
 
       programs = pipe [
         "abstractile"

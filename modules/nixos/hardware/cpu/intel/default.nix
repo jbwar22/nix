@@ -1,7 +1,7 @@
 { config, lib, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   boot.kernelModules = [ "kvm-intel" ];
-  nixpkgs.hostPlatform = mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

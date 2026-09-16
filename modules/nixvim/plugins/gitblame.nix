@@ -1,11 +1,11 @@
 { clib, ... }:
 
-with clib.nv; {
+{
   plugins.gitblame = {
     enable = true;
   };
   
   keymaps = [
-    (mkMap "<leader>b" ":GitBlameToggle<CR>")
+    (clib.nv.mkMap "<leader>b" ":GitBlameToggle<CR>")
   ];
 }

@@ -1,8 +1,12 @@
 { config, clib, ns, ... }:
 
-with clib; ns.enable (let
+let
+  inherit (clib)
+  getAdmins
+  setUserGroups;
+  
   admins = getAdmins config.custom.common.opts.host.users;
-in {
+in ns.enable {
   # from nixpkgs/nixos/modules/programs/virt-manager.nix
   programs.dconf = {
     profiles.user.databases = [{
@@ -29,4 +33,4 @@ in {
   users = setUserGroups admins [ "libvirtd" ];
 
   custom.nixos.behavior.impermanence.paths = [ "/var/lib/libvirt" ];
-})
+}

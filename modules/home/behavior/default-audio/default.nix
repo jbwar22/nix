@@ -1,16 +1,27 @@
 { config, lib, ns, ... }:
 
-with lib; with ns; (let
+let
+  inherit (ns)
+  cfg
+  opt;
+  inherit (lib)
+  mkIf
+  mkOption
+  warnIfNot;
+  inherit (lib.types)
+  nullOr
+  lines;
+
   hf = config.custom.home.opts.hostfeatures;
 in {
   options = opt {
     default-routes = mkOption {
-      type = with types; nullOr lines;
+      type = nullOr lines;
       description = "text";
       default = null;
     };
     default-nodes = mkOption {
-      type = with types; nullOr lines;
+      type = nullOr lines;
       description = "text";
       default = null;
     };
@@ -36,4 +47,4 @@ in {
       '';
     });
   };
-})
+}

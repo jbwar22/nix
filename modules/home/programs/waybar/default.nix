@@ -1,12 +1,48 @@
 { config, lib, clib, pkgs, inputs, ns, ... }:
 
-with lib; with ns; let
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt
+  ;
+  inherit (lib)
+  attrsToList
+  concatStrings
+  concatStringsSep
+  filter
+  foldl'
+  getExe
+  hasAttr
+  listToAttrs
+  mkIf
+  mkMerge
+  mkOption
+  pipe
+  range
+  replaceStrings
+  toLower;
+  inherit (lib.types)
+  int;
+  inherit (pkgs)
+  bluez
+  coreutils
+  dunst
+  gawk
+  gnugrep
+  inotify-tools
+  networkmanager
+  procps
+  stdenv
+  waybar
+  writeShellScript;
+
   colorscheme = config.custom.home.opts.colorscheme;
   hf = config.custom.home.opts.hostfeatures;
 in {
   options = eopt {
     memoryWidth = mkOption {
-      type = with types; int;
+      type = int;
       default = 12;
       description = "width of memory status";
     };
@@ -14,7 +50,7 @@ in {
 
   config = ecfg (let
 
-    clonck = inputs.clonck.packages.${pkgs.stdenv.hostPlatform.system}.clonck;
+    clonck = inputs.clonck.packages.${stdenv.hostPlatform.system}.clonck;
 
     progress = import ./progress-bars.nix lib;
 
@@ -178,7 +214,7 @@ in {
         format = "{}";
         escape = true;
         tooltip = false;
-        exec = pkgs.writeShellScript "waybar-fcitx5" ''
+        exec = writeShellScript "waybar-fcitx5" ''
           set -euo pipefail
           while true; do
             engine=$(fcitx5-remote -n)
@@ -204,11 +240,11 @@ in {
             elif [[ -f ${rclone.timeFile} ]]; then
               echo -n R
               old=$(cat ${rclone.timeFile})
-              new=$(${pkgs.coreutils}/bin/date +%s)
+              new=$(${coreutils}/bin/date +%s)
               days=$(( ($new - $old) / 86400 ))
               echo $days
           '' else "";
-        in pkgs.writeShellScript "waybar-rclone" ''
+        in writeShellScript "waybar-rclone" ''
           if [[ -f /tmp/rclone-all-status ]]; then
             cat /tmp/rclone-all-status
           ${days}
@@ -223,7 +259,7 @@ in {
         format = "{}";
         escape = true;
         tooltip = false;
-        exec = pkgs.writeShellScript "waybar-extras" ''
+        exec = writeShellScript "waybar-extras" ''
           bluetooth=""
           vpn=""
           gammastep=""
@@ -235,16 +271,16 @@ in {
             done
           ) & (
             echo vpn
-            ${pkgs.networkmanager}/bin/nmcli monitor \
-            | ${pkgs.coreutils}/bin/stdbuf -oL \
-              ${pkgs.gnugrep}/bin/grep -E '.*: connected|.*: disconnected' \
+            ${networkmanager}/bin/nmcli monitor \
+            | ${coreutils}/bin/stdbuf -oL \
+              ${gnugrep}/bin/grep -E '.*: connected|.*: disconnected' \
             | while read line
             do
               echo vpn
             done
           ) & (
             echo gammastep
-            ${pkgs.inotify-tools}/bin/inotifywait -m -e close_write \
+            ${inotify-tools}/bin/inotifywait -m -e close_write \
             ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path} \
             2>/dev/null \
             | while read line
@@ -255,10 +291,10 @@ in {
           do
             case $line in
               bluetooth)
-                if ${pkgs.bluez}/bin/hciconfig \
-                   | ${pkgs.coreutils}/bin/head -3 \
-                   | ${pkgs.coreutils}/bin/tail -1 \
-                   | ${pkgs.gnugrep}/bin/grep UP > /dev/null
+                if ${bluez}/bin/hciconfig \
+                   | ${coreutils}/bin/head -3 \
+                   | ${coreutils}/bin/tail -1 \
+                   | ${gnugrep}/bin/grep UP > /dev/null
                 then
                   bluetooth="B"
                 else
@@ -266,12 +302,12 @@ in {
                 fi
                 ;;
               vpn)
-                if ${pkgs.networkmanager}/bin/nmcli con show --active \
-                   | ${pkgs.gawk}/bin/awk '{print $3}' \
-                   | ${pkgs.gnugrep}/bin/grep vpn > /dev/null \
-                || ${pkgs.networkmanager}/bin/nmcli con show --active \
-                   | ${pkgs.gawk}/bin/awk '{print $3}' \
-                   | ${pkgs.gnugrep}/bin/grep wireguard > /dev/null \
+                if ${networkmanager}/bin/nmcli con show --active \
+                   | ${gawk}/bin/awk '{print $3}' \
+                   | ${gnugrep}/bin/grep vpn > /dev/null \
+                || ${networkmanager}/bin/nmcli con show --active \
+                   | ${gawk}/bin/awk '{print $3}' \
+                   | ${gnugrep}/bin/grep wireguard > /dev/null \
                 || [ -d /sys/class/net/wg ]
                 then
                   vpn="V"
@@ -280,8 +316,8 @@ in {
                 fi
                 ;;
               gammastep)
-                if [[ "$(${pkgs.coreutils}/bin/cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "night" ]] || \
-                   [[ "$(${pkgs.coreutils}/bin/cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "transition" ]]
+                if [[ "$(${coreutils}/bin/cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "night" ]] || \
+                   [[ "$(${coreutils}/bin/cat ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path})" == "transition" ]]
                 then
                   gammastep="G"
                 else
@@ -307,26 +343,26 @@ in {
         format = "{}";
         tooltip = false;
         signal = 5; # instant update on click, also triggered by dunst
-        on-click = pkgs.writeShellScript "waybar-dunst-pause" ''
+        on-click = writeShellScript "waybar-dunst-pause" ''
           # reference pause levls in dunst module
-          if [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 0 ]; then
-            ${pkgs.dunst}/bin/dunstctl set-pause-level 50
-          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 50 ]; then
-            ${pkgs.dunst}/bin/dunstctl set-pause-level 70
-          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 70 ]; then
-            ${pkgs.dunst}/bin/dunstctl set-pause-level 0
+          if [ "$(${dunst}/bin/dunstctl get-pause-level)" == 0 ]; then
+            ${dunst}/bin/dunstctl set-pause-level 50
+          elif [ "$(${dunst}/bin/dunstctl get-pause-level)" == 50 ]; then
+            ${dunst}/bin/dunstctl set-pause-level 70
+          elif [ "$(${dunst}/bin/dunstctl get-pause-level)" == 70 ]; then
+            ${dunst}/bin/dunstctl set-pause-level 0
           fi
-          ${pkgs.procps}/bin/pkill -RTMIN+5 waybar
+          ${procps}/bin/pkill -RTMIN+5 waybar
         '';
-        exec = pkgs.writeShellScript "waybar-dunst" ''
-          if [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 0 ]; then
+        exec = writeShellScript "waybar-dunst" ''
+          if [ "$(${dunst}/bin/dunstctl get-pause-level)" == 0 ]; then
             echo ND~
-          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 50 ]; then
+          elif [ "$(${dunst}/bin/dunstctl get-pause-level)" == 50 ]; then
             echo -n NW
-            ${pkgs.dunst}/bin/dunstctl count waiting
-          elif [ "$(${pkgs.dunst}/bin/dunstctl get-pause-level)" == 70 ]; then
+            ${dunst}/bin/dunstctl count waiting
+          elif [ "$(${dunst}/bin/dunstctl get-pause-level)" == 70 ]; then
             echo -n NF
-            ${pkgs.dunst}/bin/dunstctl count waiting
+            ${dunst}/bin/dunstctl count waiting
           fi
         '';
       };
@@ -391,7 +427,7 @@ in {
 
     programs.waybar = {
       enable = true;
-      package = pkgs.waybar;
+      package = waybar;
       
       settings = bars;
 

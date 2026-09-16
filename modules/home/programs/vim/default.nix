@@ -1,8 +1,8 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = with pkgs; [
-    vim
+  home.packages = [
+    pkgs.vim
   ];
 
   custom.home.behavior.impermanence.paths = [

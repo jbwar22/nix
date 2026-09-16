@@ -81,7 +81,25 @@
     nixpkgs-main = "stable";
     lib = channels.${nixpkgs-main}.lib;
     clib = import ./common/lib.nix lib;
-  in with lib; with clib.flake-helpers; let
+  in let
+    inherit (lib)
+    attrNames
+    elem
+    genAttrs
+    getName
+    hasAttr
+    mapAttrs
+    mkDefault
+    nixosSystem;
+    inherit (clib.flake-helpers)
+    fixHosts
+    forAllHostUserPairs
+    forAllHostnames
+    genHostUserPairs
+    getConfigurationRevisionOverlay
+    getNixosHosts
+    isNixosHost;
+
     hosts = fixHosts (import ./common/hosts.nix clib.enums);
     nixos-hosts = getNixosHosts hosts;
 

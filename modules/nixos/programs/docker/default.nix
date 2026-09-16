@@ -1,6 +1,17 @@
 { config, lib, clib, ns, ... }:
 
-with lib; with clib; with ns; (let
+let
+  inherit (ns)
+  ecfg
+  eopt
+  cfg;
+  inherit (lib)
+  mkEnableOption
+  mkIf;
+  inherit (clib)
+  getAdmins
+  setUserGroups;
+
   admins = getAdmins config.custom.common.opts.host.users;
   hasBtrfsRoot = config.fileSystems."/".fsType == "btrfs";
 in {
@@ -20,4 +31,4 @@ in {
 
     custom.nixos.behavior.impermanence.paths = [ "/var/lib/docker" ];
   };
-})
+}

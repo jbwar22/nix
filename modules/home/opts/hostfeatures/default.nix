@@ -1,6 +1,12 @@
 { config, clib, osConfig, ns, ... }:
 
-with clib; with ns; {
+let
+  inherit (ns)
+  opt;
+  inherit (clib)
+  hasGroup
+  mkDisableOption;
+in {
   options = opt {
     userIsAdmin = mkDisableOption "current user is admin on host";
     usesNixosFirewall = mkDisableOption "uses nixos firewall";

@@ -1,6 +1,6 @@
 { lib, ns, ... }:
 
-with lib; ns.enable {
-  services.xserver.desktopManager.runXdgAutostartIfNone = mkDefault true;
+ns.enable {
+  services.xserver.desktopManager.runXdgAutostartIfNone = lib.mkDefault true;
   services.udisks2.enable = true;
 }

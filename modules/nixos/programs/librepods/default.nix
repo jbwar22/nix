@@ -3,8 +3,8 @@
 ns.enable (let
   users = config.custom.common.opts.host.users;
 in {
-  environment.systemPackages = with pkgs; [
-    librepods
+  environment.systemPackages = [
+    pkgs.librepods
   ];
 
   # TODO is this needed?

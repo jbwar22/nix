@@ -1,26 +1,57 @@
 { lib, clib, pkgs, ns, ... }:
 
-with lib; with clib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt
+  opt;
+  inherit (lib)
+  attrNames
+  concatStringsSep
+  enumerate
+  filterAttrs
+  getExe
+  length
+  mapAttrs
+  mapAttrs'
+  mapAttrsToList
+  mkDefault
+  mkIf
+  mkMerge
+  mkOption
+  pipe
+  warnIfNot;
+  inherit (lib.types)
+  attrsOf
+  nullOr
+  package
+  str;
+  inherit (clib)
+  mkDisableOption
+  mkNullOrStrOption
+  mkOfSubmoduleOption;
+in {
   options = eopt {
     logDir = mkOption {
       description = "directory to write log files";
-      type = with types; nullOr str;
+      type = nullOr str;
       default = null;
     };
     timeFile = mkOption {
       description = "file to track time since last run";
-      type = with types; nullOr str;
+      type = nullOr str;
       default = null;
     };
     combinedPackage = mkOption {
-      type = with types; nullOr package;
+      type = nullOr package;
       default = null;
     };
     installCombinedPackage = mkDisableOption "rclone-combined in path";
-    configs = mkOfSubmoduleOption "configs for services" types.attrsOf {
+    configs = mkOfSubmoduleOption "configs for services" attrsOf {
       oncalendar = mkOption {
         description = "set oncalendar for systemd timer, and create systemd service";
-        type = with types; nullOr str;
+        type = nullOr str;
         default = null;
       };
       rcloneargs = mkNullOrStrOption "args for rclone script";

@@ -1,6 +1,17 @@
 { lib, pkgs, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  mkEnableOption
+  mkIf
+  mkMerge;
+  inherit (pkgs)
+  rnnoise-plugin;
+in {
   options = eopt {
     rnnoise.enable = mkEnableOption "rnnoise denoising for input";
   };
@@ -16,7 +27,7 @@ with lib; with ns; {
       jack.enable = true;
       alsa.enable = true;
     } (mkIf cfg.rnnoise.enable {
-      extraLadspaPackages = [ pkgs.rnnoise-plugin ];
+      extraLadspaPackages = [ rnnoise-plugin ];
       extraConfig.pipewire."99-input-denoising" = {
         "context.modules" = [
           {

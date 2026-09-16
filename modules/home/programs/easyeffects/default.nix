@@ -1,10 +1,23 @@
 { inputs, lib, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (inputs)
+  framework-dsp;
+  inherit (lib)
+  mkIf
+  mkOption;
+  inherit (lib.types)
+  nullOr
+  str;
+in {
   options = eopt {
     preset = mkOption {
       description = "preset";
-      type = with types; nullOr str;
+      type = nullOr str;
       default = null;
     };
   };
@@ -16,7 +29,7 @@ with lib; with ns; {
 
     xdg.configFile = {
       "easyeffects/output/gracefu.json" = mkIf (cfg.preset == "gracefu") {
-        source = "${inputs.framework-dsp}/config/output/Gracefu's Edits.json";
+        source = "${framework-dsp}/config/output/Gracefu's Edits.json";
       };
     };
   };

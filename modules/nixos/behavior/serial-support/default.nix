@@ -1,7 +1,11 @@
 { config, clib, ns, ... }:
 
-with clib; ns.enable (let
+let
+  inherit (clib)
+  getAdmins
+  setUserGroups;
+
   admins = getAdmins config.custom.common.opts.host.users;
-in {
+in ns.enable {
   users = setUserGroups admins [ "dialout" ];
-})
+}

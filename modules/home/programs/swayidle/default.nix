@@ -1,9 +1,20 @@
 { ns, lib, pkgs, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  mkIf
+  mkOption;
+  inherit (lib.types)
+  nullOr
+  int;
+in {
   options = eopt {
     sleep-timeout = mkOption {
-      type = with types; nullOr int;
+      type = nullOr int;
       default = null;
       description = "lock timeout in seconds, or null for no lock timeout";
     };

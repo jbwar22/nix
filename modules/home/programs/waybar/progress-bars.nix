@@ -1,8 +1,15 @@
-lib: {
+lib: let
+  inherit (lib)
+  concatStrings
+  elemAt
+  last
+  mod
+  range;
+in {
   # format:
   # ${numCharacters}x${numSteps}
 
-  getHorizontal = numChars: numSteps: with lib; let
+  getHorizontal = numChars: numSteps: let
     stepDefs = {
       "1" = [ "█" ];
       "2" = [ "▌" "█" ];

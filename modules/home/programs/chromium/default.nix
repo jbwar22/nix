@@ -1,8 +1,8 @@
-{ lib, pkgs, ns, ... }:
+{ pkgs, ns, ... }:
 
-with lib; ns.enable {
-  home.packages = with pkgs; [
-    chromium
+ns.enable {
+  home.packages = [
+    pkgs.chromium
   ];
 
   custom.home.behavior.impermanence.paths = [ ".config/chromium" ];

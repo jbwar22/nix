@@ -1,6 +1,6 @@
 { clib, ... }:
 
-with clib.nv; {
+{
   plugins.aerial = {
     enable = false;
     settings = {
@@ -9,7 +9,7 @@ with clib.nv; {
   };
   
   keymaps = [
-    (mkMap "<leader>a" ":AerialToggle float<CR>")
-    (mkMap "<leader>A" ":AerialToggle<CR>")
+    (clib.nv.mkMap "<leader>a" ":AerialToggle float<CR>")
+    (clib.nv.mkMap "<leader>A" ":AerialToggle<CR>")
   ];
 }

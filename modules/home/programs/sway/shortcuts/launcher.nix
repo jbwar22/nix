@@ -1,6 +1,14 @@
 pkgs: lib: config: menu:
 
-with lib; let
+let
+  inherit (lib)
+  attrNames
+  concatStringsSep
+  hasAttr
+  pipe;
+  inherit (pkgs)
+  writeShellScript;
+
   shortcuts = config.custom.home.programs.sway.shortcuts;
   isPackage = check: hasAttr "stdenv" check;
   mkCase = shortcuts: ''
@@ -25,6 +33,6 @@ with lib; let
         ;;
     esac
   '';
-in pkgs.writeShellScript "shortcuts-launcher" ''
+in writeShellScript "shortcuts-launcher" ''
   ${mkCase shortcuts}
 ''

@@ -1,9 +1,19 @@
 { lib, clib, ns, ... }:
 
-with lib; with clib; with ns; {
-  options = opt (mkOption {
+let
+  inherit (lib)
+  mapAttrsToList
+  mkOption;
+  inherit (lib.types)
+  attrsOf
+  submodule;
+  inherit (clib)
+  mkEnumOption
+  mkStrOption;
+in {
+  options = ns.opt (mkOption {
     description = "tmp file definitions";
-    type = with types; attrsOf (submodule {
+    type = attrsOf (submodule {
       options = {
         type = mkEnumOption "Type" [
           "f"  "f+" "w"  "w+" "d"  "D"  "e"  "v"  "q"  "Q"  "p"  "p+" "L"  "L+" "c"  "c+" "b"  "b+"
@@ -23,6 +33,6 @@ with lib; with clib; with ns; {
   config = {
     systemd.user.tmpfiles.rules = mapAttrsToList (_: f:
       "${f.type} ${f.path} ${f.mode} ${f.user} ${f.group} ${f.age} ${f.argument}"
-    ) cfg;
+    ) ns.cfg;
   };
 }

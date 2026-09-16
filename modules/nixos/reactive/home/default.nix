@@ -1,6 +1,13 @@
 { config, lib, clib, ns, ... }:
 
-with lib; with clib; ns.enable (let
+ns.enable (let
+  inherit (lib)
+  filter
+  mkMerge
+  pipe;
+  inherit (clib)
+  getHMOpt
+  mkIfAnyHMOpt;
   users = config.custom.common.opts.host.users;
 in {
   custom.nixos = {

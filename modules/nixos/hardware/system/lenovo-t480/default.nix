@@ -1,13 +1,16 @@
-{ options, lib, clib, modulesPath, ns, ... }:
+{ clib, modulesPath, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (clib)
+  enums;
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  options = eopt {};
+  options = ns.eopt {};
 
-  config = ecfg {
+  config = ns.ecfg {
     custom.nixos.hardware.cpu.intel.enable = true;
 
     # nixos-hardware overrides
@@ -53,7 +56,7 @@ with lib; with ns; {
     swapDevices = [ ];
 
     custom.common = {
-      opts.hardware = with clib; {
+      opts.hardware = {
         cpu = {
           vendor = enums.cpu-vendors.intel;
           threads = 8;

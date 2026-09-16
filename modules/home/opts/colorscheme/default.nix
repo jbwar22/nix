@@ -1,15 +1,21 @@
 { lib, ns, ... }:
 
-with lib; let
+let
+  inherit (lib)
+  mkOption;
+  inherit (lib.types)
+  str
+  submodule;
+
   mkColor = mkOption {
-    type = types.str;
+    type = str;
     default = "#00FF00";
   };
 in {
   options = ns.opt {
     terminal = mkOption {
       description = "terminal colors";
-      type = (types.submodule {
+      type = (submodule {
         options = {
           foreground = mkColor;
           background = mkColor;
@@ -39,7 +45,7 @@ in {
     };
     wm = mkOption {
       description = "wm colors";
-      type = (types.submodule {
+      type = (submodule {
         options = {
           background = mkColor;
           text = mkColor;
@@ -61,7 +67,7 @@ in {
     };
     ime = mkOption {
       description = "ime colors";
-      type = (types.submodule {
+      type = (submodule {
         options = {
           background = mkColor;
           border = mkColor;

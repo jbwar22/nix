@@ -1,8 +1,8 @@
 { ns, pkgs, ... }:
 
 ns.enable {
-  environment.systemPackages = with pkgs; [
-    libpwquality
+  environment.systemPackages = [
+    pkgs.libpwquality
   ];
   security.pam.services.passwd.rules.password.pwquality = {
     control = "required";

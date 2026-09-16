@@ -1,13 +1,18 @@
 { pkgs, ns, ... }:
 
-ns.enable {
-  environment.systemPackages = with pkgs; [
+let
+  inherit (pkgs)
+  ifuse
+  libimobiledevice
+  usbmuxd2;
+in ns.enable {
+  environment.systemPackages = [
     libimobiledevice
     ifuse
   ];
 
   services.usbmuxd = {
     enable = true;
-    package = pkgs.usbmuxd2;
+    package = usbmuxd2;
   };
 }

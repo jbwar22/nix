@@ -1,13 +1,25 @@
 { inputs, pkgs, config, lib, ns, ... }:
 
-with lib; with ns; let
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  mkEnableOption
+  mkIf
+  mkOption;
+  inherit (lib.types)
+  nullOr
+  str;
+
   colorscheme = config.custom.home.opts.colorscheme;
 in {
   options = eopt {
     basic = mkEnableOption "don't set configuration";
     user-dictionary = mkOption {
       description = "path to user_dictionary.db file";
-      type = with types; nullOr str;
+      type = nullOr str;
       default = null;
     };
   };

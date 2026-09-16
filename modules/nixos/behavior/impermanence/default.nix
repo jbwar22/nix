@@ -1,19 +1,36 @@
 { config, lib, clib, ns, ... }:
 
-with lib; with ns; (let
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  attrNames
+  genAttrs
+  mkDefault
+  mkMerge
+  mkOption;
+  inherit (lib.types)
+  anything
+  listOf
+  str;
+  inherit (clib)
+  mkStrOption;
+
   users = config.custom.common.opts.host.users;
   usernames = (attrNames users) ++ [ "root" ];
 in {
-  options = with clib; eopt {
+  options = eopt {
     device = mkStrOption "btrfs device";
     mntOptions = mkOption {
-      type = with types; listOf str;
+      type = listOf str;
       description = "btrfs mount options";
       default = [];
     };
     subvol = mkStrOption "btrfs subvol";
     paths = mkOption {
-      type = with types; listOf anything;
+      type = listOf anything;
       default = [];
     };
   };
@@ -67,4 +84,4 @@ in {
       behavior.etc-nixos-symlink.enable = true;
     };
   };
-})
+}

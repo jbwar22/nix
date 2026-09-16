@@ -1,9 +1,22 @@
 { lib, clib, ns, ... }:
 
-with lib; with clib; with ns; {
+let
+  inherit (ns)
+  cfg
+  opt;
+  inherit (lib)
+  mapAttrsToList
+  mkOption;
+  inherit (lib.types)
+  attrsOf
+  submodule;
+  inherit (clib)
+  mkEnumOption
+  mkStrOption;
+in {
   options = opt (mkOption {
     description = "tmp file definitions";
-    type = with types; attrsOf (submodule {
+    type = attrsOf (submodule {
       options = {
         type = mkEnumOption "Type" [
           "f"  "f+" "w"  "w+" "d"  "D"  "e"  "v"  "q"  "Q"  "p"  "p+" "L"  "L+" "c"  "c+" "b"  "b+"

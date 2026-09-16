@@ -1,5 +1,5 @@
 { config, clib, ... }:
 
 {
-  imports = with clib; allAugmentNamespaceArg config (getDirs ./.);
+  imports = clib.allAugmentNamespaceArg config (clib.getDirs ./.);
 }

@@ -1,8 +1,13 @@
-{ lib, clib, ... }:
+{ clib, ... }:
 
-with clib.nv; with lib; {
+let
+  inherit (clib)
+  getDirs;
+  inherit (clib.nv)
+  mkMap;
+in {
   
-  imports = clib.getDirs ./.;
+  imports = getDirs ./.;
 
   config = {
     colorscheme = "moonfly";

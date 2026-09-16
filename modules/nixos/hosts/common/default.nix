@@ -1,6 +1,14 @@
 { config, lib, clib, inputs, ... }:
 
-with lib; with clib; {
+let
+  inherit (lib)
+  attrNames
+  mapAttrs
+  mkIf;
+  inherit (clib)
+  getAdmins
+  loadAgeSecretsFromDir;
+in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.agenix.nixosModules.default

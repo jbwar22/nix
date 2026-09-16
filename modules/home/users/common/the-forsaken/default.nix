@@ -1,6 +1,9 @@
-{ lib, clib, ... }:
+{ clib, ... }:
 
-with lib; with clib; {
+let
+  inherit (clib)
+  enums;
+in {
   config = {
     custom.common = {
       opt.hardware = {

@@ -1,11 +1,16 @@
 { lib, ns, ... }:
 
-with lib; with ns; {
-  options = opt {
-    dir = mkOption {
-      type = with types; oneOf [str path];
+let
+  inherit (lib.types)
+  oneOf
+  path
+  str;
+in {
+  options = ns.opt {
+    dir = lib.mkOption {
+      type = oneOf [str path];
       description = "dir for wallpaper symlinks";
-      default = cfg.base;
+      default = ns.cfg.base;
     };
   };
 }

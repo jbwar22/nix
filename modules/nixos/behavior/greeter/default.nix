@@ -1,9 +1,19 @@
 { pkgs, lib, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  mkOption;
+  inherit (lib.types)
+  listOf
+  package;
+in {
   options = eopt {
     sessions = mkOption {
-      type = with types; listOf package;
+      type = listOf package;
       description = "sessions to be used";
       default = [];
     };

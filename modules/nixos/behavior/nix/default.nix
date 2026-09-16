@@ -1,6 +1,13 @@
 { inputs, self, lib, ns, ...}:
 
-with lib; ns.enable {
+let
+  inherit (lib)
+  filterAttrs
+  hasAttr
+  mapAttrs
+  mapAttrsToList
+  pipe;
+in ns.enable {
   nix = let
     flake-filter = (filterAttrs (_: v: hasAttr "_type" v && v._type == "flake"));
   in rec {

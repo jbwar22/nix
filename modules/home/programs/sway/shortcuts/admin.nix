@@ -1,35 +1,40 @@
 pkgs: lib: config:
 
-with lib; (let
+let
+  inherit (lib)
+  mkIf;
+  inherit (pkgs)
+  sway-kitty-popup-admin;
+
   hf = config.custom.home.opts.hostfeatures;
 in {
   firewall = mkIf hf.usesNixosFirewall {
-    reset = pkgs.sway-kitty-popup-admin "shortcuts-admin-firewall-reset" ''
+    reset = sway-kitty-popup-admin "shortcuts-admin-firewall-reset" ''
       sudo nixos-firewall-tool reset
     '';
 
     snapweb = mkIf hf.runningSnapweb (
-      pkgs.sway-kitty-popup-admin "shortcuts-admin-firewall-snapweb" ''
+      sway-kitty-popup-admin "shortcuts-admin-firewall-snapweb" ''
         sudo nixos-firewall-tool open tcp 1780
       ''
     );
   };
 
   cpupower = mkIf hf.hasCpupower {
-    performance = pkgs.sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
+    performance = sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
       sudo cpupower frequency-set -g performance
     '';
-    powersave = pkgs.sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
+    powersave = sway-kitty-popup-admin "shortcuts-admin-cpupower-performance" ''
       sudo cpupower frequency-set -g powersave
     '';
   };
 
   tailscale = mkIf hf.hasTailscale {
-    up = pkgs.sway-kitty-popup-admin "shortcuts-admin-tailscale-up" ''
+    up = sway-kitty-popup-admin "shortcuts-admin-tailscale-up" ''
       sudo tailscale up
     '';
-    down = pkgs.sway-kitty-popup-admin "shortcuts-admin-tailscale-down" ''
+    down = sway-kitty-popup-admin "shortcuts-admin-tailscale-down" ''
       sudo tailscale down
     '';
   };
-})
+}

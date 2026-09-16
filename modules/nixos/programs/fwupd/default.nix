@@ -1,6 +1,14 @@
-{ config, lib, clib, ns, ... }:
+{ config, clib, ns, ... }:
 
-with lib; with clib; with ns; (let
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (clib)
+  getAdmins
+  mkDisableOption
+  setUserGroups;
   admins = getAdmins config.custom.common.opts.host.users;
 in {
   options = eopt {
@@ -11,4 +19,4 @@ in {
     users = setUserGroups admins [ "input" ];
     systemd.timers.fwupd-refresh.enable = cfg.enableService;
   };
-})
+}

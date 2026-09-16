@@ -1,16 +1,16 @@
 { lib, ns, ... }:
 
-with lib; with ns; {
-  options = eopt {
-    country = mkOption {
-      type = with types; str;
+{
+  options = ns.eopt {
+    country = lib.mkOption {
+      type = lib.types.str;
       description = "country code";
       default = "US";
     };
   };
-  config = ecfg {
+  config = ns.ecfg {
     boot.extraModprobeConfig = ''
-      options cfg80211 ieee80211_regdom="${cfg.country}"
+      options cfg80211 ieee80211_regdom="${ns.cfg.country}"
     '';
   };
 }

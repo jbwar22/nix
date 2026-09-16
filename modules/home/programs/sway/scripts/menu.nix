@@ -1,4 +1,14 @@
 pkgs: lib: config: let
+  inherit (lib)
+  attrsToList
+  concatStringsSep
+  pipe;
+  inherit (pkgs)
+  jq
+  sway
+  tofi
+  writeShellScript;
+
   params-by-bar = {
     "bar768" = {
     };
@@ -26,7 +36,7 @@ pkgs: lib: config: let
     ) (lib.attrsToList args))
   ));
 
-  if-blocks = with lib; pipe config.custom.home.opts.screens [
+  if-blocks = pipe config.custom.home.opts.screens [
     attrsToList
     (map (screen: let
       output_var = if screen.value.noserial then "$output_name_noserial" else "$output_name";
@@ -39,16 +49,16 @@ pkgs: lib: config: let
     (concatStringsSep " ")
   ];
 
-in pkgs.writeShellScript "sway-menu" ''
-  tofi="${pkgs.tofi}/bin/tofi"
+in writeShellScript "sway-menu" ''
+  tofi="${tofi}/bin/tofi"
   args=()
   while getopts ":drp:" opt; do
     case $opt in
       d)
-        tofi="${pkgs.tofi}/bin/tofi-drun"
+        tofi="${tofi}/bin/tofi-drun"
         ;;
       r)
-        tofi="${pkgs.tofi}/bin/tofi --require-match=false"
+        tofi="${tofi}/bin/tofi --require-match=false"
         ;;
       p)
         args=(--prompt-text="''${OPTARG}")
@@ -60,15 +70,15 @@ in pkgs.writeShellScript "sway-menu" ''
     esac
   done
 
-  outputs=$(${pkgs.sway}/bin/swaymsg -t get_outputs)
+  outputs=$(${sway}/bin/swaymsg -t get_outputs)
   output_output=$( \
-    echo $outputs | ${pkgs.jq}/bin/jq -r '.[] | select(.focused==true).name' \
+    echo $outputs | ${jq}/bin/jq -r '.[] | select(.focused==true).name' \
   )
   output_name=$( \
-    echo $outputs | ${pkgs.jq}/bin/jq -r '.[] | select(.focused==true) | "\(.make) \(.model) \(.serial)"' \
+    echo $outputs | ${jq}/bin/jq -r '.[] | select(.focused==true) | "\(.make) \(.model) \(.serial)"' \
   )
   output_name_noserial=$( \
-    echo $outputs | ${pkgs.jq}/bin/jq -r '.[] | select(.focused==true) | "\(.make) \(.model)"' \
+    echo $outputs | ${jq}/bin/jq -r '.[] | select(.focused==true) | "\(.make) \(.model)"' \
   )
   ${if-blocks}
 ''

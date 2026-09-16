@@ -1,6 +1,17 @@
 { config, lib, clib, pkgs, ns, ...}:
 
-with lib; with clib; ns.enable (let
+let
+  inherit (lib)
+  mkIf
+  mkMerge;
+  inherit (clib)
+  ageOrNull;
+  inherit (pkgs)
+  iproute2
+  wireguard-tools;
+  inherit (pkgs.writers)
+  writeBash;
+in ns.enable (let
   namespace = "airns";
   interfaceName = "${namespace}wg0";
   configfile = ageOrNull config "vpn-namespace-wg.conf";
@@ -18,7 +29,7 @@ in {
         (mkIf (ipv4file != null) [ "ipv4.txt:${ipv4file}" ])
         (mkIf (ipv6file != null) [ "ipv6.txt:${ipv6file}" ])
       ];
-      ExecStart = with pkgs; writers.writeBash "wg-up" ''
+      ExecStart = writeBash "wg-up" ''
         # set -e
         ${iproute2}/bin/ip netns add ${namespace}
         ${iproute2}/bin/ip link add ${interfaceName} type wireguard
@@ -35,7 +46,7 @@ in {
         ${iproute2}/bin/ip -n ${namespace} route add default dev ${interfaceName}
         ${iproute2}/bin/ip -n ${namespace} -6 route add default dev ${interfaceName}
       '';
-      ExecStop = with pkgs; writers.writeBash "wg-down" ''
+      ExecStop = writeBash "wg-down" ''
         ${iproute2}/bin/ip -n ${namespace} route del default dev ${interfaceName}
         ${if ipv6file != null then ''
           ${iproute2}/bin/ip -n ${namespace} -6 route del default dev ${interfaceName}

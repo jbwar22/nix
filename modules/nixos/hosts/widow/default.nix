@@ -1,6 +1,6 @@
-{ inputs, pkgs, lib, ... }:
+{ inputs, pkgs, ... }:
 
-with lib; {
+{
   imports = [
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
   ];

@@ -1,8 +1,8 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = with pkgs; [
-    git-crypt
+  home.packages = [
+    pkgs.git-crypt
   ];
 
   programs.git = {

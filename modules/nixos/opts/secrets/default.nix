@@ -1,10 +1,10 @@
 { lib, ns, ... }:
 
-with lib; {
+{
   options = ns.opt {
-    timeZone = mkOption {
+    timeZone = lib.mkOption {
       description = "Timezone for the computer";
-      type = with types; nullOr str;
+      type = lib.types.nullOr lib.types.str;
       default = null;
     };
   };

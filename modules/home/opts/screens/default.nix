@@ -19,9 +19,8 @@ let
   pipe
   recursiveUpdate
   splitString
-  toInt
-  types;
-  inherit (types)
+  toInt;
+  inherit (lib.types)
   attrsOf
   nullOr
   str

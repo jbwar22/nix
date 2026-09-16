@@ -1,11 +1,23 @@
 { config, lib, ns, ... }:
 
-with lib; with ns; (let
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  mkIf
+  mkMerge
+  mkOption;
+  inherit (lib.types)
+  anything
+  listOf;
+
   hf = config.custom.home.opts.hostfeatures;
 in {
   options = eopt {
     paths = mkOption {
-      type = with types; listOf anything;
+      type = listOf anything;
       default = [];
     };
   };
@@ -35,4 +47,4 @@ in {
       [[ -L "$HOME/tmp" ]] || run mkdir -p "$HOME/tmp"
     '';
   };
-})
+}

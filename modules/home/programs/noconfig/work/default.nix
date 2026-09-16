@@ -1,10 +1,10 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = with pkgs; [
-    # jetbrains.pycharm-professional
-    mssql_jdbc
-    unixodbcDrivers.msodbcsql17
-    libreoffice
+  home.packages = [
+    # pkgs.jetbrains.pycharm-professional
+    pkgs.mssql_jdbc
+    pkgs.unixodbcDrivers.msodbcsql17
+    pkgs.libreoffice
   ];
 }

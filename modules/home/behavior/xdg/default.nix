@@ -1,6 +1,19 @@
 { config, lib, pkgs, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  generators
+  mkOption
+  types;
+  inherit (pkgs)
+  xdg-desktop-portal-gtk
+  xdg-desktop-portal-wlr
+  xdg-utils;
+in {
   options = eopt {
     defaultBrowser = mkOption {
       description = "default browser desktop file";
@@ -10,7 +23,7 @@ with lib; with ns; {
   };
 
   config = ecfg {
-    home.packages = with pkgs; [
+    home.packages = [
       xdg-utils
     ];
 
@@ -34,7 +47,7 @@ with lib; with ns; {
 
     xdg.portal = {
       enable = true;
-      extraPortals = with pkgs; [
+      extraPortals = [
         xdg-desktop-portal-wlr
         xdg-desktop-portal-gtk
       ];

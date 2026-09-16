@@ -1,10 +1,10 @@
 { lib, pkgs, ns, ... }:
 
-with lib; ns.enable {
+ns.enable {
   services.flatpak.enable = true;
-  xdg.portal = mkDefault {
+  xdg.portal = lib.mkDefault {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     config.common.default = "gtk";
   };
 

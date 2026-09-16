@@ -1,4 +1,55 @@
-lib: with lib; rec {
+lib: let
+  inherit (lib)
+  any
+  attrNames
+  attrsToList
+  concat
+  concatMap
+  concatMapAttrs
+  concatStrings
+  elem
+  escapeShellArg
+  filterAttrs
+  foldl'
+  functionArgs
+  genAttrs
+  getAttrFromPath
+  hasAttr
+  hasSuffix
+  head
+  imap0
+  length
+  listToAttrs
+  mapAttrs
+  mapAttrsToList
+  mkDefault
+  mkEnableOption
+  mkIf
+  mkMerge
+  mkOption
+  nameValuePair
+  path
+  pathExists
+  pipe
+  readDir
+  recursiveUpdate
+  removeSuffix
+  setAttrByPath
+  setFunctionArgs
+  splitString
+  stringToCharacters
+  substring
+  tail
+  toUpper
+  typeOf;
+  inherit (lib.types)
+  bool
+  enum
+  nullOr
+  str
+  submodule
+  ;
+in rec {
   # enum helpers
 
   # definition list of enums
@@ -188,24 +239,24 @@ lib: with lib; rec {
 
   mkStrOption = description: mkOption {
     inherit description;
-    type = types.str;
+    type = str;
   };
 
   mkEnumOption = description: l: mkOption {
     inherit description;
-    type = types.enum l;
+    type = enum l;
   };
 
   mkOfSubmoduleOption = description: of: options: mkOption {
     inherit description;
-    type = of (types.submodule {
+    type = of (submodule {
       inherit options;
     });
   };
 
   mkSubmoduleOption = description: options: mkOption {
     inherit description;
-    type = (types.submodule {
+    type = (submodule {
       inherit options;
     });
   };
@@ -214,12 +265,12 @@ lib: with lib; rec {
     default = true;
     example = false;
     description = "Whether to enable ${name}";
-    type = types.bool;
+    type = bool;
   };
 
   mkNullOrStrOption = description: mkOption {
     inherit description;
-    type = with types; nullOr str;
+    type = nullOr str;
   };
 
 

@@ -1,24 +1,32 @@
 { pkgs, ns, ... }:
 
-ns.enable {
+let
+  inherit (pkgs)
+  gamemode
+  gamescope
+  mangohud
+  proton-ge-bin
+  steam
+  writeShellScriptBin;
+in ns.enable {
   hardware.steam-hardware.enable = true;
 
   programs.steam = {
     enable = true;
-    package = pkgs.steam.override {
-      extraLibraries = pkgs: with pkgs; [
-        hidapi
+    package = steam.override {
+      extraLibraries = extraPkgs: [
+        extraPkgs.hidapi
       ];
     };
-    extraCompatPackages = with pkgs; [
+    extraCompatPackages = [
       proton-ge-bin
     ];
-    extraPackages = with pkgs; let
+    extraPackages = let
       # fix gamescope lag bomb
       # alternative one-liner:
       # env -u LD_PRELOAD gamescope -h 1440 -H 1440 -f -- env LD_PRELOAD="$LD_PRELOAD" %command%
       ld_gamescope = (writeShellScriptBin "ld_gamescope" ''
-        exec env -u LD_PRELOAD LD_BIND_NOW=1 ${pkgs.gamescope}/bin/gamescope -f -w 2560 -W 2560 -h 1440 -H 1440 --force-grab-cursor -- env LD_PRELOAD="$LD_PRELOAD" "$@"
+        exec env -u LD_PRELOAD LD_BIND_NOW=1 ${gamescope}/bin/gamescope -f -w 2560 -W 2560 -h 1440 -H 1440 --force-grab-cursor -- env LD_PRELOAD="$LD_PRELOAD" "$@"
       '');
     in [
       gamescope

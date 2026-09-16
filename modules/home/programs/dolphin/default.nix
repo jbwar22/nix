@@ -1,8 +1,8 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = with pkgs; [
-    dolphin-emu
+  home.packages = [
+    pkgs.dolphin-emu
   ];
 
   custom.home.behavior.impermanence.paths = [

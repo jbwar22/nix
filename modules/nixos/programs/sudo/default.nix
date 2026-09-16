@@ -1,6 +1,16 @@
 { lib, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  opt;
+  inherit (lib)
+  mkEnableOption
+  mkIf
+  mkMerge
+  mkOption
+  types;
+in {
   options = opt {
     bee = mkEnableOption "bee careful with sudo";
     lecture = mkOption {

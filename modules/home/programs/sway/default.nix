@@ -1,35 +1,78 @@
 { config, lib, clib, pkgs, ns, ... }:
 
-with lib; with clib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt
+  opt;
+  inherit (lib)
+  attrsToList
+  concatLines
+  concatStringsSep
+  foldl'
+  mkForce
+  mkIf
+  mkMerge
+  mkOption
+  pipe;
+  inherit (lib.types)
+  attrsOf
+  bool
+  int
+  nullOr
+  oneOf
+  package
+  str;
+  inherit (clib)
+  ageOrDefault
+  enums
+  mkIfElse;
+  inherit (pkgs)
+  brightnessctl
+  coreutils
+  dunst
+  gammastep
+  jq
+  kitty
+  procps
+  quickshell
+  sway
+  swaylock
+  waybar
+  writeShellScript
+  writeShellScriptBin
+  xscreensaver;
+in {
   options = eopt {
     blueLightFilter = mkOption {
-      type = with types; bool;
+      type = bool;
       description = "run a blue light filter at night";
       default = true;
     };
     blueLightStrength = mkOption {
-      type = with types; int;
+      type = int;
       description = "color temperature at night (kelvin)";
       default = 3600;
     };
     shortcuts = mkOption {
-      type = with types; let
+      type = let
         t = attrsOf (oneOf [ t package ]);
       in t;
       description = "shortcuts menu";
     };
     brightnessDevice = mkOption {
-      type = with types; nullOr str;
+      type = nullOr str;
       description = "device for brightnessctl";
       default = null;
     };
   };
 
   config = ecfg (let
-    colorscheme = config.custom.home.opts.colorscheme;
-    waybar = config.custom.home.programs.waybar;
-    swaylock = config.custom.home.programs.swaylock;
-    xscreensaver = config.custom.home.programs.xscreensaver;
+    colorschemecfg = config.custom.home.opts.colorscheme;
+    waybarcfg = config.custom.home.programs.waybar;
+    swaylockcfg = config.custom.home.programs.swaylock;
+    xscreensavercfg = config.custom.home.programs.xscreensaver;
     scripts = (import ./scripts) pkgs lib clib config;
     geolocation = ageOrDefault config "geolocation" "0.00:0.00";
   in mkMerge [(opt {
@@ -37,14 +80,14 @@ with lib; with clib; with ns; {
   })
   {
     custom.home.opts = {
-      sessions = [ pkgs.sway ];
+      sessions = [ sway ];
       aliases = {
-        sway = mkIf (config.custom.common.opts.hardware.gpu.vendor == enums.gpu-vendors.nvidia) "${pkgs.sway}/bin/sway --unsupported-gpu";
-        screens = "${pkgs.sway}/bin/swaymsg -t get_outputs | ${pkgs.jq}/bin/jq -r '.[] | .name + \"\\t\" + .make + \" \" + .model + \" \" + .serial'";
+        sway = mkIf (config.custom.common.opts.hardware.gpu.vendor == enums.gpu-vendors.nvidia) "${sway}/bin/sway --unsupported-gpu";
+        screens = "${sway}/bin/swaymsg -t get_outputs | ${jq}/bin/jq -r '.[] | .name + \"\\t\" + .make + \" \" + .model + \" \" + .serial'";
       };
     };
 
-    home.packages = with pkgs; mkMerge [
+    home.packages = mkMerge [
       [
         (let
           wallpaperDir = config.custom.home.opts.wallpaper.dir;
@@ -55,33 +98,33 @@ with lib; with clib; with ns; {
           ];
         in writeShellScriptBin "wallpaper" ''
           set_default () {
-            ${pkgs.coreutils}/bin/ln -sf default "${wallpaperDir}/lockscreen"
+            ${coreutils}/bin/ln -sf default "${wallpaperDir}/lockscreen"
             ${forEachScreen (screen: ''
-              ${pkgs.coreutils}/bin/ln -sf default "${wallpaperDir}/${screen.name}"
+              ${coreutils}/bin/ln -sf default "${wallpaperDir}/${screen.name}"
             '')}
           }
 
           set_wallpaper () {
             outname="$1"
-            filename="$(${pkgs.coreutils}/bin/realpath -s --relative-to="${wallpaperDir}" "$2")"
-            ${pkgs.coreutils}/bin/ln -sf "$filename" "${wallpaperDir}/$outname"
+            filename="$(${coreutils}/bin/realpath -s --relative-to="${wallpaperDir}" "$2")"
+            ${coreutils}/bin/ln -sf "$filename" "${wallpaperDir}/$outname"
           }
 
           set_from_dir () {
-            dirname="$(${pkgs.coreutils}/bin/realpath -s "$1")"
+            dirname="$(${coreutils}/bin/realpath -s "$1")"
             for filename in "$dirname/"*; do
-              outname="$(${pkgs.coreutils}/bin/basename "$filename")"
+              outname="$(${coreutils}/bin/basename "$filename")"
               set_wallpaper "$outname" "$filename"
             done
           }
 
           reload_wallpapers () {
-            ${pkgs.sway}/bin/swaymsg 'output "*" bg "${wallpaperDir}/default" fill #000000'
+            ${sway}/bin/swaymsg 'output "*" bg "${wallpaperDir}/default" fill #000000'
             ${forEachScreen (screen: ''
               ${if screen.value.noserial then ''
-                ${pkgs.sway}/bin/swaymsg 'output "${screen.name} Unknown" bg "${wallpaperDir}/${screen.name}" fill #000000'
+                ${sway}/bin/swaymsg 'output "${screen.name} Unknown" bg "${wallpaperDir}/${screen.name}" fill #000000'
               '' else ""}
-              ${pkgs.sway}/bin/swaymsg 'output "${screen.name}" bg "${wallpaperDir}/${screen.name}" fill #000000'
+              ${sway}/bin/swaymsg 'output "${screen.name}" bg "${wallpaperDir}/${screen.name}" fill #000000'
             '')}
           }
 
@@ -132,7 +175,7 @@ with lib; with clib; with ns; {
       argument = "none";
     };
 
-    xdg.configFile."gammastep/hooks/log-period.sh".source = mkIf cfg.blueLightFilter (pkgs.writeShellScript "gammastep-log-period-hook" ''
+    xdg.configFile."gammastep/hooks/log-period.sh".source = mkIf cfg.blueLightFilter (writeShellScript "gammastep-log-period-hook" ''
       case $1 in
         period-changed)
           exec echo $3 > ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path}
@@ -143,14 +186,14 @@ with lib; with clib; with ns; {
 
     wayland.windowManager.sway = {
       enable = true;
-      package = pkgs.sway;
+      package = sway;
 
       systemd.xdgAutostart = true;
       xwayland = true;
       config = rec {
         modifier = "Mod4";
-        terminal = "${pkgs.kitty}/bin/kitty";
-        menu = "${scripts.menu} -d | xargs ${pkgs.sway}/bin/swaymsg exec --";
+        terminal = "${kitty}/bin/kitty";
+        menu = "${scripts.menu} -d | xargs ${sway}/bin/swaymsg exec --";
         seat = (let 
           cursorTheme = config.custom.home.opts.cursor.theme;
         in {
@@ -218,21 +261,21 @@ with lib; with clib; with ns; {
           modifier = config.wayland.windowManager.sway.config.modifier;
           alt = "Mod1";
           shortcuts-launcher = import ./shortcuts/launcher.nix pkgs lib config scripts.menu;
-          lock = "${pkgs.swaylock}/bin/swaylock";
-          ss = "${pkgs.xscreensaver}/bin/xscreensaver-command -activate";
-          ss-lock = "exec ${pkgs.writeShellScript "screensaver-lock" ''
+          lock = "${swaylock}/bin/swaylock";
+          ss = "${xscreensaver}/bin/xscreensaver-command -activate";
+          ss-lock = "exec ${writeShellScript "screensaver-lock" ''
             ${ss}
-            ${pkgs.xscreensaver}/bin/xscreensaver-command -watch | while read line; do
-              [[ "$line" == "UNBLANK"* ]] && ${pkgs.procps}/bin/pkill -P $$ xscr
+            ${xscreensaver}/bin/xscreensaver-command -watch | while read line; do
+              [[ "$line" == "UNBLANK"* ]] && ${procps}/bin/pkill -P $$ xscr
             done
             ${lock}
           ''}";
-          qs-ipc = "${pkgs.quickshell}/bin/qs ipc -i $(${pkgs.quickshell}/bin/qs list --all --json | ${pkgs.jq}/bin/jq -r '.[].id') call main";
+          qs-ipc = "${quickshell}/bin/qs ipc -i $(${quickshell}/bin/qs list --all --json | ${jq}/bin/jq -r '.[].id') call main";
         in lib.mkOptionDefault { # append to default behavior
 
           # Media keys: Audio
-          "XF86AudioRaiseVolume" = if waybar.enable then "exec ${scripts.volume} up" else "exec ${qs-ipc} volume up";
-          "XF86AudioLowerVolume" = if waybar.enable then "exec ${scripts.volume} down" else "exec ${qs-ipc} volume down";
+          "XF86AudioRaiseVolume" = if waybarcfg.enable then "exec ${scripts.volume} up" else "exec ${qs-ipc} volume up";
+          "XF86AudioLowerVolume" = if waybarcfg.enable then "exec ${scripts.volume} down" else "exec ${qs-ipc} volume down";
           "XF86AudioMute" = "exec ${scripts.volume} mute";
           "XF86AudioMicMute" = "exec ${scripts.volume} micmute";
 
@@ -240,13 +283,13 @@ with lib; with clib; with ns; {
           "XF86MonBrightnessUp" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} up";
           "XF86MonBrightnessDown" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} down";
           "XF86Display" = mkIf cfg.blueLightFilter "exec pkill -USR1 gammastep";
-          "XF86Favorites" = mkIf swaylock.enable "exec ${pkgs.swaylock}/bin/swaylock & systemctl suspend";
-          "${modifier}+Shift+delete" = mkIfElse swaylock.enable (
-            mkIfElse xscreensaver.enable "exec ${ss-lock}" "exec ${lock}"
+          "XF86Favorites" = mkIf swaylockcfg.enable "exec ${swaylock}/bin/swaylock & systemctl suspend";
+          "${modifier}+Shift+delete" = mkIfElse swaylockcfg.enable (
+            mkIfElse xscreensavercfg.enable "exec ${ss-lock}" "exec ${lock}"
           ) (
-            mkIf xscreensaver.enable "exec ${ss}"
+            mkIf xscreensavercfg.enable "exec ${ss}"
           );
-          "${modifier}+${alt}+Shift+delete" = mkIf (swaylock.enable && xscreensaver.enable) "exec ${lock}";
+          "${modifier}+${alt}+Shift+delete" = mkIf (swaylockcfg.enable && xscreensavercfg.enable) "exec ${lock}";
 
           # Screenshot
           "${modifier}+Shift+s" = "exec ${scripts.screenshot}";
@@ -286,31 +329,31 @@ with lib; with clib; with ns; {
           "${modifier}+Shift+Left" = null;
           "${modifier}+Shift+Right" = null;
         };
-        bars = mkIfElse waybar.enable [{
-          "command" = "${pkgs.waybar}/bin/waybar";
+        bars = mkIfElse waybarcfg.enable [{
+          "command" = "${waybar}/bin/waybar";
         }] (mkForce []);
         colors = rec {
-          background = colorscheme.wm.background;
+          background = colorschemecfg.wm.background;
           focused = {
             inherit background;
-            border = colorscheme.wm.foreground-normal;
-            childBorder = colorscheme.wm.foreground-normal;
-            indicator = colorscheme.wm.foreground-normal;
-            text = colorscheme.wm.text;
+            border = colorschemecfg.wm.foreground-normal;
+            childBorder = colorschemecfg.wm.foreground-normal;
+            indicator = colorschemecfg.wm.foreground-normal;
+            text = colorschemecfg.wm.text;
           };
           unfocused = {
             inherit background;
-            border = colorscheme.wm.foreground-dim;
-            childBorder = colorscheme.wm.foreground-dim;
-            indicator = colorscheme.wm.foreground-dim;
-            text = colorscheme.wm.text;
+            border = colorschemecfg.wm.foreground-dim;
+            childBorder = colorschemecfg.wm.foreground-dim;
+            indicator = colorschemecfg.wm.foreground-dim;
+            text = colorschemecfg.wm.text;
           };
           urgent = {
             inherit background;
-            border = colorscheme.wm.foreground-alert;
-            childBorder = colorscheme.wm.foreground-alert;
-            indicator = colorscheme.wm.foreground-alert;
-            text = colorscheme.wm.text;
+            border = colorschemecfg.wm.foreground-alert;
+            childBorder = colorschemecfg.wm.foreground-alert;
+            indicator = colorschemecfg.wm.foreground-alert;
+            text = colorschemecfg.wm.text;
           };
           focusedInactive = unfocused;
           placeholder = unfocused;
@@ -357,15 +400,15 @@ with lib; with clib; with ns; {
           # TODO these are really not consistant
           # {
           #   # swayidle is handling lock-before-sleep instead
-          #   command = "pkill xss-lock; ${pkgs.xss-lock}/bin/xss-lock --ignore-sleep ${pkgs.swaylock}/bin/swaylock --ring-color=\"#000044\"";
+          #   command = "pkill xss-lock; ${xss-lock}/bin/xss-lock --ignore-sleep ${swaylock}/bin/swaylock --ring-color=\"#000044\"";
           #   always = true;
           # }
           {
-            command = "pkill dunst; ${pkgs.dunst}/bin/dunst";
+            command = "pkill dunst; ${dunst}/bin/dunst";
             always = true;
           }
           (mkIf cfg.blueLightFilter {
-            command = "pkill -9 gammastep; ${pkgs.gammastep}/bin/gammastep -l $(cat ${geolocation}) -t 6500:${toString cfg.blueLightStrength}";
+            command = "pkill -9 gammastep; ${gammastep}/bin/gammastep -l $(cat ${geolocation}) -t 6500:${toString cfg.blueLightStrength}";
             always = true;
           })
         ];

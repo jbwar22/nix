@@ -4,8 +4,8 @@
   plugins.treesitter = {
     enable = true;
 
-    grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-      jsonnet
+    grammarPackages = [
+      pkgs.vimPlugins.nvim-treesitter.builtGrammars.jsonnet
     ];
 
     settings = {

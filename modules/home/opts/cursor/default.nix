@@ -1,6 +1,17 @@
 { pkgs, lib, ns, ... }:
 
-with ns; let
+let
+  inherit (ns)
+  cfg
+  opt;
+  inherit (lib)
+  mkOption;
+  inherit (lib.types)
+  int
+  package
+  str
+  submodule;
+
   cursors = {
     "macos" = { # the only one that's small enough at size 24?
       name = "macOS";
@@ -29,25 +40,25 @@ with ns; let
     };
   };
 in {
-  options = with lib; opt {
+  options = opt {
     definition = mkOption {
-      type = types.str;
+      type = str;
       description = "cursor name";
       default = "macos";
     };
     theme = mkOption {
-      type = (types.submodule {
+      type = (submodule {
         options = {
           name = mkOption {
-            type = types.str;
+            type = str;
             description = "name of cursor within package";
           };
           package = mkOption {
-            type = types.package;
+            type = package;
             description = "cursor package";
           };
           size = mkOption {
-            type = types.int;
+            type = int;
             description = "cursor size";
           };
         };

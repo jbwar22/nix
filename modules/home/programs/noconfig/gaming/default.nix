@@ -1,10 +1,10 @@
-{ pkgs, inputs, ns, ... }:
+{ pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = with pkgs; [
-    gamescope
-    umu-launcher
-    prismlauncher
+  home.packages = [
+    pkgs.gamescope
+    pkgs.umu-launcher
+    pkgs.prismlauncher
   ];
   custom.home.behavior.impermanence.paths = [
     "games"

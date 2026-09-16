@@ -1,6 +1,9 @@
 { lib, ns, ... }:
 
-with lib; ns.enable {
+let
+  inherit (lib)
+  mkDefault;
+in ns.enable {
   services.printing.enable = true;
   services.avahi = {
     enable = mkDefault true;

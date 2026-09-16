@@ -1,7 +1,7 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  environment.systemPackages = with pkgs; [
-    vim
+  environment.systemPackages = [
+    pkgs.vim
   ];
 }

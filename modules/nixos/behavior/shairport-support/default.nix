@@ -1,10 +1,23 @@
 { lib, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (ns)
+  cfg
+  ecfg
+  eopt;
+  inherit (lib)
+  allUnique
+  mkDefault
+  mkOption
+  throwIfNot;
+  inherit (lib.types)
+  listOf
+  number;
+in {
   options = eopt {
     ports = mkOption {
       description = "ports to open for shairport-sync";
-      type = with types; listOf number;
+      type = listOf number;
       default = [ 5000 ];
     };
   };

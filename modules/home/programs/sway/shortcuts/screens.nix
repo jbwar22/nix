@@ -1,6 +1,23 @@
 pkgs: lib: config:
 
-with lib; let
+let
+  inherit (lib)
+  concatLists
+  concatStringsSep
+  filterAttrs
+  foldl'
+  hasAttr
+  mapAttrs
+  mapAttrsToList
+  mkIf
+  pipe
+  recursiveUpdate
+  typeOf;
+  inherit (pkgs)
+  procps
+  sway
+  writeShellScript;
+
   screens = config.custom.home.opts.screens;
 
   getUndo = specialisation-def: output-def: pipe specialisation-def [
@@ -14,7 +31,7 @@ with lib; let
   getSwaymsgLines = output-name: output-def: if hasAttr "sway" output-def then (
     pipe output-def.sway [
       (mapAttrsToList (sway-command-name: sway-command-value: ''
-        ${pkgs.sway}/bin/swaymsg 'output "${output-name}" ${sway-command-name} ${sway-command-value}'
+        ${sway}/bin/swaymsg 'output "${output-name}" ${sway-command-name} ${sway-command-value}'
       ''))
       (concatStringsSep "\n")
     ]
@@ -37,11 +54,11 @@ with lib; let
         (getSwaymsgLines output-name output-def)
       ]))
       (concatStringsSep "\n")
-      (pkgs.writeShellScript "shortcuts-screens-specialisation-${specialisation-name}")
+      (writeShellScript "shortcuts-screens-specialisation-${specialisation-name}")
     ]))
   ];
 in specialisation-scripts // {
-  gammatoggle = mkIf config.custom.home.programs.sway.blueLightFilter (pkgs.writeShellScript "reset-gammastep" ''
-    ${pkgs.procps}/bin/pkill -USR1 gammastep
+  gammatoggle = mkIf config.custom.home.programs.sway.blueLightFilter (writeShellScript "reset-gammastep" ''
+    ${procps}/bin/pkill -USR1 gammastep
   '');
 }

@@ -1,13 +1,19 @@
-{ config, options, lib, clib, modulesPath, ns, ... }:
+{ config, lib, clib, modulesPath, ns, ... }:
 
-with lib; with ns; {
+let
+  inherit (lib)
+  mkForce
+  mkIf;
+  inherit (clib)
+  enums;
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  options = eopt {};
+  options = ns.eopt {};
 
-  config = ecfg (let
+  config = ns.ecfg (let
     kernelOlder = config.boot.kernelPackages.kernelOlder;
     kernelAtLeast = config.boot.kernelPackages.kernelAtLeast;
     # fixed in linux 7.0
@@ -89,7 +95,7 @@ with lib; with ns; {
     }];
 
     custom.common = {
-      opts.hardware = with clib; {
+      opts.hardware = {
         cpu = {
           vendor = enums.cpu-vendors.amd;
           threads = 16;
