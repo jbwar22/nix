@@ -1,21 +1,25 @@
 { inputs, pkgs, ns, ... }:
 
-ns.enable {
-  home.packages = [
-    pkgs.gimp3
-    pkgs.element-desktop
-    pkgs.feh
-    pkgs.qpwgraph
-    pkgs.sqlitebrowser
-    pkgs.zoom-us
-    pkgs.mullvad-browser
+let
+  vlc = inputs.wrappers.lib.wrapPackage ({ ... }: {
+    inherit pkgs;
+    package = pkgs.vlc;
+    env = {
+      DISPLAY = "";
+    };
+  });
+in ns.enable {
+  home.packages = builtins.attrValues {
+    inherit (pkgs)
+    element-desktop
+    feh
+    gimp3
+    mullvad-browser
+    qpwgraph
+    sqlitebrowser
+    zoom-us;
 
-    (inputs.wrappers.lib.wrapPackage ({ ... }: {
-      inherit pkgs;
-      package = pkgs.vlc;
-      env = {
-        DISPLAY = "";
-      };
-    }))
-  ];
+    inherit
+    vlc;
+  };
 }

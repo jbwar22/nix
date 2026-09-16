@@ -6,13 +6,10 @@ let
   ecfg
   eopt;
   inherit (lib)
+  attrValues
   generators
   mkOption
   types;
-  inherit (pkgs)
-  xdg-desktop-portal-gtk
-  xdg-desktop-portal-wlr
-  xdg-utils;
 in {
   options = eopt {
     defaultBrowser = mkOption {
@@ -23,9 +20,10 @@ in {
   };
 
   config = ecfg {
-    home.packages = [
-      xdg-utils
-    ];
+    home.packages = attrValues {
+      inherit (pkgs)
+      xdg-utils;
+    };
 
     xdg.userDirs = {
       enable = true;
@@ -47,10 +45,11 @@ in {
 
     xdg.portal = {
       enable = true;
-      extraPortals = [
-        xdg-desktop-portal-wlr
+      extraPortals = attrValues {
+        inherit (pkgs)
         xdg-desktop-portal-gtk
-      ];
+        xdg-desktop-portal-wlr;
+      };
       xdgOpenUsePortal = true;
       config = {
         sway.default   = [ "wlr" ];

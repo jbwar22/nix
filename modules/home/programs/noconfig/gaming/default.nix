@@ -1,11 +1,12 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = [
-    pkgs.gamescope
-    pkgs.umu-launcher
-    pkgs.prismlauncher
-  ];
+  home.packages = builtins.attrValues {
+    inherit (pkgs)
+    gamescope
+    prismlauncher
+    umu-launcher;
+  };
   custom.home.behavior.impermanence.paths = [
     "games"
     ".local/share/umu"

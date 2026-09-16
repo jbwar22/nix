@@ -1,10 +1,12 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = [
-    # pkgs.jetbrains.pycharm-professional
-    pkgs.mssql_jdbc
-    pkgs.unixodbcDrivers.msodbcsql17
-    pkgs.libreoffice
-  ];
+  home.packages = builtins.attrValues {
+    inherit (pkgs)
+    libreoffice
+    mssql_jdbc;
+
+    inherit (pkgs.unixodbcDrivers)
+    msodbcsql17;
+  };
 }

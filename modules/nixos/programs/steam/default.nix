@@ -1,39 +1,56 @@
 { pkgs, ns, ... }:
 
 let
+  inherit (builtins)
+  attrValues;
   inherit (pkgs)
-  gamemode
   gamescope
-  mangohud
-  proton-ge-bin
   steam
   writeShellScriptBin;
+
+  # fix gamescope lag bomb
+  # alternative one-liner:
+  # env -u LD_PRELOAD gamescope -h 1440 -H 1440 -f -- env LD_PRELOAD="$LD_PRELOAD" %command%
+  ld_gamescope = writeShellScriptBin "ld_gamescope" ''
+    exec \
+      env \
+        -u LD_PRELOAD LD_BIND_NOW=1 \
+        ${gamescope}/bin/gamescope \
+        -f \
+        -w 2560 -W 2560 -h 1440 -H 1440 \
+        --force-grab-cursor \
+        -- \
+        env \
+          LD_PRELOAD="$LD_PRELOAD" \
+          "$@"
+  '';
 in ns.enable {
   hardware.steam-hardware.enable = true;
 
   programs.steam = {
     enable = true;
     package = steam.override {
-      extraLibraries = extraPkgs: [
-        extraPkgs.hidapi
-      ];
+      extraLibraries = extraPkgs: attrValues {
+        inherit (extraPkgs)
+        hidapi;
+      };
     };
-    extraCompatPackages = [
-      proton-ge-bin
-    ];
-    extraPackages = let
-      # fix gamescope lag bomb
-      # alternative one-liner:
-      # env -u LD_PRELOAD gamescope -h 1440 -H 1440 -f -- env LD_PRELOAD="$LD_PRELOAD" %command%
-      ld_gamescope = (writeShellScriptBin "ld_gamescope" ''
-        exec env -u LD_PRELOAD LD_BIND_NOW=1 ${gamescope}/bin/gamescope -f -w 2560 -W 2560 -h 1440 -H 1440 --force-grab-cursor -- env LD_PRELOAD="$LD_PRELOAD" "$@"
-      '');
-    in [
-      gamescope
-      mangohud
+
+    extraCompatPackages = attrValues {
+      inherit (pkgs)
+      proton-ge-bin;
+    };
+
+    extraPackages = attrValues {
+      inherit (pkgs)
       gamemode
-      ld_gamescope
-    ];
+      mangohud;
+
+      inherit
+      gamescope
+      ld_gamescope;
+    };
+
     extest.enable = true; # steam input on wayland
     localNetworkGameTransfers.openFirewall = true;
     protontricks.enable = true;

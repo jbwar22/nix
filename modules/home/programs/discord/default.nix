@@ -2,19 +2,18 @@
 
 ns.enable (let
   inherit (lib)
+  attrValues
   getExe'
   join
   mapAttrs
   mapAttrsToList;
   inherit (pkgs)
-  writers
   discord
-  writeShellScript
+  findutils
+  python3Packages
   rsync
-  findutils;
-  inherit (pkgs.python3Packages)
-  capstone
-  pyelftools;
+  writeShellScript
+  writers;
 
   flags = {
     "--use-gl" = "egl"; # this appears to be the one that fixes flickering
@@ -34,7 +33,11 @@ ns.enable (let
   argsString = join " " argsList;
 
   discordPatcher = writers.writePython3Bin "krisp-patcher-python" {
-    libraries = [ capstone pyelftools ];
+    libraries = attrValues {
+      inherit (python3Packages)
+      capstone
+      pyelftools;
+    };
     flakeIgnore = [
       "E501" # line too long (82 > 79 characters)
       "F403" # ‘from module import *’ used; unable to detect undefined names

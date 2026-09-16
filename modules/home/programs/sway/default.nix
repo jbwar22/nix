@@ -190,7 +190,7 @@ in {
 
       systemd.xdgAutostart = true;
       xwayland = true;
-      config = rec {
+      config = {
         modifier = "Mod4";
         terminal = "${kitty}/bin/kitty";
         menu = "${scripts.menu} -d | xargs ${sway}/bin/swaymsg exec --";

@@ -1,10 +1,7 @@
 { pkgs, ns, ... }:
 
-let
-  inherit (pkgs)
-  git-crypt;
-in ns.enable {
+ns.enable {
   environment.systemPackages = [
-    git-crypt   # needed for using this repo
+    pkgs.git-crypt   # needed for using this repo
   ];
 }

@@ -9,8 +9,6 @@ let
   mkEnableOption
   mkIf
   mkMerge;
-  inherit (pkgs)
-  rnnoise-plugin;
 in {
   options = eopt {
     rnnoise.enable = mkEnableOption "rnnoise denoising for input";
@@ -27,7 +25,7 @@ in {
       jack.enable = true;
       alsa.enable = true;
     } (mkIf cfg.rnnoise.enable {
-      extraLadspaPackages = [ rnnoise-plugin ];
+      extraLadspaPackages = [ pkgs.rnnoise-plugin ];
       extraConfig.pipewire."99-input-denoising" = {
         "context.modules" = [
           {

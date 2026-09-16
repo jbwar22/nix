@@ -1,16 +1,17 @@
 { pkgs, ns, ... }:
 
 ns.enable {
-  home.packages = [
-    pkgs.noto-fonts
-    pkgs.noto-fonts-cjk-sans
-    pkgs.noto-fonts-cjk-serif
-    pkgs.noto-fonts-color-emoji
-    pkgs.freefont_ttf
-    pkgs.corefonts
-    pkgs.vista-fonts
-    pkgs.jigmo
-  ];
+  home.packages = builtins.attrValues {
+    inherit (pkgs)
+    corefonts
+    freefont_ttf
+    jigmo
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    noto-fonts-color-emoji
+    vista-fonts;
+  };
 
   fonts.fontconfig = {
     enable = true;
