@@ -132,7 +132,7 @@
           ./modules/nixos/hosts/${hostname}
           {
             custom.common.opts.host = host; # other common opts (opts.hardware) specified in modules
-            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib;
+            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib clib;
             home-manager = {
               useGlobalPkgs = true;
               extraSpecialArgs = { inherit inputs clib self; };
@@ -157,7 +157,7 @@
         };
         modules = (genHMModules hostname username) ++ [
           {
-            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs pkgs.lib;
+            nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib clib;
           }
         ] ++ (if !(isNixosHost host) then [
           # since there is no osConfig for non-nixos systems, all of custom.common needs to be specified

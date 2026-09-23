@@ -13,6 +13,7 @@ lib: let
   foldl'
   functionArgs
   genAttrs
+  getAttr
   getAttrFromPath
   hasAttr
   hasSuffix
@@ -40,8 +41,10 @@ lib: let
   stringToCharacters
   substring
   tail
+  throwIf
   toUpper
-  typeOf;
+  typeOf
+  versionAtLeast;
   inherit (lib.types)
   bool
   enum
@@ -392,4 +395,17 @@ in rec {
     '';
     inherit text;
   };
+
+  untilReaches = checkPackage: version: usePackage:
+    throwIf
+      (versionAtLeast checkPackage.version version)
+      "version override for ${checkPackage.name} to ${version} has become out of date"
+      (throwIf
+        (!(versionAtLeast usePackage.version version))
+        "version override for ${checkPackage.name} to ${version} is invalid (usePackage is at ${usePackage.version})"
+        usePackage);
+
+  untilReachesBatch = checkChannel: useChannel: mapAttrs (name: version: 
+    untilReaches (getAttr name checkChannel) version (getAttr name useChannel) 
+  );
 }

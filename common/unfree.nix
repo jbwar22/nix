@@ -2,6 +2,7 @@
   "apple_cursor"
   "corefonts"
   "discord"
+  "discord-unwrapped"
   "msodbcsql17"
   "nvidia-settings"
   "nvidia-x11"

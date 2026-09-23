@@ -1,11 +1,4 @@
-channels: final: prev: {
-  inherit (channels.unstable)
-
-  # replace stable with unstable
-  sway-unwrapped
-
-  ;
-
-  # for referencing packages that do not need to be unstable system-wide
-  unstable = channels.unstable;
-}
+channels: clib: final: prev: let
+  unstableUntilReaches = clib.untilReachesBatch channels.stable channels.unstable {
+  };
+in unstableUntilReaches
