@@ -19,10 +19,7 @@
         systemd-boot.enable = true;
         systemd-boot.fixResolution = true;
         secure-boot.enable = true;
-        kernel = {
-          default = pkgs.linuxPackages_7_2;
-          extra = [ pkgs.linuxPackages_6_18 ];
-        };
+        kernel.default = pkgs.linuxPackages_7_2;
         virtualisation.enable = true;
         impermanence = {
           enable = true;
