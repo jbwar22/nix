@@ -162,5 +162,10 @@ in {
       sway.resolution = "1920x1080@60.000hz";
       bar = "bar1080";
     };
+    # living room tv
+    "VIZIO, Inc E601i-A3 UKJWAM0100001" = {
+      sway.resolution = "1920x1080@60.000hz";
+      bar = "bar1080";
+    };
   });
 }

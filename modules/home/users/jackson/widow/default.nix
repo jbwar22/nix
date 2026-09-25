@@ -29,22 +29,14 @@
           "BOE 0x06B3" = {
             sway.position = "0 0";
           };
-          "Acer Technologies XV271U M3 140400E433LIJ" = {
-            sway.position = "1366 -672";
-            specialisations = {
-              "work monitor left".sway = {
-                position = "-2560 -672";
-              };
-              "work monitor above".sway = {
-                position = "-597 -1440";
-              };
-            };
-          };
           "LG Electronics LG TV 0x01010101" = {
             sway.position = "0 -1080";
           };
           "Hewlett Packard HP 22cwa 6CM6120J0Z" = {
             sway.position = "-1920 0";
+          };
+          "VIZIO, Inc E601i-A3 UKJWAM0100001" = {
+            sway.position = "0 -1080";
           };
         };
         wallpaper.dir = "/home/${config.home.username}/pictures/wallpapers/active";
