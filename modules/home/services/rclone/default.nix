@@ -9,7 +9,6 @@ let
   inherit (lib)
   attrNames
   concatStringsSep
-  enumerate
   filterAttrs
   getExe
   length
@@ -28,6 +27,7 @@ let
   package
   str;
   inherit (clib)
+  enumerate
   mkDisableOption
   mkNullOrStrOption
   mkOfSubmoduleOption;

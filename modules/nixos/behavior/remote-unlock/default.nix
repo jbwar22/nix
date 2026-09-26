@@ -7,15 +7,15 @@ let
   eopt;
   inherit (lib)
   mkDefault
-  mkOption
-  mkStrOption;
+  mkOption;
   inherit (lib.types)
   enum
   listOf
   path
   str;
   inherit (clib)
-  mkIfElse;
+  mkIfElse
+  mkStrOption;
   inherit (pkgs)
   openssl
   tpm2-tools
