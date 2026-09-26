@@ -13,7 +13,6 @@
         pc.enable = true;
         laptop.enable = true;
         gaming.enable = true;
-        work.enable = true;
       };
 
       behavior = {

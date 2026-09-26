@@ -7,7 +7,6 @@
     custom.home = {
       suites = {
         pc.enable = true;
-        work.enable = true;
       };
 
       services = {
