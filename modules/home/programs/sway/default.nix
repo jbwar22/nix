@@ -283,7 +283,7 @@ in {
           "XF86MonBrightnessUp" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} up";
           "XF86MonBrightnessDown" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} down";
           "XF86Display" = mkIf cfg.blueLightFilter "exec pkill -USR1 gammastep";
-          "XF86Favorites" = mkIf swaylockcfg.enable "exec ${swaylock}/bin/swaylock & systemctl suspend";
+          "XF86Favorites" = mkIf swaylockcfg.enable "exec ${swaylock}/bin/swaylock -f && systemctl suspend";
           "${modifier}+Shift+delete" = mkIfElse swaylockcfg.enable (
             mkIfElse xscreensavercfg.enable "exec ${ss-lock}" "exec ${lock}"
           ) (
