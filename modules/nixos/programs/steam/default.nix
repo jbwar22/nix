@@ -51,8 +51,20 @@ in ns.enable {
       ld_gamescope;
     };
 
+    extraArgs = "--pipewire-dmabuf";
+
     extest.enable = true; # steam input on wayland
     localNetworkGameTransfers.openFirewall = true;
     protontricks.enable = true;
+    remotePlay.openFirewall = true;
+  };
+
+  # frame
+  networking.firewall = {
+    allowedTCPPortRanges = [ { from = 27036; to = 27037; } ];
+    allowedUDPPortRanges = [
+      { from = 27031; to = 27036; }
+      { from = 10400; to = 10401; }
+    ];
   };
 }
