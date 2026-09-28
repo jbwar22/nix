@@ -1,9 +1,12 @@
 inputs: final: prev: {
   # regex replace nix store paths with /n/s/ to shorten lines
-  btop = prev.btop.overrideAttrs {
+  btop = (prev.btop.overrideAttrs {
     patches = [
       ./patches/btop-nix-store-replace.patch
     ];
+  }).override {
+    cudaSupport = true;
+    rocmSupport = true;
   };
 
   # scripts hack to allow sending signals while muted
