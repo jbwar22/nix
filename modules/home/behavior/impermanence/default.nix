@@ -31,13 +31,13 @@ in {
           ".ssh"
           ".local/share/home-manager"
           ".local/share/nix"
+          ".local/share/flatpak" # more than just flatpak, includes xdg portals stuff
           { path = ".cache/nix"; origin = "local"; }
           { path = ".cache/mesa_shader_cache"; origin = "local"; }
           { path = ".cache/mesa_shader_cache_db"; origin = "local"; }
         ]
         (mkIf hf.hasDocker [ ".docker" ])
         (mkIf hf.hasFlatpak [
-          ".local/share/flatpak"
           ".var/app"
         ])
       ];
