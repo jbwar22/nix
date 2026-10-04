@@ -19,8 +19,10 @@ in {
 
     services.pipewire = mkMerge [{
       enable = true;
+      # package = pkgs.pipewire-unstable;
       audio.enable = true;
       wireplumber.enable = true;
+      # wireplumber.package = pkgs.wireplumber-unstable;
       pulse.enable = true;
       jack.enable = true;
       alsa.enable = true;

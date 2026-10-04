@@ -34,6 +34,8 @@ in ns.enable {
         inherit (extraPkgs)
         hidapi;
       };
+
+      # extraArgs = "--pipewire-dmabuf";
     };
 
     extraCompatPackages = attrValues {
@@ -50,8 +52,6 @@ in ns.enable {
       gamescope
       ld_gamescope;
     };
-
-    extraArgs = "--pipewire-dmabuf";
 
     extest.enable = true; # steam input on wayland
     localNetworkGameTransfers.openFirewall = true;

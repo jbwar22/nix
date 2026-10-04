@@ -51,9 +51,15 @@ in {
         xdg-desktop-portal-wlr;
       };
       xdgOpenUsePortal = true;
-      config = {
-        sway.default   = [ "wlr" ];
-        common.default = [ "wlr" ];
+      config = let
+        portalcfg = {
+          default = [ "gtk" ];
+          "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+          "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+        };
+      in {
+        sway = portalcfg;
+        common = portalcfg;
       };
     };
 
@@ -63,6 +69,10 @@ in {
         max_fps = 60;
         chooser_type = "dmenu";
         chooser_cmd = "${pkgs.rofi}/bin/rofi -dmenu -p 'Select a source to share:'";
+        # chooser_type = "none";
+        # output_name = "DP-3";
+        # force_mod_linear = 0;
+        # max_fps = 0;
       };
     };
 

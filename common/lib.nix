@@ -408,4 +408,6 @@ in rec {
   untilReachesBatch = checkChannel: useChannel: mapAttrs (name: version: 
     untilReaches (getAttr name checkChannel) version (getAttr name useChannel) 
   );
+
+  unstableUntilStableReaches = channels: untilReachesBatch channels.stable channels.unstable;
 }
