@@ -31,8 +31,6 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-stable";
-      inputs.home-manager.follows = "home-manager";
-      inputs.systems.follows = "systems";
     };
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
