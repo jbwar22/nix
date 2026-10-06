@@ -81,7 +81,6 @@
     clib = import ./common/lib.nix lib;
   in let
     inherit (lib)
-    attrNames
     elem
     genAttrs
     getName
@@ -112,10 +111,12 @@
       pkgs = imported-channels.${nixpkgs-main};
     };
 
-    genHMModules = hostname: username: [
+    genHMModules = hostname: username: userdef: let
+      modulesFolder = if userdef?modules then userdef.modules else username;
+    in [
       ./modules/home/users/common # fully loads custom.common on nixos systems (both hm module and standalone)
-      ./modules/home/users/${username}
-      ./modules/home/users/${username}/${hostname}
+      ./modules/home/users/${modulesFolder}
+      ./modules/home/users/${modulesFolder}/${hostname}
       { home.username = mkDefault username; }
     ];
   in rec {
@@ -134,9 +135,9 @@
             home-manager = {
               useGlobalPkgs = true;
               extraSpecialArgs = { inherit inputs clib self; };
-              users = genAttrs (attrNames host.users) (username: {
-                imports = genHMModules hostname username;
-              });
+              users = mapAttrs (username: userdef: {
+                imports = genHMModules hostname username userdef;
+              }) host.users;
             };
           }
         ];
@@ -146,6 +147,7 @@
     homeConfigurations = forAllHostUserPairs (genHostUserPairs hosts) (hostname: username: let
       inherit (importChannelsForSystem hosts.${hostname}.system) imported-channels pkgs;
       host = hosts.${hostname};
+      userdef = host.users.${username};
     in
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -153,7 +155,7 @@
           inherit inputs clib self;
           osConfig = if isNixosHost host then nixosConfigurations.${hostname}.config else false;
         };
-        modules = (genHMModules hostname username) ++ [
+        modules = (genHMModules hostname username userdef) ++ [
           {
             nixpkgs.overlays = import ./common/overlays inputs imported-channels host.system pkgs lib clib;
           }
