@@ -29,7 +29,7 @@
 
       programs = {
         fwupd.enable = true;
-        plymouth.theme = "rings";
+        plymouth.adi1090x-theme = "rings";
         snapserver.enable = false;
         librepods.enable = true;
       };

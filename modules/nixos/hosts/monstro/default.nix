@@ -39,7 +39,7 @@
       };
 
       programs = {
-        plymouth.theme = "rings";
+        plymouth.adi1090x-theme = "rings";
         snapserver.enable = true;
         tailscale.serviceContainer = {
           enable = true;
