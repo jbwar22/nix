@@ -8,6 +8,7 @@ ns.enable {
       ios-mount.enable = true;
       powerbutton-lock-power.enable = true;
       printing.enable = true;
+      regdomain.enable = true;
       serial-support.enable = true;
       sound.enable = true;
     };
