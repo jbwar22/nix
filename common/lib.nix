@@ -36,6 +36,7 @@ lib: let
   recursiveUpdate
   removeSuffix
   setAttrByPath
+  setDefaultModuleLocation
   setFunctionArgs
   splitString
   stringToCharacters
@@ -142,9 +143,9 @@ in rec {
 
   # ns import helpers
 
-  augmentNamespaceArg = config: modulePath: partiallyApplyFormal (import modulePath) {
+  augmentNamespaceArg = config: modulePath: setDefaultModuleLocation modulePath (partiallyApplyFormal (import modulePath) {
     ns = mkNsHelpers config modulePath;
-  };
+  });
 
   allAugmentNamespaceArg = config: imports: map (imp: augmentNamespaceArg config imp) imports;
 
