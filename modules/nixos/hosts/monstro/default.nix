@@ -22,7 +22,7 @@
           enable = true;
         };
         virtualisation.enable = true;
-        kernel.default = pkgs.linuxPackages_zen;
+        kernel.default = pkgs.linuxPackages_rtwdebug;
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
         pipewire-low-latency.enable = true;

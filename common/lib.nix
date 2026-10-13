@@ -401,10 +401,7 @@ in rec {
     throwIf
       (versionAtLeast checkPackage.version version)
       "version override for ${checkPackage.name} to ${version} has become out of date"
-      (throwIf
-        (!(versionAtLeast usePackage.version version))
-        "version override for ${checkPackage.name} to ${version} is invalid (usePackage is at ${usePackage.version})"
-        usePackage);
+      usePackage;
 
   untilReachesBatch = checkChannel: useChannel: mapAttrs (name: version: 
     untilReaches (getAttr name checkChannel) version (getAttr name useChannel) 

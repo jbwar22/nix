@@ -1,5 +1,5 @@
 inputs: channels: system: pkgs: lib: clib: [
   (import ./unstable.nix channels clib)
-  (import ./custom.nix inputs)
+  (import ./custom.nix inputs clib)
   (import ./scripts.nix)
 ]

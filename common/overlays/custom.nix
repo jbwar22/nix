@@ -1,4 +1,4 @@
-inputs: final: prev: {
+inputs: clib: final: prev: {
   # regex replace nix store paths with /n/s/ to shorten lines
   btop = (prev.btop.overrideAttrs {
     patches = [
@@ -53,5 +53,29 @@ inputs: final: prev: {
       ./patches/xscreensaver-no-offscreen.patch
     ];
   });
+
+  linuxPackages_rtwdebug = clib.untilReaches final.linuxPackages_latest.kernel "7.3" (final.linuxPackagesFor (
+    final.linuxKernel.kernels.linux_7_2.override (let
+      urlVersion = "7.3-rc7";
+      realVersion = "7.3.0-rc7";
+    in {
+      argsOverride = {
+        version = realVersion;
+        modDirVersion = realVersion;
+        src = final.fetchurl {
+          url = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/snapshot/linux-${urlVersion}.tar.gz";
+          hash = "sha256-94n8DXs3E7a+IyhPKpw1v0H7hnhbJM/MUGwg2P9xJSM=";
+        };
+        structuredExtraConfig = let
+          inherit (final.lib.kernel)
+          yes;
+        in {
+          RTW89_DEBUG = yes;
+          RTW89_DEBUGMSG = yes;
+          RTW89_DEBUGFS = yes;
+        };
+      };
+    })
+  ));
 }
 
