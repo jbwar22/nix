@@ -9,6 +9,7 @@
     };
   };
   config = ns.ecfg {
+    hardware.wirelessRegulatoryDatabase = true;
     boot.extraModprobeConfig = ''
       options cfg80211 ieee80211_regdom="${ns.cfg.country}"
     '';
