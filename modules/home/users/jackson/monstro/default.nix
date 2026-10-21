@@ -9,7 +9,9 @@ in{
 
     custom.home = {
       suites = {
+        gaming.enable = true;
         pc.enable = true;
+        workstation.enable = true;
       };
 
       behavior = {

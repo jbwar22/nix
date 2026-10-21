@@ -10,7 +10,6 @@ ns.enable {
     };
 
     programs = {
-      noconfig.gui.enable = true;
       noconfig.tui.enable = true;
       noconfig.util.enable = true;
       bash.enable = true;
@@ -34,6 +33,7 @@ ns.enable {
       tmux.enable = true;
       udiskie.enable = true;
       vim.enable = true;
+      wine.enable = true;
     };
   };
 }

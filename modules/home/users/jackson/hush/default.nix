@@ -11,8 +11,10 @@
       };
 
       suites = {
+        gaming.enable = true;
         pc.enable = true;
         work.enable = true;
+        workstation.enable = true;
       };
 
       behavior = {

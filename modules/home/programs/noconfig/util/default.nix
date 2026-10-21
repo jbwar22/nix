@@ -25,6 +25,7 @@ let
 in ns.enable {
   home.packages = attrValues {
     inherit (pkgs)
+    alsa-utils
     appimage-run
     cowsay
     dig

@@ -9,7 +9,6 @@ ns.enable {
       noconfig.gaming.enable = true;
       dolphin.enable = true;
       r2modman.enable = true;
-      wine.enable = true;
     };
   };
 }
