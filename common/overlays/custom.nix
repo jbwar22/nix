@@ -53,20 +53,5 @@ inputs: clib: final: prev: {
       ./patches/xscreensaver-no-offscreen.patch
     ];
   });
-
-  linuxPackages_rtwdebug = final.linuxPackagesFor (
-    final.linuxKernel.kernels.linux_7_3.override {
-      argsOverride = {
-        structuredExtraConfig = let
-          inherit (final.lib.kernel)
-          yes;
-        in {
-          RTW89_DEBUG = yes;
-          RTW89_DEBUGMSG = yes;
-          RTW89_DEBUGFS = yes;
-        };
-      };
-    }
-  );
 }
 
