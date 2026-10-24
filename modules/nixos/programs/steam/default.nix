@@ -62,6 +62,11 @@ in ns.enable {
     (hiPrio patchedModule)
   ];
 
+  networking.networkmanager.settings."device-steam-frame-adapter" = {
+    match-device = "driver:rtw89_8852cu";
+    "wifi.scan-rand-mac-address" = "no";
+  };
+
   boot.extraModprobeConfig = ''
     options rtw89_core reg6_pwr_override=1 disable_2ghz=Y
   '';
