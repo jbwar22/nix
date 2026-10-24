@@ -36,7 +36,36 @@ let
           "$@"
   '';
   getLauncher = username: "/home/${username}/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher";
+
+  kernelPackages = config.boot.kernelPackages;
+  kernel = kernelPackages.kernel;
+  modulePath = "drivers/net/wireless/realtek/rtw89";
+  patchedModule = kernelPackages.stdenv.mkDerivation {
+    pname = "patched-kernel-module-${baseNameOf modulePath}";
+    inherit (kernel) src version;
+    patches = [
+      ./0001-reg6-pwr-override.patch
+      ./0002-disable-2ghz.patch
+    ];
+    nativeBuildInputs = kernel.moduleBuildDependencies;
+    makeFlags = kernelPackages.kernelModuleMakeFlags ++ [
+      "INSTALL_MOD_PATH=$(out)"
+      "M=$(PWD)/${modulePath}"
+    ];
+    buildFlags = [ "modules" ];
+    installFlags = [ "modules_install" ];
+    enableParallelBuilding = true;
+  };
 in ns.enable {
+
+  boot.extraModulePackages = [
+    (hiPrio patchedModule)
+  ];
+
+  boot.extraModprobeConfig = ''
+    options rtw89_core reg6_pwr_override=1 disable_2ghz=Y
+  '';
+
   hardware.steam-hardware.enable = true;
 
   programs.steam = {
