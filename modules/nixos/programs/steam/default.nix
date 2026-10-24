@@ -1,12 +1,23 @@
-{ pkgs, ns, ... }:
+{ config, pkgs, lib, clib, ns, ... }:
 
 let
   inherit (builtins)
   attrValues;
+  inherit (lib)
+  hiPrio
+  mapAttrs'
+  nameValuePair;
+  inherit (clib)
+  getUsersHMPredicate;
   inherit (pkgs)
   gamescope
+  libcap
   steam
-  writeShellScriptBin;
+  writeShellScriptBin
+  ;
+
+  users = config.custom.common.opts.host.users;
+  gamingUsers = getUsersHMPredicate config users (cfg: cfg.custom.home.suites.gaming.enable);
 
   # fix gamescope lag bomb
   # alternative one-liner:
@@ -24,6 +35,7 @@ let
           LD_PRELOAD="$LD_PRELOAD" \
           "$@"
   '';
+  getLauncher = username: "/home/${username}/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher";
 in ns.enable {
   hardware.steam-hardware.enable = true;
 
@@ -67,4 +79,24 @@ in ns.enable {
       { from = 10400; to = 10401; }
     ];
   };
+
+  systemd.services = mapAttrs' (username: _: nameValuePair "steamvr-cap-sys-nice-${username}" {
+    description = "SteamVR Scheduling";
+    wantedBy = [ "multi-user.target" ];
+    script = let
+      launcher = getLauncher username;
+    in ''
+      if [[ -f "${launcher}" && ! -L "${launcher}" ]] \
+         && [[ "$(${libcap}/bin/getcap "${launcher}")" != *cap_sys_nice* ]]; then
+        ${libcap}/bin/setcap cap_sys_nice=eip "${launcher}"
+      fi
+    '';
+    serviceConfig.Type = "oneshot";
+  }) gamingUsers;
+
+  systemd.paths = mapAttrs' (username: _: nameValuePair "steamvr-cap-sys-nice-${username}" {
+    description = "Re-run when launcher updates";
+    wantedBy = [ "multi-user.target" ];
+    pathConfig.PathChanged = getLauncher username;
+  }) gamingUsers;
 }

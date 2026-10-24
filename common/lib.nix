@@ -238,6 +238,9 @@ in rec {
 
   hasGroup = config: osConfig: group: elem group (getUserGroups osConfig config.home.username);
 
+  getUsersHMPredicate = (config: users: predicate:
+    filterAttrs (username: _: isUserPredicate config username predicate) users
+  );
 
   # option helpers
 
