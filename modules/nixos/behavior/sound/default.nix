@@ -17,6 +17,17 @@ in {
   config = ecfg {
     security.rtkit.enable = true;
 
+    environment.etc = {
+      "alsa/conf.d/60-a52-encoder.conf".source =
+        pkgs.alsa-plugins + "/etc/alsa/conf.d/60-a52-encoder.conf";
+
+      "alsa/conf.d/59-a52-lib.conf".text = ''
+        pcm_type.a52 {
+          lib "${pkgs.alsa-plugins}/lib/alsa-lib/libasound_module_pcm_a52.so"
+        }
+      '';
+    };
+
     services.pipewire = mkMerge [{
       enable = true;
       # package = pkgs.pipewire-unstable;
