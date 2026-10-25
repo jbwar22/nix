@@ -20,7 +20,10 @@
         bash.hostcolor = "\\033[38;5;160m";
         sway.brightnessDevice = "intel_backlight";
         waybar.enable = true;
-        mpv.compat = true;
+        mpv = {
+          compat = true;
+          downmix = false;
+        };
       };
 
       opts = {

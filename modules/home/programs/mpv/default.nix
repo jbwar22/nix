@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ns, ... }:
+{ config, lib, clib, pkgs, inputs, ns, ... }:
 
 let
   inherit (ns)
@@ -8,16 +8,19 @@ let
   inherit (lib)
   mkEnableOption
   mkIf;
+  inherit (clib)
+  mkDisableOption;
 in {
   options = eopt {
     compat = mkEnableOption "compatibility";
+    downmix = mkDisableOption "add downmix script";
   };
 
   config = ecfg {
     programs.mpv = {
       enable = true;
 
-      scripts = [
+      scripts = mkIf cfg.downmix [
         inputs.jbwar22-mpv-scripts.packages.${pkgs.stdenv.hostPlatform.system}.downmix
       ];
 
