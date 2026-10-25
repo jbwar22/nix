@@ -21,6 +21,7 @@
 
       programs = {
         snapserver.enable = true;
+        plymouth.adi1090x-theme = "red_loader";
       };
     };
 
