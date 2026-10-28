@@ -6,6 +6,7 @@ ns.enable {
       noconfig.work.enable = true;
       slack.enable = true;
       gchat.enable = true;
+      yaak.enable = true;
     };
     services = {
       locker.enable = true;
