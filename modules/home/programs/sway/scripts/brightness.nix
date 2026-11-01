@@ -23,7 +23,12 @@ pkgs: lib: clib: slider: config: let
   dunst
   writeShellScript;
 
-  # a(x-d)^2 + c, a = (65535 - c)/(b - d)^2
+  # q(x-d)^2 + c, q = (a - c)/(b - d)^2
+  # a = y val at max step
+  # b = number of steps
+  # c = y val of apex
+  # d = x offset of apex
+  # output y val at x vals (steps) 1 thru b
   genRange = b: c: d: pipe b [
     (range 1)
     (map (x: pipe x [
@@ -44,7 +49,8 @@ in writeShellScript "sway-brightness" ''
             then "0 1 10 27 51 84 124 172 228 292 364 444 531 627 730 841 960 1087 1222 1365 1515"
             else (
             if (config.custom.home.programs.sway.brightnessDevice == "amdgpu_bl1")
-            then "1 ${genRange 20 5700 (-1)}"
+            # for some stupid reason, there is no granularity anymore in the low ranges, so hardcode cutoffs...
+            then "0 900 2699 ${genRange 18 3200 (-2)}"
             else ""
           )} \
         )"
