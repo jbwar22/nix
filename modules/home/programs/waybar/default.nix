@@ -395,7 +395,7 @@ in {
     };
 
     screensList = attrsToList config.custom.home.opts.screens;
-    screen-id = screen-name: replaceStrings [" "] ["-"] screen-name;
+    screen-id = screen-name: replaceStrings [" " ","] ["-" "-"] screen-name;
 
     bar-names-by-id = pipe screensList [
       (map (screen: {
