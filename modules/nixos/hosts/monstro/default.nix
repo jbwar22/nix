@@ -25,6 +25,7 @@
         kernel.default = pkgs.linuxPackages_latest;
         wake-on-lan.enable = true;
         vpn-namespace.enable = true;
+        openvpn-socks.enable = true;
         pipewire-low-latency.enable = true;
         sound.rnnoise.enable = true;
         tpm.enable = true;
