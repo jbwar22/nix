@@ -20,6 +20,26 @@
         "type": "github"
       }
     },
+    "ani2xcursor": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792562879,
+        "narHash": "sha256-xhKb+xYPGT5x32zq7HqNkKCjTltzBlBOKwVT6V77UjU=",
+        "owner": "yuzujr",
+        "repo": "ani2xcursor",
+        "rev": "e524f533fa0efd0098ccc7ea597169219df3a31b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yuzujr",
+        "repo": "ani2xcursor",
+        "type": "github"
+      }
+    },
     "clonck": {
       "inputs": {
         "nixpkgs": [
@@ -437,6 +457,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "ani2xcursor": "ani2xcursor",
         "clonck": "clonck",
         "flake-parts": "flake-parts",
         "framework-dsp": "framework-dsp",

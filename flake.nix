@@ -41,6 +41,10 @@
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+    ani2xcursor = {
+      url = "github:yuzujr/ani2xcursor";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
     clonck = {
       url = "github:jbwar22/clonck";
       inputs.nixpkgs.follows = "nixpkgs-stable";
