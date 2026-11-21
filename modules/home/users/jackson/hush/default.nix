@@ -67,6 +67,7 @@
         };
         wallpaper.dir = "/home/${config.home.username}/pictures/wallpapers/active";
         colorscheme = import ./colorscheme.nix;
+        cursor.definition = "fish";
       };
     };
 

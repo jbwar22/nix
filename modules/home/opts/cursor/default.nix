@@ -38,6 +38,26 @@ let
       package = pkgs.posy-cursors;
       size = 32;
     };
+    "fish" = {
+      name = "coldyhands_fish_cursor_pack";
+      package = pkgs.stdenv.mkDerivation {
+        pname = "coldyhands_fish_cursor_pack";
+        version = "1.0.0";
+        src = pkgs.requireFile {
+          name = "coldyhands_fish_cursor_pack.tar.gz";
+          sha256 = "ea221941041eb38abd77d4379760d3137db90c0fd7d349a98c059b3d712b88da";
+          message = ''
+            Using cursor "fish" requires Fish Cursor Pack from Coldyhands.
+            Expected file: pack built with ani2xcursor as .tar.gz
+          '';
+        };
+        installPhase = ''
+          install -dm 0755 $out/share/icons/coldyhands_fish_cursor_pack
+          cp -r xcursor/* $out/share/icons/coldyhands_fish_cursor_pack
+        '';
+      };
+      size = 32;
+    };
   };
 in {
   options = opt {
