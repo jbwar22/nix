@@ -82,6 +82,11 @@ in ns.enable {
       };
 
       # extraArgs = "--pipewire-dmabuf";
+
+      # see below
+      extraEnv = {
+        LD_PRELOAD = "${pkgs.extest}/lib/libextest.so";
+      };
     };
 
     extraCompatPackages = attrValues {
@@ -99,7 +104,10 @@ in ns.enable {
       ld_gamescope;
     };
 
-    extest.enable = true; # steam input on wayland
+    # PR 590551
+    # disable extest option, and manually configure in steam.override above
+    # extest.enable = true; # steam input on wayland
+
     localNetworkGameTransfers.openFirewall = true;
     protontricks.enable = true;
     remotePlay.openFirewall = true;
