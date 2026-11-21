@@ -38,8 +38,9 @@ in {
       rbt = "${pkgs.nh}/bin/nh os test /etc/nixos";
       # rbbb = "nixos-rebuild build";
       rbbb = "${pkgs.nh}/bin/nh os build /etc/nixos";
-      ng = "sudo nix-collect-garbage -d";
-      ng7 = "sudo nix-collect-garbage --delete-older-than 7d";
+      ng = "sudo ${pkgs.nix}/bin/nix-collect-garbage -d";
+      ng7 = "sudo ${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 7d";
+      gcr = "${pkgs.findutils}/bin/find /nix/var/nix/gcroots/auto | while read root; do ${pkgs.coreutils}/bin/readlink \"$root\"; done | ${pkgs.coreutils}/bin/sort";
     };
 
     programs.bash = let
