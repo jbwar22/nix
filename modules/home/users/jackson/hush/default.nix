@@ -37,11 +37,6 @@
         quickshell.enable = true;
         kdeconnect.enable = true;
         swayidle.sleep-timeout = 60 * 15;
-
-        easyeffects = {
-          enable = true;
-          preset = "gracefu";
-        };
       };
 
       opts = {

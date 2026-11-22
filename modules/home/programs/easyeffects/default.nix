@@ -7,6 +7,9 @@ let
   eopt;
   inherit (inputs)
   framework-dsp;
+  inherit (builtins)
+  fromJSON
+  readFile;
   inherit (lib)
   mkIf
   mkOption;
@@ -25,11 +28,8 @@ in {
     services.easyeffects = {
       enable = true;
       preset = mkIf (cfg.preset != null) cfg.preset;
-    };
-
-    xdg.configFile = {
-      "easyeffects/output/gracefu.json" = mkIf (cfg.preset == "gracefu") {
-        source = "${framework-dsp}/config/output/Gracefu's Edits.json";
+      extraPresets = {
+        gracefu = mkIf (cfg.preset == "gracefu") (fromJSON (readFile "${framework-dsp}/config/output/Gracefu's Edits.json"));
       };
     };
   };
