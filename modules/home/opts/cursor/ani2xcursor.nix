@@ -14,17 +14,19 @@
   version ? "1.0.0",
   manifestSettings ? {}
 }: let
-  getSetting = attrPathStr: let
-    attrPath = lib.splitString "." attrPathStr;
-    attrAllPath = (lib.init attrPath) ++ [ "default" ];
+  getSetting = attrName1: attrName2: default: let
+    attrPath = [ attrName1 attrName2 ];
+    attrDefaultPath = [ attrName1 "default" ];
   in 
     if (lib.hasAttrByPath attrPath manifestSettings)
     then lib.getAttrFromPath attrPath manifestSettings
     else (
-      if (lib.hasAttrByPath attrAllPath manifestSettings)
-      then lib.getAttrFromPath attrAllPath manifestSettings
-      else ""
+      if (lib.hasAttrByPath attrDefaultPath manifestSettings)
+      then lib.getAttrFromPath attrDefaultPath manifestSettings
+      else default
     );
+  getFile = attrName: getSetting "files" attrName "";
+  getSize = attrName: getSetting "sizes" attrName "16,24,32,48,64,96,128";
 
   manifest = writeText "manifest.toml" ''
     [input]
@@ -32,42 +34,42 @@
     dir = "@sourceRoot@"
 
     [files]
-    pointer     = "${getSetting "files.pointer"}"
-    help        = "${getSetting "files.help"}"
-    working     = "${getSetting "files.working"}"
-    busy        = "${getSetting "files.busy"}"
-    precision   = "${getSetting "files.precision"}"
-    text        = "${getSetting "files.text"}"
-    hand        = "${getSetting "files.hand"}"
-    unavailable = "${getSetting "files.unavailable"}"
-    vert        = "${getSetting "files.vert"}"
-    horz        = "${getSetting "files.horz"}"
-    dgn1        = "${getSetting "files.dgn1"}"
-    dgn2        = "${getSetting "files.dgn2"}"
-    move        = "${getSetting "files.move"}"
-    alternate   = "${getSetting "files.alternate"}"
-    link        = "${getSetting "files.link"}"
-    person      = "${getSetting "files.person"}"
-    pin         = "${getSetting "files.pin"}"
+    pointer     = "${getFile "pointer"}"
+    help        = "${getFile "help"}"
+    working     = "${getFile "working"}"
+    busy        = "${getFile "busy"}"
+    precision   = "${getFile "precision"}"
+    text        = "${getFile "text"}"
+    hand        = "${getFile "hand"}"
+    unavailable = "${getFile "unavailable"}"
+    vert        = "${getFile "vert"}"
+    horz        = "${getFile "horz"}"
+    dgn1        = "${getFile "dgn1"}"
+    dgn2        = "${getFile "dgn2"}"
+    move        = "${getFile "move"}"
+    alternate   = "${getFile "alternate"}"
+    link        = "${getFile "link"}"
+    person      = "${getFile "person"}"
+    pin         = "${getFile "pin"}"
 
     [sizes]
-    pointer     = "${getSetting "sizes.pointer"}"
-    help        = "${getSetting "sizes.help"}"
-    working     = "${getSetting "sizes.working"}"
-    busy        = "${getSetting "sizes.busy"}"
-    precision   = "${getSetting "sizes.precision"}"
-    text        = "${getSetting "sizes.text"}"
-    hand        = "${getSetting "sizes.hand"}"
-    unavailable = "${getSetting "sizes.unavailable"}"
-    vert        = "${getSetting "sizes.vert"}"
-    horz        = "${getSetting "sizes.horz"}"
-    dgn1        = "${getSetting "sizes.dgn1"}"
-    dgn2        = "${getSetting "sizes.dgn2"}"
-    move        = "${getSetting "sizes.move"}"
-    alternate   = "${getSetting "sizes.alternate"}"
-    link        = "${getSetting "sizes.link"}"
-    person      = "${getSetting "sizes.person"}"
-    pin         = "${getSetting "sizes.pin"}"
+    pointer     = "${getSize "pointer"}"
+    help        = "${getSize "help"}"
+    working     = "${getSize "working"}"
+    busy        = "${getSize "busy"}"
+    precision   = "${getSize "precision"}"
+    text        = "${getSize "text"}"
+    hand        = "${getSize "hand"}"
+    unavailable = "${getSize "unavailable"}"
+    vert        = "${getSize "vert"}"
+    horz        = "${getSize "horz"}"
+    dgn1        = "${getSize "dgn1"}"
+    dgn2        = "${getSize "dgn2"}"
+    move        = "${getSize "move"}"
+    alternate   = "${getSize "alternate"}"
+    link        = "${getSize "link"}"
+    person      = "${getSize "person"}"
+    pin         = "${getSize "pin"}"
   '';
 in stdenv.mkDerivation {
   pname = name;
@@ -90,7 +92,7 @@ in stdenv.mkDerivation {
       --replace-fail "@sourceRoot@" "$sourceRoot"
   '';
   buildPhase = ''
-    ani2xcursor --resample nearest .
+    ani2xcursor --resample auto --size ${getSize "default"} .
   '';
   installPhase = ''
     install -dm 0755 $out/share/icons/${name}

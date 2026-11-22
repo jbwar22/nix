@@ -38,10 +38,8 @@ let
       package = pkgs.posy-cursors;
       size = 32;
     };
-    "fish" = let
-      size = 64;
-    in {
-      inherit size;
+    "fish" =  {
+      size = 32;
       name = "coldyhands_fish_cursor_pack";
       package = pkgs.callPackage ./ani2xcursor.nix {
         ani2xcursor = inputs.ani2xcursor.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -67,7 +65,6 @@ let
             move = "Fish_move.ani";
             link = "Fish_link.ani";
           };
-          sizes.default = toString size;
         };
       };
     };
