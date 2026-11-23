@@ -31,8 +31,6 @@ let
   inherit (pkgs)
   brightnessctl
   coreutils
-  dunst
-  gammastep
   jq
   kitty
   procps
@@ -45,16 +43,6 @@ let
   xscreensaver;
 in {
   options = eopt {
-    blueLightFilter = mkOption {
-      type = bool;
-      description = "run a blue light filter at night";
-      default = true;
-    };
-    blueLightStrength = mkOption {
-      type = int;
-      description = "color temperature at night (kelvin)";
-      default = 3600;
-    };
     shortcuts = mkOption {
       type = let
         t = attrsOf (oneOf [ t package ]);
@@ -74,7 +62,6 @@ in {
     swaylockcfg = config.custom.home.programs.swaylock;
     xscreensavercfg = config.custom.home.programs.xscreensaver;
     scripts = (import ./scripts) pkgs lib clib config;
-    geolocation = ageOrDefault config "geolocation" "0.00:0.00";
   in mkMerge [(opt {
     shortcuts = import ./shortcuts pkgs lib config;
   })
@@ -164,23 +151,6 @@ in {
       XDG_CURRENT_DESKTOP = "sway";
       NIXOS_OZONE_WL = "1";
     };
-
-    custom.home.behavior.tmpfiles."gammastep-period-output" = mkIf cfg.blueLightFilter {
-      type = "f";
-      path = "/tmp/sway-gammastep-output-${config.home.username}";
-      mode = "1600";
-      user = "${config.home.username}";
-      group = "users";
-      age = "-";
-      argument = "none";
-    };
-
-    xdg.configFile."gammastep/hooks/log-period.sh".source = mkIf cfg.blueLightFilter (writeShellScript "gammastep-log-period-hook" ''
-      case $1 in
-        period-changed)
-          exec echo $3 > ${config.custom.home.behavior.tmpfiles."gammastep-period-output".path}
-      esac
-    '');
 
     wayland.systemd.target = "sway-session.target";
 
@@ -282,7 +252,7 @@ in {
           # Media keys: Display
           "XF86MonBrightnessUp" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} up";
           "XF86MonBrightnessDown" = mkIf (cfg.brightnessDevice != null) "exec ${scripts.brightness} down";
-          "XF86Display" = mkIf cfg.blueLightFilter "exec pkill -USR1 gammastep";
+          "XF86Display" = "exec pkill -USR1 gammastep";
           "XF86Favorites" = mkIf swaylockcfg.enable "exec ${swaylock}/bin/swaylock -f && systemctl suspend";
           "${modifier}+Shift+delete" = mkIfElse swaylockcfg.enable (
             mkIfElse xscreensavercfg.enable "exec ${ss-lock}" "exec ${lock}"
@@ -396,22 +366,6 @@ in {
         floating = {
           border = 2;
         };
-        startup = [
-          # TODO these are really not consistant
-          # {
-          #   # swayidle is handling lock-before-sleep instead
-          #   command = "pkill xss-lock; ${xss-lock}/bin/xss-lock --ignore-sleep ${swaylock}/bin/swaylock --ring-color=\"#000044\"";
-          #   always = true;
-          # }
-          {
-            command = "pkill dunst; ${dunst}/bin/dunst";
-            always = true;
-          }
-          (mkIf cfg.blueLightFilter {
-            command = "pkill -9 gammastep; ${gammastep}/bin/gammastep -l $(cat ${geolocation}) -t 6500:${toString cfg.blueLightStrength}";
-            always = true;
-          })
-        ];
       };
       extraConfig = ''
         titlebar_padding 4 1

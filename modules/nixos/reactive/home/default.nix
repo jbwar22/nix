@@ -11,9 +11,14 @@ ns.enable (let
   users = config.custom.common.opts.host.users;
 in {
   custom.nixos = {
-    programs.home = {
-      swaylock.enable = mkIfAnyHMOpt config (config: config.programs.swaylock.enable) true;
-      fcitx5.enable = mkIfAnyHMOpt config (config: config.custom.home.programs.fcitx5.enable) true;
+    programs = {
+      home = {
+        swaylock.enable = mkIfAnyHMOpt config (config: config.programs.swaylock.enable) true;
+        fcitx5.enable = mkIfAnyHMOpt config (config: config.custom.home.programs.fcitx5.enable) true;
+      };
+      geoclue2.enable = mkIfAnyHMOpt config (config:
+        config.services.gammastep.enable && config.services.gammastep.provider == "geoclue2"
+      ) true;
     };
 
     behavior = {

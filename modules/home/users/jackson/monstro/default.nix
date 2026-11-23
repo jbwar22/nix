@@ -32,8 +32,7 @@ in{
       };
 
       programs = {
-        sway.blueLightFilter = true;
-        sway.blueLightStrength = 4200;
+        gammastep.strength = 4200;
         firefox.usePackage = true;
         virt-manager.enable = true;
         bash.hostcolor = "\\033[38;5;140m";
