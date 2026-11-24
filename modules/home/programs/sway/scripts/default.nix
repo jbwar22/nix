@@ -10,4 +10,5 @@ rec {
   brightness = (import ./brightness.nix) pkgs lib clib slider config;
   menu = (import ./menu.nix) pkgs lib config;
   runner = (import ./runner.nix) pkgs lib menu;
+  sigkill = (import ./sigkill.nix) pkgs;
 }

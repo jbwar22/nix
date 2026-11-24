@@ -288,6 +288,8 @@ in {
           # Basic behavior
           "${modifier}+Shift+a" = "focus child";
 
+          "${modifier}+Ctrl+Shift+q" = "exec ${scripts.sigkill}";
+
           # Disable defaults
           "${modifier}+space" = null;
           "${modifier}+Up" = null;
